@@ -1,5 +1,6 @@
 import { NgModule, LOCALE_ID } from "@angular/core";
 import { Title, BrowserModule } from "@angular/platform-browser";
+//import { WorkerAppModule } from "@angular/platform-webworker";
 import { RouterModule } from "@angular/router";
 import { HttpModule } from "@angular/http";
 import { AppComponent } from "./app.component";
@@ -33,12 +34,10 @@ import { Ng2BreadcrumbModule, BreadcrumbService } from "ng2-breadcrumb/ng2-bread
 import { BreadcrumbComponent } from "./shared/breadcrumb.component";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import * as angMaterial from '@angular/material';
-import 'rxjs/add/operator/mergeMap';
+import { TransferHttpModule } from '../modules/transfer-http/transfer-http.module';
 
 @NgModule({
     imports: [
-        BrowserAnimationsModule,
-        BrowserModule,
         EditorModule,
         HttpModule,
         ForumModule,
@@ -62,7 +61,10 @@ import 'rxjs/add/operator/mergeMap';
         ReCaptchaModule,
         SharedModule,
         StadiumModule,
-        WishModule
+        WishModule,
+    //    WorkerAppModule
+
+        TransferHttpModule, // Our Http TransferData method
     ],
     declarations: [
         account.AccountSigninComponent,
@@ -117,8 +119,8 @@ import 'rxjs/add/operator/mergeMap';
         user.UserConfigComponent,
         user.UserOnlineCounterComponent
     ], // components and directives
-    bootstrap: [
-        AppComponent], // root component
+  //  bootstrap: [
+   //     AppComponent], // root component
 entryComponents: [
  material.MaterialActivateDialogComponent,
 ],

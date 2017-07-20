@@ -33,7 +33,18 @@ var SharedConfig = {
 // Configuration for client-side bundle suitable for running in browsers
 var ClientBundleOutputDir = "./wwwroot/js/";
 var ClientBundleConfig = Merge(SharedConfig, {
-    entry: { 'main-client': "./angular2app/main.ts" },
+    entry: { 
+        'main-client': "./angular2app/main.ts",
+      //  "polyfills": [
+      //      "./angular2app/polyfills.ts"
+      //  ],
+     //   "styles": [
+     //       "./angular2app/styles.css"
+     //   ],
+      //  "webworker": [
+     //       "./angular2app/workerLoader.ts"
+     //   ]
+ },
     output: { path: Path.join(__dirname, ClientBundleOutputDir) },
     plugins: [
         new Webpack.DllReferencePlugin({
