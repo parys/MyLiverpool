@@ -1,0 +1,9 @@
+﻿<div class="col-sm-12">
+    <div class="col-sm-12 flex" *ngFor="let item of items">
+        <div class="col-sm-6" [textContent]="item.name"></div>
+        <div class="col-sm-6">
+            <div *ngFor="let role of item.roles" [textContent]="role.name"></div>
+        </div>
+        <hr class="col-sm-12"/>
+    </div>
+</div>

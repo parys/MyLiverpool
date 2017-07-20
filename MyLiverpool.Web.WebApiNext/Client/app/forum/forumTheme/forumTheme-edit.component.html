@@ -1,0 +1,31 @@
+﻿<div class="col-sx-12 col-sm-12">
+    <form class="form-horizontal" name="editForm" role="form" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label class="control-label col-xs-2 col-sm-2">Подсекция:</label>
+            <div class="col-xs-10 col-sm-10">
+                <select class="form-control" name="subsectionId" formControlName="subsectionId">
+                    <option *ngFor="let subsection of forumSubsections" [value]="subsection.id">{{subsection.name}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-2 col-sm-2">Имя:</label>
+            <div class="col-xs-10 col-sm-10">
+                <input class="form-control" name="name" formControlName="name" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-2 col-sm-2">Описание:</label>
+            <div class="col-xs-10 col-sm-10">
+                <input class="form-control" name="description" formControlName="description" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-sm-offset-2 col-xs-10 col-sm-10">
+                <button type="submit" [disabled]="!editForm.valid" class="btn btn-default">Сохранить</button>
+            </div>
+        </div>
+    </form>
+</div>

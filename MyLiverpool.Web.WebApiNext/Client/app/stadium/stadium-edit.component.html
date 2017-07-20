@@ -1,0 +1,9 @@
+﻿<form class="form-horizontal flex-space-around" name="editForm" role="form" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+            <md-input-container class="full-width">
+            <input mdInput placeholder="Название" name="name" formControlName="name" />
+            </md-input-container>
+    <md-input-container class="full-width">
+        <input mdInput placeholder="Город" name="city" formControlName="city" />
+    </md-input-container>
+    <button md-raised-button type="submit" [disabled]="!editForm.valid" class="">Сохранить</button>
+</form>

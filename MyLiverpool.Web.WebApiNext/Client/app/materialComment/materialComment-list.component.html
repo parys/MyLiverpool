@@ -1,0 +1,41 @@
+﻿<div>
+    <div class="btn-group" *ngIf="roles.isModerator">
+        <form class="form-inline btn-block" [formGroup]="filterForm" (ngSubmit)="update()">
+            <label class="control-label">
+                <input class="checkbox" name="onlyUnverified" formControlName="onlyUnverified" type="checkbox" /> Только непроверенные <!--todo add switcher--> 
+            </label>
+            <button class="btn btn-success" type="submit">Отфильтровать</button>
+        </form>
+    </div>
+    <div class="top20" *ngFor="let comment of items | paginate: { itemsPerPage: itemsPerPage,
+                                                      currentPage: page,
+                                                      totalItems: totalItems }; let i = index;">
+        <div class="panel" ng-class="">
+            <div class="panel-heading panel-default">
+                <h3 class="panel-title">
+                    <a [routerLink]="['/users', comment.authorId]"><span [textContent]="comment.authorUserName"></span></a>
+                    <span class="col-xs-2 col-sm-2 pull-right" *ngIf="roles.isModerator">
+                        <a [hidden]="comment.isVerified" (click)="verify(i)"><span class="glyphicon glyphicon-ok"></span></a>
+                        <a (click)="showDeleteModal(i)"><span class="glyphicon glyphicon-trash"></span></a>
+                    </span>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div [innerHTML]="comment.message"></div>
+            </div>
+            <div class="panel-footer">
+                <div> <span [textContent]="comment.additionTime | date:'medium'"></span><a class="pull-right" [routerLink]="[+comment.type === 1 ? '/news' : '/blogs', comment.materialId]">Материал</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pagination">
+    <pagination-controls (pageChange)="pageChanged($event)"
+                         directionLinks="true"
+                         autoHide="true"
+                         previousLabel="Назад"
+                         nextLabel="Вперед"
+                         screenReaderPaginationLabel="Постраничный вид"
+                         screenReaderPageLabel="Страница"
+                         screenReaderCurrentLabel="Вы на странице"></pagination-controls>
+</div>

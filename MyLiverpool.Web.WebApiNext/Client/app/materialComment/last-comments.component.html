@@ -1,0 +1,6 @@
+﻿<section class="col-xs-12 bg-maroon text-white">
+    Последние комментарии:
+    <div *ngFor="let item of items; let i = index;" class="col-xs-12 container-row">
+        <a [routerLink]="[+item.type === 1 ? '/news' : '/blogs', item.materialId]" [class.text-yellow]="i % 2 === 0"  [class.text-darkgold]="i % 2 === 1" [textContent]="item.message"></a>
+    </div>
+</section>

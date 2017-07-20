@@ -1,0 +1,2 @@
+﻿<a *ngIf="roles.isAdminAssistant || (roles.isInformer && typeId === 3)" [routerLink]="['/editPage', typeId]">Редактировать</a>
+<div [innerHtml]="content"></div>

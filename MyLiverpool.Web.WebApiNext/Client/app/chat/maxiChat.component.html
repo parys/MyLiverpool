@@ -1,0 +1,47 @@
+﻿<h4>Здесь можно общаться на любые темы.</h4>
+<div class="block-minichat">
+    <div class="blocktitle text-center">
+        <b>Макси-чат(флудилка)</b>
+    </div>
+    <div class="blockcontent-inside">
+        <div class="chatMessage-block maxi">
+            <div class="chat-message clearfix" *ngFor="let message of items; let i = index;">
+                <div class="col-xs-12 col-sm-12 container-row clearfix">
+                    <a [routerLink]="['/users', message.authorId]" [textContent]="message.authorUserName"></a>
+                    <div class="pull-right" [textContent]="message.additionTime | date:'medium'"></div>
+                    <span role="button" *ngIf="roles.isModerator || roles.isSelf(message.authorId)" (click)="edit(i)" class="glyphicon glyphicon-pencil"></span>
+                    <span role="button" *ngIf="roles.isModerator" (click)="showDeleteModal(i)" class="glyphicon glyphicon-trash"></span>
+                </div>
+                <div class="col-xs-12 container-row" style="text-align: left;" [innerHTML]="sanitizeByHtml(message.message)">
+                </div>
+                <div class="col-xs-12 row">
+                    <a role="button" (click)="addReply(i)"><span *ngIf="roles.isLogined && !roles.isSelf(message.authorId)" class="glyphicon glyphicon-share-alt"></span></a>
+                </div>
+            </div>
+        </div>
+        <form *ngIf="roles.isLogined" class="form-horizontal clearfix" name="messageForm" role="form" [formGroup]="messageForm" (ngSubmit)="onSubmit()">
+            <div>
+                <div class="col-xs-12 col-sm-12 container-row">
+                    <bbeditor name="chat-message" [type]="3" [value]="messageForm.message" formControlName="message"></bbeditor>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 text-center container-row" style="margin-top: -37px;">            
+                <button md-raised-button color="warn" type="submit" [disabled]="!messageForm.valid" class="chat-button">
+                    <span *ngIf="selectedEditIndex == null">Добавить</span>
+                    <span *ngIf="selectedEditIndex !== null">Обновить</span>
+                </button>
+                <button md-raised-button *ngIf="selectedEditIndex !== null" type="button" (click)="cancelEdit()">Отмена</button>
+                
+            </div>
+        </form>
+        <div *ngIf="!roles.isLogined" class="text-white text-center ">Для добавления сообщений необходимо войти.</div>
+        <div class="full-width text-center text-white flex-space-around top20">
+            <form role="form" [formGroup]="chatMaxiTimerForm">
+                <md-select placeholder="Автообновление чата" color="warn" formControlName="timerValue" (change)="updateSchedule($event)" class="chatUpdate">
+                    <md-option *ngFor="let interval of intervalArray" [value]="interval.value" [textContent]="interval.key"></md-option>
+                </md-select>
+            </form>
+            <button type="button" (click)="update()"><span class="glyphicon glyphicon-refresh"></span></button>
+        </div>
+    </div>
+</div>

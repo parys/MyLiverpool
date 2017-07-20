@@ -1,0 +1,75 @@
+﻿<nav class="navbar navbar-default maroon-panel container-row beauty-font bg-header">
+    <div class="navbar-collapse container-row" style="margin-right: 0; padding-right: 0;"> <!--todo need some research-->
+        <ul class="nav navbar-nav flex-vertical-center flex-space-around" style="font-size: large; width: 100%;">
+            <!--<li><a [routerLink]="['/']" style="color: aliceblue; font-weight: bold;">My<span style="color: yellow;">LFC</span>.ru</a></li>-->
+            <li><a role="button" [routerLink]="['/news', 0]" style="display: inline;">
+                <img src="/content/logo34.png" style="max-width: 310px; margin: 0 -15px;" alt="MyLFC.ru"/>
+            </a></li>
+            <li>
+                <a role="button" [mdMenuTriggerFor]="newsMenu">
+                    Новости<b class="caret"></b>
+                </a>
+                <md-menu #newsMenu="mdMenu">
+                    <a [routerLink]="['/news']" [queryParams]="{page: 1}" md-menu-item>Новости</a>
+                    <a *ngIf="roles.isNewsmaker" [routerLink]="['/news', 0, 'edit']" md-menu-item>Добавить</a>
+                    <a [routerLink]="['/newsCategories']" md-menu-item>Категории</a>
+                </md-menu>
+            </li>
+            <li>
+                <a role="button" [mdMenuTriggerFor]="blogsMenu">
+                    Блоги<b class="caret"></b>
+                </a>
+                <md-menu #blogsMenu="mdMenu">
+                    <a [routerLink]="['/blogs']" [queryParams]="{page: 1}" md-menu-item>Блоги</a>
+                    <a *ngIf="roles.isAuthor" [routerLink]="['/blogs', 0, 'edit']" md-menu-item>Добавить</a>
+                    <a [routerLink]="['/blogCategories']" md-menu-item>Категории</a>
+                </md-menu>
+            </li>
+            <li>
+                <a role="button" [mdMenuTriggerFor]="fcClub">
+                    ФК Ливерпуль<b class="caret"></b>
+                </a>
+                <md-menu #fcClub="mdMenu">
+                    <a [routerLink]="['/clubHistory']" md-menu-item>История</a>
+                    <a [routerLink]="['/aboutClub']" md-menu-item>О Клубе</a>
+                    <a [routerLink]="['/stuff/first']" md-menu-item>Тренерский штаб</a>
+                    <a [routerLink]="['/squad/first']" md-menu-item>Состав</a>
+                </md-menu>
+            </li>
+            <li>
+                <a role="button" [mdMenuTriggerFor]="seasonMenu">
+                    Сезон<b class="caret"></b>
+                </a>
+                <md-menu #seasonMenu="mdMenu">
+                    <a [routerLink]="['/seasons/calendar']" md-menu-item>Календарь</a>
+                    <!--<button [routerLink]="['/season/eplTable']" md-menu-item>Полная таблица АПЛ</button>-->
+                    <a [routerLink]="['/players/statistics']" md-menu-item>Статистика игроков</a>
+                    <a *ngIf="roles.isAdmin" [routerLink]="['/seasons']" md-menu-item>Список сезонов</a>
+                    <a [routerLink]="['/transfers/current']" md-menu-item>Трансферы</a>
+                </md-menu>
+            </li>
+            <li>
+                <a [routerLink]="['/users']" [queryParams]="{page: 1}">Пользователи</a>
+            </li>
+            <li><a [routerLink]="['/rules']"><b class="text-danger color-red beauty-font">Правила</b></a></li>
+            <!--li> <a [routerLink]="['/forum']">Форум</a></!--li>-->
+            <li *ngIf="roles.isNewsmaker || roles.isAuthor">
+                <a role="button" [mdMenuTriggerFor]="adminMenu">
+                    Админка<b class="caret"></b>
+                </a>
+                <md-menu #adminMenu="mdMenu">
+                    <a [routerLink]="['/matches']" md-menu-item>Матчи</a>
+                    <a [routerLink]="['/clubs']" md-menu-item>Клубы</a>
+                    <a [routerLink]="['/roleGroups']" md-menu-item>Роли</a>
+                    <a [routerLink]="['/persons']" md-menu-item>Люди</a>
+                    <a [routerLink]="['/stadiums']" md-menu-item>Стадионы</a>
+                    <a *ngIf="roles.isNewsmaker || roles.isAuthor" [routerLink]="['/images']" md-menu-item>Изображения</a>
+                    <a [routerLink]="['/materialComments']" [queryParams]="{page: 1}" md-menu-item>Комментарии</a>
+                </md-menu>
+            </li>
+            <li class="liverbird-navbar">
+                <img alt="125 лет со дня основания ФК Ливерпуль" src="/content/liverbird5.png">
+            </li>
+        </ul>
+    </div>
+</nav>

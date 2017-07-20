@@ -1,0 +1,16 @@
+﻿<div class="row">
+    <div class="col-xs-10 col-sm-10">
+            <label [for]="controlName"
+                   class="btn btn-info">{{buttonName}}</label>
+            <input type="file"
+                   class="hidden"
+                   accept="image/*"
+                   [multiple]="isMultiple"
+                   (change)="onUploadImage($event)"
+                   [id]="controlName" />
+        <div *ngFor="let file of uploadedFiles">
+            <img [src]="file" alt="" />
+            <input class="form-control" readonly [value]="file" alt="" />
+        </div>
+    </div>
+</div>

@@ -25,12 +25,14 @@
     "node",
     "tinymce"
   ],
+  "include": [
+    "Client"
+  ],
   "exclude": [
     "bin",
     "obj",
     "node_modules",
-    "temp-js",
-    "angular2app/main.aot.ts"
+    "Client/main.aot.ts"
   ],
   "awesomeTypescriptLoaderOptions": {
     "forkChecker": true,

@@ -1,0 +1,85 @@
+﻿<form class="form-horizontal col-xs-12" name="editForm" role="form" [formGroup]="editTransferForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label class="control-label col-xs-2 col-md-2">Игрок</label>
+        <div class="col-xs-10 col-md-10">
+            <input (valueChanged)="updatePerson($event)"
+                   attr-placeholder="Введите игрока..."
+                   ng2-auto-complete
+                   class="form-control"
+                   [list-formatter]="autocompleteListFormatter"
+                   display-property-name="value"
+                   formControlName="personName"
+                   loading-text="Загрузочка"
+                   min-chars="2"
+                   name="person"
+                   type="text"
+                   [source]="persons"
+                   autocomplete="off"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-2 col-md-2">Клуб</label>
+        <div class="col-xs-10 col-md-10">
+            <input (valueChanged)="updateClub($event)"
+                   attr-placeholder="Введите клуб..."
+                   ng2-auto-complete
+                   class="form-control"
+                   [list-formatter]="autocompleteListFormatter"
+                   display-property-name="value"
+                   formControlName="clubName"
+                   loading-text="Загрузочка"
+                   min-chars="2"
+                   name="club"
+                   type="text"
+                   [source]="clubs"
+                   autocomplete="off"/>
+        </div>
+    </div>     
+    <div class="form-group">
+        <label class="control-label col-xs-2 col-md-2">Сезон</label>
+        <div class="col-xs-10 col-md-10">
+            <input (valueChanged)="updateSeason($event)"
+                   attr-placeholder="Введите сезон..."
+                   ng2-auto-complete
+                   class="form-control"
+                   [list-formatter]="autocompleteListFormatter"
+                   display-property-name="value"
+                   formControlName="seasonName"
+                   loading-text="Загрузочка"
+                   min-chars="2"
+                   name="season"
+                   type="text"
+                   [source]="seasons"
+                   autocomplete="off"/>
+        </div>
+    </div> 
+    <md-input-container class="full-width">
+        <input mdInput [mdDatepicker]="datePicker1" placeholder="Выберите дату трансфера" formControlName="startDate">
+        <button mdSuffix [mdDatepickerToggle]="datePicker1"></button>
+    </md-input-container>
+    <md-datepicker #datePicker1 startView="year" touchUi="true"></md-datepicker> 
+    <div class="form-group">
+        <md-slide-toggle formControlName="onLoan"
+                         color="warn">Аренда
+        </md-slide-toggle>
+    </div>
+    <div [hidden]="!editTransferForm.get('onLoan').value">
+        <md-input-container class="full-width">
+            <input mdInput [mdDatepicker]="datePicker2" placeholder="Выберите дату окончания трансфера(Для аренды)" formControlName="finishDate">
+            <button mdSuffix [mdDatepickerToggle]="datePicker2"></button>
+        </md-input-container>
+        <md-datepicker #datePicker2 startView="year" touchUi="true"></md-datepicker>
+    </div>
+    <md-input-container class="col-xs-12">
+        <input mdInput placeholder="Сумма трансфера в фунтах(цифра)" type="number" formControlName="amount">
+    </md-input-container>
+    <div class="form-group">Ушел
+        <md-slide-toggle formControlName="coming"
+                         color="warn">Пришел
+        </md-slide-toggle>
+    </div>
+
+    <div class="form-group">
+        <button md-raised-button type="submit" [disabled]="!editTransferForm.valid" class="text-center full-width">Сохранить</button>
+    </div>
+</form>

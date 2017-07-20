@@ -1,0 +1,28 @@
+﻿<form *ngIf="pmReplyEditForm" class="form-horizontal col-md-12" role="form" name="writePm" [formGroup]="pmReplyEditForm" (ngSubmit)="onSubmit()">
+    <h2>Написать сообщение</h2>
+    <div class="form-group">
+        <label class="control-label col-md-2">Получатель</label>
+        <div class="col-md-10">
+            <input class="form-control" readonly
+                   [value]="userName" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Заголовок</label>
+        <div class="col-md-10">
+            <input class="form-control" name="title" formControlName="title" maxlength="50" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Сообщение</label>
+        <div class="col-md-10">
+            <textarea class="form-control" name="message" rows="4" formControlName="message" maxlength="2500"> </textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button md-raised-button color="warn" [disabled]="!pmReplyEditForm.valid" type="submit">Отправить</button>
+            <button md-raised-button type="button" (click)="closeWindow()">Отмена</button>
+        </div>
+    </div>
+</form>

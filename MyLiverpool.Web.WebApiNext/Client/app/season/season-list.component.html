@@ -1,0 +1,14 @@
+﻿<div>
+    <a [routerLink]="[0, 'edit']">Добавить сезон</a>
+    <ul *ngFor="let season of seasons; let i = index;">
+        <li>
+            <a [routerLink]="[season.id, 'edit']">
+                <span [textContent]="season.startSeasonYear + '-' + season.endSeasonYear"></span>
+            </a>
+            <!--<span *ngIf="roles.isEditor">
+                <a [routerLink]="[category.id, 'edit']"> <span class="glyphicon glyphicon-pencil"></span></a>
+                <a *ngIf="category.itemsCount == 0" (click)="delete(i)"> <span class="glyphicon glyphicon-trash"></span></a>
+            </span>-->
+        </li>
+    </ul>
+</div>

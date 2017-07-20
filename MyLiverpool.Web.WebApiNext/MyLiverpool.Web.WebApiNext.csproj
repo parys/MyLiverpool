@@ -12,144 +12,51 @@
     <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <!-- Files not to show in IDE -->
+    <Content Remove="wwwroot\dist\**" />
+    <None Remove="Client\dist\**" />
+    <Content Remove="coverage\**" />
 
+    <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+    <Content Remove="Client\**" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Remove="node_modules\**\*" />
-    <Compile Remove="temp-js\**" />
-    <Content Remove="temp-js\**" />
-    <EmbeddedResource Remove="temp-js\**" />
-    <None Remove="temp-js\**" />
     <Content Remove="appsettings.json" />
     <Content Remove="package-lock.json" />
-    <Content Remove="web.config" />
-    <Content Remove="wwwroot/10427.ttf" />
-    <None Update="angular2app\js;Views\**\*;wwwroot\**\*">
+    <None Update="Client\js;Views\**\*;wwwroot\**\*">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </None>
-    <None Update="wwwroot\js\*.map;wwwroot\swagger\**\*;node_modules\**\*;*.pdb">
+    <None Update="wwwroot\swagger\**\*;node_modules\**\*;*.pdb">
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
   </ItemGroup>
-
+  <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec Command="npm install" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --env.aot --env.client" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --env.aot --env.server" />
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="wwwroot\dist\**; Client\dist\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+  <Target Name="CleanDist" AfterTargets="Clean">
+    <ItemGroup>
+      <FilesToDelete Include="Client\dist\**; wwwroot\dist\**" />
+    </ItemGroup>
+    <Delete Files="@(FilesToDelete)" />
+    <RemoveDir Directories="Client\dist; wwwroot\dist" />
+  </Target>
   <ItemGroup>
-    <Content Include="wwwroot\content\persons\AdamLallana1.jpeg" />
-    <Content Include="wwwroot\content\persons\StevenGerrard2.jpg" />
     <Content Include="wwwroot\fonts\10427.ttf" />
     <Content Include="wwwroot\fonts\Alice-Regular.ttf" />
-    <Content Include="wwwroot\js\extPlugins\spoiler\css\spoiler.css" />
-    <Content Include="wwwroot\js\extPlugins\spoiler\plugin.js" />
-    <Content Include="wwwroot\js\extPlugins\spoiler\plugin.min.js" />
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\angel.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\bravo.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\cool.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\diablo.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\drinks.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\fool.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\friends.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\goal.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\good.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\goodpost.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\help.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\hi.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\LFCclap.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\LFCfacepalm.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\LFClaugh.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\LFCparty.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\LFCworried.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\liverpool.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\lol.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\new_russian.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\no.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\ok.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\omg.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\punish.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\rtfm.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\sad.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\sarcasm.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\tease.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\thankyou.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\thumbdown.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\thumbup.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\wall.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\wink.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\yahoo.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\yes.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\img\ynwa.gif">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\src\plugins\customEmoticons\plugin.js">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -197,25 +104,12 @@
     <LangVersion>6</LangVersion>
   </PropertyGroup>
 
-  <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
-    <Exec Command="node node_modules/@angular/compiler-cli/src/main.js -p tsconfig.aot.json" />
-    <Exec Command="node node_modules/rollup/bin/rollup -c rollup.config.js" />
-  </Target>
-
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\js\langs\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="appsettings.json" />
-    <None Include="Properties\PublishProfiles\Default Settings.pubxml.user" />
-    <None Include="Properties\PublishProfiles\mylfc - Web Deploy.pubxml.user" />
-    <None Include="Properties\PublishProfiles\zipp.pubxml.user" />
-    <None Include="web.config" />
+    <Folder Include="Client\dist\" />
   </ItemGroup>
 
 </Project>

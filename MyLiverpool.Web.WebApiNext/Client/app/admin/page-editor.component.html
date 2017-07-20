@@ -1,0 +1,13 @@
+﻿<div class="top20" *ngIf="editPageForm">
+    <form class="form-horizontal" name="editPageForm" role="form" [formGroup]="editPageForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label class="col-xs-12"> Текст страницы(<span [textContent]="title"></span>):</label>
+            <div class="col-xs-12">
+                <bbeditor name="message" [type]="2" [value]="content" formControlName="content"></bbeditor>
+            </div>
+        </div>
+        <div class="form-group text-center">
+            <button md-raised-button color="warn" type="submit" [disabled]="!editPageForm.valid">Сохранить</button>
+        </div>
+    </form>
+</div>

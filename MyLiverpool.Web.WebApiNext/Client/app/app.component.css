@@ -1,0 +1,1382 @@
+﻿/*@font-face {
+    font-family: "Beauty";
+    src: url('./fonts/10427.ttf') format('truetype')
+}*/
+
+/* override theme material */
+.mat-ink-bar {
+    background-color: maroon;
+}
+
+/* material override */
+
+/* temporary bug*/
+.mce-container.mce-panel.mce-floatpanel.mce-popover.mce-bottom.mce-start {
+    width: 250px !important;
+    height: 290px !important;
+    overflow: auto;
+}
+a:hover {
+    text-decoration: none;
+    color: red;
+}
+
+body {
+    background-color: #f5f5f5;
+    /*color: #6e6e6e;'*/
+}
+
+button.no-style {
+    border: 0;
+    background-color: inherit;
+}
+
+iframe {
+    width: 100%;
+    background-color: #f5f5f5;
+}
+
+iframe .body-wrapper{
+    background-color: #f5f5f5;
+}
+
+hr {
+    border-top-width: 3px;
+    border-top-color: maroon;
+}
+
+  .news-mini {
+        height: 140px;
+        width: 300px;
+    }
+
+textarea {
+    resize: vertical;
+}
+
+.avatar {
+    width: 100px;
+}
+
+.avatar-medium {
+    min-width: 30px;
+    width: 100px;
+}
+
+.beauty-font {
+    font-family: "Beauty";
+}
+
+.best-player {
+    height: 150px;
+    width: 150px;
+}
+
+.bg-maroon {
+    background-color: #731010;
+}
+
+.bg-gray {
+    background-color: #f5f5f5;
+}
+
+.bg-header {
+     overflow: hidden;
+ }
+
+.bg-header::before {
+    content: ' ';
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    z-index: 0;
+    opacity: 0.2;
+    background-repeat: no-repeat;
+    background-image: url('/content/header4.png');
+    background-position: 50% 100%;
+    background-size: 30%;
+}
+
+.bg-light-blue {
+    background-color: lightblue;
+}
+.border-blue {
+    border-color: lightskyblue;
+}
+
+.border-gray {
+    border-color: gray;
+}
+
+.border-lgray {
+    border-color: lightgray;
+}
+
+.border-maroon {
+    border-color: #731010;
+}
+
+.border-yellow {
+    border-color: wheat;
+}
+
+.border-panel {
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border-width: 5px;
+    border-style: solid;
+}
+
+.block-minichat {
+    background-color: #731010;
+    border-radius: 10px;
+}
+
+.blockcontent-inside {
+    margin-left: 0px;
+    padding: 1px 7px;
+}
+
+.blocktitle {
+    text-transform: uppercase;
+    color: orange;
+}
+
+.border-left-maroon {
+    border-left: 5px solid #731010;
+}
+
+.breadcrumb {
+    margin-bottom: 0;
+}
+
+.chat-message {
+    padding: 0 5px 5px 5px;
+    margin-bottom: 3px;
+    background: #e5e5e5;
+    border: 1px solid #cdcdcd;
+    border-radius: 5px;
+} 
+
+.chat-message img {
+    max-width: 100%;
+    height: auto;
+}
+
+.club-logo {
+    max-width: 45px;
+}
+
+.center {
+    margin: auto;
+}
+
+.chatMessage-block {
+    height: 350px;
+    overflow-y: auto;
+}
+
+.chatMessage-block.maxi {
+    height: 500px;
+}
+
+.chatUpdate {
+    background-color: white;
+    padding-left: 5px;
+}
+
+.chatUpdate .mat-select-placeholder {
+    color: goldenrod;
+}
+
+.color-gold {
+    color: gold !important;
+}
+
+.color-back-gold {
+    background-color: gold;
+}
+
+.color-back-maroon {
+    background-color: maroon;
+}
+
+.color-red {
+    color: red;
+}
+
+.comment {
+    background-color: #e5e5e5;
+    border: gray solid thin;
+    border-radius: 10px;
+    min-height: 80px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
+
+    .comment img {
+        max-width: 100%;
+        height: auto;
+    }
+
+.dropdown-menu {
+    min-width: 140px;
+    border: 5px solid #731010;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.dropdown-toggle:hover{
+    background-color: white;
+    color: yellow;
+}
+.eplTable {
+    overflow-y: auto;
+}
+
+.eplTable > .table {
+    margin-bottom: 0;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+}
+
+.flex-space-around {
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row;
+    flex-wrap: wrap;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.forum-message {
+    min-height: 120px;
+}
+
+.font-size13 {
+    font-size: 13px;
+}
+
+.font-size40 {
+    font-size: 40px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.infodate {
+    text-align: center;
+    color: #000000;
+}
+
+.inline {
+    display:inline;
+}
+
+.img-medium {
+    min-width: 40px;
+    max-width: 100px;
+}
+
+.list-inline.small-offset > li {
+    display: inline-block;
+    padding-right: 5px;
+    padding-left: 0;
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .chat-button {
+        min-width: 80px !important;
+        max-width: 80px;
+        padding: 0 !important;
+    }
+}
+
+@media(max-width: 1209px) { /* should based on menu length? todo*/
+    .liverbird-navbar > img {
+        display: none;
+    }
+}
+@media(min-width: 1210px) {
+    .liverbird-navbar { margin-left: auto; }
+
+    .liverbird-navbar > img { max-height: 90px; }
+}
+
+    .login-list-panel {
+        list-style: none;
+    }
+
+    .main-container {
+        /*background-color: #f5f5f5;*/
+        /*font-size: medium; todo maybe bug*/
+    }
+
+    /* background image*/
+    /*
+.main {
+    overflow: hidden;
+}
+    .main:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -10;
+        opacity: 0.2;
+        background-image: url('/content/logo22.jpg');
+        background-repeat: repeat;
+        background-position: 50% 0;
+        
+        background-size: 100%;
+    }*/
+    .match-calendar img {
+        display: block;
+        width: 45px;
+    }
+
+    .material-body img {
+        border: lightgray solid 5px;
+        display: flex;
+        height: auto;
+        margin: auto;
+        max-width: 100%;
+        width: auto;
+    }
+
+    .material-header {
+        color: #731010;
+        font-weight: bold;
+        padding-left: 10px;
+        text-transform: uppercase;
+    }
+
+        .material-header > a {
+            color: #731010;
+        }
+
+            .material-header > a > h4 {
+                font-weight: bold;
+            }
+
+.material-pending {
+    background-color: #e07676;
+}
+
+    .mainContent {
+        margin-top: 60px;
+    }
+
+    .material-info-panel {
+        background-color: lightgray;
+    }
+
+        .material-info-panel > ul {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+    .margin-auto {
+        margin: auto;
+    }
+
+    .nav-avatar {
+        width: 50px;
+        height: 50px;
+    }
+
+    .navbar {
+        margin-bottom: 0;
+        text-transform: uppercase;
+    }
+
+    .navbar-default .navbar-nav > li > a {
+        color: #FFF;
+        font-family: "Beauty";
+    }
+
+        .navbar-default .navbar-nav > li > a:hover {
+            color: #6e6e6e;
+        }
+
+    .maroon-panel {
+        background-color: #731010;
+        border-radius: 10px;
+    }
+
+    .overflowable {
+        overflow-y: auto;
+    }
+
+    .padding0 {
+        padding: 0;
+    }
+
+    .padding10 {
+        padding: 10px;
+    }
+
+    .pm-counter {
+        font-size: large;
+    }
+
+    @media (min-width: 768px) {
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: -15px;
+        }
+
+        .navbar-nav > li > a.padding0 {
+            padding: 0;
+        }
+    }
+
+    .stuff-card {
+        width: 200px;
+        margin-bottom: 20px;
+    }
+
+    .table > tbody > tr > td {
+        vertical-align: middle;
+        align-content: center;
+    }
+
+    .text-white {
+        color: white;
+    }
+
+    .text-yellow {
+        color: yellow;
+    }
+
+    .text-darkgold {
+        color: darkgoldenrod;
+    }
+
+    .text-underline {
+        text-decoration: underline;
+    }
+
+    .top10 {
+        margin-top: 10px;
+    }
+
+    .top20 {
+        margin-top: 20px;
+    }
+
+    .top50 {
+        margin-top: 50px;
+    }
+
+    .userAvatar {
+        max-width: 90px;
+        max-height: 90px;
+    }
+
+    /* AngularJS Form validation styling */
+    .validation.help-block {
+        color: #E07676;
+        font-style: italic;
+    }
+
+    .va-top {
+        vertical-align: top;
+    }
+
+    /* invalid & (dirty or touched) => red -- CSS3 only */
+    /*.mat-input-container.ng-invalid.ng-dirty:not(:focus),
+.mat-input-container.ng-invalid.ng-touched:not(:focus) {
+    border-left: 5px solid #e74c3c;
+}
+
+/* valid & dirty => green 
+.mat-input-container.ng-valid.ng-dirty.ng-touched {
+    border-left: 5px solid #2ecc71;
+}*/
+
+    /* error display font italic, text-danger is red in BS */
+    .validation.text-danger {
+        font-style: italic;
+    }
+
+    .width50p {
+        width: 50%;
+    }
+
+    .vertical-center {
+        vertical-align: middle;
+    }
+
+    .flex-container {
+        display: flex;
+    }
+
+    .flex-vertical-center {
+        min-height: 0%; /* Fallback for browsers do NOT support vh unit */
+        min-height: 0vh; /* These two lines are counted as one :-)*/
+        display: flex;
+        align-items: center;
+    }
+
+    .container-row {
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+
+    .margin-top-middle {
+        margin-top: 30px;
+    }
+
+    .mini-avatar {
+        height: 20px;
+        width: 20px;
+    }
+
+.mini-logo {
+    height: 20px;
+}
+
+    /*maybe need refactor fixed*/
+    input.ng-valid[required].ng-touched, .ng-valid.required.ng-touched {
+        border-left: 5px solid #42A948; /* green */
+    }
+
+    input.ng-touched:not(:focus).ng-invalid:not(form) {
+        border-left: 5px solid #a94442; /* red */
+    }
+
+    /* forum start */
+
+    /* ===== forum Start ===== */
+
+    a.postuser1:link, a.postuser1:visited, a.postuser1:hover {
+        color: #000000;
+        font-weight: normal;
+        text-decoration: none
+    }
+
+    a.postuser2:link, a.postuser2:visited, a.postuser2:hover {
+        color: #993399;
+        font-weight: bold;
+        text-decoration: none
+    }
+
+    a.postuser3:link, a.postuser3:visited, a.postuser3:hover {
+        color: #009900;
+        font-weight: bold;
+        text-decoration: none
+    }
+
+    a.postuser4:link, a.postuser4:visited, a.postuser4:hover {
+        color: red;
+        font-weight: bold;
+        text-decoration: none
+    }
+
+    a.postuser5:link, a.postuser5:visited, a.postuser5:hover {
+        color: #3333FF;
+        font-weight: bold;
+        text-decoration: none
+    }
+
+    a.postuser6:link, a.postuser6:visited, a.postuser6:hover {
+        color: orange;
+        font-weight: bold;
+        text-decoration: none
+    }
+
+    a.postuser7:link, a.postuser7:visited, a.postuser7:hover {
+        color: #000000;
+        font-weight: bold;
+        text-decoration: none
+    }
+
+    a.postuser8:link, a.postuser8:visited, a.postuser8:hover {
+        color: #009900;
+        font-weight: bold;
+        text-decoration: none
+    }
+
+    a.postuser9:link, a.postuser9:visited, a.postuser9:hover {
+        color: #000000;
+        font-weight: bold;
+        text-decoration: none
+    }
+
+    a.postuser10:link, a.postuser10:visited, a.postuser10:hover {
+        color: #000000;
+        font-weight: bold;
+        text-decoration: none
+    }
+
+    /* General forum Table View */
+    .gTable {
+        background: #EBEBEB;
+        width: 98%;
+        margin-left: 1%;
+        margin-right: 1%;
+    }
+
+    .gTableTop {
+        padding: 2px;
+        background: url('http://src.ucoz.ru/t/631/17.gif') #B60600;
+        color: #FFFFFF;
+        font-weight: bold;
+        height: 23px;
+        padding-left: 17px;
+        font-size: 10pt;
+    }
+
+    .gTableSubTop {
+        padding: 2px;
+        background: url('http://src.ucoz.ru/t/631/5.gif') center #418E00;
+        color: #000000;
+        height: 20px;
+        font-size: 10px;
+    }
+
+    .gTableBody, .gTableBottom {
+        padding: 2px;
+        background: #F1FFDD;
+    }
+
+    .gTableBody1 {
+        padding: 2px;
+        background: #FFFFFF;
+    }
+
+    .gTableLeft {
+        padding: 2px;
+        background: #F1FFDD;
+        font-weight: bold;
+        color: #BD0A00
+    }
+
+    .gTableRight {
+        padding: 2px;
+        background: #F1FFDD
+    }
+
+    .gTableError {
+        padding: 2px;
+        background: #F1FFDD;
+        color: #FF0000;
+    }
+
+
+    /* ------------------------ */
+
+    /* Forums Styles */
+    .forumNameTd, .forumLastPostTd {
+        padding: 2px;
+        background: #FFFFFF
+    }
+
+    .forumIcoTd, .forumThreadTd, .forumPostTd {
+        padding: 2px;
+        background: #F1FFDD
+    }
+
+    .forumLastPostTd, .forumArchive {
+        padding: 2px;
+        font-size: 7pt;
+    }
+
+    a.catLink:link {
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+
+    a.catLink:visited {
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+
+    a.catLink:hover {
+        text-decoration: underline;
+        color: #FFFFFF;
+    }
+
+    a.catLink:active {
+        text-decoration: underline;
+        color: #FFFFFF;
+    }
+
+    .lastPostGuest, .lastPostUser, .threadAuthor {
+        font-weight: bold
+    }
+
+    .archivedForum {
+        font-size: 7pt;
+        color: #FF0000;
+        font-weight: bold;
+    }
+    /* ------------- */
+
+    /* forum Titles & other */
+    .forum {
+        font-weight: bold;
+        font-size: 9pt;
+    }
+
+    .forumDescr, .forumModer {
+        color: #858585;
+        font-size: 7pt;
+    }
+
+    .forumViewed {
+        font-size: 9px;
+    }
+
+    a.forum:link, a.lastPostUserLink:link, a.forumLastPostLink:link, a.threadAuthorLink:link {
+        text-decoration: none;
+        color: #BD0A00;
+    }
+
+    a.forum:visited, a.lastPostUserLink:visited, a.forumLastPostLink:visited, a.threadAuthorLink:visited {
+        text-decoration: none;
+        color: #BD0A00;
+    }
+
+    a.forum:hover, a.lastPostUserLink:hover, a.forumLastPostLink:hover, a.threadAuthorLink:hover {
+        text-decoration: underline;
+        color: #79B56C;
+    }
+
+    a.forum:active, a.lastPostUserLink:active, a.forumLastPostLink:active, a.threadAuthorLink:active {
+        text-decoration: underline;
+        color: #BD0A00;
+    }
+    /* -------------------- */
+
+    /* forum Navigation Bar */
+    .forumNamesBar {
+        font-weight: bold;
+        font-size: 7pt;
+    }
+
+    .forumBarKw {
+        font-weight: normal;
+    }
+
+    a.forumBarA:link {
+        text-decoration: none;
+        color: #000000;
+    }
+
+    a.forumBarA:visited {
+        text-decoration: none;
+        color: #000000;
+    }
+
+    a.forumBarA:hover {
+        text-decoration: none;
+        color: #BD0A00;
+    }
+
+    a.forumBarA:active {
+        text-decoration: underline;
+        color: #BD0A00;
+    }
+    /* -------------------- */
+
+    /* forum Fast Navigation Blocks */
+    .fastNav, .fastSearch, .fastLoginForm {
+        font-size: 7pt;
+    }
+    /* ---------------------------- */
+
+    /* forum Fast Navigation Menu */
+    .fastNavMain {
+        background: #CEF0C6;
+    }
+
+    .fastNavCat {
+        background: #EBF9E6;
+    }
+
+    .fastNavCatA {
+        background: #EBF9E6;
+        color: #0000FF
+    }
+
+    .fastNavForumA {
+        color: #0000FF
+    }
+    /* -------------------------- */
+
+    /* forum Page switches */
+    .switches {
+        background: #418E00;
+    }
+
+    .pagesInfo {
+        background: #FFFFFF;
+        padding-right: 10px;
+        font-size: 7pt;
+    }
+
+    .switch {
+        background: #FFFFFF;
+        width: 15px;
+        font-size: 7pt;
+    }
+
+    .switchActive {
+        background: #FFF799;
+        font-weight: bold;
+        color: #BD0A00;
+        width: 15px
+    }
+
+    a.switchDigit:link, a.switchBack:link, a.switchNext:link {
+        text-decoration: none;
+        color: #000000;
+    }
+
+    a.switchDigit:visited, a.switchBack:visited, a.switchNext:visited {
+        text-decoration: none;
+        color: #000000;
+    }
+
+    a.switchDigit:hover, a.switchBack:hover, a.switchNext:hover {
+        text-decoration: underline;
+        color: #FF0000;
+    }
+
+    a.switchDigit:active, a.switchBack:active, a.switchNext:active {
+        text-decoration: underline;
+        color: #FF0000;
+    }
+    /* ------------------- */
+
+    /* forum Threads Style */
+    .threadNametd, .threadAuthTd, .threadLastPostTd {
+        padding: 2px;
+        background: #FFFFFF
+    }
+
+    .threadIcoTd, .threadPostTd, .threadViewTd {
+        padding: 2px;
+        background: #F1FFDD
+    }
+
+    .threadLastPostTd {
+        padding: 2px;
+        font-size: 7pt;
+    }
+
+    .threadDescr {
+        color: #858585;
+        font-size: 7pt;
+    }
+
+    .threadNoticeLink {
+        font-weight: bold;
+    }
+
+    .threadsType {
+        padding: 2px;
+        background: #FFF799;
+        height: 20px;
+        font-weight: bold;
+        font-size: 7pt;
+        color: #BD0A00;
+        padding-left: 40px;
+    }
+
+    .threadsDetails {
+        padding: 2px;
+        background: #8EBC4D;
+        height: 20px;
+        color: #000000;
+    }
+
+    .forumOnlineBar {
+        padding: 2px;
+        background: #8EBC4D;
+        height: 20px;
+        color: #000000;
+    }
+
+    a.threadPinnedLink:link {
+        text-decoration: none;
+        color: #0000FF;
+    }
+
+    a.threadPinnedLink:visited {
+        text-decoration: none;
+        color: #0000FF;
+    }
+
+    a.threadPinnedLink:hover {
+        text-decoration: none;
+        color: #FF0000;
+    }
+
+    a.threadPinnedLink:active {
+        text-decoration: underline;
+        color: #FF0000;
+    }
+
+    a.threadLink:link {
+        text-decoration: none;
+        color: #BD0A00;
+    }
+
+    a.threadLink:visited {
+        text-decoration: none;
+        color: #BD0A00;
+    }
+
+    a.threadLink:hover {
+        text-decoration: underline;
+        color: #000000;
+    }
+
+    a.threadLink:active {
+        text-decoration: underline;
+        color: #000000;
+    }
+
+    .postpSwithces {
+        font-size: 7pt;
+    }
+
+    .thDescr {
+        font-weight: normal;
+    }
+
+    .threadFrmBlock {
+        font-size: 7pt;
+        text-align: right;
+    }
+    /* ------------------- */
+
+    /* forum Posts View */
+    /*.postTable {}*/
+    .postPoll {
+        background: #F1FFDD;
+        text-align: center;
+    }
+
+    .postFirst {
+        background: #F7FDF4;
+        border-bottom: 3px solid #649A56;
+    }
+
+    .postRest1 {
+        background: #F1FFDD;
+    }
+
+    .postRest2 {
+        background: #F7FDF4;
+    }
+
+    .postSeparator {
+        height: 3px;
+        background: #B60600;
+    }
+
+    .postTdTop {
+        background: center #418E00;
+        color: #000000;
+        height: 20px;
+        font-size: 10px;
+    }
+
+    .postBottom {
+        background: #FFF799;
+        height: 20px
+    }
+
+    .postUser {
+        font-weight: bold;
+    }
+
+    .postTdInfo {
+        text-align: center;
+        padding: 5px;
+        background: #F1FFDD;
+    }
+
+    .postRankName {
+        margin-top: 5px;
+    }
+
+    .postRankIco {
+        margin-bottom: 5px;
+    }
+
+    .reputation {
+        margin-top: 5px;
+    }
+
+    .signatureHr {
+        margin-top: 20px;
+        color: #649A56;
+    }
+
+    .posttdMessage {
+        padding: 5px;
+        background: #FFFFFF;
+    }
+
+    .pollQuestion {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .pollButtons, .pollTotal {
+        text-align: center;
+    }
+
+    .pollSubmitBut, .pollreSultsBut {
+        width: 140px;
+        font-size: 7pt;
+    }
+
+    .pollSubmit {
+        font-weight: bold;
+    }
+
+    .pollEnd {
+        text-align: center;
+        height: 30px;
+    }
+
+    .codeMessage {
+        background: #FFFFFF;
+        padding: 5px;
+    }
+
+    .quoteMessage {
+        background: #FFFFFF;
+        padding: 5px;
+    }
+
+    .signatureView {
+        font-size: 7pt;
+    }
+
+    .edited {
+        padding-top: 30px;
+        font-size: 7pt;
+        text-align: right;
+        color: gray;
+    }
+
+    .editedBy {
+        font-weight: bold;
+        font-size: 8pt;
+    }
+
+    .statusBlock {
+        padding-top: 3px;
+    }
+
+    .statusOnline {
+        color: #0000FF;
+    }
+
+    .statusOffline {
+        color: #FF0000;
+    }
+    /* ------------------ */
+
+    /* forum AllInOne Fast Add */
+    .newThreadBlock {
+        background: #F9F9F9;
+        border: 1px solid #B2B2B2;
+    }
+
+    .newPollBlock {
+        background: #F9F9F9;
+        border: 1px solid #B2B2B2;
+    }
+
+    .newThreadItem, .newPollItem {
+        padding: 0 0 0 8px;
+        background: url('http://src.ucoz.ru/t/631/19.gif') no-repeat 0px 4px;
+    }
+    /* ----------------------- */
+
+    /* forum Post Form */
+    .pollBut, .loginButton, .searchSbmFl, .commSbmFl, .signButton, .codeButtons, .codeCloseAll {
+        font-size: 7pt;
+        background: url('http://src.ucoz.ru/t/631/17.gif') #B60600;
+        color: #FFFFFF;
+        border: 1px outset #FFFFFF;
+    }
+
+    .codeCloseAll {
+        font-weight: bold;
+    }
+
+    .postNameFl, .postDescrFl {
+        background: #FBFEFA;
+        border: 1px solid #BD0A00;
+        width: 400px
+    }
+
+    .postPollFl, .postQuestionFl {
+        background: #FBFEFA;
+        border: 1px solid #BD0A00;
+        width: 400px
+    }
+
+    .postResultFl {
+        background: #FBFEFA;
+        border: 1px solid #BD0A00;
+        width: 50px
+    }
+
+    .postAnswerFl {
+        background: #FBFEFA;
+        border: 1px solid #BD0A00;
+        width: 300px
+    }
+
+    .postTextFl {
+        background: #FBFEFA;
+        border: 1px solid #BD0A00;
+        width: 550px;
+        height: 150px
+    }
+
+    .postUserFl {
+        background: #FBFEFA;
+        border: 1px solid #BD0A00;
+        width: 300px
+    }
+
+    .pollHelp {
+        font-weight: normal;
+        font-size: 7pt;
+        padding-top: 3px;
+    }
+
+    .smilesPart {
+        padding-top: 5px;
+        text-align: center
+    }
+    /* ----------------- */
+
+    /* ====== forum End ====== */
+
+    /*--------------------- Forum start ---------------------*/
+
+    .modBut {
+        font-size: 12px;
+    }
+
+    .forumContent {
+        width: 890px;
+        background-color: #ffffff;
+        padding: 0 5px 0 5px;
+    }
+
+    /*.forumContent a {}
+
+.forumContent table {}*/
+
+    .gTable, .postTable {
+        background: #ffffff;
+    }
+
+        .gTable td {
+            background: #ffffff;
+            border: 1px solid #e1e1e1;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+
+        .postTable td {
+            border-collapse: collapse;
+            border: 1px solid #e1e1e1;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+
+    td.postRest1, td.postRest2, td.postFirst {
+        border: 0px;
+    }
+
+    .gTable td.gTableTop {
+        padding: 0px 10px;
+        border: 1px solid #debc72;
+        background: url(http://myliverpool.ru/desighn/img/126.png) repeat top right;
+        font: 14px/32px 'Tahoma';
+        color: #ffffff;
+        text-transform: uppercase;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+
+    .gTableTop a {
+        color: #ffffff;
+    }
+
+    /*.gTableTop a:hover {}*/
+
+    .gTable td.gTableSubTop {
+        background: #e1e1e1;
+        color: #848484;
+        border: 0px;
+        font-size: 10px;
+    }
+
+    .gTableSubTop a {
+        color: #848484;
+    }
+
+    .gTableTop, .gTableSubTop, .forumNameTd, .forumThreadTd, .forumPosrTd, .forumLastPostTd, .threadNametd,
+    .threadPostTd, .threadAuthTd, .threadViewTd, .threadLastPostTd, td.threadsDetails, td.forumOnlineBar {
+        padding: 4px 10px;
+    }
+
+    #frM6 td, #frM14 td, #frM50 td, #frM56 td, #frM59 td, #frM3 td, #frM45 td {
+        padding: 4px 10px;
+    }
+
+    .postBottom table td {
+        border: 0px;
+    }
+
+    .postTable td {
+        padding: 1px 5px;
+        color: #333;
+    }
+
+    .postSeparator {
+        display: none;
+    }
+
+    .posttdMessage {
+        text-align: justify;
+    }
+
+    .threadPostTd, .threadViewTd, .threadAuthTd, .forumThreadTd, .forumPostTd {
+        text-align: center !important;
+    }
+
+    /*a.TopSortLink {}
+
+a.TopSortLink:hover {}*/
+
+    a.postUser {
+        font-weight: bold;
+    }
+
+    a.forum, a.threadLink {
+        font-size: 12px;
+        color: #c48b49;
+    }
+
+    /*.quoteMessage {}*/
+
+    .forumDescr, .threadDescr {
+        font-size: 10px;
+        color: #a1a1a1;
+    }
+
+    td.postTdTop {
+        background: #e1e1e1;
+    }
+
+    /*td.postTdTop a {}*/
+
+    td.forumIcoTd, td.forumThreadTd, td.forumPostTd, td.gTableRight, td.threadIcoTd, td.threadPostTd,
+    td.threadViewTd {
+        padding: 2px;
+    }
+
+    td.pollQuestion, .pollResults td, td.pollResults, td.pollTotal, td.pollAnswer, td.pollButtons, .smiles td {
+        border: 0px;
+    }
+
+    /*td.pagesInfo, td.switch, td.switchActive {}
+
+td.switch, td.switchActive {}
+
+td.switch a {}*/
+
+    .switchActive {
+        font-weight: bold;
+    }
+
+    /*--------------------- Forum end ---------------------*/
+
+    /* old site start*/
+
+    .left1 {
+        display: block;
+        float: left;
+        width: 205px;
+        height: 160px;
+        background: url(http://myliverpool.ru/desighn/img/inform.png) no-repeat;
+    }
+
+    .blocktitle2 {
+        line-height: 16px;
+        font: 11px 'Tahoma';
+        color: #ffffff;
+        padding-right: 70px;
+        padding-top: 5px;
+        text-transform: uppercase;
+    }
+
+    .score {
+        font-size: 30px;
+    }
+
+    .infopic {
+        color: #000000;
+        font-family: Verdana;
+        font-size: 14px;
+        padding-top: 15px;
+        padding-left: 0;
+    }
+
+    .embl {
+        text-align: center;
+        font-family: Verdana;
+        font-size: 12px;
+        color: #000000;
+    }
+
+
+    /* old site end*/
+    .spoiler {
+        border: 1px solid #ff0000;
+        background-color: #f5f5f5;
+        border-radius: 5px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .spoiler-toggle {
+        font-weight: bold;
+        cursor: default;
+        padding: 5px;
+        font-size: 12px;
+        color: #ff0000;
+    }
+
+    .spoiler-text {
+        padding: 5px;
+    }

@@ -1,0 +1,14 @@
+﻿<md-card class="col-xs-12 container-row" *ngIf="currentPersonIndex != null">
+    <md-card-header>
+        <md-card-title>
+            Сегодня день рождения отмечает <b [textContent]="items[currentPersonIndex].russianName"></b>
+        </md-card-title>
+    </md-card-header>
+    <md-card-content>
+        <img [src]="items[currentPersonIndex].photo" class="center-block avatar-medium" [alt]="items[currentPersonIndex].russianName" />
+    </md-card-content>
+    <md-card-actions *ngIf="items.length > 1">
+        <button md-button (click)="goToPrevious()"><span class="glyphicon glyphicon-triangle-left"></span></button>
+        <button md-button (click)="goToNext()" class="pull-right"><span class="glyphicon glyphicon-triangle-right"></span></button>
+    </md-card-actions>
+</md-card>

@@ -1,0 +1,50 @@
+﻿import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Location } from "@angular/common";
+import { ActivatedRoute } from "@angular/router";
+import { Subscription } from "rxjs/Subscription";
+import { TransferService } from "./transfer.service";
+import { Transfer } from "./transfer.model";
+import { RolesCheckedService, IRoles } from "../shared/index";
+
+@Component({
+    selector: "<transfer-current-list>",
+    templateUrl: "./transfer-current-list.component.html"
+})
+export class TransferCurrentListComponent implements OnInit, OnDestroy {
+    private sub2: Subscription;
+    public roles: IRoles;
+    public comeIn: Transfer[];
+    public comeOut: Transfer[];
+    public totalIn: number = 0;
+    public totalOut: number = 0;
+
+    constructor(private service: TransferService,
+        private route: ActivatedRoute,
+        private location: Location,
+        private rolesChecked: RolesCheckedService) {
+    }
+
+    public ngOnInit(): void {
+        this.roles = this.rolesChecked.checkRoles();
+
+        this.update();
+    }
+
+    public ngOnDestroy(): void {
+        if (this.sub2) { this.sub2.unsubscribe(); }
+    }
+
+    public update(): void {
+        this.sub2 = this.service
+            .getCurrentAll()
+            .subscribe(data => this.parseList(data),
+                error => console.log(error));
+    }
+
+    private parseList(list: Transfer[]): void {
+        this.comeIn = list.filter(x => x.coming);
+        this.comeOut = list.filter(x => !x.coming);
+        this.comeIn.forEach(elem => this.totalIn += elem.amount);
+        this.comeOut.forEach(elem => this.totalOut += elem.amount);
+    }
+}

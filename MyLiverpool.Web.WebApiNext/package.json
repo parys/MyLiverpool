@@ -2,11 +2,13 @@
   "name": "asp.net",
   "version": "1.0.0",
   "scripts": {
-    "postinstall": "webpack --config webpack.config.vendor.js",
+    "postinstall1": "webpack --config webpack.config.vendor.js",
     "client-server": "webpack --config webpack.config.js",
     "build-aot": "ngc -p tsconfig.aot.json",
     "tree-shaking": "rollup -c rollup.config.js",
-    "build:aot-rollup": "ngc -p tsconfig.aot.json && rollup -c rollup.config.js"
+    "build:aot-rollup": "ngc -p tsconfig.aot.json && rollup -c rollup.config.js",
+    "build:dev": "webpack --progress --color",
+    "build:aot": "webpack --env.aot --env.client & webpack --env.aot --env.server"
   },
   "dependencies": {
     "@angular/animations": "4.3.1",
@@ -21,9 +23,10 @@
     "@angular/platform-browser": "4.3.1",
     "@angular/platform-browser-dynamic": "4.3.1",
     "@angular/platform-server": "4.3.1",
-    "@angular/router": "4.3.1",
     "@angular/platform-webworker": "4.3.1",
     "@angular/platform-webworker-dynamic": "4.3.1",
+    "@angular/router": "4.3.1",
+    "@ngtools/webpack": "1.5.1",
     "@nguniversal/aspnetcore-engine": "1.0.0-beta.2",
     "@types/node": "7.0.29",
     "@types/tinymce": "4.5.7",

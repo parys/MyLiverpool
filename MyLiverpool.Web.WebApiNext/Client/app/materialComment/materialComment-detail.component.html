@@ -1,0 +1,79 @@
+﻿<div class="col-xs-offset-{{deep}} col-sm-offset-{{deep}} comment container-fluid">
+    <div class="row">
+        <div class="col-xs-9 col-sm-7">
+            <span *ngIf="item.number" [textContent]="item.number"></span>
+            <a [routerLink]="['/users', item.authorId]" [textContent]="item.authorUserName"></a>
+            <span class="small" [textContent]="item.additionTime | date:'medium'"></span>
+        </div>
+        <div class="col-xs-3 col-sm-5">
+            <span class="pull-right">
+                <span style="color: green">
+                    <span [textContent]="item.positiveCount"></span>
+                    <button class="no-style" (click)="vote(true)" *ngIf="item.canPositiveVote && !roles.isSelf(item.authorId)"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                </span>/
+                <span style="color: red">
+                    <button class="no-style" (click)="vote(false)" *ngIf="item.canNegativeVote && !roles.isSelf(item.authorId)"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                    <span [textContent]="item.negativeCount"></span>
+                </span>
+                <a *ngIf="roles.isModerator || roles.isSelf(item.authorId)" role="button" (click)="showEditModal()"><span class="glyphicon glyphicon-pencil"> </span></a>
+                <a *ngIf="roles.isModerator" role="button" (click)="showDeleteModal()"><span class="glyphicon glyphicon-trash"> </span></a>
+            </span>
+        </div>
+    </div>
+    <div *ngIf="!isEditMode">
+        <div class="row" >
+            <div class="col-xs-2 col-sm-2">
+                <img class="avatar-medium" [src]="item.photo" [alt]="item.authorUserName" />
+            </div>
+            <div class="col-xs-10 col-sm-10 container-row">
+                <p [innerHTML]="sanitizeByHtml(item.message)"></p>
+            </div>
+        </div>
+        <div class="row" *ngIf="item.answer || (isEditMode && roles.isEditor)">
+            <div class="col-xs-3 col-sm-3">Ответ:</div>
+            <div class="col-xs-9 col-sm-9">
+                <i *ngIf="!isEditMode" [innerHTML]="item.answer"></i>
+                <bbeditor *ngIf="isEditMode" name="answer" [value]="item.answer" formControlName="answer"></bbeditor>
+            </div>
+        </div>   
+        <div class="col-xs-12 col-sm-12 container-row" *ngIf="!roles.isSelf(item.authorId) && canCommentary && !isAddingMode && roles.isLogined">
+            <a role="button" (click)="showAddCommentModal()">Ответить</a>
+        </div>
+    </div>
+    <form class="form-horizontal" role="form" [formGroup]="commentForm" (ngSubmit)="editComment()" *ngIf="isEditMode">
+        <div class="row">
+            <div class="col-xs-2 col-sm-2">
+                <img class="avatar-medium" [src]="item.photo" [alt]="item.authorUserName"/>
+            </div>
+            <div class="col-xs-10 col-sm-10">
+                <bbeditor name="message" formControlName="message"></bbeditor>
+            </div>
+        </div>
+        <div class="row" *ngIf="roles.isEditor">
+            <div class="col-xs-3 col-sm-3">Ответ:</div>
+            <div class="col-xs-9 col-sm-9">
+                <bbeditor name="answer" formControlName="answer"></bbeditor>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12">
+            <button md-raised-button color="warn" [disabled]="!commentForm.valid" type="submit">Обновить</button>
+            <button md-raised-button (click)="cancelEdit()" type="button">Отмена</button>
+        </div>
+    </form>
+    <div *ngIf="isAddingMode">
+        <hr/>
+        <h4 class="">Добавление ответа на комментарий</h4>
+        <form class="form-horizontal" role="form" [formGroup]="commentForm" (ngSubmit)="addComment()">
+            <div class="modal-body">
+                <bbeditor name="message" formControlName="message"></bbeditor>
+            </div>
+            <div class="modal-footer">
+                <button md-raised-button color="warn" [disabled]="!commentForm.valid" type="submit">Добавить</button>
+                <button md-raised-button data-dismiss="modal" (click)="cancelAdding()" type="button">Отмена</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div *ngFor="let child of item.children">
+    <materialComment-detail [item]="child" [deep]="deep > 6 ? 7 : deep+1" [materialId]="materialId" [canCommentary]="canCommentary" [parent]="item"></materialComment-detail>
+</div>

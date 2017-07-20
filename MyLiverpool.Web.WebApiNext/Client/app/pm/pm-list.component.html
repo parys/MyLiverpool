@@ -1,0 +1,57 @@
+﻿<div class="container-fluid">
+    <md-tab-group>
+        <md-tab label="Полученные">
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>#</td>
+                    <td>Заголовок</td>
+                    <td>Отправитель</td>
+                    <td>Дата получения</td>
+                </tr>
+                </thead>
+                <tbody *ngFor="let message of received; let i = index">
+                <tr>
+                    <td [textContent]="i + 1"></td>
+                    <td>
+                        <a [routerLink]="[message.id]">
+                            <b *ngIf="!message.isRead" [textContent]="message.title"></b>
+                            <span *ngIf="message.isRead" [textContent]="message.title"></span>
+                        </a>
+                    </td>
+                    <td><a [routerLink]="['/users', message.senderId]" [textContent]="message.sender"></a></td>
+                    <td [textContent]="message.sentTime | date:'medium'"></td>
+                </tr>
+                </tbody>
+            </table>
+        </md-tab>
+        <md-tab label="Отправленные">
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>#</td>
+                    <td>Заголовок</td>
+                    <td>Получатель</td>
+                    <td>Дата отправки</td>
+                </tr>
+                </thead>
+                <tbody *ngFor="let message of sent; let i = index">
+                <tr>
+                    <td [textContent]="i + 1"></td>
+                    <td>
+                        <a [routerLink]="[message.id]">
+                            <b *ngIf="!message.isRead" [textContent]="message.title"></b>
+                            <span *ngIf="message.isRead" [textContent]="message.title"></span>
+                        </a>
+                    </td>
+                    <td><a [routerLink]="['/users', message.receiverId]" [textContent]="message.receiver"></a></td>
+                    <td [textContent]="message.sentTime | date:'medium'"></td>
+                </tr>
+                </tbody>
+            </table>
+        </md-tab>
+        <md-tab label="Написать сообщеньку">
+            <pm-edit></pm-edit>
+        </md-tab> <!--(select)="writePm()"-->
+    </md-tab-group>
+</div>

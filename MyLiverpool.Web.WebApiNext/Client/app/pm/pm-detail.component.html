@@ -1,0 +1,29 @@
+﻿<div class="col-md-12 form-horizontal margin-top-middle" *ngIf="item">
+    <div class="form-group">
+        <label class="control-label col-md-2" *ngIf="roles.isSelf(item.senderId)">Получатель</label>
+        <label class="control-label col-md-2" *ngIf="!roles.isSelf(item.senderId)">Отправитель</label>
+        <div class="col-md-10">
+            <input class="form-control" disabled *ngIf="roles.isSelf(item.senderId)" [value]="item.receiver" />
+            <input class="form-control" disabled *ngIf="!roles.isSelf(item.senderId)" [value]="item.sender" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Заголовок</label>
+        <div class="col-md-10">
+            <input class="form-control" disabled [value]="item.title" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Сообщение</label>
+        <div class="col-md-10">
+            <textarea class="form-control" disabled rows="8" [innerHTML]="sanitizeByHtml(item.message)"></textarea>
+        </div>
+    </div>   
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <a md-raised-button color="primary" *ngIf="materialId"role="button" [routerLink]="['/' + link, materialId]">Перейти к материалу</a>
+            <a md-raised-button color="primary" *ngIf="!materialId" role="button" (click)="writePm()">Ответить</a>
+        </div>
+    </div>
+    <pm-reply *ngIf="selectedUserId" [userId]="selectedUserId" (close)="closePmWindow($event);" [userName]="selectedUserName" [title]="item.title"></pm-reply>
+</div>

@@ -1,0 +1,24 @@
+﻿<div>
+    <h1 class="text-center">Адрес электронной почты не подтвержден</h1>
+    <div class="col-md-12">
+        <form class="form-horizontal" name="unconfirmedForm" role="form" [formGroup]="unconfirmedForm" (ngSubmit)="onSubmit()" *ngIf="!finish">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Адрес электронной почты</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" name="email" placeholder="" formControlName="email">
+                    <div class="alert alert-danger" *ngIf="unconfirmedForm.controls['email'].touched && !unconfirmedForm.controls['email'].valid">
+                        <div *ngIf="unconfirmedForm.controls['email'].hasError('required')">Необходимо заполнить поле.</div>
+                        <div *ngIf="unconfirmedForm.controls['email'].hasError('minlength')">Значение должно превышать 6 символов.</div> <!--todo move to config-->
+                        <div *ngIf="unconfirmedForm.controls['email'].hasError('incorrectMailFormat')">Введенное значение не является допустимым адресом.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" [disabled]="!unconfirmedForm.valid" class="btn btn-default">Переслать письмо</button>
+                </div>
+            </div>
+        </form>
+        <div *ngIf="finish">Письмо успешно отправлено</div>
+    </div>
+</div>

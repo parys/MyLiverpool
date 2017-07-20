@@ -1,0 +1,61 @@
+﻿<div class="col-md-12 top20">
+    <h4>Друзья, если у вас уже был аккаунт на старом сайте, то не нужно регистрироваться заново. Мы можем и вернуть вам к нему доступ, и поменять почту, и поменять логин(по желанию). Если это так пишите в пожелания, или на старом сайте parys.</h4>
+    <form class="form-horizontal" *ngIf="!result" [formGroup]="registerForm" (ngSubmit)="onSubmit()" role="form">
+        <div class="form-group">
+            <label class="col-md-2 control-label">Логин</label>
+            <div class="col-md-10">
+                <input class="form-control" formControlName="userName" type="text"/>
+                <div class="alert alert-danger" *ngIf="registerForm.controls['userName'].touched && !registerForm.controls['userName'].valid">
+                    <div *ngIf="registerForm.controls['userName'].hasError('required')">Необходимо заполнить поле.</div>
+                    <div *ngIf="registerForm.controls['userName'].hasError('minlength')">Значение должно превышать 3 символа.</div><!--todo move to config-->
+                    <div *ngIf="registerForm.controls['userName'].hasError('notUniqueUserName')">Пользователь с таким логином уже зарегистрирован.</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Почта</label>
+            <div class="col-md-10">
+                <input class="form-control" formControlName="email" type="email"/>
+                <div class="alert alert-danger" *ngIf="registerForm.controls['email'].touched && !registerForm.controls['email'].valid">
+                    <div *ngIf="registerForm.controls['email'].hasError('required')">Необходимо заполнить поле.</div>
+                    <div *ngIf="registerForm.controls['email'].hasError('minlength')">Значение должно превышать 6 символов.</div> <!--todo move to config-->
+                    <div *ngIf="registerForm.controls['email'].hasError('incorrectMailFormat')">Введенное значение не является допустимым адресом.</div>
+                    <div *ngIf="registerForm.controls['email'].hasError('notUniqueEmail')">Пользователь с таким адресом уже зарегистрирован.</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Пароль</label>
+            <div class="col-md-10">
+                <input class="form-control" formControlName="password" type="password"/>
+                <div class="alert alert-danger" *ngIf="registerForm.controls['password'].touched && !registerForm.controls['password'].valid">
+                    <div *ngIf="registerForm.controls['password'].hasError('required')">Необходимо заполнить поле.</div>
+                    <div *ngIf="registerForm.controls['password'].hasError('minlength')">Значение должно превышать 6 символов.</div> <!--todo move to config-->
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Ещё раз пароль</label>
+            <div class="col-md-10">
+                <input class="form-control" formControlName="confirmPassword" type="password"/>
+                <div class="alert alert-danger" *ngIf="registerForm.controls['confirmPassword'].touched &&
+                      (!registerForm.controls['confirmPassword'].valid || registerForm.hasError('mismatchedPasswords'))">
+                    <div *ngIf="registerForm.controls['confirmPassword'].hasError('required')">Необходимо заполнить поле.</div>
+                    <div *ngIf="registerForm.controls['confirmPassword'].hasError('minlength')">Значение должно превышать 6 символов.</div> <!--todo move to config-->
+                    <div *ngIf="registerForm.hasError('mismatchedPasswords')">Введенные пароли должны совпадать.</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" *ngIf="isHuman">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-default" [disabled]="!registerForm.valid" type="submit">Зарегистрироваться</button>
+            </div>
+        </div>
+        <div class="form-group" [hidden]="isHuman">
+            <div class="col-md-offset-2 col-md-10">
+                <recaptcha (isHuman)="isHuman = $event"></recaptcha>
+            </div>
+        </div>
+    </form>
+    <span *ngIf="result">Регистрация прошла успешно, пожалуйста, подтвердите регистрацию. Письмо отправлено на введенную вами почту.</span>
+</div>

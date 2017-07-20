@@ -1,0 +1,34 @@
+﻿<div>
+    <table *ngIf="season" class="table table-condensed table-bordered table-hover">
+        <tbody class="">
+        <tr *ngFor="let match of season.matches; let i = index;" class="center-middle">
+            <td [textContent]="i+1">
+            </td>
+            <td>
+                <span [textContent]="match.typeName"></span>
+            </td>
+            <td>
+                <span><span [textContent]="match.dateTime | date:'d MMM y j:mm'"></span><a *ngIf="roles.isAdminAssistant" [routerLink]="['/matches', match.id, 'edit']"><span class="glyphicon glyphicon-pencil"></span></a></span>
+            </td>
+            <td>
+                <img class="club-logo" [src]="match.homeClubLogo" [alt]="match.homeClubName">
+            </td>
+            <td>
+                <span [textContent]="match.homeClubName"></span>
+            </td>
+            <td>
+                <span [textContent]="match.scoreHome"></span>:<span [textContent]="match.scoreAway"></span>
+            </td>
+            <td>
+                <img class="club-logo" [src]="match.awayClubLogo" [alt]="match.awayClubName">
+            </td>
+            <td>
+                <span [textContent]="match.awayClubName"></span>
+            </td>
+            <td>
+                <span [textContent]="match.stadium"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

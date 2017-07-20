@@ -1,32 +1,32 @@
-﻿{
-  "compilerOptions": {
-    "target": "es5",
-    "module": "es2015",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "lib": [ "es2015", "dom" ],
-    "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "outDir": "temp-js/dist/unbundled-aot"
-  },
+﻿//{
+//  "compilerOptions": {
+//    "target": "es5",
+//    "module": "es2015",
+//    "moduleResolution": "node",
+//    "sourceMap": true,
+//    "emitDecoratorMetadata": true,
+//    "experimentalDecorators": true,
+//    "lib": [ "es2015", "dom" ],
+//    "noImplicitAny": true,
+//    "suppressImplicitAnyIndexErrors": true,
+//    "outDir": "temp-js/dist/unbundled-aot"
+//  },
 
-  "files": [
-    "angular2app/app/app.module.ts",
-    "angular2app/main.aot.ts"
-  ],
-  "typeRoots": [
-    "./node_modules/@types"
-  ],
-  "types": [
-    "node",
-    "tinymce"
-  ],
+//  "files": [
+//    "angular2app/app/app.module.ts",
+//    "angular2app/main.aot.ts"
+//  ],
+//  "typeRoots": [
+//    "./node_modules/@types"
+//  ],
+//  "types": [
+//    "node",
+//    "tinymce"
+//  ],
 
-  "angularCompilerOptions": {
-    "genDir": "./temp-js/aot",
-    "skipMetadataEmit": true
-  },
-  "atom": { "rewriteTsconfig": false }
-}
+//  "angularCompilerOptions": {
+//    "genDir": "./temp-js/aot",
+//    "skipMetadataEmit": true
+//  },
+//  "atom": { "rewriteTsconfig": false }
+//}
