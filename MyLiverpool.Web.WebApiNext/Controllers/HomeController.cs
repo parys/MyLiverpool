@@ -20,7 +20,8 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
         /// Returns index wiew with prerended view.
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
+    //    public async Task<IActionResult> Index()
         {
             var nodeServices = Request.HttpContext.RequestServices.GetRequiredService<INodeServices>();
             var hostEnv = Request.HttpContext.RequestServices.GetRequiredService<IHostingEnvironment>();
@@ -41,7 +42,7 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
             };
             // Add more customData here, add it to the TransferData class
 
-            // Prerender / Serialize application (with Universal)
+         /*   // Prerender / Serialize application (with Universal)
             var prerenderResult = await Prerenderer.RenderToString(
                 "/",
                 nodeServices,
@@ -59,7 +60,7 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
             ViewData["Meta"] = prerenderResult.Globals["meta"]; // set our <meta> SEO tags
             ViewData["Links"] = prerenderResult.Globals["links"]; // set our <link rel="canonical"> etc SEO tags
             ViewData["TransferData"] = prerenderResult.Globals["transferData"]; // our transfer data set to window.TRANSFER_CACHE = {};
-
+*/
             return View();
         }
 

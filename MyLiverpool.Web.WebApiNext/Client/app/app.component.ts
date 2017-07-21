@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit, ViewEncapsulation, Renderer2, Inject } from '@angular/core';  
 import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { Title } from "@angular/platform-browser";
-import { REQUEST } from "app/shared/constants/request";
+import { REQUEST } from "./shared/constants/request";
 import { Observable } from "rxjs/Observable"
 import { RolesCheckedService } from "./shared/roles-checked.service";
 import { IRoles } from "./shared/roles.interface";

@@ -31,19 +31,20 @@ export function getRequest() {
     return { cookie: document.cookie };
 }
 
-@NgModule({
+@NgModule(({
     bootstrap: [AppComponent],
     imports: [
-        BrowserModule.withServerTransition({
-            appId: 'my-app-id' // make sure this matches with your Server NgModule
-        }),
+        BrowserModule//.withServerTransition({
+        //        appId: 'my-app-id' // make sure this matches with your Server NgModule
+        //    })
+        ,
         BrowserAnimationsModule,
         BrowserTransferStateModule,
 
         // Our Common AppModule
         AppModule,
 
-  //      SignalRModule.forRoot(createConfig)
+        //      SignalRModule.forRoot(createConfig)
     ],
     providers: [
         {
@@ -57,6 +58,6 @@ export function getRequest() {
             useFactory: (getRequest)
         }
     ]
-})
+}) as any)
 export class BrowserAppModule {
 }
