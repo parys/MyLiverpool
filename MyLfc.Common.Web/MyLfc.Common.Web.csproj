@@ -4,4 +4,12 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="BrotliSharpLib" Version="0.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.1.0-rc1-final" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.0-rc1-final" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0-rc1-final" />
+    <PackageReference Include="System.IO.Compression.Brotli" Version="0.1.0-e180119-3" />
+  </ItemGroup>
+
 </Project>
