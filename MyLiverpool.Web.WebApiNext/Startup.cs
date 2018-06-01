@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
+using System.Threading.Tasks;
 using AspNet.Security.OpenIdConnect.Primitives;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Builder;
@@ -27,6 +28,8 @@ using MyLiverpool.Web.WebApiNext.Extensions;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using MyLiverpool.Web.WebApiNext.Hubs;
+using MyLiverpool.Web.WebApiNext.Middlewares;
 
 namespace MyLiverpool.Web.WebApiNext
 {
@@ -125,7 +128,15 @@ namespace MyLiverpool.Web.WebApiNext
             //    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             //    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             //})
-            .AddOAuthValidation();
+            .AddOAuthValidation(opts =>
+                {
+                    //opts.Events.OnRetrieveToken = context =>
+                    //{
+                    //    context.Token = context.Request.Query["token"];
+
+                    //    return Task.CompletedTask;
+                    //};
+                });
 
             services.AddOpenIddict<int>(options =>
               {
@@ -287,8 +298,8 @@ namespace MyLiverpool.Web.WebApiNext
 
              //   options.InvocationTimeoutMilliseconds = 140000;
             });
-            var context = (LiverpoolContext) services.BuildServiceProvider().GetService(typeof(LiverpoolContext));
-            context.Database.Migrate();
+            var dbcontext = (LiverpoolContext) services.BuildServiceProvider().GetService(typeof(LiverpoolContext));
+            dbcontext.Database.Migrate();
             //if (Env.IsDevelopment())
             //{
             //    new DatabaseInitializer(context).Seed();
@@ -299,6 +310,8 @@ namespace MyLiverpool.Web.WebApiNext
             {
                 configuration.RootPath = "ClientApp/dist/aspnetcorespa";
             });
+
+            services.AddSignalR();
         }
 
         /// <summary>
@@ -339,7 +352,7 @@ namespace MyLiverpool.Web.WebApiNext
             }
 
             app.UseCors("MyPolicy");
-
+            app.UseSignalRAuthentication();
             app.UseAuthentication();
 
             app.UseDefaultFiles();
@@ -357,10 +370,10 @@ namespace MyLiverpool.Web.WebApiNext
                 }
             );
 
-            //app.UseSignalR(routes =>
-            //{
-            //    routes.MapHub<LfcHub>("hub");
-            //});
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/hubs/chat");
+            });
 
             app.UseMvc(routes =>
             {

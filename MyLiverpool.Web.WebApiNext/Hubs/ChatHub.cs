@@ -10,7 +10,7 @@ namespace MyLiverpool.Web.WebApiNext.Hubs
     /// <summary>
     /// Contains all signalR methods.
     /// </summary>
-    public class LfcHub : Hub
+    public class ChatHub : Hub
     {
         //private static readonly ConnectionMapping<string> _connections =
         //    new ConnectionMapping<string>();
@@ -21,7 +21,7 @@ namespace MyLiverpool.Web.WebApiNext.Hubs
         /// Constructor.
         /// </summary>
         /// <param name="chatMessageService"></param>
-        public LfcHub(IChatMessageService chatMessageService)
+        public ChatHub(IChatMessageService chatMessageService)
         {
             _chatMessageService = chatMessageService;
         }
@@ -31,11 +31,13 @@ namespace MyLiverpool.Web.WebApiNext.Hubs
         /// </summary>
         /// <param name="chatMessage"></param>
         [Authorize]
-        public async void SendChatMessage(ChatMessageDto chatMessage)
+        public async Task SendChat(ChatMessageDto chatMessage)
         {
-          //  var chatMessage1 = JsonConvert.DeserializeObject<ChatMessageDto>(chatMessage);
-          //  var result = await _chatMessageService.CreateAsync(chatMessage1);
-          //  if (result != null)
+            var id = Context.ConnectionId;
+            var name = Context.User.Identity.Name;
+            //  var chatMessage1 = JsonConvert.DeserializeObject<ChatMessageDto>(chatMessage);
+            var result = await _chatMessageService.CreateAsync(chatMessage);
+            if (result != null)
             {
                 await Clients.All.SendAsync("SendChat", chatMessage);
             }

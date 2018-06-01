@@ -42,7 +42,7 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
           //  result.Ip = HttpContext.GetIp();
             RemoveCache((int)dto.Type);
 
-         //   var hubContext = new LfcHub(_chatMessageService);
+         //   var hubContext = new ChatHub(_chatMessageService);
          //   hubContext.SendChatMessage(result);
             return Ok(result);
         }

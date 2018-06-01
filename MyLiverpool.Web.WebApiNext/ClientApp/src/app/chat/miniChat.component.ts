@@ -11,8 +11,7 @@ import { ChatMessageType } from "./chatMessageType.enum";
 import { ChatMessageService } from "./chatMessage.service";
 import { RolesCheckedService, DeleteDialogComponent, StorageService } from "@app/shared";
 import { EditorComponent } from "@app/editor";
-//import { HubConnection } from '@aspnet/signalr-client/dist/browser/signalr-clientES5-1.0.0-alpha2-final.js';
-//import { HubConnection } from '@aspnet/signalr-client';
+import { HubConnection, HubConnectionBuilder } from "@aspnet/signalr";
 
 @Component({
     selector: "mini-chat",
@@ -26,7 +25,7 @@ export class MiniChatComponent implements OnInit, OnDestroy {
     public chatTimerForm: FormGroup;
     public items: ChatMessage[] = new Array<ChatMessage>();
     public selectedEditIndex: number = null;
-    //    private chatHub: HubConnection;
+    private chatHub: HubConnection;
     public intervalArray: { key: string, value: number }[]
         = [{ key: "---", value: 0 },
         { key: "15 сек", value: 15 },
@@ -44,18 +43,30 @@ export class MiniChatComponent implements OnInit, OnDestroy {
         private sanitizer: DomSanitizer,
         public roles: RolesCheckedService,
         private storage: StorageService,
-        private dialog: MatDialog) {
+        private dialog: MatDialog,
+        @Inject('BASE_URL') private baseUrl: string) {
 
         //this.chatHub = new HubConnection("/hub");
-        //this.chatHub.on("sendChat", (data) => {
-        //   console.warn(data);
-        //});
+     
         //this.chatHub.start();
     }
 
     public ngOnInit(): void {
+        let tokens = this.storage.retrieveTokens();
+        this.chatHub = new HubConnectionBuilder().withUrl(`${this.baseUrl}hubs/chat?token=${tokens.access_token}`).build();
+        this.chatHub.on("sendChat", (data) => {
+            console.warn(data);
+        });
         this.initForm();
         this.update();
+
+        this.chatHub.start()
+            .then(() => {
+                console.log('Hub connection started');
+            })
+            .catch(err => {
+                console.log('Error while establishing connection: ' + err);
+            });
     }
 
     public ngOnDestroy() {
@@ -85,14 +96,14 @@ export class MiniChatComponent implements OnInit, OnDestroy {
             },
                 e => console.log(e));
         } else {
-            //    this.chatHub.invoke("sendChat", this.messageForm.value);
-            this.service.create(this.messageForm.value)
-                .subscribe(data => {
-                    this.items.unshift(data);
-                    this.messageForm.get("message").patchValue("");
-                    this.cd.markForCheck();
-                },
-                (e) => console.log(e));
+                this.chatHub.invoke("sendChat", this.messageForm.value);
+            //this.service.create(this.messageForm.value)
+            //    .subscribe(data => {
+            //        this.items.unshift(data);
+            //        this.messageForm.get("message").patchValue("");
+            //        this.cd.markForCheck();
+            //    },
+            //    (e) => console.log(e));
         }
     }
 
