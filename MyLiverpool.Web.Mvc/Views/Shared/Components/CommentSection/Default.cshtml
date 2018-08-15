@@ -6,3 +6,17 @@
     @await Component.InvokeAsync("CommentDetail", new { comment, deep = 0})
     @*<comment-detail [item]="comment" [deep]="0" [materialId]="materialId" [canCommentary]="canCommentary" [type]="type" [matchId]="matchId"></comment-detail>*@
 }
+@if (User.Identity.IsAuthenticated)
+{
+    <form >
+        <textarea class="tiny" id="newComment"></textarea>
+        <button id="sendNewComment"></button>
+    </form>
+
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.8.2/tinymce.min.js"
+    integrity="sha256-2DEM8ybpCSGNF32f4l2CcIx5gTWZvKIQn+3bZDL4Qkc="
+    crossorigin="anonymous"></script>*@
+    <script>
+
+    </script>
+}
