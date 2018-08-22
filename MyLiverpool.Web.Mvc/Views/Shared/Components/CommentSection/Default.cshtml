@@ -8,9 +8,9 @@
 }
 @if (User.Identity.IsAuthenticated)
 {
-    <form >
+    <form method="post" asp-controller="Comment" asp-action="Create">
         <textarea class="tiny" id="newComment"></textarea>
-        <button id="sendNewComment"></button>
+        <button id="sendNewComment" type="submit">Добавить</button>
     </form>
 
 @*<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.8.2/tinymce.min.js"

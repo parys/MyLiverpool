@@ -22,7 +22,7 @@ namespace MyLiverpool.Web.Mvc.Controllers
             _cacheManager = cacheManager;
         }
         
-        [Authorize, HttpPost]
+        [Authorize, HttpPost("")]
         public async Task<IActionResult> Create([FromBody] CommentDto dto)
         {
             dto.IsVerified = false;//IsSiteTeamMember();
