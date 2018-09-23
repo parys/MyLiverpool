@@ -1,24 +1,23 @@
 ﻿<h2>Тренерский штаб</h2>
-<nav mat-tab-nav-bar>
-    <a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index"
-       [routerLink]="routeLink.link"
-       [active]="activeLinkIndex === i"
-       (click)="activeLinkIndex = i"
-       [textContent]="routeLink.label"></a>
-</nav>
-<div class="flex-space-around">
-    <div *ngFor="let person of items">
-        <mat-card class="stuff-card">
-            <mat-card-header>
-                <mat-card-title role="button" *ngIf="roles.isInformer" [routerLink]="['/persons', person.id, 'edit']" [textContent]="person.russianName"></mat-card-title>&nbsp;
-                <mat-card-title *ngIf="!roles.isInformer" [textContent]="person.russianName"></mat-card-title>
-                <mat-card-subtitle [textContent]="person.position"></mat-card-subtitle>
-            </mat-card-header>
-            <img mat-card-image [src]="person.photo" [alt]="person.russianName">
-            <mat-card-content>
-                <p *ngIf="person.country"><span [textContent]="person.country"></span></p>
-                <p><span [textContent]="person.birthday | date"></span></p>
-            </mat-card-content>
-        </mat-card>
-    </div>
-</div>
+<mat-tab-group [selectedIndex]="activeLinkIndex"
+               (selectedIndexChange)="changeTab($event)">
+    <mat-tab *ngFor="let routeLink of routeLinks; let i = index"
+             [label]="routeLink.label">
+        <div class="flex-space-around">
+            <div *ngFor="let person of items">
+                <mat-card class="stuff-card">
+                    <mat-card-header>
+                        <mat-card-title role="button" *ngIf="roles.isInformer" [routerLink]="['/persons', person.id, 'edit']" [textContent]="person.russianName"></mat-card-title>&nbsp;
+                        <mat-card-title *ngIf="!roles.isInformer" [textContent]="person.russianName"></mat-card-title>
+                        <mat-card-subtitle [textContent]="person.position"></mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image [src]="person.photo" [alt]="person.russianName">
+                    <mat-card-content>
+                        <p *ngIf="person.country"><span [textContent]="person.country"></span></p>
+                        <p><span [textContent]="person.birthday | date"></span></p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>

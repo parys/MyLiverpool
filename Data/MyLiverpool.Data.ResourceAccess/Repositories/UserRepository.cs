@@ -74,7 +74,7 @@ namespace MyLiverpool.Data.ResourceAccess.Repositories
             return await GetQuerableList(page, itemPerPage, filter, order, orderBy).ToListAsync();
         }
 
-        public IQueryable<User> GetQuerableList(int page, int itemPerPage = 15, Expression<Func<User, bool>> filter = null,
+        public IQueryable<User> GetQuerableList(int? page, int itemPerPage = 15, Expression<Func<User, bool>> filter = null,
             SortOrder order = SortOrder.Ascending, Expression<Func<User, object>> orderBy = null)
         {
             IQueryable<User> query = _context.Users.Include(x => x.RoleGroup);
@@ -87,7 +87,12 @@ namespace MyLiverpool.Data.ResourceAccess.Repositories
             {
                 query = query.ObjectSort(orderBy, order);
             }
-            query = query.Skip((page - 1) * itemPerPage).Take(itemPerPage);
+
+            if (page.HasValue)
+            {
+                query = query.Skip((page.Value - 1) * itemPerPage).Take(itemPerPage);
+            }
+
             return query;
         }
 

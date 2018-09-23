@@ -9,7 +9,7 @@ namespace MyLiverpool.Data.ResourceAccess.Interfaces
 {
     public interface IMaterialCommentRepository : ICrudRepository<MaterialComment>
     {
-        Task<ICollection<MaterialComment>> GetOrderedByAsync(int page, int itemPerPage = 15,
+        Task<ICollection<MaterialComment>> GetOrderedByAsync(int? page, int itemPerPage = 15,
     Expression<Func<MaterialComment, bool>> filter = null, SortOrder order = SortOrder.Ascending,
     Expression<Func<MaterialComment, object>> orderBy = null);
 

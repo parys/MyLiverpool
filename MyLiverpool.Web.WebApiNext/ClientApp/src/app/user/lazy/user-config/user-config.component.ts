@@ -33,9 +33,9 @@ export class UserConfigComponent implements OnInit, OnDestroy {
         this.service.updateConfig(userConfig)
             .subscribe(data => {
                 if (data) {
-                    this.snackBar.open("Настройки были успешно изменены", null, { duration: 5000 });
+                    this.snackBar.open("Настройки изменены");
                 } else {
-                    this.snackBar.open("Не удалось сохранить настройки", null, { duration: 5000 });
+                    this.snackBar.open("Настройки НЕ изменены");
                 }
             });
     }

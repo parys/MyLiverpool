@@ -1,6 +1,6 @@
 ﻿<div class="text-white">
     <div>Посетителей всего: <span [textContent]="allCount" class="text-yellow"></span> / Гостей: <span [textContent]="guestCount" class="text-yellow"></span></div>
-    <div *ngIf="users.length > 0">Пользователи: <span *ngFor="let user of users; let i = index; let last = last">
+    <div *ngIf="users?.length > 0">Пользователи: <span *ngFor="let user of users; let i = index; let last = last">
         <a role="button" [routerLink]="['/users', user.id]" class="text-yellow" [textContent]="user.userName"></a><span *ngIf="!last">, </span></span>
     </div>
 </div>

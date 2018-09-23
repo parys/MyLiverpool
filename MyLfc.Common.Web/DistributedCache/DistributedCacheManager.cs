@@ -21,7 +21,7 @@ namespace MyLfc.Common.Web.DistributedCache
             {
                 await _distributedCache.SetAsync(key, obj.Serialize());
             }
-            catch (RedisConnectionException ex)
+            catch (RedisConnectionException)
             {
             }
         }
@@ -32,7 +32,7 @@ namespace MyLfc.Common.Web.DistributedCache
             {
                 await _distributedCache.SetStringAsync(key, obj);
             }
-            catch (RedisConnectionException ex)
+            catch (RedisConnectionException)
             {
             }
         }
@@ -47,7 +47,7 @@ namespace MyLfc.Common.Web.DistributedCache
                     return cacheValue.Deserialize<T>();
                 }
             }
-            catch (RedisConnectionException ex)
+            catch (RedisConnectionException)
             {
             }
 
@@ -60,7 +60,7 @@ namespace MyLfc.Common.Web.DistributedCache
             {
                 return await _distributedCache.GetStringAsync(key);
             }
-            catch (RedisConnectionException ex)
+            catch (RedisConnectionException)
             {
             }
 
@@ -73,7 +73,7 @@ namespace MyLfc.Common.Web.DistributedCache
             {
                 await _distributedCache.RemoveAsync(key);
             }
-            catch (RedisConnectionException ex)
+            catch (RedisConnectionException)
             {
             }
         }
@@ -97,7 +97,7 @@ namespace MyLfc.Common.Web.DistributedCache
                     }
                 }
             }
-            catch (RedisConnectionException ex)
+            catch (RedisConnectionException)
             {
                 result = await (Task<T>)method.DynamicInvoke();
             }
@@ -126,7 +126,7 @@ namespace MyLfc.Common.Web.DistributedCache
                     await _distributedCache.SetStringAsync(key, result);
                 }
             }
-            catch (RedisConnectionException ex)
+            catch (RedisConnectionException)
             {
                 result = await (Task<string>)method.DynamicInvoke();
             }

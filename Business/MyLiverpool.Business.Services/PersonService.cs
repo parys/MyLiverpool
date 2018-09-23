@@ -4,10 +4,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MyLiverpool.Business.Contracts;
 using MyLiverpool.Business.Dto;
 using MyLiverpool.Business.Dto.Filters;
-using MyLiverpool.Common.Utilities;
 using MyLiverpool.Common.Utilities.Extensions;
 using MyLiverpool.Data.Common;
 using MyLiverpool.Data.Entities;
@@ -19,12 +19,12 @@ namespace MyLiverpool.Business.Services
     {
         private readonly IMapper _mapper;
         private readonly IGenericRepository<Person> _personRepository;
-        private readonly IHelperEntityRepository _helperEntityRepository;
+        private readonly IHelperService _helperEntityService;
 
-        public PersonService(IMapper mapper, IHelperEntityRepository helperEntityRepository, IGenericRepository<Person> personRepository)
+        public PersonService(IMapper mapper, IHelperService helperEntityService, IGenericRepository<Person> personRepository)
         {
             _mapper = mapper;
-            _helperEntityRepository = helperEntityRepository;
+            _helperEntityService = helperEntityService;
             _personRepository = personRepository;
         }
 
@@ -86,13 +86,13 @@ namespace MyLiverpool.Business.Services
 
         public async Task<PersonDto> GetByIdAsync(int id)
         {
-            var person = await _personRepository.GetByIdAsync(id);
+            var person = await _personRepository.GetFirstByPredicateAsync(x => x.Id == id);
             return _mapper.Map<PersonDto>(person);
         }
 
         public async Task<PersonDto> UpdateAsync(PersonDto dto)
         {
-            var person = await _personRepository.GetByIdAsync(dto.Id);
+            var person = await _personRepository.GetFirstByPredicateAsync(x => x.Id == dto.Id);
             if (person == null)
             {
                 return null;
@@ -113,16 +113,16 @@ namespace MyLiverpool.Business.Services
 
         public async Task<bool> DeleteAsync(int id)
         {
-            await _personRepository.DeleteAsync(id);
+            await _personRepository.DeleteAsync(x => x.Id == id);
             return true;
         }
         
         public async Task<PersonDto> GetBestPlayerAsync()
         {
-            var playerHelpEntity = await _helperEntityRepository.GetByTypeAsync(HelperEntityType.BestPlayer);
+            var playerHelpEntity = await _helperEntityService.GetAsync(HelperEntityType.BestPlayer);
             if (playerHelpEntity != null && int.TryParse(playerHelpEntity.Value, out int playerId))
             {
-                var player = await _personRepository.GetByIdAsync(playerId);
+                var player = await _personRepository.GetFirstByPredicateAsync(x => x.Id == playerId);
                 return _mapper.Map<PersonDto>(player);
             }
             return null;
@@ -135,12 +135,12 @@ namespace MyLiverpool.Business.Services
             //    Type = HelperEntityType.BestPlayer,
             //    Value = personId.ToString()
             //};
-            //await _helperEntityRepository.UpdateAndSaveAsync(entity);
+            //await _helperEntityService.UpdateAndSaveAsync(entity);
         }
 
         public async Task<IEnumerable<PersonDto>> GetStuffListAsync(PersonType personType)
         {
-            var stuffList1 = await _personRepository.GetListAsync(true, x => x.Type == personType);
+            var stuffList1 = await _personRepository.GetListAsync(filter: x => x.Type == personType);
             var stuffList = stuffList1.ToList();
             var tempList = new List<Person>();
             var coach = stuffList.FirstOrDefault(x => x.Position == "Главный тренер");
@@ -181,7 +181,7 @@ namespace MyLiverpool.Business.Services
                               !x.Transfers.Any(y => y.OnLoan && !y.Coming &&
                                                     y.FinishDate.Value.Date >= DateTime.Today.Date);
             }
-            var squadList1 = await _personRepository.GetListAsync(true, filter);
+            var squadList1 = await _personRepository.GetListAsync(filter: filter);
             var squadList = _mapper.Map<IEnumerable<PersonDto>>(squadList1).ToList();
             var goalkeepers = squadList.Where(x => x.Position == "Вратарь");
             var defenders = squadList.Where(x => x.Position == "Защитник");
@@ -219,7 +219,9 @@ namespace MyLiverpool.Business.Services
                                                        x.Type != PersonType.Rival &&
                                                        x.Type != PersonType.CompetitorCoach &&
                                                        x.Type != PersonType.Referee;
-            var list = await _personRepository.GetListAsync(true, filter);
+            var list = await _personRepository
+                .GetQueryableList(asNoTracking: true, filter: filter)
+                .ToListAsync();
             return _mapper.Map<IEnumerable<PersonDto>>(list);
         }
     }

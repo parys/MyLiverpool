@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MyLiverpool.Business.Contracts;
 using MyLiverpool.Business.Dto;
 using MyLiverpool.Business.Dto.Filters;
@@ -34,7 +35,7 @@ namespace MyLiverpool.Business.Services
 
         public async Task<InjuryDto> UpdateAsync(InjuryDto dto)
         {
-            var model = await _injuryRepository.GetByIdAsync(dto.Id);
+            var model = await _injuryRepository.GetFirstByPredicateAsync(x => x.Id == dto.Id);
             if (model != null)
             {
                 model.Person = null;
@@ -49,13 +50,13 @@ namespace MyLiverpool.Business.Services
 
         public async Task<bool> DeleteAsync(int id)
         {
-            await _injuryRepository.DeleteAsync(id);
+            await _injuryRepository.DeleteAsync(x => x.Id == id);
             return true;
         }
 
         public async Task<InjuryDto> GetByIdAsync(int id)
         {
-            var model = await _injuryRepository.GetByIdAsync(id, true, x => x.Person);
+            var model = await _injuryRepository.GetFirstByPredicateAsync(x => x.Id == id, true, x => x.Include(i => i.Person));
             if (model != null)
             {
                 return _mapper.Map<InjuryDto>(model);
@@ -96,7 +97,9 @@ namespace MyLiverpool.Business.Services
                     sortBy = x => x.Description;
                 }
             }
-            var injuries = await _injuryRepository.GetListAsync(filters.Page, filters.ItemsPerPage, true, filter, filters.SortOrder, sortBy, c => c.Person);
+
+            var injuries = await _injuryRepository.GetListAsync(filters.Page, filters.ItemsPerPage, true, filter,
+                filters.SortOrder, sortBy, i => i.Include(c => c.Person));
             var injuryDtos = _mapper.Map<IEnumerable<InjuryDto>>(injuries);
             var count = await _injuryRepository.CountAsync(filter);
             return new PageableData<InjuryDto>(injuryDtos, filters.Page, count);
@@ -105,7 +108,11 @@ namespace MyLiverpool.Business.Services
         public async Task<IEnumerable<InjuryDto>> GetCurrentListAsync()
         {
             Expression<Func<Injury, bool>> filter = x => !x.EndTime.HasValue;
-            var injuries = await _injuryRepository.GetListAsync(filter, SortOrder.Descending, i => i.StartTime, x => x.Person);
+            var injuries = await _injuryRepository.GetQueryableList(filter: filter,
+                order: SortOrder.Descending,
+                orderBy: i => i.StartTime,
+                include: x => x.Include(i => i.Person))
+                .ToListAsync();
             return _mapper.Map<ICollection<InjuryDto>>(injuries);
         }
     }

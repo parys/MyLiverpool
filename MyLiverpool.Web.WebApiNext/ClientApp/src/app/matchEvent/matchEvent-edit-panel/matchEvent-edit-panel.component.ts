@@ -1,13 +1,13 @@
 ﻿import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Router, ActivatedRoute } from "@angular/router";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { debounceTime, distinctUntilChanged, switchMap } from "rxjs/operators";
 import { MatchEventService } from "../matchEvent.service";
 import { MatchEvent } from "../matchEvent.model";                        
 import { MatchEventType } from "../matchEventType.model";
-import { Person, PersonService } from "@app/person";
-import { Configuration } from "@app/app.constants";
+import { Person, PersonService, PersonFilters } from "@app/person";
+import { DEBOUNCE_TIME } from "@app/+constants";
+import { Pageable } from "@app/shared";
 
 @Component({
     selector: "matchEvent-edit-panel",
@@ -25,11 +25,8 @@ export class MatchEventEditPanelComponent implements OnInit {
     
     public types: MatchEventType[];
 
-    constructor(private matchEventService: MatchEventService,    
-        private route: ActivatedRoute,
+    constructor(private matchEventService: MatchEventService,
         private personService: PersonService,
-        private config: Configuration,
-        private router: Router,
         private formBuilder: FormBuilder) {
     }
 
@@ -87,8 +84,15 @@ export class MatchEventEditPanelComponent implements OnInit {
         this.id = this.selectedEvent ? this.selectedEvent.id : 0;
 
         this.persons$ = this.editMatchEventForm.controls["personName"].valueChanges.pipe(
-            debounceTime(this.config.debounceTime),
-            distinctUntilChanged(),
-            switchMap((value: string) => this.personService.getListByName(value)));
+                debounceTime(DEBOUNCE_TIME),
+                distinctUntilChanged(),
+                switchMap((value: string) => {
+                    const filter = new PersonFilters();
+                    filter.name = value;
+                    return this.personService.getAll(filter);
+                }),
+                switchMap((pagingClubs: Pageable<Person>): Observable<Person[]> => {
+                    return of(pagingClubs.list);
+                }));
     }
 }

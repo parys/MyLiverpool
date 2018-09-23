@@ -2,15 +2,16 @@
 import { TransferEditComponent } from "./transfer-edit";
 import { TransferListComponent } from "./transfer-list";
 import { TransferCurrentListComponent } from "./transfer-current-list";
-import { RoleGuard } from "@app/+auth";
+import { RoleGuard, RolesEnum } from "@app/+auth";
+import { EDITING_RU, TRANSFERS_RU } from "@app/+constants";
 
 export const transferRoutes: Routes = [
     {
         path: "",
         component: TransferListComponent,
         data: {
-            title: "Трансферы",
-            roles: ["infoStart"]
+            title: TRANSFERS_RU,
+            roles: [RolesEnum[RolesEnum.InfoStart]]
         },
         canActivate: [RoleGuard]
     },
@@ -18,8 +19,8 @@ export const transferRoutes: Routes = [
         path: ":id/edit",
         component: TransferEditComponent,
         data: {
-            title: "Редактирование",
-            roles: ["infoStart"]
+            title: EDITING_RU,
+            roles: [RolesEnum[RolesEnum.InfoStart]]
         },
         canActivate: [RoleGuard]
     },
@@ -27,7 +28,7 @@ export const transferRoutes: Routes = [
         path: "current",
         component: TransferCurrentListComponent,
         data: {
-            title: "Трансферы"
+            title: TRANSFERS_RU
         }
     }
 ];

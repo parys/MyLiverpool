@@ -1,6 +1,6 @@
 ﻿<mat-form-field class="full-width">
     <mat-select #seasonSelect placeholder="Сезон">
-        <mat-option *ngFor="let season of seasons" [value]="season.id" [textContent]="season.startSeasonYear + ' ' + season.endSeasonYear">
+        <mat-option *ngFor="let season of seasons" [value]="season.id" [textContent]="season.startSeasonYear + '-' + season.endSeasonYear">
         </mat-option>
     </mat-select>
 </mat-form-field>

@@ -21,7 +21,7 @@
             "index": "src/index.html",
             "main": "src/main.browser.ts",
             "polyfills": "src/polyfills/polyfills.ts",
-            "tsConfig": "src/tsconfig.cli.json",
+            "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/manifest.json"
             ],

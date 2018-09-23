@@ -1,9 +1,9 @@
 ﻿import { Component, OnInit } from "@angular/core";   
-import { ActivatedRoute, Router } from "@angular/router";
-import { Title } from "@angular/platform-browser";
+import { Router } from "@angular/router";
 import { MaterialCategory, MaterialType } from "../../model";
 import { MaterialCategoryService } from "../../core";
 import { RolesCheckedService } from "@app/+auth";
+import { CustomTitleService } from "@app/shared";
 
 @Component({
     selector: "materialCategory-list",
@@ -16,8 +16,7 @@ export class MaterialCategoryListComponent implements OnInit {
     constructor(private service: MaterialCategoryService,
         public roles: RolesCheckedService,
         private router: Router,
-        private titleService: Title,
-        private route: ActivatedRoute) {
+        private titleService: CustomTitleService) {
     }
 
     public ngOnInit(): void {

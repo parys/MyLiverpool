@@ -1,6 +1,5 @@
 ﻿import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
-import { Configuration } from "@app/app.constants";
 import { ImageService } from "../image.service";
 
 @Component({
@@ -18,8 +17,7 @@ export class ImageCropAdditionComponent {
     croppedImage: any = "";
 
 
-    constructor(private configuration: Configuration,
-        private service: ImageService,
+    constructor(private service: ImageService,
         private snackBar: MatSnackBar
     ) {
     }
@@ -29,17 +27,14 @@ export class ImageCropAdditionComponent {
     }
 
     imageCropped(image: string) {
-        console.log("imageCropped");
      //   console.log(image);
         this.croppedImage = image;
         
     }
     imageLoaded() {
-        console.log("imageLoaded");
         // show cropper
     }
     loadImageFailed() {
-        console.log("loadImageFailed");
         // show message
     }
 
@@ -47,7 +42,7 @@ export class ImageCropAdditionComponent {
         this.service.uploadBase64Image(this.croppedImage)
             .subscribe(result => {
                 this.loadedImage.emit(result);
-                this.snackBar.open("Изображение успешно обрезано");
+                this.snackBar.open("Изображение обрезано");
                 this.imageChangedEvent = null;
                 this.croppedImage = null;
                 },

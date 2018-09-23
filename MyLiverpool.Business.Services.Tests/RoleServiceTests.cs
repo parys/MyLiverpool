@@ -31,7 +31,7 @@ namespace MyLiverpool.Business.Services.Tests
         {
             InitRoles();
             UserRepository = new UserRepository(Context, GetUserManager());
-            RoleService = new RoleService(new RoleGroupRepository(GetFakeContextWithRolesAndRoleGroups()),
+            RoleService = new RoleService(new GenericRepository<RoleGroup>(GetFakeContextWithRolesAndRoleGroups()),
                 MapperConfig.GetConfiration.CreateMapper(), UserRepository);
         }
 

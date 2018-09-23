@@ -3,25 +3,18 @@ import { Observable } from "rxjs";
 import { MatchPerson } from "./matchPerson.model";
 import { HttpWrapper } from "@app/+httpWrapper";
 import { MatchPersonType } from "./matchPersonType.model";
+import { MATCH_PERSONS_ROUTE } from "@app/+constants";
 
 @Injectable()
 export class MatchPersonService {
     private actionUrl: string;
 
     constructor(private http: HttpWrapper) {
-        this.actionUrl = "matchPerson/";
+        this.actionUrl = MATCH_PERSONS_ROUTE + "/";
     }
-    /*
-        public getAll(page: number): Observable<Pageable<MatchEvent>> {
-            return this.http.get<Pageable<MatchEvent>>(this.actionUrl + "list?page=" + page);
-        };
-    
-        public getSingle(id: number): Observable<MatchEvent> {
-            return this.http.get<MatchEvent>(this.actionUrl + id);
-        };*/
 
     public getForMatch(matchId: number): Observable<MatchPerson[]> {
-        return this.http.get<MatchPerson[]>(`${this.actionUrl}getForMatch/${matchId}`);
+        return this.http.get<MatchPerson[]>(`${this.actionUrl}getForMatch/${matchId}`); //todo move to match endpoint
     };
 
     public create(item: MatchPerson): Observable<MatchPerson> {

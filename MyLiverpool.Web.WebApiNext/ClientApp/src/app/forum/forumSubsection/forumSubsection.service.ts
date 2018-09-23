@@ -2,17 +2,18 @@
 import { Observable } from "rxjs";
 import { HttpWrapper } from "@app/+httpWrapper";
 import { ForumSubsection } from "./forumSubsection.model";
+import { FORUM_SUBSECTIONS_ROUTE } from "@app/+constants";
 
 @Injectable()
 export class ForumSubsectionService {
     private actionUrl: string;
 
     constructor(private http: HttpWrapper) {
-        this.actionUrl = "forumSubsection/";
+        this.actionUrl = FORUM_SUBSECTIONS_ROUTE + "/";
     }
 
     public getAll(): Observable<ForumSubsection[]> {
-        return this.http.get<ForumSubsection[]>(this.actionUrl + "list/");
+        return this.http.get<ForumSubsection[]>(this.actionUrl);
     };
 
     public getSingle(id: number): Observable<ForumSubsection> {

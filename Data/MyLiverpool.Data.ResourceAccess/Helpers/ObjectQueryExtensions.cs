@@ -11,11 +11,11 @@ namespace MyLiverpool.Data.ResourceAccess.Helpers
 {
     public static class ObjectQueryExtensions
     {
-        public static IQueryable<T> Include1<T>(this IQueryable<T> query, Expression<Func<T, object>> selector) where T: class
-        {
-            var path = new PropertyPathVisitor().GetProperyPath(selector);
-            return query.Include(path);
-        }
+        //public static IQueryable<T> Include1<T>(this IQueryable<T> query, Expression<Func<T, object>> selector) where T: class
+        //{
+        //    var path = new PropertyPathVisitor().GetProperyPath(selector);
+        //    return query.Include(path);
+        //}
 
         class PropertyPathVisitor : ExpressionVisitor
         {

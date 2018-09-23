@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AspNet.Security.OAuth.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ using Newtonsoft.Json;
 
 namespace MyLiverpool.Web.WebApiNext.Controllers
 {
+    /// <inheritdoc />
     /// <summary>
     /// Manages injuries.
     /// </summary>
@@ -55,7 +57,29 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
         /// <param name="filters">Applied filters.</param>
         /// <returns>Injuries list.</returns>
         [AllowAnonymous, HttpGet("")]
-        public async Task<IActionResult> GetListAsync([FromQuery] string filters)
+        [Obsolete("Remove after 1.10.18")]
+        public async Task<IActionResult> GetListOldAsync([FromQuery] string filters)
+        {
+            InjuryFiltersDto filtersObj;
+            if (filters == null)
+            {
+                filtersObj = new InjuryFiltersDto();
+            }
+            else
+            {
+                filtersObj = (InjuryFiltersDto)JsonConvert.DeserializeObject(filters, typeof(InjuryFiltersDto));
+            }
+            var result = await _injuryService.GetListAsync(filtersObj);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Returns pageable injury list.
+        /// </summary>
+        /// <param name="filters">Applied filters.</param>
+        /// <returns>Injuries list.</returns>
+        [AllowAnonymous, HttpGet("{filters}")]
+        public async Task<IActionResult> GetListAsync([FromRoute] string filters)
         {
             InjuryFiltersDto filtersObj;
             if (filters == null)

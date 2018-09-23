@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using MyLiverpool.Business.Contracts;
 using MyLiverpool.Business.Dto;
 using MyLiverpool.Business.Dto.Filters;
-using MyLiverpool.Common.Utilities;
 using MyLiverpool.Common.Utilities.Extensions;
 using MyLiverpool.Data.Entities;
 using MyLiverpool.Data.ResourceAccess.Interfaces;
@@ -22,11 +21,11 @@ namespace MyLiverpool.Business.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IRoleGroupRepository _roleGroupRepository;
+        private readonly IGenericRepository<RoleGroup> _roleGroupRepository;
         private readonly IMapper _mapper;
         private readonly string _defaultPhotoPath = Path.Combine("content", "avatars", "default.png");
 
-        public UserService(IMapper mapper, IUserRepository userRepository, IRoleGroupRepository roleGroupRepository)
+        public UserService(IMapper mapper, IUserRepository userRepository, IGenericRepository<RoleGroup> roleGroupRepository)
         {
             _mapper = mapper;
             _userRepository = userRepository;
@@ -64,6 +63,10 @@ namespace MyLiverpool.Business.Services
             if (!string.IsNullOrWhiteSpace(dto.UserName))
             {
                 filter = filter.And(x => x.UserName.Contains(dto.UserName));
+            }
+            if (!string.IsNullOrWhiteSpace(dto.Ip))
+            {
+                filter = filter.And(x => x.Ip.Contains(dto.Ip));
             }
             Expression<Func<User, object>> sortBy = x => x.LastModified;
             if (!string.IsNullOrWhiteSpace(dto.SortBy))
@@ -103,43 +106,6 @@ namespace MyLiverpool.Business.Services
             var allUsersCount = await _userRepository.GetCountAsync(filter);
             var result = new PageableData<UserMiniDto>(usersDto, dto.Page, allUsersCount, dto.ItemsPerPage);
             return result;
-        }
-
-        public async Task<bool> EditRoleGroupAsync(int userId, int roleGroupId)
-        {
-            var user = await _userRepository.GetByIdFromManagerAsync(userId);
-            var oldRoleGroup = await _roleGroupRepository.GetByIdAsync(user.RoleGroupId);
-            var newRoleGroup = await _roleGroupRepository.GetByIdAsync(roleGroupId);
-            var rolesToDelete = GetRolesToDelete(oldRoleGroup.RoleGroups.Select(x => x.Role), newRoleGroup.RoleGroups.Select(x => x.Role));
-            var rolesToAdd = GetRolesToAdd(oldRoleGroup.RoleGroups.Select(x => x.Role), newRoleGroup.RoleGroups.Select(x => x.Role));
-            user.RoleGroupId = roleGroupId;
-            try
-            {
-                if (rolesToDelete.Any())
-                {
-                    await _userRepository.RemoveFromRolesAsync(user, rolesToDelete);
-                }
-                if (rolesToAdd.Any())
-                {
-                    await _userRepository.AddToRolesAsync(user, rolesToAdd);
-                }
-            }
-            catch (Exception)
-            {
-
-            }
-            await _userRepository.UpdateAsync(user);
-            return true;
-        }
-
-        public async Task<IEnumerable<UsernameDto>> GetUserNamesAsync(string typed)
-        {
-            if (string.IsNullOrEmpty(typed))
-            {
-                typed = "";
-            }
-            var users = await _userRepository.GetListAsync(1, GlobalConstants.CountLoginsForAutocomlete, x => x.UserName.Contains(typed));
-            return users.Select(x => new UsernameDto() { Id = x.Id, Username = x.UserName });
         }
 
         public async Task<string> GetPhotoPathAsync(int userId)
@@ -245,18 +211,5 @@ namespace MyLiverpool.Business.Services
             var list = await _userRepository.GetListAsync(1, 1000, filter, SortOrder.Descending, u => u.LastModified);
             return _mapper.Map<IEnumerable<UserMiniDto>>(list);
         }
-
-        #region private
-
-        private IEnumerable<string> GetRolesToDelete(IEnumerable<Role> oldRoles, IEnumerable<Role> newRoles)
-        {
-            return oldRoles.Where(x => newRoles.All(n => n.Id != x.Id)).Select(x => x.Name);
-        }
-        private IEnumerable<string> GetRolesToAdd(IEnumerable<Role> oldRoles, IEnumerable<Role> newRoles)
-        {
-            return newRoles.Where(x => oldRoles.All(n => n.Id != x.Id)).Select(x => x.Name);
-        }
-
-        #endregion
     }
 }

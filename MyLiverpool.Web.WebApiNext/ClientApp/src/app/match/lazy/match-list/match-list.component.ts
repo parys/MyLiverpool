@@ -1,11 +1,14 @@
-﻿import { Component, OnInit, OnDestroy } from "@angular/core";
+﻿import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { Location } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
-import { MatDialog } from "@angular/material";
-import { Subscription } from "rxjs";
-import { Match } from "@app/match/model";
+import { MatDialog, MatPaginator } from "@angular/material";
+import { Subscription, merge, of, Observable } from "rxjs";
+import { startWith, switchMap, map, catchError } from "rxjs/operators";
+
+import { Match, MatchFilters } from "@app/match/model";
 import { MatchService } from "@app/match/core";
 import { Pageable, DeleteDialogComponent } from "@app/shared";
+import { PAGE, MATCHES_ROUTE } from "@app/+constants/";
 
 @Component({
     selector: "match-list",
@@ -17,10 +20,8 @@ export class MatchListComponent implements OnInit, OnDestroy {
     private sub: Subscription;
     private sub2: Subscription;
     public items: Match[];
-    public page: number = 1;
-    public itemsPerPage: number = 15;
-    public totalItems: number;
     private categoryId: number;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(private matchService: MatchService,
         private route: ActivatedRoute,
@@ -29,12 +30,34 @@ export class MatchListComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit(): void {
-        this.sub = this.route.queryParams.subscribe(qParams => {
-                this.page = qParams["page"] || 1;
-                this.categoryId = qParams["categoryId"] || null;
+        this.route.queryParams.subscribe(qParams => {
+                this.paginator.pageIndex = +qParams[PAGE] - 1 || 0;
+                this.paginator.pageSize = +qParams["itemsPerPage"] || 15;
+                this.categoryId = +qParams["categoryId"];
             },
-            error => console.log(error));
-        this.update();
+            e => console.log(e));
+
+        merge(this.paginator.page)
+            .pipe(
+                startWith({}),
+                switchMap(() => {
+                    return this.update();
+                }),
+                map((data: Pageable<Match>) => {
+                    this.paginator.pageIndex = data.pageNo - 1;
+                    this.paginator.pageSize = data.itemPerPage;
+                    this.paginator.length = data.totalItems;
+
+                    return data.list;
+                }),
+                catchError(() => {
+                    return of([]);
+                })
+            ).subscribe(data => {
+                    this.items = data;
+                    this.updateUrl();
+                },
+                e => console.log(e));
     }
 
     public ngOnDestroy(): void {
@@ -42,17 +65,18 @@ export class MatchListComponent implements OnInit, OnDestroy {
         if(this.sub2) { this.sub2.unsubscribe(); }
     }
 
-    public update(): void {
-        this.sub2 = this.matchService
-            .getAll(this.page)
-            .subscribe(data => this.parsePageable(data),
-                error => console.log(error));
+    public update(): Observable<Pageable<Match>>  {
+        let filters = new MatchFilters();
+        filters.categoryId = this.categoryId;
+        filters.itemsPerPage = this.paginator.pageSize;
+        filters.page = this.paginator.pageIndex + 1;
+
+        return this.matchService
+            .getAll(filters);
     }
 
-    public pageChanged(event: any): void {
-        this.page = event;
-        this.update();
-        let newUrl = `matches?page=${this.page}`;
+    public updateUrl(): void {
+        const newUrl = `${MATCHES_ROUTE}?${PAGE}=${this.paginator.pageIndex}`;
         this.location.replaceState(newUrl);
     };
 
@@ -76,12 +100,5 @@ export class MatchListComponent implements OnInit, OnDestroy {
                     }
                 }
             );
-    }
-
-    private parsePageable(pageable: Pageable<Match>): void {
-        this.items = pageable.list;
-        this.page = pageable.pageNo;
-        this.itemsPerPage = pageable.itemPerPage;
-        this.totalItems = pageable.totalItems;
     }
 }

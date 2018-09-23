@@ -20,7 +20,9 @@ namespace MyLiverpool.Data.ResourceAccess.Repositories
         }
         public async Task<MaterialComment> GetByIdAsync(int id)
         {
-            return await _context.MaterialComments.Include(x => x.Children).FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.MaterialComments
+                .Include(x => x.Children)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<MaterialComment> AddAsync(MaterialComment entity)
@@ -86,7 +88,7 @@ namespace MyLiverpool.Data.ResourceAccess.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<MaterialComment>> GetOrderedByAsync(int page, int itemPerPage = 15,
+        public async Task<ICollection<MaterialComment>> GetOrderedByAsync(int? page, int itemPerPage = 15,
             Expression<Func<MaterialComment, bool>> filter = null,
             SortOrder order = SortOrder.Ascending, Expression<Func<MaterialComment, object>> orderBy = null)
         {
@@ -101,7 +103,12 @@ namespace MyLiverpool.Data.ResourceAccess.Repositories
             {
                 query = query.ObjectSort(orderBy, order);
             }
-            query = query.Skip((page - 1)*itemPerPage).Take(itemPerPage);
+
+            if (page.HasValue)
+            {
+                query = query.Skip((page.Value - 1) * itemPerPage).Take(itemPerPage);
+            }
+
             return await query.ToListAsync();
         }
 

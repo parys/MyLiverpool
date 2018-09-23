@@ -1,1 +1,1 @@
-﻿export * from "./wish.module";
+﻿export * from "./lazy";

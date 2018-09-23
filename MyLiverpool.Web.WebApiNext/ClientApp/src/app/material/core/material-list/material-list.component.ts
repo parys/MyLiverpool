@@ -2,7 +2,6 @@
 import { Location } from "@angular/common";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
-import { Title } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { MaterialService } from "../material.service";
 import { MaterialActivateDialogComponent } from "../material-activate-dialog";
@@ -10,6 +9,8 @@ import { Material, MaterialFilters } from "../../model";
 import { DeleteDialogComponent, Pageable } from "@app/shared";
 import { RolesCheckedService } from "@app/+auth";
 import { MaterialType } from "@app/materialCategory";
+import { CustomTitleService } from "@app/shared";
+import { PAGE, TITLE_RU, NEWSS_RU, BLOGS_RU } from "@app/+constants";
 
 @Component({
     selector: "material-list",
@@ -35,7 +36,7 @@ export class MaterialListComponent implements OnInit, OnDestroy {
         private location: Location,
         public roles: RolesCheckedService,
         private snackBar: MatSnackBar,
-        private titleService: Title,
+        private titleService: CustomTitleService,
         private dialog: MatDialog) {
         this.navigationSubscription = this.router.events.subscribe((e: any) => {
             // If it is a NavigationEnd event re-initalise the component
@@ -66,13 +67,14 @@ export class MaterialListComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         if (this.router.url.startsWith("/news")) {
-            this.titleService.setTitle("Новости");
+            this.titleService.setTitle(NEWSS_RU);
             this.type = MaterialType.News;
         } else if (this.router.url.startsWith("/blogs")){
-            this.titleService.setTitle("Блоги");
+            this.titleService.setTitle(BLOGS_RU);
             this.type = MaterialType.Blogs;
         } else {
             this.type = MaterialType.Both;
+            this.titleService.setTitle(TITLE_RU);
         }
     }
 
@@ -89,7 +91,7 @@ export class MaterialListComponent implements OnInit, OnDestroy {
     };
 
     private updateUrl(): void {
-        let newUrl: string = `${MaterialType[this.type].toLowerCase()}?page=${this.page}`;
+        let newUrl: string = `${MaterialType[this.type].toLowerCase()}?${PAGE}=${this.page}`;
         if (this.categoryId) {
             newUrl = `${newUrl}&categoryId=${this.categoryId}`;
         }
@@ -110,9 +112,9 @@ export class MaterialListComponent implements OnInit, OnDestroy {
                 () => {
                     if (result) {
                         news.pending = false;
-                        this.snackBar.open("Материал успешно активирован", null, { duration: 5000 });
+                        this.snackBar.open("Материал активирован");
                     } else {
-                        this.snackBar.open("Материал НЕ БЫЛ активирован", null, { duration: 5000 });
+                        this.snackBar.open("Материал НЕ активирован");
                     }
                 }
             );
@@ -127,7 +129,7 @@ export class MaterialListComponent implements OnInit, OnDestroy {
                     if (result) {
                         this.items.splice(index, 1);
                     } else {
-                        this.snackBar.open("Ошибка удаления", null, {duration: 5000});
+                        this.snackBar.open("Ошибка удаления");
                     }
                 }
             );
@@ -156,7 +158,7 @@ export class MaterialListComponent implements OnInit, OnDestroy {
 
     private parseQueryParamsAndUpdate(): void {
         this.sub2 = this.route.queryParams.subscribe(qParams => {
-                this.page = qParams["page"] || 1;
+                this.page = qParams[PAGE] || 1;
                 this.categoryId = qParams["categoryId"] || null;
                 this.userName = qParams["userName"] || "";
                 this.userId = qParams["userId"] || null;

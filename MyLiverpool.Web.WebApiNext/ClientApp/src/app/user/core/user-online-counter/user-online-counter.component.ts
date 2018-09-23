@@ -3,7 +3,6 @@ import { TransferState, makeStateKey } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { UserService } from "../user.service";
 import { IUserOnline, UsersOnline } from "@app/+common-models";
-import { Configuration } from "@app/app.constants";
 import { SignalRService } from "@app/+signalr";
 
 const USER_ONLINE_KEY = makeStateKey<UsersOnline>("user-online");
@@ -22,8 +21,7 @@ export class UserOnlineCounterComponent implements OnInit, OnDestroy {
     constructor(private userService: UserService,
         private cd: ChangeDetectorRef,
         private transferState: TransferState,
-        private signalRService: SignalRService,
-        private config: Configuration) { }
+        private signalRService: SignalRService) { }
 
     public ngOnInit(): void {
         this.updateCount();

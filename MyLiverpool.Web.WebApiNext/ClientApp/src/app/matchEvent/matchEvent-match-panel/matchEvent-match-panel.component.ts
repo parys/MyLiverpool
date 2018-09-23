@@ -1,13 +1,11 @@
 ﻿import { Component, OnInit, Input } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { DeleteDialogComponent } from "@app/shared";
 import { RolesCheckedService } from "@app/+auth";
 import { Observable } from "rxjs";
 import { MatchEventService } from "../matchEvent.service";
 import { MatchEvent } from "../matchEvent.model";
-import { Person, PersonService } from "@app/person";
-import { Configuration } from "@app/app.constants";
+import { Person } from "@app/person";
 
 @Component({
     selector: "matchEvent-match-panel",
@@ -25,10 +23,6 @@ export class MatchEventMatchPanelComponent implements OnInit {
     public selectedIndex: number;
 
     constructor(private matchEventService: MatchEventService,
-        private route: ActivatedRoute,
-        private personService: PersonService,
-        private config: Configuration,
-        private router: Router,
         public roles: RolesCheckedService,
         private snackBar: MatSnackBar,
         private dialog: MatDialog) {
@@ -86,9 +80,9 @@ export class MatchEventMatchPanelComponent implements OnInit {
                 () => {
                     if (result) {
                         this.events.splice(index, 1);
-                        this.snackBar.open("Удалено", null, { duration: 2000 });
+                        this.snackBar.open("Удалено");
                     } else {
-                        this.snackBar.open("Ошибка удаления", null, { duration: 2000 });
+                        this.snackBar.open("Ошибка удаления");
                     }
                 }
             );

@@ -1,30 +1,17 @@
 ﻿import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Pageable } from "@app/shared";
 import { HttpWrapper } from "@app/+httpWrapper";
-import { Person } from "./person.model";
-import { SquadList } from "./squad-list.model";
-import { PersonType } from "./personType.model";
-import { PersonFilters } from "./personFilters.model";
+import { Person, SquadList, PersonType, PersonFilters } from "@app/person/model";
+import { PERSONS_ROUTE } from "@app/+constants";
+import { BaseRestService } from "@app/+infrastructure";
 
 @Injectable()
-export class PersonService {
-    private actionUrl: string = "person/";
+export class PersonService extends BaseRestService<Person, PersonFilters> {
+    private actionUrl: string = PERSONS_ROUTE + "/";
 
-    constructor(private http: HttpWrapper) {
+    constructor(public http: HttpWrapper) {
+        super(http, PERSONS_ROUTE + "/");
     }
-
-    public getAll(filters: PersonFilters): Observable<Pageable<Person>> {
-        return this.http.get<Pageable<Person>>(this.actionUrl + `list/${encodeURIComponent(JSON.stringify(filters))}`);
-    };
-
-    public getListByName(typed: string): Observable<Person[]> {
-        return this.http.get<Person[]>(`${this.actionUrl}getPersonsByName?typed=${typed}`);
-    };
-
-    public getSingle(id: number): Observable<Person> {
-        return this.http.get<Person>(this.actionUrl + id);
-    };
 
     public getBestPlayer(): Observable<Person> {
         return this.http.get<Person>(this.actionUrl + "bestPlayer/");
@@ -33,19 +20,7 @@ export class PersonService {
     public setBestPlayer(personId: number): Observable<boolean> {
         return this.http.put<boolean>(`${this.actionUrl}bestPlayer/${personId}`, "");
     };
-
-    public create(item: Person): Observable<Person> {
-        return this.http.post<Person>(this.actionUrl, JSON.stringify(item));
-    };
-
-    public update(id: number, itemToUpdate: Person): Observable<Person> {
-        return this.http.put<Person>(this.actionUrl + id, JSON.stringify(itemToUpdate));
-    };
-
-    public delete(id: number): Observable<boolean> {
-        return this.http.delete<boolean>(this.actionUrl + id);
-    };
-
+    
     public getBirthdays(): Observable<Person[]> {
         return this.http.get<Person[]>(`${this.actionUrl}birthdays`);
     };

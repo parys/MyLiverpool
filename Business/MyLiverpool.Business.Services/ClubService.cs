@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MyLiverpool.Business.Contracts;
 using MyLiverpool.Business.Dto;
 using MyLiverpool.Business.Dto.Filters;
@@ -35,7 +36,7 @@ namespace MyLiverpool.Business.Services
 
         public async Task<ClubDto> UpdateAsync(ClubDto dto)
         {
-            var club = await _clubRepository.GetByIdAsync(dto.Id);
+            var club = await _clubRepository.GetFirstByPredicateAsync(x => x.Id == dto.Id);
             club.Name = dto.Name;
             club.EnglishName = dto.EnglishName;
             club.StadiumId = dto.StadiumId;
@@ -48,25 +49,25 @@ namespace MyLiverpool.Business.Services
 
         public async Task<bool> DeleteAsync(int id)
         {
-            await _clubRepository.DeleteAsync(id);
+            await _clubRepository.DeleteAsync(x => x.Id == id);
             return true;
         }
 
         public async Task<ClubDto> GetByIdAsync(int id)
         {
-            var model = await _clubRepository.GetByIdAsync(id, true, x => x.Stadium);
+            var model = await _clubRepository.GetFirstByPredicateAsync(x => x.Id == id, true, x => x.Include(c => c.Stadium));
             return _mapper.Map<ClubDto>(model);
         }
 
         public async Task<string> GetNameAsync(int clubId)
         {
-            var club = await _clubRepository.GetByIdAsync(clubId);
+            var club = await _clubRepository.GetFirstByPredicateAsync(x => x.Id == clubId);
             return club?.EnglishName.Trim() ?? string.Empty;
         }
 
         public async Task UpdateLogoAsync(int clubId, string relativePath)
         {
-            var club = await _clubRepository.GetByIdAsync(clubId);
+            var club = await _clubRepository.GetFirstByPredicateAsync(x => x.Id == clubId);
             club.Logo = relativePath;
             await _clubRepository.UpdateAsync(club);
         }
@@ -74,7 +75,7 @@ namespace MyLiverpool.Business.Services
         public async Task UpdateLogoAsync(string name, string relativePath)
         {
             Expression<Func<Club, bool>> filter = x => string.IsNullOrWhiteSpace(name) || x.EnglishName.ToLowerInvariant() == name.ToLowerInvariant();
-            var club = await _clubRepository.GetFirstByFilterAsync(filter);
+            var club = await _clubRepository.GetFirstByPredicateAsync(filter);
             if (club != null)
             {
                 club.Logo = relativePath;
@@ -109,7 +110,9 @@ namespace MyLiverpool.Business.Services
                     sortBy = x => x.Stadium.Name;
                 }
             }
-            var model = await _clubRepository.GetListAsync(filters.Page, filters.ItemsPerPage, true, filter, filters.SortOrder, sortBy, c => c.Stadium);
+
+            var model = await _clubRepository.GetListAsync(filters.Page, filters.ItemsPerPage, true, filter,
+                filters.SortOrder, sortBy, c => c.Include(x => x.Stadium));
             var clubDtos = _mapper.Map<IEnumerable<ClubDto>>(model);
             var count = await _clubRepository.CountAsync(filter);
             return new PageableData<ClubDto>(clubDtos, filters.Page, count);
@@ -129,7 +132,7 @@ namespace MyLiverpool.Business.Services
         public async Task<ClubDto> GetByNameAsync(string name)
         {
             Expression<Func<Club, bool>> filter = x => string.IsNullOrWhiteSpace(name) || x.EnglishName.ToLowerInvariant() == name.ToLowerInvariant();
-            var club = await _clubRepository.GetFirstByFilterAsync(filter);
+            var club = await _clubRepository.GetFirstByPredicateAsync(filter);
             if (club != null)
             {
                 return _mapper.Map<ClubDto>(club);

@@ -9,6 +9,7 @@ import { TransferCoreModule } from "../core";
 import { TransferCurrentListComponent } from "./transfer-current-list";
 import { ClubCoreModule } from "@app/club";
 import { SeasonCoreModule } from "@app/season";
+import { MatNativeDateModule, MatDatepickerModule } from "@angular/material";
 
 @NgModule({
     imports: [
@@ -17,7 +18,9 @@ import { SeasonCoreModule } from "@app/season";
         PersonCoreModule,
         ClubCoreModule,
         SeasonCoreModule,
-        TransferCoreModule
+        TransferCoreModule,
+        MatNativeDateModule,
+        MatDatepickerModule
     ],
     declarations: [
         TransferEditComponent,

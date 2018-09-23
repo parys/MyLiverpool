@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MyLiverpool.Business.Contracts;
 using MyLiverpool.Business.Dto;
 using MyLiverpool.Data.Entities;
@@ -11,10 +13,10 @@ namespace MyLiverpool.Business.Services
 {
     public class MatchPersonService : IMatchPersonService
     {
-        private readonly IMatchPersonRepository _matchPersonRepository;
+        private readonly IGenericRepository<MatchPerson> _matchPersonRepository;
         private readonly IMapper _mapper;
 
-        public MatchPersonService(IMatchPersonRepository matchPersonRepository, IMapper mapper)
+        public MatchPersonService(IGenericRepository<MatchPerson> matchPersonRepository, IMapper mapper)
         {
             _matchPersonRepository = matchPersonRepository;
             _mapper = mapper;
@@ -23,13 +25,14 @@ namespace MyLiverpool.Business.Services
         public async Task<MatchPersonDto> CreateAsync(MatchPersonDto dto)
         {
             var entity = _mapper.Map<MatchPerson>(dto);
-            await _matchPersonRepository.AddAsync(entity);
+            entity.Created = DateTime.Now;
+            await _matchPersonRepository.CreateAsync(entity);
             return dto;
         }
 
         public async Task<MatchPersonDto> UpdateAsync(MatchPersonDto dto)
         {
-            var entity = await _matchPersonRepository.GetByComplexIdAsync(dto.MatchId, dto.PersonId);
+            var entity = await _matchPersonRepository.GetFirstByPredicateAsync(x => x.MatchId == dto.MatchId && x.PersonId == dto.PersonId);
             if (entity != null)
             {
                 entity.PersonType = dto.PersonType;
@@ -53,14 +56,17 @@ namespace MyLiverpool.Business.Services
 
         public async Task<IEnumerable<MatchPersonDto>> GetListByMatchIdAsync(int matchId)
         {
-            var events = await _matchPersonRepository.GetListAsync(x => x.MatchId == matchId);
+            var events = await _matchPersonRepository.GetQueryableList(filter: x => x.MatchId == matchId, 
+                order: SortOrder.Ascending, 
+                orderBy:x => x.Created, include: x => x.Include(m => m.Person))
+                .ToListAsync();
+
             return _mapper.Map<IEnumerable<MatchPersonDto>>(events);
         }
 
         public async Task<bool> DeleteAsync(int matchId, int personId)
         {
-            await _matchPersonRepository.DeleteAsync(matchId, personId);
-            return true;
+            return await _matchPersonRepository.DeleteAsync(x => x.MatchId == matchId && x.PersonId == personId);
         }
     }
 }

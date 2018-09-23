@@ -5,9 +5,7 @@
                 <div class="pull-left gTopCornerRight" [textContent]="item.name"></div>
             </td>
         </tr>
-        <tr *ngFor="let message of items | paginate: { itemsPerPage: itemsPerPage,
-                                                      currentPage: page,
-                                                      totalItems: totalItems }; let i = index;">
+        <tr *ngFor="let message of items; let i = index;">
             <td class="">
                 <table class="full-width postTable">
                     <tbody>
@@ -109,14 +107,5 @@
     </tbody>
 
 </table>
-<div class="pagination">
-    <pagination-controls (pageChange)="pageChanged($event)"
-                         directionLinks="true"
-                         autoHide="true"
-                         previousLabel="Назад"
-                         nextLabel="Вперед"
-                         screenReaderPaginationLabel="Постраничный вид"
-                         screenReaderPageLabel="Страница"
-                         screenReaderCurrentLabel="Вы на странице"></pagination-controls>
-</div>
+
 <forumMessage-addition [themeId]="item?.id" (newMessage)="addNewMessage($event)"></forumMessage-addition>

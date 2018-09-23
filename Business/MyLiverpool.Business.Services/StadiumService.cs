@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MyLiverpool.Business.Contracts;
 using MyLiverpool.Business.Dto;
+using MyLiverpool.Business.Dto.Filters;
 using MyLiverpool.Common.Utilities;
+using MyLiverpool.Common.Utilities.Extensions;
 using MyLiverpool.Data.Common;
 using MyLiverpool.Data.Entities;
 using MyLiverpool.Data.ResourceAccess.Interfaces;
@@ -25,7 +27,7 @@ namespace MyLiverpool.Business.Services
 
         public async Task<StadiumDto> GetByIdAsync(int id)
         {
-            var stadium = await _stadiumRepository.GetByIdAsync(id);
+            var stadium = await _stadiumRepository.GetFirstByPredicateAsync(x => x.Id == id);
             if (stadium != null)
             {
                 return _mapper.Map<StadiumDto>(stadium);
@@ -56,7 +58,7 @@ namespace MyLiverpool.Business.Services
 
         public async Task<StadiumDto> UpdateAsync(StadiumDto dto)
         {
-            var stadium = await _stadiumRepository.GetByIdAsync(dto.Id);
+            var stadium = await _stadiumRepository.GetFirstByPredicateAsync(x => x.Id == dto.Id);
             stadium.Name = dto.Name;
             stadium.City = dto.City;
             await _stadiumRepository.UpdateAsync(stadium);
@@ -67,7 +69,7 @@ namespace MyLiverpool.Business.Services
         {
             try
             {
-                await _stadiumRepository.DeleteAsync(id);
+                await _stadiumRepository.DeleteAsync(x => x.Id == id);
             }
             catch (Exception)
             {
@@ -81,6 +83,19 @@ namespace MyLiverpool.Business.Services
             Expression<Func<Stadium, bool>> filter = x => string.IsNullOrWhiteSpace(typed) || x.Name.Contains(typed);
             var list = await _stadiumRepository.GetListAsync(1, GlobalConstants.CountStadiumsForAutocomlete, true, filter);
             return _mapper.Map<IEnumerable<StadiumDto>>(list);
+        }
+
+        public async Task<PageableData<StadiumDto>> GetListAsync(StadiumFiltersDto filters)
+        {
+            Expression<Func<Stadium, bool>> filter = x => true;
+            if(!string.IsNullOrWhiteSpace(filters.Name))
+            {
+                filter = filter.And(x => x.Name.Contains(filters.Name));
+            }
+            var stadiums = await _stadiumRepository.GetListAsync(filters.Page, filters.ItemsPerPage, true, filter, orderBy: x => x.Name);
+            var dtos = _mapper.Map<ICollection<StadiumDto>>(stadiums);
+            var count = await _stadiumRepository.CountAsync(filter);
+            return new PageableData<StadiumDto>(dtos, filters.Page, count);
         }
     }
 }

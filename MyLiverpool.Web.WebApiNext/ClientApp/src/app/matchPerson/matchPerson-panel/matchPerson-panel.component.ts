@@ -95,9 +95,9 @@ export class MatchPersonPanelComponent implements OnInit {
                     if (result) {
                         this.matchPersons.splice(this.matchPersons.indexOf(person), 1);
                         this.parsePersons(this.matchPersons);
-                        this.snackBar.open("Удалено", null, { duration: 2000 });
+                        this.snackBar.open("Удалено");
                     } else {
-                        this.snackBar.open("Ошибка удаления", null, { duration: 2000 });
+                        this.snackBar.open("Ошибка удаления");
                     }
                 }
             );

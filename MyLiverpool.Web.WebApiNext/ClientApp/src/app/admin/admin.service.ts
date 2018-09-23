@@ -1,11 +1,12 @@
 ﻿import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpWrapper } from "@app/+httpWrapper";
+import { HELPERS_ROUTE } from "@app/+constants";
 
 @Injectable()
 export class AdminService {
     private actionUrl: string = "admin/";
-    private actionHelperUrl: string = "helper/";
+    private actionHelperUrl: string = HELPERS_ROUTE + "/";
 
     constructor(private http: HttpWrapper) {
     }

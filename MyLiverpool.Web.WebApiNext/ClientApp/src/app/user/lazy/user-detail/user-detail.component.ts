@@ -1,13 +1,12 @@
 ﻿import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Title } from "@angular/platform-browser";
 import { MatSnackBar } from "@angular/material";
 import { Subscription } from "rxjs";
-import { Configuration } from "@app/app.constants";
 import { User, UserService } from "@app/user";
 import { RolesCheckedService } from "@app/+auth";
 import { RoleGroupService, RoleGroup } from "@app/roleGroup";
+import { CustomTitleService } from "@app/shared";
 
 @Component({
     selector: "user-detail",
@@ -23,27 +22,22 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     public selectedUserId: number;
     public banDaysCount: number = 0;    
 
-    constructor(private configuration: Configuration,
+    constructor(
         private service: UserService,
         private route: ActivatedRoute,
         public roles: RolesCheckedService,
         private roleGroupService: RoleGroupService,
         private formBuilder: FormBuilder,
         private snackBar: MatSnackBar,
-        private titleService: Title,
-        private router: Router) { }
+        private titleService: CustomTitleService) { }
 
     public ngOnInit(): void { 
         this.initRoleForm();
         this.initBanForm();
         this.sub = this.route.params.subscribe(params => {
-            if (params["id"] !== undefined) {
-                this.service.getSingle(+params["id"])
-                    .subscribe(data => this.parse(data),
-                        e => console.log(e));
-            } else {
-                this.router.navigate(["/users", { page: 1 }]);
-            }
+            this.service.getSingle(+params["id"])
+                .subscribe(data => this.parse(data),
+                    e => console.log(e));
         });
         if (this.roles.userRoles.isAdminAssistant) {
             this.loadRoleGroups();
@@ -60,9 +54,9 @@ export class UserDetailComponent implements OnInit, OnDestroy {
             .subscribe(data => {
                 if (data) {
                     this.roleForm.patchValue(roleGroupId);
-                    this.snackBar.open("Группа была успешно изменена", null, { duration: 5000 });
+                    this.snackBar.open("Группа изменена");
                 } else {
-                    this.snackBar.open("Не удалось изменить группу", null, { duration: 5000 });
+                    this.snackBar.open("Группа НЕ изменена");
                 }
             });
     }
@@ -135,12 +129,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
 
     private initBanForm(): void {
         this.banForm = this.formBuilder.group({
-            banDaysCount: [
-                "", Validators.compose([
-                    Validators.required,
-                    Validators.min(1)
-                ])
-            ]
+            banDaysCount: ["", Validators.min(1)]
         });
     }
 }

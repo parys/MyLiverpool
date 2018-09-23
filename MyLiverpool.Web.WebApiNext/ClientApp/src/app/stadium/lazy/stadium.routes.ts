@@ -1,7 +1,9 @@
 ﻿import { Routes } from "@angular/router";
 import { StadiumEditComponent } from "./stadium-edit"
 import { StadiumListComponent } from "./stadium-list";
-import { RoleGuard } from "@app/+auth";
+import { RoleGuard, RolesEnum } from "@app/+auth";
+import { EDIT_ROUTE } from "@app/+constants/routes.constants";
+import { EDITING_RU } from "@app/+constants/ru.constants";
 
 export const stadiumRoutes: Routes = [
     {
@@ -9,7 +11,7 @@ export const stadiumRoutes: Routes = [
         component: StadiumListComponent,
         data: {
             title: "Стадионы",
-            roles: ["infoStart"]
+            roles: [RolesEnum[RolesEnum.InfoStart]]
         },
         canActivate: [RoleGuard]
     },
@@ -17,11 +19,11 @@ export const stadiumRoutes: Routes = [
         path: ":id",
         children: [
             {
-                path: "edit",
+                path: EDIT_ROUTE,
                 component: StadiumEditComponent,
                 data: {
-                    title: "Редактирование стадиона",
-                    roles: ["infoStart"]
+                    title: EDITING_RU,
+                    roles: [RolesEnum[RolesEnum.InfoStart]]
                 },
                 canActivate: [RoleGuard]
             }

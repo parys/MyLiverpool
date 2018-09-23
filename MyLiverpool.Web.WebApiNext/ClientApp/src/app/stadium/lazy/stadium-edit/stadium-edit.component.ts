@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { StadiumService } from "../../core";
 import { Stadium } from "../../model";
+import { STADIUMS_ROUTE } from "@app/+constants";
 
 @Component({
     selector: "stadium-edit",
@@ -38,16 +39,10 @@ export class StadiumEditComponent implements OnInit, OnDestroy {
     }
 
     public onSubmit(): void {
-        let stadium = this.editForm.value;
-        if (this.id > 0) {
-            this.service.update(this.id, stadium)
-                .subscribe(data => this.router.navigate(["/stadiums"]),
-                    e => console.log(e));
-        } else {
-            this.service.create(stadium)
-                .subscribe(data => this.router.navigate(["/stadiums"]),
-                    e => console.log(e));
-        }
+        const stadium = this.editForm.value;
+        this.service.createOrUpdate(this.id, stadium)
+            .subscribe(data => this.router.navigate([STADIUMS_ROUTE]),
+                e => console.log(e));
     }
 
     private parse(data: Stadium): void {

@@ -7,13 +7,15 @@ import { PmDetailComponent } from "./pm-detail";
 import { PmEditComponent } from "./pm-edit";
 import { PmCoreModule } from "../core";
 import { EditorModule } from "@app/editor";
+import { MatTabsModule } from "@angular/material";
 
 @NgModule({
     imports: [
         SharedModule,
         RouterModule.forChild(pmRoutes),
         EditorModule,
-        PmCoreModule
+        PmCoreModule,
+        MatTabsModule
     ],
     declarations: [
         PmEditComponent,

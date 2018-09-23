@@ -1,6 +1,7 @@
 ﻿import { Injectable, Inject } from "@angular/core";
 import { LocalStorage } from "./local-storage";
 import { IAuthTokenModel } from "@app/+auth";
+import { USER_ID } from "../+constants/help.constants";
 
 @Injectable()
 export class StorageService {
@@ -33,12 +34,12 @@ export class StorageService {
     }
 
     public getUserId(): number {
-        return +this.get("userId");
+        return +this.get(USER_ID);
     }
     
     public removeAuthTokens(): void {
         this.remove("roles");
-        this.remove("userId");
+        this.remove(USER_ID);
         this.remove("auth-tokens");
         this.remove("refresh-token");
     }
@@ -63,7 +64,7 @@ export class StorageService {
 
     public setUserId(id: number): void {
         if (!this.localStorage) return;
-        this.setObject("userId", id);
+        this.setObject(USER_ID, id);
     }
 
     public tryAddViewForMaterial(id: number): boolean {

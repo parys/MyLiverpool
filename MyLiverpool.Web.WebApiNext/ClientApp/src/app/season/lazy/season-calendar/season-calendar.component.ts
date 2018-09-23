@@ -1,12 +1,12 @@
 ﻿import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from "@angular/core";
 import { MatSelect, MatSelectChange } from "@angular/material";
 import { ActivatedRoute } from "@angular/router";
-import { Season } from "../../season.model";
-import { SeasonService } from "../../season.service";
+import { Season } from "../../model";
+import { SeasonService } from "../../core";
 import { RolesCheckedService } from "@app/+auth";
 
 @Component({
-    selector: "<season-calendar>",
+    selector: "season-calendar",
     templateUrl: "./season-calendar.component.html",
     styleUrls: ["./season-calendar.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -33,7 +33,7 @@ export class SeasonCalendarComponent implements OnInit {
             this.update(false);
         });
 
-        this.service.getAll()
+        this.service.getAllWithoutFilter()
             .subscribe(data => this.seasons = data,
                 e => console.log(e));
 

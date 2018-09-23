@@ -2,10 +2,11 @@
 import { Observable } from "rxjs";
 import { HttpWrapper } from "@app/+httpWrapper";
 import { Poll } from "../models";
+import { POLLS_ROUTE } from "@app/+constants";
 
 @Injectable()
 export class PollService {
-    private actionUrl: string = "polls/";
+    private actionUrl: string = POLLS_ROUTE + "/";
 
     constructor(private http: HttpWrapper) {
     }

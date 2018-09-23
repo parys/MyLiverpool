@@ -1,6 +1,6 @@
-﻿export class CommentFilter {
+﻿import { BaseRestFilter } from "@app/+infrastructure";
+
+export class CommentFilter extends BaseRestFilter {
     public onlyUnverified: boolean;
-    public page: number;
     public userId: number;
-    public itemsPerPage: number;
 }

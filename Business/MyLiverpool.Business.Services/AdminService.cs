@@ -5,7 +5,6 @@ using MyLiverpool.Business.Contracts;
 using MyLiverpool.Common.Utilities;
 using MyLiverpool.Data.Common;
 using MyLiverpool.Data.Entities;
-using MyLiverpool.Data.ResourceAccess.Interfaces;
 
 namespace MyLiverpool.Business.Services
 {
@@ -13,11 +12,11 @@ namespace MyLiverpool.Business.Services
     {
         private const string Address = "http://www.sports.ru/epl/table/";
         private const string XpathTableRows = "/html/body/div/div/div/div/div/div/div/table/tbody//tr";
-        private readonly IHelperEntityRepository _helperEntityRepository;
+        private readonly IHelperService _helpEntityService;
 
-        public AdminService(IHelperEntityRepository helperEntityRepository)
+        public AdminService(IHelperService helpEntityService)
         {
-            _helperEntityRepository = helperEntityRepository;
+            _helpEntityService = helpEntityService;
         }
 
         public async Task<string> UpdateTableAsync()
@@ -70,12 +69,14 @@ namespace MyLiverpool.Business.Services
                 }
                 newRows.Append("</tbody></table>");
 
-            var entity = await _helperEntityRepository.GetByTypeAsync(HelperEntityType.EplTable) ?? new HelpEntity
+            var entity = await _helpEntityService.GetAsync(HelperEntityType.EplTable) ?? new HelpEntity
             {
                 Type = HelperEntityType.EplTable
             };
             entity.Value = newRows.ToString();
-            await _helperEntityRepository.UpdateAndSaveAsync(entity);
+
+            await _helpEntityService.CreateOrUpdateAsync(entity.Type, entity.Value);
+
             return entity.Value;
         }
     }

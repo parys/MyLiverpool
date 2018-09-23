@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material";
 import { AuthService } from "@app/+auth";
+import { ACCOUNT_ROUTE } from "@app/+constants";
 
 @Component({
     selector: "account-signin",
@@ -32,7 +33,7 @@ export class AccountSigninComponent implements OnInit {
             .subscribe(data => data,
                 e => {
                     if (e.error === "unconfirmed_email") {
-                        this.router.navigate(["/account/unconfirmedEmail"]);
+                        this.router.navigate([`/${ACCOUNT_ROUTE}/unconfirmedEmail`]);
                         return;
                     }
                     if (e.error === "invalid_grant" &&

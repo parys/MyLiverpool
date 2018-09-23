@@ -8,7 +8,8 @@ import { MaterialService } from "../../core";
 import { Material } from "../../model";
 import { MaterialCategoryService, MaterialCategory, MaterialType } from "@app/materialCategory";
 import { RolesCheckedService } from "@app/+auth";
-import { MaterialGuardDialogComponent } from "./material-guard-dialog/material-guard-dialog.component";
+import { MaterialGuardDialogComponent } from "./material-guard-dialog";
+import { EDIT_ROUTE, MESSAGE } from "@app/+constants";
 
 @Component({
     selector: "material-edit",
@@ -63,11 +64,11 @@ export class MaterialEditComponent implements OnInit {
                     if (!this.editForm.get("stayOnPage").value) {
                         this.router.navigate([`/${MaterialType[this.type].toLowerCase()}`, data.id]);
                     }
-                    this.snackBar.open("Материал успешно обновлен", null);
+                    this.snackBar.open("Материал обновлен");
                 },
                     e => {
                         console.log(e);
-                        this.snackBar.open("Материал не был обновлен", null);
+                        this.snackBar.open("Материал НЕ обновлен");
                     });
         } else {
             this.service.create(newsItem, this.type)
@@ -75,13 +76,13 @@ export class MaterialEditComponent implements OnInit {
                     if (!this.editForm.get("stayOnPage").value) {
                         this.router.navigate([`/${MaterialType[this.type].toLowerCase()}`, data.id]);
                     }
-                    this.location.go(this.router.createUrlTree([MaterialType[this.type].toLowerCase(), data.id, "edit"]).toString());
+                    this.location.go(this.router.createUrlTree([MaterialType[this.type].toLowerCase(), data.id, EDIT_ROUTE]).toString());
                     this.id = data.id;
-                    this.snackBar.open("Материал успешно создан", null);
+                    this.snackBar.open("Материал создан");
                 },
                     e => {
                         console.log(e);
-                        this.snackBar.open("Материал не был создан", null);
+                        this.snackBar.open("Материал НЕ создан");
                     });
         }
     }
@@ -105,8 +106,8 @@ export class MaterialEditComponent implements OnInit {
             }
         },
             e => console.log(e), () => {
-                const oldValue = this.editForm.get("message").value;
-                this.editForm.get("message").patchValue(oldValue + imgTags);
+                const oldValue = this.editForm.get(MESSAGE).value;
+                this.editForm.get(MESSAGE).patchValue(oldValue + imgTags);
             });
     }
 

@@ -11,8 +11,8 @@
         <div class="full-width text-center">
             Помощники судьи: <span *ngFor="let ref of assistantRef; let last = last;">
                 {{ref.personName}}
-                <span *ngIf="roles.isInformer" role="button" (click)="selectMatchPerson(person)" class="material-icons" style="font-size: 100%;">edit</span>
-                <span *ngIf="roles.isInformer" role="button" (click)="showDeleteModal(person)" class="material-icons" style="font-size: 100%;">clear</span><span *ngIf="!last">, </span>
+                <span *ngIf="roles.isInformer" role="button" (click)="selectMatchPerson(ref)" class="material-icons" style="font-size: 100%;">edit</span>
+                <span *ngIf="roles.isInformer" role="button" (click)="showDeleteModal(ref)" class="material-icons" style="font-size: 100%;">clear</span><span *ngIf="!last">, </span>
             </span>
             <span *ngIf="roles.isInformer && assistantRef.length < 2" role="button" (click)="addMatchPerson(8)"><mat-icon>add</mat-icon></span>
         </div>

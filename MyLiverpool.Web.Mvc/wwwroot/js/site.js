@@ -9,9 +9,9 @@
             time = dateTime.toString("HH:mm");
         }
         var date = dateTime.toString("dd/MM/YYYY");
-        if ($(this).data()) {
+        //if ($(this).data()) {
 
-        }//
+        //}//
         //  $(this).text(`${time} ${date}`);
         if ($(this).data("sec")) {
             $(this).text(moment($(this).data("date")).format('DD MMM YYYY, HH:mm:ss'));

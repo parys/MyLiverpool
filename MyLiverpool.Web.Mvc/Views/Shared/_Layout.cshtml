@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="utf-8" />
@@ -28,6 +29,7 @@
 
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
 <nav class="navbar navbar-default maroon-panel container-row beauty-font bg-header">
@@ -159,7 +161,7 @@
         </script>
     </div>
 </environment>
-    <b class="col-xs-12 text-center">Облегченная версия сайта <a href="//mylfc.ru">mylfc.ru</a> только для чтения. Преимущественное развитие будет получать только основная версия.</b>
+    <b class="col-xs-12 text-center">Облегченная версия сайта <a href="https://mylfc.ru">mylfc.ru</a> только для чтения. Преимущественное развитие будет получать только основная версия.</b>
     <div class="main clearfix">
         <div class="col-xs-12 container-fluid main-container col-sm-6 col-sm-push-3">
             @RenderBody()

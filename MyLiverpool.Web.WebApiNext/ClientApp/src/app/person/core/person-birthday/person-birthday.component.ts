@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
 import { Subscription } from "rxjs";
 import { PersonService } from "../person.service";
-import { Person } from "../person.model";
+import { Person } from "@app/person/model";
 
 @Component({
     selector: "person-birthday",

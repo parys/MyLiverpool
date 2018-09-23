@@ -50,7 +50,6 @@ export class CommentSectionComponent implements OnInit, OnChanges, AfterViewChec
     //todo research
     //public ngAfterViewChecked(): void {
     //    if (this.isScrolled) return;
-    //    console.log("ngAfterViewChecked");
     //    const fragment = this.router.parseUrl(this.router.url).fragment;
     //    if (fragment) {
     //        const element = document.getElementById(fragment);
@@ -59,28 +58,12 @@ export class CommentSectionComponent implements OnInit, OnChanges, AfterViewChec
     //                document.documentElement.offsetHeight;
     //            let clientTop = document.documentElement.clientTop || document.body.clientTop || 0;
     //            let top = element.getBoundingClientRect().top + scrollTop - clientTop;
-
-    //            console.log("scrTop= " + scrollTop);
-    //            console.log("clientTop= " + clientTop);
-    //            console.log("top= " + top);
-    //            console.log("prevHeight= " + this.prevHeight);
-    //            console.log("----------------");
     //            this.renderer.addClass(element, "active");
     //            while (this.prevHeight !== top) {
     //           // do {
     //                console.log("element ");
 
-    //                console.log("scrTop= " + scrollTop);
-    //                console.log("clientTop= " + clientTop);
-    //                console.log("top= " + top);
-    //                console.log("prevHeight= " + this.prevHeight);
-    //                console.log("/");
-    //                console.log(document.body.scrollTop);
-    //                console.log(window.pageYOffset);
-    //                console.log(document.documentElement.scrollTop);
-    //                console.log(document.documentElement.clientTop);
-    //                console.log(document.body.clientTop);
-    //                console.log("/");
+
     //                if (this.prevHeight !== top) {
     //                    console.log("!=");
     //                    console.warn("prevHeight= " + this.prevHeight);
@@ -94,7 +77,6 @@ export class CommentSectionComponent implements OnInit, OnChanges, AfterViewChec
     //                clientTop = document.documentElement.clientTop || document.body.clientTop || 0;
     //                top = element.getBoundingClientRect().top + scrollTop - clientTop;
     //            } 
-    //            console.error("scroll");
     //            element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" } );
     //           // this.isScrolled = true;
             
@@ -165,7 +147,7 @@ export class CommentSectionComponent implements OnInit, OnChanges, AfterViewChec
         comment.materialId = this.materialId;
         comment.matchId = this.matchId;
         comment.type = this.type ? this.type : 3;//todo
-        this.commentService.create(comment)
+        this.commentService.createOrUpdate(comment.id, comment)
             .subscribe(data => {
                 this.items.push(data);
                 this.totalItems += 1;

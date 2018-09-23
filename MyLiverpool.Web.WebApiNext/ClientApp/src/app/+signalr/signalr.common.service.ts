@@ -47,13 +47,17 @@ export class SignalRService {
 
         this.hubConnection = new HubConnectionBuilder()
             .withUrl(`${this.baseUrl}hubs/${hubUrl}`, options)
-          //       .withHubProtocol(new MessagePackHubProtocol())
+        //         .withHubProtocol(new MessagePackHubProtocol())
             .configureLogging(LogLevel.Error)
             .build();
         this.hubConnection.on("updateChat", (data: ChatMessage) => {
             this.chatSubject.next(data);
         });
-        this.hubConnection.on("updateOnline", (data: any) => {
+        this.hubConnection.on("updateOnline", (data: UsersOnline) => {
+            //console.warn(data);
+            //console.warn(data.allCount);
+            //console.warn(data.guestCount);
+            //console.warn(data.users.length);
             this.onlineSubject.next(data);
         });
         this.hubConnection.on("addComment", (data: Comment) => {
@@ -89,9 +93,9 @@ export class SignalRService {
                 console.error(err);
             });
 
-        this.hubConnection.onclose(() => {
+      //  this.hubConnection.onclose(() => {
       //      this.initializeHub();
-            console.warn("RECONNECT");
-        });
+           // console.warn("RECONNECT");
+      //  });
     }
 }

@@ -107,7 +107,7 @@
             </span>
             <span> | </span>
             <span *ngIf="item.commentsCount > 0">
-                <a [routerLink]="['/materialComments']" [queryParams]="{page: 1, userId: item.id}">Комментарии(<span [textContent]="item.commentsCount"></span>)</a>
+                <a [routerLink]="['/comments']" [queryParams]="{page: 1, userId: item.id}">Комментарии(<span [textContent]="item.commentsCount"></span>)</a>
             </span>
         </div>
     </div>

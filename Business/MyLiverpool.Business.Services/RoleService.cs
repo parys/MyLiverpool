@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MyLiverpool.Business.Contracts;
 using MyLiverpool.Business.Dto;
 using MyLiverpool.Data.Entities;
@@ -11,11 +12,11 @@ namespace MyLiverpool.Business.Services
 {
     public class RoleService : IRoleService
     {
-        private readonly IRoleGroupRepository _roleGroupRepository;
+        private readonly IGenericRepository<RoleGroup> _roleGroupRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public RoleService(IRoleGroupRepository roleGroupRepository, IMapper mapper, IUserRepository userRepository)
+        public RoleService(IGenericRepository<RoleGroup> roleGroupRepository, IMapper mapper, IUserRepository userRepository)
         {
             _roleGroupRepository = roleGroupRepository;
             _mapper = mapper;
@@ -25,8 +26,10 @@ namespace MyLiverpool.Business.Services
         public async Task<bool> EditRoleGroupAsync(int newRoleGroupId, int userId)
         {
             var user = await _userRepository.GetByIdFromManagerAsync(userId);
-            var oldRoleGroup = await _roleGroupRepository.GetByIdAsync(user.RoleGroupId);
-            var newRoleGroup = await _roleGroupRepository.GetByIdAsync(newRoleGroupId);
+            var oldRoleGroup = await _roleGroupRepository.GetFirstByPredicateAsync(x => x.Id == user.RoleGroupId,
+                include: s => s.Include(x => x.RoleGroups).ThenInclude(x => x.Role));
+            var newRoleGroup = await _roleGroupRepository.GetFirstByPredicateAsync(x => x.Id == newRoleGroupId,
+                    include: s => s.Include(x => x.RoleGroups).ThenInclude(x => x.Role));
 
             var rolesToDelete = GetRolesToDelete(oldRoleGroup.RoleGroups.Select(x => x.Role), newRoleGroup.RoleGroups.Select(x => x.Role));
             var rolesToAdd = GetRolesToAdd(oldRoleGroup.RoleGroups.Select(x => x.Role), newRoleGroup.RoleGroups.Select(x => x.Role));
@@ -49,7 +52,9 @@ namespace MyLiverpool.Business.Services
 
         public async Task<IEnumerable<RoleGroupDto>> GetRoleGroupsWithRolesAsync()
         {
-            var roleGroups = await _roleGroupRepository.GetListWithRolesAsync();
+            var roleGroups = await _roleGroupRepository
+                .GetQueryableList(include: s => s.Include(x => x.RoleGroups).ThenInclude(x => x.Role))
+                .ToListAsync();
             return _mapper.Map<IEnumerable<RoleGroupDto>>(roleGroups);
         }
 

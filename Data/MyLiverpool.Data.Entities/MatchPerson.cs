@@ -1,4 +1,5 @@
-﻿using MyLiverpool.Data.Common;
+﻿using System;
+using MyLiverpool.Data.Common;
 
 namespace MyLiverpool.Data.Entities
 {
@@ -13,5 +14,7 @@ namespace MyLiverpool.Data.Entities
         public Person Person { get; set; }
 
         public MatchPersonType PersonType { get; set; }
+
+        public DateTime Created { get; set; }
     }
 }

@@ -5,6 +5,7 @@ import {
     RouterStateSnapshot
 } from "@angular/router";
 import { RolesCheckedService } from "./roles-checked.service";
+import { NEWS_ROUTE } from "../+constants/routes.constants";
 
 @Injectable()
 export class UnSignedGuard implements CanActivate {
@@ -12,7 +13,7 @@ export class UnSignedGuard implements CanActivate {
 
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         if (this.rolesService.userRoles.isLogined) {
-            this.router.navigate(["/news"]);              //bug need to go to root
+            this.router.navigate([NEWS_ROUTE]);              //bug need to go to root
              return false;
         }
         return true;

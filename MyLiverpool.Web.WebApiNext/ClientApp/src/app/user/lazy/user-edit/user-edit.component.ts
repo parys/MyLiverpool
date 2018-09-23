@@ -36,12 +36,12 @@ export class UserEditComponent implements OnInit, OnDestroy {
                 new Date(user.birthday.setHours(
                     user.birthday.getHours() + (-1) * user.birthday.getTimezoneOffset() / 60));
         }
-        this.service.update(user)
+        this.service.createOrUpdate(user.id, user)
             .subscribe(data => {
                 if (data) {
-                    this.snackBar.open("Профиль успешно обновлен", null, { duration: 5000 });
+                    this.snackBar.open("Профиль обновлен");
                 } else {
-                    this.snackBar.open("Профиль не обновлен", null, { duration: 5000 });
+                    this.snackBar.open("Профиль не обновлен");
                 }
             });
     }

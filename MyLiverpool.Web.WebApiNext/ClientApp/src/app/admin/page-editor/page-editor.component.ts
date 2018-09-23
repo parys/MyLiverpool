@@ -62,9 +62,9 @@ export class PageEditorComponent implements OnInit, OnDestroy {
         if (model === "&nbsp;") model = "";
         this.service.updateValue(this.id, model).subscribe(data => {
             if (data) {
-                this.snackBar.open("Страница успешно обновлена.", null, { duration: 5000 });
+                this.snackBar.open("Страница обновлена.");
             } else {
-                this.snackBar.open("Страница НЕ БЫЛА обновлена.", null, { duration: 5000 });
+                this.snackBar.open("Страница НЕ обновлена.");
             }
         });
     }

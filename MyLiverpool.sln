@@ -41,9 +41,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyLiverpool.Data.Common", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyLfc.Business.ViewModels", "MyLfc.Business.ViewModels\MyLfc.Business.ViewModels.csproj", "{1BFA4469-9B0E-48CA-B44B-E750AA73BE25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLiverpool.Web.Mvc", "MyLiverpool.Web.Mvc\MyLiverpool.Web.Mvc.csproj", "{81619D76-DD65-4ADD-9C63-D5F55A9D5479}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyLiverpool.Web.Mvc", "MyLiverpool.Web.Mvc\MyLiverpool.Web.Mvc.csproj", "{81619D76-DD65-4ADD-9C63-D5F55A9D5479}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLfc.Common.Web", "MyLfc.Common.Web\MyLfc.Common.Web.csproj", "{3FFD07A1-4D7B-405F-89E6-D7F328F14E5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyLfc.Common.Web", "MyLfc.Common.Web\MyLfc.Common.Web.csproj", "{3FFD07A1-4D7B-405F-89E6-D7F328F14E5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,8 +91,8 @@ Global
 		{E9E4FC98-D355-44B8-A46A-6D9D39F6E015}.Release|x64.Build.0 = Release|Any CPU
 		{E9E4FC98-D355-44B8-A46A-6D9D39F6E015}.Release|x86.ActiveCfg = Release|Any CPU
 		{E9E4FC98-D355-44B8-A46A-6D9D39F6E015}.Release|x86.Build.0 = Release|Any CPU
-		{7D4AC6F5-EA6A-4028-ADAB-92B27FBEFA98}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{7D4AC6F5-EA6A-4028-ADAB-92B27FBEFA98}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{7D4AC6F5-EA6A-4028-ADAB-92B27FBEFA98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D4AC6F5-EA6A-4028-ADAB-92B27FBEFA98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D4AC6F5-EA6A-4028-ADAB-92B27FBEFA98}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{7D4AC6F5-EA6A-4028-ADAB-92B27FBEFA98}.Debug|x64.Build.0 = Debug|Any CPU
 		{7D4AC6F5-EA6A-4028-ADAB-92B27FBEFA98}.Debug|x86.ActiveCfg = Debug|Any CPU

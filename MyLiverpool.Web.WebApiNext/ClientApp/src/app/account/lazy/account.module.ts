@@ -11,6 +11,7 @@ import { UnconfirmedEmailComponent } from "./unconfirmedEmail";
 import { AccountValidators } from "./account.validators";
 import { AccountCoreModule } from "../core";
 import { RecaptchaModule } from "@app/shared/modules";
+//import { AccountInitComponent } from "./account-init.component";
 
 @NgModule({
     imports: [
@@ -25,10 +26,14 @@ import { RecaptchaModule } from "@app/shared/modules";
         ConfirmEmailComponent,
         ForgotPasswordComponent,
         ResetPasswordComponent,
-        UnconfirmedEmailComponent
+        UnconfirmedEmailComponent,
+  //      AccountInitComponent
     ],
     providers: [
         AccountValidators
+    ],
+    bootstrap: [
+  //      AccountInitComponent
     ]
 })
 export class AccountModule { }

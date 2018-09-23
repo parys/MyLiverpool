@@ -12,7 +12,7 @@
         if (category.ItemsCount > 0)
         {
             <li *ngIf="roles.isEditor">
-                <a asp-action="Index" asp-controller="Materials" asp-route-categoryId="@category.Id">
+                <a asp-action="Index" asp-controller="@category.MaterialType.ToString()" asp-route-categoryId="@category.Id">
                     @category.Name [@category.ItemsCount]
                 </a>
                 @*<span *ngIf="roles.isEditor">

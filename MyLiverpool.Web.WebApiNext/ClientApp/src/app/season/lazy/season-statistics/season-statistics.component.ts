@@ -1,8 +1,7 @@
 ﻿import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatSelect, MatSelectChange } from "@angular/material";
-import { SeasonService } from "../../season.service";
-import { Season } from "../../season.model";
-import { PersonStatistics } from "../../personStatistics.model";
+import { SeasonService } from "../../core";
+import { PersonStatistics, Season } from "../../model";
 
 @Component({
     selector: "<season-statistics>",
@@ -24,7 +23,7 @@ export class SeasonStatisticsComponent implements OnInit {
             this.update(data.value, false);
         });
 
-        this.seasonService.getAll()
+        this.seasonService.getAllWithoutFilter()
             .subscribe(data => this.seasons = data,
                 e => console.log(e));
 

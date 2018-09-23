@@ -3,13 +3,14 @@ import { Observable } from "rxjs";
 import { MatchEvent } from "./matchEvent.model";
 import { MatchEventType } from "./matchEventType.model";
 import { HttpWrapper } from "@app/+httpWrapper";
+import { MATCH_EVENTS_ROUTE } from "@app/+constants";
 
 @Injectable()
 export class MatchEventService {
     private actionUrl: string;
 
     constructor(private http: HttpWrapper) {
-        this.actionUrl = "matchEvent/";
+        this.actionUrl = MATCH_EVENTS_ROUTE + "/";
     }
 /*
     public getAll(page: number): Observable<Pageable<MatchEvent>> {
@@ -21,7 +22,7 @@ export class MatchEventService {
     };*/
 
     public getForMatch(matchId: number): Observable<MatchEvent[]> {
-        return this.http.get<MatchEvent[]>(`${this.actionUrl}getForMatch/${matchId}`);
+        return this.http.get<MatchEvent[]>(`${this.actionUrl}getForMatch/${matchId}`); // todo go to match endpoint
     };
 
     public create(item: MatchEvent): Observable<MatchEvent> {

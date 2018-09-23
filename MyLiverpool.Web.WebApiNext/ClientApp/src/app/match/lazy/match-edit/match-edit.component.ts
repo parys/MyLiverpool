@@ -1,13 +1,15 @@
 ﻿import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { debounceTime, distinctUntilChanged, switchMap } from "rxjs/operators";
 import { MatchService } from "@app/match/core";
 import { SeasonService, Season } from "@app/season";
 import { Match, MatchType } from "@app/match/model";
-import { Stadium, StadiumService } from "@app/stadium";
-import { Club, ClubService } from "@app/club";
+import { Stadium, StadiumService, StadiumFilters } from "@app/stadium";
+import { Club, ClubService, ClubFilters } from "@app/club";
+import { DEBOUNCE_TIME, MATCHES_ROUTE } from "@app/+constants";
+import { Pageable } from "@app/shared";
 
 @Component({
     selector: "match-edit",
@@ -17,7 +19,6 @@ import { Club, ClubService } from "@app/club";
 export class MatchEditComponent implements OnInit {
     private id: number;
     public editMatchForm: FormGroup;
-    public debounceTime: number = 600;
     public types: MatchType[];
     public seasons: Season[];
     public clubs$: Observable<Club[]>;
@@ -35,32 +36,26 @@ export class MatchEditComponent implements OnInit {
     public ngOnInit(): void {
         this.initForm();
         let id = this.route.snapshot.params["id"];
-        if(id && id > 0) {
+        if(+id > 0) {
                 this.matchService.getSingle(id)
                     .subscribe(data => this.parse(data),
-                    error => console.log(error));
+                    e => console.log(e));
             };
         
         this.matchService.getTypes()
             .subscribe(data => this.types = data,
-                error => console.log(error));
+                e => console.log(e));
 
-        this.seasonService.getAll()
+        this.seasonService.getAllWithoutFilter()
             .subscribe(data => this.seasons = data,
-            error => console.log(error));
+            e => console.log(e));
     }
 
     public onSubmit(): void {
         const match = this.parseForm();
-        if (this.id > 0) {
-            this.matchService.update(this.id, match)
-                .subscribe(data => this.router.navigate(["/matches", data.id]),
+        this.matchService.createOrUpdate(this.id, match)
+            .subscribe(data => this.router.navigate([MATCHES_ROUTE, data.id]),
                 e => console.log(e));
-        } else {
-            this.matchService.create(match)
-                .subscribe(data => this.router.navigate(["/matches", data.id]),
-                e => console.log(e));
-        }
     }
 
     public selectStadium(id: number) {
@@ -105,21 +100,28 @@ export class MatchEditComponent implements OnInit {
         });
 
         this.stadiums$ = this.editMatchForm.controls["stadiumName"].valueChanges.pipe(
-            debounceTime(this.debounceTime),
+            debounceTime(DEBOUNCE_TIME),
             distinctUntilChanged(),
-            switchMap((value: string) => this.stadiumService.getListByName(value)));
+            switchMap((value: string) => {
+                const filter = new StadiumFilters();
+                filter.name = value;
+                return this.stadiumService.getAll(filter);
+            }),
+            switchMap((pagingStadiums: Pageable<Stadium>): Observable<Stadium[]> => {
+                return of(pagingStadiums.list);
+            }));
 
         this.clubs$ = this.editMatchForm.controls["clubName"].valueChanges.pipe(
-            debounceTime(this.debounceTime),
+            debounceTime(DEBOUNCE_TIME),
             distinctUntilChanged(),
-            switchMap((value: string) => this.clubService.getListByName(value)));
-    }
-
-    private getIdFromUrl(url: string): string {
-        if (url) {
-            const pieces = url.split("/");
-            return pieces[pieces.length - 1];
-        }
-        return null;
+            switchMap((value: string): Observable<Pageable<Club>> => {
+                const filter = new ClubFilters();
+                filter.name = value;
+                return this.clubService.getAll(filter);
+            }),
+            switchMap((pagingClubs: Pageable<Club>): Observable<Club[]> => {
+                return of(pagingClubs.list);
+            })
+        );
     }
 }

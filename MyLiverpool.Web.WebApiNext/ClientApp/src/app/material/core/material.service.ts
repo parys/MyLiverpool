@@ -4,17 +4,18 @@ import { MaterialType } from "@app/materialCategory";
 import { Pageable } from "@app/shared";
 import { HttpWrapper } from "@app/+httpWrapper";
 import { MaterialFilters, Material } from "../model";
+import { MATERIALS_ROUTE } from "@app/+constants";
 
 @Injectable()
 export class MaterialService {
     private actionUrl: string;
 
     constructor(private http: HttpWrapper) {
-        this.actionUrl = "material/";
+        this.actionUrl = MATERIALS_ROUTE + "/";
     }
 
     public getAll(filters: MaterialFilters): Observable<Pageable<Material>> {
-        return this.http.get<Pageable<Material>>(this.actionUrl + "list/" + encodeURIComponent(JSON.stringify(filters)));
+        return this.http.get<Pageable<Material>>(this.actionUrl + encodeURIComponent(JSON.stringify(filters)));
     };
 
     public getSingle(id: number): Observable<Material> {

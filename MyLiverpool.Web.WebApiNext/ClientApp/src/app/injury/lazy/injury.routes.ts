@@ -1,15 +1,16 @@
 ﻿import { Routes } from "@angular/router";
 import { InjuryEditComponent } from "./injury-edit";
 import { InjuryListComponent } from "./injury-list";
-import { RoleGuard } from "@app/+auth";
+import { RoleGuard, RolesEnum } from "@app/+auth";
+import { EDITING_RU, INJURIES_RU } from "@app/+constants";
 
 export const injuryRoutes: Routes = [
     {
         path: "",
         component: InjuryListComponent,
         data: {
-            title: "Травмы",
-            roles: ["infoStart"]
+            title: INJURIES_RU,
+            roles: [RolesEnum[RolesEnum.InfoStart]]
         },
         canActivate: [RoleGuard]
     },
@@ -17,8 +18,8 @@ export const injuryRoutes: Routes = [
         path: ":id/edit",
         component: InjuryEditComponent,
         data: {
-            title: "Редактирование",
-            roles: ["infoStart"]
+            title: EDITING_RU,
+            roles: [RolesEnum[RolesEnum.InfoStart]]
         },
         canActivate: [RoleGuard]
     }

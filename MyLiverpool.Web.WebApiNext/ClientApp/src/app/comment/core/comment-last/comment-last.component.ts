@@ -4,7 +4,6 @@ import { Subscription } from "rxjs";
 import { CommentService } from "../comment.service";
 import { Comment } from "@app/+common-models";
 import { SignalRService } from "@app/+signalr";
-import { Configuration } from "@app/app.constants";
 
 const COMMENT_LAST_KEY = makeStateKey<Comment[]>("comments-last");
 
@@ -19,7 +18,6 @@ export class CommentLastComponent implements OnInit, OnDestroy {
     public items: Comment[];
 
     constructor(private service: CommentService,
-        private config: Configuration,
         private cd: ChangeDetectorRef,
         private transferState: TransferState,
         private signalRService: SignalRService) {

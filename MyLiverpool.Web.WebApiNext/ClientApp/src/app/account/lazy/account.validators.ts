@@ -2,20 +2,18 @@
 import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { AccountService } from "../core";
-import { Configuration } from "@app/app.constants";
 import { debounceTime, takeUntil, take, switchMap } from "rxjs/operators";
+import { DEBOUNCE_TIME, MIN_EMAIL_LENGTH, MIN_USERNAME_LENGTH } from "@app/+constants";
 
 @Injectable()
 export class AccountValidators {
     static service: AccountService;
-    static config: Configuration;
     static changed = new Subject<any>();
     static changed1 = new Subject<any>();
 
     constructor(private service1: AccountService
     ) {
         AccountValidators.service = service1;
-        AccountValidators.config = new Configuration();
     }
 
     public isEmailUnique(control: FormControl): Observable<IValidationResult> {
@@ -23,14 +21,14 @@ export class AccountValidators {
         return new Observable((obs: any) => {
             control
                 .valueChanges.pipe(
-                debounceTime(AccountValidators.config.debounceTime),                
+                debounceTime(DEBOUNCE_TIME),                
                 takeUntil(AccountValidators.changed),
                 take(1),
                 switchMap((value: string) => AccountValidators.service.isEmailUnique(value))
                 )
                 .subscribe(
                 data => {
-                    if (+control.value.length < AccountValidators.config.minEmailLength || data) {  
+                    if (+control.value.length < MIN_EMAIL_LENGTH || data) {  
                         obs.next(null);
                     } else {
                         obs.next({ "notUniqueEmail": true });
@@ -49,14 +47,14 @@ export class AccountValidators {
         return new Observable((obs: any) => {
             control
                 .valueChanges.pipe(
-                debounceTime(AccountValidators.config.debounceTime),
+                debounceTime(DEBOUNCE_TIME),
                 takeUntil(AccountValidators.changed1),
                 take(1),//todo
                 switchMap((value: string) => AccountValidators.service.isUserNameUnique(value))
                 )
                 .subscribe(
                 data => {
-                    if (+control.value.length < AccountValidators.config.minUserNameLength || data) {
+                    if (+control.value.length < MIN_USERNAME_LENGTH || data) {
                         obs.next(null);
                     } else {
                         obs.next({ "notUniqueUserName": true });

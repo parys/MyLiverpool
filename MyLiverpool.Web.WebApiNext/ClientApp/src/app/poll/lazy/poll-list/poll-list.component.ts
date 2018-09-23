@@ -1,6 +1,5 @@
 ﻿import { Component, OnInit } from "@angular/core";   
 import { ActivatedRoute, Router } from "@angular/router";
-import { Title } from "@angular/platform-browser";
 import { Poll } from "../../models";
 import { RolesCheckedService } from "@app/+auth";
 import { PollService } from "../../core/poll.service";
@@ -15,7 +14,6 @@ export class PollListComponent implements OnInit {
     constructor(private service: PollService,
         public roles: RolesCheckedService,
         private router: Router,
-        private titleService: Title,
         private route: ActivatedRoute) {
     }
 

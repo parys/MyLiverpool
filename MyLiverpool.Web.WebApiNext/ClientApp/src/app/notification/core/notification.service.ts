@@ -2,10 +2,11 @@
 import { Observable } from "rxjs";
 import { HttpWrapper } from "@app/+httpWrapper";
 import { Notification } from "@app/notification/model";
+import { NOTIFICATIONS_ROUTE } from "@app/+constants";
 
 @Injectable()
 export class NotificationService {
-    private actionUrl: string = "notification/";
+    private actionUrl: string = NOTIFICATIONS_ROUTE + "/";
 
     constructor(private http: HttpWrapper) {
     }

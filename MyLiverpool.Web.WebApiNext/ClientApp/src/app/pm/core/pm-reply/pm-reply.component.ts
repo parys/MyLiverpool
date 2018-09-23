@@ -1,7 +1,6 @@
-﻿import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from "@angular/core";
+﻿import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
-import { Subscription } from "rxjs";
 import { Pm } from "../../model";
 import { PmService } from "../pm.service";
 
@@ -9,8 +8,7 @@ import { PmService } from "../pm.service";
     selector: "pm-reply",
     templateUrl: "./pm-reply.component.html"
 })
-export class PmReplyComponent implements OnInit, OnDestroy {
-    private sub: Subscription;
+export class PmReplyComponent implements OnInit {
     public pmReplyEditForm: FormGroup;
     public id: number = 0;
     @Input() public userName: string;
@@ -24,7 +22,6 @@ export class PmReplyComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit(): void {
-        console.log(11);
         this.pmReplyEditForm = this.formBuilder.group({
             title: [
                 this.getTitle(), Validators.compose([
@@ -41,17 +38,14 @@ export class PmReplyComponent implements OnInit, OnDestroy {
         });
     }
 
-    public ngOnDestroy(): void {
-    }
-
     public onSubmit(): void {
         const model: Pm = this.pmReplyEditForm.value;
         model.receiverId = this.userId;
 
-        this.sub = this.service.create(model).subscribe(data => {
+        this.service.create(model).subscribe(data => {
                 if (data) {
                     this.closeWindow();
-                    this.snackBar.open("Сообщение отправлено.", null, { duration: 5000 });
+                    this.snackBar.open("Сообщение отправлено");
                 }
             },
             e => console.log(e));

@@ -10,11 +10,11 @@ namespace MyLiverpool.Business.Services
 {
     public class ForumMessageService : IForumMessageService
     {
-        private readonly IForumMessageRepository _forumMessageRepository;
+        private readonly IGenericRepository<ForumMessage> _forumMessageRepository;
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
 
-        public ForumMessageService(IForumMessageRepository forumMessageRepository, IMapper mapper, IUserRepository userRepository)
+        public ForumMessageService(IGenericRepository<ForumMessage> forumMessageRepository, IMapper mapper, IUserRepository userRepository)
         {
             _forumMessageRepository = forumMessageRepository;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace MyLiverpool.Business.Services
         public async Task<ForumMessageDto> CreateAsync(ForumMessageDto dto)
         {
             var model = _mapper.Map<ForumMessage>(dto);
-            model = await _forumMessageRepository.AddAsync(model);
+            model = await _forumMessageRepository.CreateAsync(model);
             model.Author = await _userRepository.GetByIdAsync(model.AuthorId);
             
             return _mapper.Map<ForumMessageDto>(model);
@@ -32,7 +32,7 @@ namespace MyLiverpool.Business.Services
 
         public async Task<ForumMessageDto> UpdateAsync(ForumMessageDto dto)
         {
-            var model = await _forumMessageRepository.GetByIdAsync(dto.Id);
+            var model = await _forumMessageRepository.GetFirstByPredicateAsync(x => x.Id == dto.Id);
             model.LastModifiedTime = DateTime.Now;
             model.Message = dto.Message;
             await _forumMessageRepository.UpdateAsync(model);
@@ -41,7 +41,7 @@ namespace MyLiverpool.Business.Services
 
         public async Task<bool> DeleteAsync(int id)
         {
-            await _forumMessageRepository.DeleteAsync(id);
+            await _forumMessageRepository.DeleteAsync(x => x.Id == id);
             return true;
         }
     }
