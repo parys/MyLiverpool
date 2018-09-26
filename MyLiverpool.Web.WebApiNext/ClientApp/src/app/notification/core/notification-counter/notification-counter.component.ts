@@ -6,11 +6,13 @@ import { NotificationService } from "../notification.service";
 import { Notification } from "../../model";
 import { RolesCheckedService } from "@app/+auth";
 import { SignalRService } from "@app/+signalr";
+import { CustomTitleService } from "@app/shared";
+import { NOTIFICATIONS_ROUTE } from "@app/+constants";
 
 @Component({
     selector: "notification-counter",
     templateUrl: "./notification-counter.component.html",
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.Default
 })
 export class NotificationCounterComponent implements OnInit, OnDestroy {
     private sub: Subscription;
@@ -21,25 +23,34 @@ export class NotificationCounterComponent implements OnInit, OnDestroy {
         public roles: RolesCheckedService,
         private signalR: SignalRService,
         private router: Router,
+        private titleService: CustomTitleService,
         private cd: ChangeDetectorRef,
         private snackBar: MatSnackBar) { }
 
     public ngOnInit(): void {
         this.updateCount();
 
-        this.signalR.readNotify.subscribe(data => this.count -= data,
+        this.signalR.readNotify.subscribe(data => {
+            this.count -= data;
+                this.titleService.removeCount(this.count);
+            },
             () => {
                 this.cd.markForCheck();
             });
-        this.signalR.newNotify.subscribe((data : Notification) => {
+        this.signalR.newNotify.subscribe((data: Notification) => {
             this.count++;
-            this.snackBar.open("Вам пришло уведомление", this.action)
-                .onAction()
-                .subscribe(_ => {
-                    this.service.read(([data.id])).subscribe(_ =>
-                        this.router.navigate([`/${data.typeName}/${data.entityId}`], { fragment: data.commentId ? `com${data.commentId}` : "" }));
-                });
-        });
+                this.titleService.addCount(1);
+                this.snackBar.open("Новое уведомление", this.action)
+                    .onAction()
+                    .subscribe(_ => {
+                        this.service.read(([data.id])).subscribe(_ =>
+                            this.router.navigate([`/${data.typeName}/${data.entityId}`],
+                                { fragment: data.commentId ? `com${data.commentId}` : "" }));
+                    });
+            },
+            () => {
+                this.cd.markForCheck();
+            });
     }
 
     public ngOnDestroy(): void {
@@ -50,10 +61,11 @@ export class NotificationCounterComponent implements OnInit, OnDestroy {
         this.sub = this.service.getUnreadCount()
             .subscribe(data => {
                 this.count = +data;
+                    this.titleService.addCount(this.count);
                 if (+data > 0) {
-                    this.snackBar.open("У вас есть новые уведомления", this.action)
+                    this.snackBar.open("Есть новые уведомления", this.action)
                         .onAction()
-                        .subscribe(_ => this.router.navigate(["/notifications"]));
+                        .subscribe(_ => this.router.navigate([NOTIFICATIONS_ROUTE]));
                 }
                 },
             e => console.log(e),

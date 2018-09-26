@@ -9,12 +9,12 @@ import { NgxChartsModule } from "@swimlane/ngx-charts";
     imports: [
         SharedModule,
         RouterModule.forChild(pollCoreRoutes),
-        NgxChartsModule
+   //     NgxChartsModule
     ],
     declarations: [
     ],
     exports: [
-        NgxChartsModule
+    //    NgxChartsModule
     ],
     providers: [
         PollService

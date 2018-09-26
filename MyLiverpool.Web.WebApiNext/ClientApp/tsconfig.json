@@ -10,6 +10,7 @@
     "noEmit": false,
     "strictNullChecks": false,
     "noImplicitAny": true,
+    "noImplicitUseStrict": true,
     "allowUnreachableCode": false,
     "alwaysStrict": false,
     "skipDefaultLibCheck": true,

@@ -12,18 +12,21 @@ import { MatchCoreModule } from "../core";
 import { ClubCoreModule } from "@app/club";
 import { StadiumCoreModule } from "@app/stadium";
 import { SeasonCoreModule } from "@app/season";
+import { MatNativeDateModule, MatDatepickerModule } from "@angular/material";
 
 @NgModule({
     imports: [
         CommentCoreModule,
         SharedModule,
         MatchEventModule,
-        MatchPersonModule,
         RouterModule.forChild(matchRoutes),
+        MatchPersonModule,
         MatchCoreModule,
         ClubCoreModule,
         SeasonCoreModule,
-        StadiumCoreModule
+        StadiumCoreModule,
+        MatNativeDateModule,
+        MatDatepickerModule
     ],
     declarations: [
         MatchEditComponent,

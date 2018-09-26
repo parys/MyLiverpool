@@ -2,8 +2,9 @@
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
-import { Season } from "../../season.model";
-import { SeasonService } from "../../season.service";
+import { Season } from "../../model";
+import { SeasonService } from "../../core";
+import { SEASONS_ROUTE } from "@app/+constants";
 
 @Component({
     selector: "season-edit",
@@ -41,12 +42,9 @@ export class SeasonEditComponent implements OnInit, OnDestroy {
         const model: Season = this.editForm.value;
         model.id = this.id;
 
-        let res: Season;
-        if (this.id > 0) {
-            this.service.update(this.id, model).subscribe((data: Season) => res = data);
-        } else {
-            this.service.create(model).subscribe(data => res = data);
-        }
-        this.router.navigate(["/seasons"]);
+        this.service.createOrUpdate(this.id, model)
+            .subscribe((data: Season) => {
+                this.router.navigate([SEASONS_ROUTE]);
+            });
     }
 }

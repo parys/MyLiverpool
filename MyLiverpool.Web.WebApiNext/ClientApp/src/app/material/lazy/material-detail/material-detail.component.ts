@@ -1,15 +1,16 @@
 ﻿import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, PLATFORM_ID, Inject } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
-import { Title } from "@angular/platform-browser";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { Subscription } from "rxjs";
 import { MaterialService, MaterialActivateDialogComponent } from "../../core";
-import { Material } from "../../model";                
-import { MaterialType } from "@app/materialCategory";                
+import { Material } from "../../model";
+import { MaterialType } from "@app/materialCategory";
 import { DeleteDialogComponent } from "@app/shared";
 import { RolesCheckedService } from "@app/+auth";
 import { StorageService } from "@app/+storage";
+import { CustomTitleService } from "@app/shared";
+import { NEWS_RU, BLOG_RU } from "@app/+constants/ru.constants";
 
 @Component({
     selector: "material-detail",
@@ -20,10 +21,10 @@ import { StorageService } from "@app/+storage";
 
 export class MaterialDetailComponent implements OnInit, OnDestroy {
     private sub: Subscription;
-    private subs: Subscription;
+    private navigationSubscription: Subscription;
     public item: Material;
     public type: MaterialType;
-    
+
     constructor(private service: MaterialService,
         @Inject(PLATFORM_ID) private platformId: Object,
         private route: ActivatedRoute,
@@ -31,45 +32,26 @@ export class MaterialDetailComponent implements OnInit, OnDestroy {
         private storage: StorageService,
         public roles: RolesCheckedService,
         private router: Router,
-        private titleService: Title,
+        private titleService: CustomTitleService,
         private snackBar: MatSnackBar,
         private dialog: MatDialog) {
-    }
-
-    public ngOnInit(): void {
-        if (this.router.url.startsWith("/news")) {
-            this.titleService.setTitle("Новость");
-            this.type = MaterialType.News;
-            this.cd.markForCheck();
-        } else {
-            this.titleService.setTitle("Блог");
-            this.type = MaterialType.Blogs;
-            this.cd.markForCheck();
-        }
-        
-        this.sub = this.route.params.subscribe(params => {
-            //if (+params["id"] === 0) {
-            //    this.router.navigate(["/"]); //bug temporary workaround
-            //} else {
-                this.service.getSingle(+params["id"])
-                    .subscribe(data => {
-                            this.parse(data);
-                        },
-                    e => console.log(e),
-                    () => {
-                        if (isPlatformBrowser(this.platformId) && this.item.socialLinks) {
-                            ssn();
-                        }
-                        this.cd.markForCheck();
-                    });
-           // }
+        this.navigationSubscription = this.router.events.subscribe((e: any) => {
+            // If it is a NavigationEnd event re-initalise the component
+            if (e instanceof NavigationEnd) {
+                this.init();
+            }
         });
     }
 
-    public ngOnDestroy(): void {
-        if(this.sub) this.sub.unsubscribe();
+    public ngOnInit(): void {
+        this.init();
     }
-    
+
+    public ngOnDestroy(): void {
+        if (this.sub) this.sub.unsubscribe();
+        if (this.navigationSubscription) this.navigationSubscription.unsubscribe();
+    }
+
     public showActivateModal(): void {
         const dialogRef = this.dialog.open(MaterialActivateDialogComponent);
         dialogRef.afterClosed().subscribe(result => {
@@ -88,18 +70,45 @@ export class MaterialDetailComponent implements OnInit, OnDestroy {
         }, e => console.log(e));
     }
 
-    private activate() : void {
+    private init(): void {
+        if (this.router.url.startsWith("/news")) {
+            this.titleService.setTitle(NEWS_RU);
+            this.type = MaterialType.News;
+            this.cd.markForCheck();
+        } else {
+            this.titleService.setTitle(BLOG_RU);
+            this.type = MaterialType.Blogs;
+            this.cd.markForCheck();
+        }
+
+        this.sub = this.route.params.subscribe(params => {
+            this.service.getSingle(+params["id"])
+                .subscribe(data => {
+                    this.parse(data);
+                },
+                    e => console.log(e),
+                    () => {
+                        if (isPlatformBrowser(this.platformId) && this.item.socialLinks) {
+                            ssn();
+                        }
+                        this.cd.markForCheck();
+                    });
+            // }
+        });
+    }
+
+    private activate(): void {
         this.service.activate(this.item.id)
             .subscribe(res => {
-                    if (res) {
-                        this.item.pending = false;
-                        this.cd.markForCheck();
-                        this.snackBar.open("Материал успешно активирован");
-                    } else {
-                        this.snackBar.open("Материал НЕ БЫЛ активирован");
-                    }
-                },
-            e => console.log(e));
+                if (res) {
+                    this.item.pending = false;
+                    this.cd.markForCheck();
+                    this.snackBar.open("Материал активирован");
+                } else {
+                    this.snackBar.open("Материал НЕ активирован");
+                }
+            },
+                e => console.log(e));
     }
 
     private delete(): void {
@@ -110,7 +119,7 @@ export class MaterialDetailComponent implements OnInit, OnDestroy {
                 } else {
                     this.snackBar.open("Ошибка удаления");
                 }
-                },
+            },
                 e => console.log(e));
     }
 
@@ -118,7 +127,7 @@ export class MaterialDetailComponent implements OnInit, OnDestroy {
         this.titleService.setTitle(item.title);
         this.item = item;
         this.addView();
-    //    this.cd.detectChanges();
+        //    this.cd.detectChanges();
     }
 
     private addView(): void {

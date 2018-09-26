@@ -62,7 +62,7 @@ export class PmEditComponent implements OnInit, OnDestroy {
 
         this.sub = this.service.create(model).subscribe(data => {
             this.editPmForm.patchValue({ message: "" });
-                this.snackBar.open("Сообщение отправлено.", null, { duration: 5000 });
+                this.snackBar.open("Сообщение отправлено");
             },
             e => console.log(e));
     }

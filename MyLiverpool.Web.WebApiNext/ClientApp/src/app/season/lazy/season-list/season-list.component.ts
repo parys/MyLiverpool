@@ -1,9 +1,9 @@
 ﻿import { Component, OnInit } from "@angular/core";
-import { SeasonService } from "../../season.service";
-import { Season } from "../../season.model";
+import { SeasonService } from "../../core";
+import { Season } from "../../model";
 
 @Component({
-    selector: "<season-list>",
+    selector: "season-list",
     templateUrl: "./season-list.component.html"
 })
 export class SeasonListComponent implements OnInit {
@@ -13,7 +13,7 @@ export class SeasonListComponent implements OnInit {
     }
 
     public ngOnInit(): void {     
-        this.service.getAll().subscribe(data => this.seasons = data,
+        this.service.getAllWithoutFilter().subscribe(data => this.seasons = data,
             e => console.log(e));
     }
 

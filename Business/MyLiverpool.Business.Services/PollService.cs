@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MyLiverpool.Business.Contracts;
 using MyLiverpool.Business.Dto.Polls;
 using MyLiverpool.Data.Entities.Polls;
@@ -33,7 +34,7 @@ namespace MyLiverpool.Business.Services
         {
             var model = _mapper.Map<Poll>(dto);
             var newAnswers = model.Answers;
-            var oldAnswers = await _pollAnswerRepository.GetListAsync(x => x.PollId == dto.Id);
+            var oldAnswers = await _pollAnswerRepository.GetListAsync(filter: x => x.PollId == dto.Id);
             await UpdatePollAnswersAsync(oldAnswers, newAnswers);
             model.Answers = null;
             model = await _pollRepository.UpdateAsync(model);
@@ -43,19 +44,19 @@ namespace MyLiverpool.Business.Services
 
         public async Task<bool> DeleteAsync(int id)
         {
-            await _pollRepository.DeleteAsync(id);
+            await _pollRepository.DeleteAsync(x => x.Id == id);
             return true;
         }
 
         public async Task<PollDto> GetByIdAsync(int id)
         {
-            var model = await _pollRepository.GetByIdAsync(id, true, x=> x.Answers); //todo load answers and count or inner load?
+            var model = await _pollRepository.GetFirstByPredicateAsync(x => x.Id == id, true, x=> x.Include(p => p.Answers)); //todo load answers and count or inner load?
             return _mapper.Map<PollDto>(model);
         }
 
         public async Task<IEnumerable<PollDto>> GetListAsync()
         {
-            var model = await _pollRepository.GetListAsync(true);
+            var model = await _pollRepository.GetListAsync();
             return _mapper.Map<IEnumerable<PollDto>>(model);
         }
 
@@ -68,7 +69,6 @@ namespace MyLiverpool.Business.Services
 
             await _pollAnswerRepository.UpdateRangeAsync(GetAnswersToUpdate(oldAnswers, newAnswers));
             await _pollAnswerRepository.DeleteRangeAsync(GetAnswersToDelete(oldAnswers, newAnswers));
-
         }
 
         private IEnumerable<PollAnswer> GetAnswersToDelete(IEnumerable<PollAnswer> oldAnswers, IEnumerable<PollAnswer> newAnswers)

@@ -2,10 +2,10 @@
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Title } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { MaterialCategoryService } from "../../core";
 import { MaterialType } from "../../model";
+import { CustomTitleService } from "@app/shared";
 
 @Component({
     selector: "materialCategory-edit",
@@ -21,7 +21,7 @@ export class MaterialCategoryEditComponent implements OnInit, OnDestroy {
         private formBuilder: FormBuilder,
         private snackBar: MatSnackBar,
         private router: Router,
-        private titleService: Title,
+        private titleService: CustomTitleService,
         private route: ActivatedRoute) {
         if (this.router.url.startsWith("/newsCategories")) {
             this.titleService.setTitle("Категории новостей");
@@ -34,11 +34,7 @@ export class MaterialCategoryEditComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         this.editCategoryForm = this.formBuilder.group({
-            name: [
-                "", Validators.compose([
-                    Validators.required
-                ])
-            ],
+            name: ["", Validators.required],
             description: [""]
         });
         this.sub = this.route.params.subscribe(params => {
@@ -63,13 +59,13 @@ export class MaterialCategoryEditComponent implements OnInit, OnDestroy {
         if (this.id > 0) {
             this.service.update(this.id, model).subscribe(data => {
                 if (data) {
-                    this.snackBar.open("Категория успешно обновлена", null);
+                    this.snackBar.open("Категория обновлена", null);
                 }
             }, e => console.log(e));
         } else {
             this.service.create(model, this.type).subscribe(data => {
                 if (data) {
-                    this.snackBar.open("Категория успешно создана", null);
+                    this.snackBar.open("Категория создана", null);
                 }
             }, e => console.log(e));
         }

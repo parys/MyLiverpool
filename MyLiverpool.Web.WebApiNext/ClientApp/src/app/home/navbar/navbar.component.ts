@@ -1,5 +1,4 @@
 ﻿import { Component, Output, EventEmitter, ChangeDetectionStrategy } from "@angular/core";
-import { RolesCheckedService } from "@app/+auth";
 
 @Component({
     selector: "navbar",
@@ -9,6 +8,4 @@ import { RolesCheckedService } from "@app/+auth";
 })
 export class NavbarComponent {
     @Output() public toggle: EventEmitter<any> = new EventEmitter();
-    constructor(public roles: RolesCheckedService) {
-    }
 }

@@ -2,7 +2,7 @@
 import { ForumSectionListComponent } from "./forumSection";
 import { ForumSubsectionListComponent, ForumSubsectionEditComponent } from "./forumSubsection";
 import { ForumThemeListComponent, ForumThemeEditComponent } from "./forumTheme";
-import { RoleGuard } from "@app/+auth";
+import { RoleGuard, RolesEnum } from "@app/+auth";
 
 export const forumRoutes: Routes = [
     {
@@ -18,7 +18,7 @@ export const forumRoutes: Routes = [
                         component: ForumSubsectionEditComponent,
                         data: {
                             title: "Создание подраздела",
-                            roles: ["newsStart", "infoStart"]
+                            roles: [RolesEnum[RolesEnum.NewsStart], RolesEnum[RolesEnum.InfoStart]]
                         },
                         canActivate: [RoleGuard]
                     },
@@ -30,7 +30,7 @@ export const forumRoutes: Routes = [
                             {
                                 path: "edit",
                                 component: ForumThemeEditComponent,
-                                data: { title: "Создание темы", roles: ["newsStart"] },
+                                data: { title: "Создание темы", roles: [RolesEnum[RolesEnum.NewsStart]] },
                                 canActivate: [RoleGuard]
                             }
                         ]

@@ -3,7 +3,7 @@ import { RouterModule } from "@angular/router";
 import { SharedModule } from "@app/shared";
 import { roleGroupRoutes } from "./roleGroup.routes";
 import { RoleGroupListComponent } from "./roleGroup-list";
-import { RoleGroupCoreModule } from "../roleGroup-core.module";
+import { RoleGroupCoreModule } from "../core/roleGroup-core.module";
 
 @NgModule({
     imports: [

@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MyLiverpool.Business.Contracts;
 using MyLiverpool.Business.Dto;
 using MyLiverpool.Data.Common;
@@ -33,7 +34,7 @@ namespace MyLiverpool.Business.Services
 
         public async Task<MatchEventDto> UpdateAsync(MatchEventDto dto)
         {
-            var entity = await _matchEventRepository.GetByIdAsync(dto.Id);
+            var entity = await _matchEventRepository.GetFirstByPredicateAsync(x => x.Id == dto.Id);
             if (entity != null)
             {
                 entity.MatchId = dto.MatchId;
@@ -53,21 +54,23 @@ namespace MyLiverpool.Business.Services
 
         public async Task<bool> DeleteAsync(int id)
         {
-            await _matchEventRepository.DeleteAsync(id);
+            await _matchEventRepository.DeleteAsync(x => x.Id == id);
             return true;
         }
 
         public async Task<MatchEventDto> GetByIdAsync(int id)
         {
-            var model = await _matchEventRepository.GetByIdAsync(id, true, x => x.Season, x => x.Person);
+            var model = await _matchEventRepository.GetFirstByPredicateAsync(x => x.Id == id, true, x => x
+                .Include(z => z.Season)
+                .Include(z => z.Person));
             return model != null ? _mapper.Map<MatchEventDto>(model) : null;
         }
 
         public async Task<IEnumerable<MatchEventDto>> GetListByMatchIdAsync(int matchId)
         {
             var events =
-                await _matchEventRepository.GetListAsync(x => x.MatchId == matchId, SortOrder.Descending,
-                    x => x.Minute, x => x.Person);
+                await _matchEventRepository.GetListAsync(filter: x => x.MatchId == matchId, order: SortOrder.Descending,
+                    orderBy: x => x.Minute, include: me => me.Include(x => x.Person));
             return _mapper.Map<IEnumerable<MatchEventDto>>(events);
         }
 
@@ -77,13 +80,14 @@ namespace MyLiverpool.Business.Services
             {
                 seasonId = await _seasonService.GetCurrentSeasonIdAsync();
             }
-            var events = await _matchEventRepository.GetListAsync(
-                x => x.Match.SeasonId == seasonId && x.Match.MatchType != MatchTypeEnum.PreSeason && x.Person.Type != PersonType.Rival,
-                SortOrder.Unspecified,
-                null, x => x.Person, x => x.Match);
+            var events = _matchEventRepository.GetQueryableList(
+                filter: x => x.Match.SeasonId == seasonId
+                     && x.Match.MatchType != MatchTypeEnum.PreSeason
+                     && x.Person.Type != PersonType.Rival,
+                include: x => x.Include(mp => mp.Person).Include(mp => mp.Match));
             var persons = events.GroupBy(x => x.PersonId);
 
-            return persons.Select(person => new PersonStatisticDto
+            return await persons.Select(person => new PersonStatisticDto
                 {
                     PersonId = person.Key,
                     PersonName = person.First().Person.RussianName,
@@ -91,7 +95,7 @@ namespace MyLiverpool.Business.Services
                     Assists = Count(person.Where(x => x.Type == MatchEventType.Assist)),
                     Yellows = Count(person.Where(x => x.Type == MatchEventType.Yellow)),
                     Reds = Count(person.Where(x => x.Type == MatchEventType.Red))
-                });
+                }).ToListAsync();
         }
 
         private StatisticsDto Count(IEnumerable<MatchEvent> events)

@@ -1,6 +1,7 @@
 ﻿import { Injectable, ApplicationRef } from "@angular/core";
 import { Subject } from "rxjs";
 import { StorageService } from "@app/+storage";
+import { RolesEnum } from "./models/roles.enum";
 
 @Injectable()
 export class RolesCheckedService {
@@ -44,25 +45,25 @@ export class RolesCheckedService {
             return;
         };
         this.userRoles.isLogined = true;
-        this.userRoles.isEditor = this.checkRole("NewsFull") || this.checkRole("BlogFull");
-        this.userRoles.isNewsmaker = this.checkRole("NewsStart");
-        this.userRoles.isModerator = this.checkRole("UserStart");
-        this.userRoles.isMainModerator = this.checkRole("UserFull");
-        this.userRoles.isAdminAssistant = this.checkRole("AdminStart");
-        this.userRoles.isAdmin = this.checkRole("AdminFull");
-        this.userRoles.isAuthor = this.checkRole("BlogStart");
-        this.userRoles.isInformer = this.checkRole("InfoStart");
-        this.userRoles.isMainInformer = this.checkRole("InfoFull");
+        this.userRoles.isEditor = this.checkRole(RolesEnum[RolesEnum.NewsFull]) || this.checkRole(RolesEnum[RolesEnum.BlogFull]);
+        this.userRoles.isNewsmaker = this.checkRole(RolesEnum[RolesEnum.NewsStart]);
+        this.userRoles.isModerator = this.checkRole(RolesEnum[RolesEnum.UserStart]);
+        this.userRoles.isMainModerator = this.checkRole(RolesEnum[RolesEnum.UserFull]);
+        this.userRoles.isAdminAssistant = this.checkRole(RolesEnum[RolesEnum.AdminStart]);
+        this.userRoles.isAdmin = this.checkRole(RolesEnum[RolesEnum.AdminFull]);
+        this.userRoles.isAuthor = this.checkRole(RolesEnum[RolesEnum.BlogStart]);
+        this.userRoles.isInformer = this.checkRole(RolesEnum[RolesEnum.InfoStart]);
+        this.userRoles.isMainInformer = this.checkRole(RolesEnum[RolesEnum.InfoFull]);
         this.isLogined = true;
-        this.isEditor = this.checkRole("NewsFull") || this.checkRole("BlogFull");
-        this.isNewsmaker = this.checkRole("NewsStart");
-        this.isModerator = this.checkRole("UserStart");
-        this.isMainModerator = this.checkRole("UserFull");
-        this.isAdminAssistant = this.checkRole("AdminStart");
-        this.isAdmin = this.checkRole("AdminFull");
-        this.isAuthor = this.checkRole("BlogStart");
-        this.isInformer = this.checkRole("InfoStart");
-        this.isMainInformer = this.checkRole("InfoFull");
+        this.isEditor = this.checkRole(RolesEnum[RolesEnum.NewsFull]) || this.checkRole(RolesEnum[RolesEnum.BlogFull]);
+        this.isNewsmaker = this.checkRole(RolesEnum[RolesEnum.NewsStart]);
+        this.isModerator = this.checkRole(RolesEnum[RolesEnum.UserStart]);
+        this.isMainModerator = this.checkRole(RolesEnum[RolesEnum.UserFull]);
+        this.isAdminAssistant = this.checkRole(RolesEnum[RolesEnum.AdminStart]);
+        this.isAdmin = this.checkRole(RolesEnum[RolesEnum.AdminFull]);
+        this.isAuthor = this.checkRole(RolesEnum[RolesEnum.BlogStart]);
+        this.isInformer = this.checkRole(RolesEnum[RolesEnum.InfoStart]);
+        this.isMainInformer = this.checkRole(RolesEnum[RolesEnum.InfoFull]);
         this.rolesChanged.next(this.userRoles);
         this.cd.tick();
     }

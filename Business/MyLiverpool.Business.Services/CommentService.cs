@@ -148,6 +148,11 @@ namespace MyLiverpool.Business.Services
             return new PageableData<CommentDto>(commentDtos, page, commentsCount, ItemPerPage);
         }
 
+        public async Task<int> CountAsync(Expression<Func<MaterialComment, bool>> filter = null)
+        {
+            return await _commentService.GetCountAsync(filter);
+        }
+
         public async Task<bool> VerifyAsync(int id)
         {
             var comment = await _commentService.GetByIdAsync(id);
@@ -270,7 +275,7 @@ namespace MyLiverpool.Business.Services
 
             var link = parentComment.Type.ToString().ToLowerInvariant();
 
-            var callbackUrl = $"http://{host}/{link}/{parentComment.MaterialId ?? parentComment.MatchId}#com{commentId}";
+            var callbackUrl = $"https://{host}/{link}/{parentComment.MaterialId ?? parentComment.MatchId}#com{commentId}";
             return $"Пользователь {authorUserName} оставил <a href=\"{callbackUrl}\">ответ</a> на ваш комментарий: \"{commentText}\".";
         }
 

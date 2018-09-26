@@ -4,8 +4,10 @@ import { MatPaginator, MatSort, MatSelect, MatDialog } from "@angular/material";
 import { ActivatedRoute } from "@angular/router";
 import { merge, of, Observable, fromEvent } from "rxjs";
 import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged } from "rxjs/operators";
-import { Person, PersonService, PersonType, PersonFilters } from "@app/person/core";
+import { PersonService } from "@app/person/core";
+import { Person, PersonType, PersonFilters } from "@app/person/model";
 import { Pageable, DeleteDialogComponent } from "@app/shared";
+import { KEYUP, DEBOUNCE_TIME, PERSONS_ROUTE, PAGE } from "@app/+constants";
 
 @Component({
     selector: "person-list",
@@ -34,14 +36,14 @@ export class PersonListComponent implements OnInit {
 
         merge(this.sort.sortChange,
             this.typeSelect.selectionChange,
-            fromEvent(this.nameInput.nativeElement, "keyup")
-                .pipe(debounceTime(1000),
+            fromEvent(this.nameInput.nativeElement, KEYUP)
+                .pipe(debounceTime(DEBOUNCE_TIME),
                     distinctUntilChanged()))
             .subscribe(() => this.paginator.pageIndex = 0);
 
         merge(this.sort.sortChange, this.paginator.page, this.typeSelect.selectionChange,
-            fromEvent(this.nameInput.nativeElement, "keyup")
-                .pipe(debounceTime(1000),
+            fromEvent(this.nameInput.nativeElement, KEYUP)
+                .pipe(debounceTime(DEBOUNCE_TIME),
                     distinctUntilChanged()))
             .pipe(
                 startWith({}),
@@ -94,7 +96,7 @@ export class PersonListComponent implements OnInit {
     }
 
     private updateUrl(): void {
-        let newUrl = `persons?page=${this.paginator.pageIndex + 1}`;
+        let newUrl = `${PERSONS_ROUTE}?${PAGE}=${this.paginator.pageIndex + 1}`;
 
         const name = this.nameInput.nativeElement.value;
         if (name) {

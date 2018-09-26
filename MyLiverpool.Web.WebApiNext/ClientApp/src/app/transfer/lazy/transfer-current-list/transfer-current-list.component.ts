@@ -7,7 +7,7 @@ import { Transfer } from "@app/transfer/model";
 import { RolesCheckedService } from "@app/+auth";
 
 @Component({
-    selector: "<transfer-current-list>",
+    selector: "transfer-current-list",
     templateUrl: "./transfer-current-list.component.html",
     styleUrls: ["./transfer-current-list.component.scss"]
 })

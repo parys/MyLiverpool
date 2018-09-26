@@ -4,10 +4,12 @@ import { MatPaginator, MatSort, MatSelect } from "@angular/material";
 import { ActivatedRoute } from "@angular/router";
 import { User, UserFilters, UserService } from "@app/user";
 import { merge, of, Observable, fromEvent } from "rxjs";
-import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { RoleGroup, RoleGroupService } from "@app/roleGroup";
 import { Pageable } from "@app/shared";
 import { RolesCheckedService } from "@app/+auth";
+import { KEYUP, DEBOUNCE_TIME, PAGE, USERS_ROUTE } from "@app/+constants";
+
 
 @Component({
     selector: "user-list",
@@ -25,6 +27,7 @@ export class UserListComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild("roleSelect") roleSelect: MatSelect;
     @ViewChild("userInput") userInput: ElementRef;
+    @ViewChild("ipInput") ipInput: ElementRef;
 
     constructor(private userService: UserService,
         private location: Location,
@@ -37,19 +40,24 @@ export class UserListComponent implements OnInit {
         this.paginator.pageIndex = +this.route.snapshot.queryParams["page"] - 1 || 0;
         this.paginator.pageSize = +this.route.snapshot.queryParams["itemsPerPage"] || 15;
         this.userInput.nativeElement.value = this.route.snapshot.queryParams["userName"] || "";
+        this.ipInput.nativeElement.value = this.route.snapshot.queryParams["ip"] || "";
         this.roleSelect.value = this.route.snapshot.queryParams["roleGroupId"] || "";
         this.updateRoleGroups();
 
         merge(this.sort.sortChange,
-                this.roleSelect.selectionChange,
-            fromEvent(this.userInput.nativeElement, "keyup")
-                .pipe(debounceTime(1000),
+            this.roleSelect.selectionChange,
+            fromEvent(this.userInput.nativeElement, KEYUP),
+            fromEvent(this.ipInput.nativeElement, KEYUP)
+                .pipe(debounceTime(DEBOUNCE_TIME),
                     distinctUntilChanged()))
             .subscribe(() => this.paginator.pageIndex = 0);
 
-        merge(this.sort.sortChange, this.paginator.page, this.roleSelect.selectionChange,
-                fromEvent(this.userInput.nativeElement, "keyup")
-                .pipe(debounceTime(1000),
+        merge(this.sort.sortChange,
+            this.paginator.page,
+            this.roleSelect.selectionChange,
+            fromEvent(this.userInput.nativeElement, KEYUP),
+            fromEvent(this.ipInput.nativeElement, KEYUP)
+                .pipe(debounceTime(DEBOUNCE_TIME),
                     distinctUntilChanged()))
             .pipe(
                 startWith({}),
@@ -66,15 +74,14 @@ export class UserListComponent implements OnInit {
                 catchError(() => {
                     return of([]);
                 })
-        ).subscribe(data => {
-            this.items = data;
-                    this.updateUrl();
-                },
+            ).subscribe(data => {
+                this.items = data;
+                this.updateUrl();
+            },
                 e => console.log(e));
     }
 
     public writePm(index: number): void {
-        console.log(index);
         this.selectedUserIndex = index;
     }
 
@@ -88,6 +95,7 @@ export class UserListComponent implements OnInit {
         filters.itemsPerPage = this.paginator.pageSize;
         filters.roleGroupId = this.roleSelect.value;
         filters.userName = this.userInput.nativeElement.value;
+        filters.ip = this.ipInput.nativeElement.value;
         filters.sortBy = this.sort.active;
         filters.order = this.sort.direction;
 
@@ -96,7 +104,7 @@ export class UserListComponent implements OnInit {
     }
 
     private updateUrl(): void {
-        let newUrl = `users?page=${this.paginator.pageIndex + 1}`;
+        let newUrl = `${USERS_ROUTE}?${PAGE}=${this.paginator.pageIndex + 1}`;
 
         const userName = this.userInput.nativeElement.value;
         if (userName) {

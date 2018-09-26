@@ -1,7 +1,7 @@
 ﻿import { Routes } from "@angular/router";
 import { StaticPageComponent } from "./static-page";
 import { HelperType } from "@app/admin";
-import { RoleGuard } from "@app/+auth";
+import { RoleGuard, RolesEnum } from "@app/+auth";
 
 export const homeRoutes: Routes = [
     {
@@ -20,14 +20,13 @@ export const homeRoutes: Routes = [
     { path: "job", component: StaticPageComponent, data: { title: "Работа на сайте", type: HelperType.Job } },
     { path: "fantasy", component: StaticPageComponent, data: { title: "Фэнтази лиги", type: HelperType.Fantasy } },
     { path: "cooperation", component: StaticPageComponent, data: { title: "Сотрудничество", type: HelperType.Cooperation } },
- //   { path: "players/statistics", component: StaticPageComponent, data: { title: "Статистика игроков", type: HelperType.Strikers } },
     {
         path: "instructions",
         component: StaticPageComponent,
         data: {
             title: "Инструкции",
             type: HelperType.Instructions,
-            roles: ["adminStart"]
+            roles: [RolesEnum[RolesEnum.AdminStart]]
         },
         canActivate: [RoleGuard]
     },
@@ -37,7 +36,7 @@ export const homeRoutes: Routes = [
         data: {
             title: "Планы",
             type: HelperType.Plans,
-            roles: ["adminStart"]
+            roles: [RolesEnum[RolesEnum.AdminStart]]
         },
         canActivate: [RoleGuard]
     }

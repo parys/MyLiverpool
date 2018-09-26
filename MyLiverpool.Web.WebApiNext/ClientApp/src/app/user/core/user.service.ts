@@ -1,36 +1,18 @@
 ﻿import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Pageable } from "@app/shared";
 import { HttpWrapper } from "@app/+httpWrapper";
-import { UserFilters } from "./userFilters.model";
-import { User } from "./user.model";
+import { UserFilters, User, UserConfig } from "../model";
 import { UsersOnline } from "@app/+common-models";
-import { UserConfig } from "./user-config.model";
+import { USERS_ROUTE } from "@app/+constants";
+import { BaseRestService } from "@app/+infrastructure";
 
 @Injectable()
-export class UserService {
-    private actionUrl: string = "user/";
+export class UserService extends BaseRestService<User, UserFilters> {
+    private actionUrl: string = USERS_ROUTE + "/";
 
-    constructor(private http: HttpWrapper) {
+    constructor(public http: HttpWrapper) {
+        super(http, USERS_ROUTE + "/");
     }
-
-    public getAll(filters: UserFilters): Observable<Pageable<User>> {
-        return this.http.get<Pageable<User>>(this.actionUrl + "list/" + encodeURIComponent(JSON.stringify(filters)));
-    };
-
-    public getSingle(id: number): Observable<User> {
-        return this.http.get<User>(this.actionUrl + id);
-    };
-
-    public getListByUserName(typed: string): Observable<User[]> {
-        return this.http.get<User[]>(`${this.actionUrl}getUserNames?typed=${typed}`);
-    };
-
- //   public update(itemToUpdate: User): Observable<User>;
-   // update(): any;
-    public update(itemToUpdate?: User): Observable<User> {
-        return this.http.put<User>(this.actionUrl, JSON.stringify(itemToUpdate));
-    };
 
     public updateRoleGroup(id: number, roleGroupId: number): Observable<boolean> {
         return this.http.put<boolean>(`${this.actionUrl}updateRoleGroup/${id}/${roleGroupId}`, "");

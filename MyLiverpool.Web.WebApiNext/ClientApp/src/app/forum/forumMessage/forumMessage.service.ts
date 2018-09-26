@@ -8,7 +8,7 @@ export class ForumMessageService {
     private actionUrl: string;
 
     constructor(private http: HttpWrapper) {
-        this.actionUrl = "forumMessage/";
+        this.actionUrl = "/";
     }
 
     // getAll = (): Observable<ForumMessage[]> => {

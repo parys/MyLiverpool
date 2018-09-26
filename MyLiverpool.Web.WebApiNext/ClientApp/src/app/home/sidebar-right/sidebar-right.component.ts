@@ -5,7 +5,7 @@ import { RolesCheckedService, AuthService } from "@app/+auth";
     selector: "sidebar-right",
     templateUrl: "./sidebar-right.component.html",
     styleUrls: ["./sidebar-right.component.scss"],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.Default
 })
 export class SidebarRightComponent {
     constructor(public roles: RolesCheckedService,

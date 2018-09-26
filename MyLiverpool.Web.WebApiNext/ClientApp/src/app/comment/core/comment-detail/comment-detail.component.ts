@@ -78,7 +78,7 @@ export class CommentDetailComponent implements OnInit, OnDestroy {
     }
 
     public showDeleteModal(): void {
-        let dialogRef = this.dialog.open(DeleteDialogComponent);
+        const dialogRef = this.dialog.open(DeleteDialogComponent);
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.delete();
@@ -94,7 +94,7 @@ export class CommentDetailComponent implements OnInit, OnDestroy {
     public addComment(): void {
         this.commentForm.markAsPending();
         let comment = this.getNewComment();
-        this.materialCommentService.create(comment)
+        this.materialCommentService.createOrUpdate(comment.id, comment)
             .subscribe(data => {
                 this.item.children.push(data);
                 this.cancelAdding();
@@ -137,7 +137,7 @@ export class CommentDetailComponent implements OnInit, OnDestroy {
     public editComment(): void {
         this.commentForm.markAsPending();
         const comment: Comment = this.getComment();
-        this.materialCommentService.update(this.item.id, comment)
+        this.materialCommentService.createOrUpdate(this.item.id, comment)
             .subscribe(data => {
                 this.item = comment;
                 this.cancelEdit();

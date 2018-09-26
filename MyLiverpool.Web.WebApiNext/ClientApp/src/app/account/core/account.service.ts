@@ -2,13 +2,14 @@
 import { Observable } from "rxjs";
 import { HttpWrapper } from "@app/+httpWrapper";
 import { ResetPassword, ChangePassword } from "../model";
+import { ACCOUNT_ROUTE } from "@app/+constants";
 
 @Injectable()
 export class AccountService {
     private actionUrl: string;
 
     constructor(private http: HttpWrapper) {
-        this.actionUrl = "account/";
+        this.actionUrl = ACCOUNT_ROUTE + "/";
     }
 
     public confirmEmail(userId: number, code: string): Observable<boolean> {

@@ -1,12 +1,12 @@
 ﻿import { Component, OnInit, OnDestroy, PLATFORM_ID, Inject } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { isPlatformBrowser } from "@angular/common";  
 import { BehaviorSubject, Subscription, interval } from "rxjs";
-import { Title } from "@angular/platform-browser";
 import { map } from "rxjs/operators";
 import { MatchService } from "@app/match/core";
 import { Match } from "@app/match/model";
 import { RolesCheckedService } from "@app/+auth";
+import { CustomTitleService } from "@app/shared";
 
 @Component({
     selector: "match-detail",
@@ -15,17 +15,38 @@ import { RolesCheckedService } from "@app/+auth";
 })
 export class MatchDetailComponent implements OnInit, OnDestroy {
     private sub$: Subscription;
+    private sub2: Subscription;
     public item: Match;
     public countDown$: BehaviorSubject<string>;
 
-    constructor(private matchService: MatchService,
+    constructor(private router: Router,
+        private matchService: MatchService,
         public roles: RolesCheckedService,
-        private title: Title,
+        private title: CustomTitleService,
         @Inject(PLATFORM_ID) private platformId: Object,
         private route: ActivatedRoute) {
+        this.sub2 = this.router.events.subscribe((e: any) => {
+            // If it is a NavigationEnd event re-initalise the component
+            if (e instanceof NavigationEnd) {
+                this.init();
+            }
+        });
     }
 
     public ngOnInit(): void {
+        this.init();
+    }
+
+    public ngOnDestroy(): void {
+        if (this.sub$) this.sub$.unsubscribe();
+        if (this.sub2) this.sub2.unsubscribe();
+    }
+
+    public pin(id?: number): void {
+        this.matchService.pin(id).subscribe(data => data, e => console.log(e));
+    }
+
+    private init(): void {
         const id = this.route.snapshot.params["id"];
         if (id) {
             this.matchService.getSingle(id)
@@ -49,14 +70,6 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
                     },
                     e => console.log(e));
         };
-    }
-
-    public ngOnDestroy(): void {
-        if (this.sub$) this.sub$.unsubscribe();
-    }
-
-    public pin(id?: number): void {
-        this.matchService.pin(id).subscribe(data => data, e => console.log(e));
     }
 
     private updateTimeRemaining(endtime: Date): string {

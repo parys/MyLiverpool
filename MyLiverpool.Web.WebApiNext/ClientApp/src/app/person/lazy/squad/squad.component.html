@@ -1,92 +1,92 @@
 ﻿<h2>Cостав:</h2>
-<nav mat-tab-nav-bar>
-    <a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index"
-       [routerLink]="routeLink.link"
-       [active]="activeLinkIndex === i"
-       (click)="activeLinkIndex = i"
-       [textContent]="routeLink.label"></a>
-</nav>
-<div *ngIf="item?.goalkeepers.length > 0">
-    <h3>Вратари:</h3>
-    <div class="flex-space-around">
-        <div *ngFor="let person of item?.goalkeepers">
-            <mat-card class="stuff-card">
-                <mat-card-header>
-                    <mat-card-title>
-                        <b *ngIf="person.number">#<span [textContent]="person.number"></span></b>&nbsp;
-                        <span role="button" *ngIf="roles.isInformer" [routerLink]="['/persons', person.id, 'edit']" [textContent]="person.russianName"></span>
-                        <span *ngIf="!roles.isInformer" [textContent]="person.russianName"></span>
-                    </mat-card-title>
-                </mat-card-header>
-                <img mat-card-image [src]="person.photo" [alt]="person.russianName">
-                <mat-card-content>
-                    <p *ngIf="person.country"><span [textContent]="person.country"></span></p>&nbsp;
-                    <p><span [textContent]="person.birthday | date"></span></p>
-                </mat-card-content>
-            </mat-card>
+<mat-tab-group [selectedIndex]="activeLinkIndex"
+               (selectedIndexChange)="changeTab($event)">
+    <mat-tab *ngFor="let routeLink of routeLinks; let i = index"
+             [label]="routeLink.label">
+        <div *ngIf="item?.goalkeepers.length > 0">
+            <h3>Вратари:</h3>
+            <div class="flex-space-around">
+                <div *ngFor="let person of item?.goalkeepers">
+                    <mat-card class="stuff-card">
+                        <mat-card-header>
+                            <mat-card-title>
+                                <b *ngIf="person.number">#<span [textContent]="person.number"></span></b>&nbsp;
+                                <span role="button" *ngIf="roles.isInformer" [routerLink]="['/persons', person.id, 'edit']" [textContent]="person.russianName"></span>
+                                <span *ngIf="!roles.isInformer" [textContent]="person.russianName"></span>
+                            </mat-card-title>
+                        </mat-card-header>
+                        <img mat-card-image [src]="person.photo" [alt]="person.russianName">
+                        <mat-card-content>
+                            <p *ngIf="person.country"><span [textContent]="person.country"></span></p>&nbsp;
+                            <p><span [textContent]="person.birthday | date"></span></p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-<div *ngIf="item?.defenders.length > 0">
-    <h3>Защитники:</h3>
-    <div class="flex-space-around">
-        <div *ngFor="let person of item?.defenders">
-            <mat-card class="stuff-card">
-                <mat-card-header>
-                    <mat-card-title>
-                        <b *ngIf="person.number">#<span [textContent]="person.number"></span></b>&nbsp;
-                        <span role="button" *ngIf="roles.isInformer" [routerLink]="['/persons', person.id, 'edit']" [textContent]="person.russianName"></span>
-                        <span *ngIf="!roles.isInformer" [textContent]="person.russianName"></span>
-                    </mat-card-title>
-                </mat-card-header>
-                <img mat-card-image [src]="person.photo" [alt]="person.russianName">
-                <mat-card-content>
-                    <p *ngIf="person.country"><span [textContent]="person.country"></span></p>
-                    <p><span [textContent]="person.birthday | date"></span></p>
-                </mat-card-content>
-            </mat-card>
+        <div *ngIf="item?.defenders.length > 0">
+            <h3>Защитники:</h3>
+            <div class="flex-space-around">
+                <div *ngFor="let person of item?.defenders">
+                    <mat-card class="stuff-card">
+                        <mat-card-header>
+                            <mat-card-title>
+                                <b *ngIf="person.number">#<span [textContent]="person.number"></span></b>&nbsp;
+                                <span role="button" *ngIf="roles.isInformer" [routerLink]="['/persons', person.id, 'edit']" [textContent]="person.russianName"></span>
+                                <span *ngIf="!roles.isInformer" [textContent]="person.russianName"></span>
+                            </mat-card-title>
+                        </mat-card-header>
+                        <img mat-card-image [src]="person.photo" [alt]="person.russianName">
+                        <mat-card-content>
+                            <p *ngIf="person.country"><span [textContent]="person.country"></span></p>
+                            <p><span [textContent]="person.birthday | date"></span></p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
         </div>
-    </div>
-    </div>
-<div *ngIf="item?.midfielders.length > 0">
-    <h3>Полузащитники:</h3>
-    <div class="flex-space-around">
-        <div *ngFor="let person of item?.midfielders">
-            <mat-card class="stuff-card">
-                <mat-card-header>
-                    <mat-card-title>
-                        <b *ngIf="person.number">#<span [textContent]="person.number"></span></b>&nbsp;
-                        <span role="button" *ngIf="roles.isInformer" [routerLink]="['/persons', person.id, 'edit']" [textContent]="person.russianName"></span>
-                        <span *ngIf="!roles.isInformer" [textContent]="person.russianName"></span>
-                    </mat-card-title>
-                </mat-card-header>
-                <img mat-card-image [src]="person.photo" [alt]="person.russianName">
-                <mat-card-content>
-                    <p *ngIf="person.country"><span [textContent]="person.country"></span></p>
-                    <p><span [textContent]="person.birthday | date"></span></p>
-                </mat-card-content>
-            </mat-card>
+        <div *ngIf="item?.midfielders.length > 0">
+            <h3>Полузащитники:</h3>
+            <div class="flex-space-around">
+                <div *ngFor="let person of item?.midfielders">
+                    <mat-card class="stuff-card">
+                        <mat-card-header>
+                            <mat-card-title>
+                                <b *ngIf="person.number">#<span [textContent]="person.number"></span></b>&nbsp;
+                                <span role="button" *ngIf="roles.isInformer" [routerLink]="['/persons', person.id, 'edit']" [textContent]="person.russianName"></span>
+                                <span *ngIf="!roles.isInformer" [textContent]="person.russianName"></span>
+                            </mat-card-title>
+                        </mat-card-header>
+                        <img mat-card-image [src]="person.photo" [alt]="person.russianName">
+                        <mat-card-content>
+                            <p *ngIf="person.country"><span [textContent]="person.country"></span></p>
+                            <p><span [textContent]="person.birthday | date"></span></p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-<div *ngIf="item?.strikers.length > 0">
-    <h3>Нападающие:</h3>
-    <div class="flex-space-around">
-        <div *ngFor="let person of item?.strikers">
-            <mat-card class="stuff-card">
-                <mat-card-header>
-                    <mat-card-title>
-                        <b *ngIf="person.number">#<span [textContent]="person.number"></span></b>&nbsp;
-                        <span role="button" *ngIf="roles.isInformer" [routerLink]="['/persons', person.id, 'edit']" [textContent]="person.russianName"></span>
-                        <span *ngIf="!roles.isInformer" [textContent]="person.russianName"></span>
-                    </mat-card-title>
-                </mat-card-header>
-                <img mat-card-image [src]="person.photo" [alt]="person.russianName">
-                <mat-card-content>
-                    <p *ngIf="person.country"><span [textContent]="person.country"></span></p>
-                    <p><span [textContent]="person.birthday | date"></span></p>
-                </mat-card-content>
-            </mat-card>
+        <div *ngIf="item?.strikers.length > 0">
+            <h3>Нападающие:</h3>
+            <div class="flex-space-around">
+                <div *ngFor="let person of item?.strikers">
+                    <mat-card class="stuff-card">
+                        <mat-card-header>
+                            <mat-card-title>
+                                <b *ngIf="person.number">#<span [textContent]="person.number"></span></b>&nbsp;
+                                <span role="button" *ngIf="roles.isInformer" [routerLink]="['/persons', person.id, 'edit']" [textContent]="person.russianName"></span>
+                                <span *ngIf="!roles.isInformer" [textContent]="person.russianName"></span>
+                            </mat-card-title>
+                        </mat-card-header>
+                        <img mat-card-image [src]="person.photo" [alt]="person.russianName">
+                        <mat-card-content>
+                            <p *ngIf="person.country"><span [textContent]="person.country"></span></p>
+                            <p><span [textContent]="person.birthday | date"></span></p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    </mat-tab>
+</mat-tab-group>
+

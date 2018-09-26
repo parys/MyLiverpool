@@ -3,12 +3,12 @@ import { SharedModule } from "@app/shared";
 import { MatchPersonEditPanelComponent } from "./matchPerson-edit-panel";
 import { MatchPersonService } from "./matchPerson.service";
 import { MatchPersonPanelComponent } from "./matchPerson-panel";
-import { PersonCoreModule } from "@app/person";
+import { PersonEditModule } from "@app/person";
 
 @NgModule({
     imports: [
         SharedModule,
-        PersonCoreModule
+        PersonEditModule
     ],
     declarations: [
         MatchPersonEditPanelComponent,

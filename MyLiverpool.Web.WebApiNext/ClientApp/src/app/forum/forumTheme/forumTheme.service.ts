@@ -2,17 +2,18 @@
 import { Observable } from "rxjs";
 import { HttpWrapper } from "@app/+httpWrapper";
 import { ForumTheme } from "./forumTheme.model";
+import { FORUM_THEMES_ROUTE } from "@app/+constants";
 
 @Injectable()
 export class ForumThemeService {
     private actionUrl: string;
 
     constructor(private http: HttpWrapper) {
-        this.actionUrl = "forumTheme/";
+        this.actionUrl = FORUM_THEMES_ROUTE + "/";
     }
 
     public getAll(): Observable<ForumTheme[]> {
-        return this.http.get<ForumTheme[]>(this.actionUrl + "list/");
+        return this.http.get<ForumTheme[]>(this.actionUrl);
     };
 
     public getSingle(id: number): Observable<ForumTheme> {

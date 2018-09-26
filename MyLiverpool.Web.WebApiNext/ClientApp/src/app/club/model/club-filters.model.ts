@@ -1,7 +1,5 @@
-﻿export class ClubFilters {
+﻿import { BaseRestFilter } from "@app/+infrastructure";
+
+export class ClubFilters extends BaseRestFilter {
     public name: string;
-    public page: number;
-    itemsPerPage: number = 15;
-    order: string;
-    sortBy: string;
 }

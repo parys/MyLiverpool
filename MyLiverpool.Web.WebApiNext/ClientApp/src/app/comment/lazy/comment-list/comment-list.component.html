@@ -1,24 +1,7 @@
-﻿    <form *ngIf="roles.isModerator" class="flex-v-c flex-space-between" [formGroup]="filterForm" (ngSubmit)="update()">
-    <mat-checkbox formControlName="onlyUnverified" color="warn">Только непроверенные</mat-checkbox>
-    <mat-form-field>
-        <mat-select placeholder="Количество на странице" color="warn" formControlName="itemsPerPage">
-            <mat-option *ngFor="let interval of intervalArray" [value]="interval.value" [textContent]="interval.key"></mat-option>
-        </mat-select>
-    </mat-form-field>
-    <button mat-raised-button color="primary">Отфильтровать</button>
-</form>
-<div *ngFor="let comment of items | paginate: { itemsPerPage: itemsPerPage,
-                                                      currentPage: page,
-                                                      totalItems: totalItems }; let i = index;">
+﻿<div *ngIf="roles.isModerator" class="flex-v-c flex-space-between">
+    <mat-checkbox #onlyUnverified color="warn">Только непроверенные</mat-checkbox>
+</div>
+<div *ngFor="let comment of items">
     <comment-detail [item]="comment" [deep]="0" [canCommentary]="false"></comment-detail>
 </div>
-<div class="pagination">
-    <pagination-controls (pageChange)="pageChanged($event)"
-                         directionLinks="true"
-                         autoHide="true"
-                         previousLabel="Назад"
-                         nextLabel="Вперед"
-                         screenReaderPaginationLabel="Постраничный вид"
-                         screenReaderPageLabel="Страница"
-                         screenReaderCurrentLabel="Вы на странице"></pagination-controls>
-</div>
+<mat-paginator [showFirstLastButtons]="true" [pageSizeOptions]="[15, 25, 50]"></mat-paginator>

@@ -2,13 +2,14 @@
 import { Observable } from "rxjs";
 import { Image } from "../model";
 import { HttpWrapper } from "@app/+httpWrapper";
+import { IMAGES_ROUTE } from "@app/+constants";
 
 @Injectable()
 export class ImageService {
     private actionUrl: string;
 
     constructor(private http: HttpWrapper) {
-        this.actionUrl = "image/";
+        this.actionUrl = IMAGES_ROUTE + "/";
     }
 
     public get(path: string): Observable<Image[]> {

@@ -1,3 +1,2 @@
-﻿export * from "./roleGroup.model";
-export * from "./roleGroup-core.module";
-export * from "./roleGroup.service";
+﻿export * from "./core";
+export * from "./model";

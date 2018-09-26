@@ -1,6 +1,5 @@
 ﻿import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { PersonEditComponent } from "./person-edit";
 import { PersonBirthdayComponent } from "./person-birthday";
 import { PersonService } from "./person.service";
 import { BestPlayerComponent } from "./best-player";
@@ -14,13 +13,12 @@ import { SharedModule } from "@app/shared";
     ],
     declarations: [
         BestPlayerComponent,
-        PersonBirthdayComponent,
-        PersonEditComponent
+        PersonBirthdayComponent
+
     ],
     exports: [
         BestPlayerComponent,
-        PersonBirthdayComponent,
-        PersonEditComponent
+        PersonBirthdayComponent
     ],
     providers: [
         PersonService

@@ -22,12 +22,12 @@ namespace MigratorVnext
 {
     public class Program
     {
-        private static readonly IForumMessageRepository ForumMessageRepository;
-        private static readonly IForumSectionRepository ForumSectionRepository;
+        private static readonly IGenericRepository<ForumMessage> ForumMessageRepository;
+        private static readonly IGenericRepository<ForumSection> ForumSectionRepository;
         private static readonly IForumSubsectionRepository ForumSubsectionRepository;
         private static readonly IForumThemeRepository ForumThemeRepository;
         private static readonly IMaterialRepository MaterialRepository;
-        private static readonly IMaterialCategoryRepository MaterialCategoryRepository;
+        private static readonly IGenericRepository<MaterialCategory> MaterialCategoryRepository;
         private static readonly IMaterialCommentRepository MaterialCommentRepository;
         private static readonly IUserRepository UserRepository;
         private const string Path = @"D:\\downloads\11\_s1\";
@@ -59,12 +59,12 @@ namespace MigratorVnext
             var userManager = new UserManager<User>(store, options, hasher, null, null, normalizer, null, null, null);
 
             UserRepository = new UserRepository(_db, userManager);
-            ForumMessageRepository = new ForumMessageRepository(GetNewContext());
-            ForumSectionRepository = new ForumSectionRepository(GetNewContext());
+            ForumMessageRepository = new GenericRepository<ForumMessage>(GetNewContext());
+            ForumSectionRepository = new GenericRepository<ForumSection>(GetNewContext());
             ForumSubsectionRepository = new ForumSubsectionRepository(GetNewContext());
             ForumThemeRepository = new ForumThemeRepository(GetNewContext());
             MaterialRepository = new MaterialRepository(GetNewContext());
-            MaterialCategoryRepository = new MaterialCategoryRepository(GetNewContext());
+            MaterialCategoryRepository = new GenericRepository<MaterialCategory>(GetNewContext());
             MaterialCommentRepository = new MaterialCommentRepository(GetNewContext());
 
         }
@@ -575,7 +575,7 @@ namespace MigratorVnext
                     limit = MaxChars;
                 }
 
-                var categories = MaterialCategoryRepository.GetAsync().Result.Where(x => x.MaterialType == MaterialType.Blogs).ToList();
+                var categories = MaterialCategoryRepository.GetListAsync().Result.Where(x => x.MaterialType == MaterialType.Blogs).ToList();
 
                 for (int i = 0; i < limit; i++)
                 {
@@ -912,7 +912,7 @@ namespace MigratorVnext
                     limit = MaxChars * 10;
                 }
                 
-                var categories = MaterialCategoryRepository.GetAsync().Result.Where(x => x.MaterialType == MaterialType.News).ToList();
+                var categories = MaterialCategoryRepository.GetListAsync().Result.Where(x => x.MaterialType == MaterialType.News).ToList();
 
                 for (int i = 0; i < limit; i++)
                 {
@@ -1327,7 +1327,7 @@ namespace MigratorVnext
                     i++;
                     
                     Console.Write("| " + (i * 1.00 / chars.Length).ToString("P"));
-                    var result = MaterialCategoryRepository.AddAsync(blogCategory).Result;
+                    var result = MaterialCategoryRepository.CreateAsync(blogCategory).Result;
                 }
              //    MaterialCategoryRepository.SaveChangesAsync().Wait();
             }
@@ -1402,7 +1402,7 @@ namespace MigratorVnext
                         }
                         i++;
                     }
-                    var result = MaterialCategoryRepository.AddAsync(newsCategory).Result;
+                    var result = MaterialCategoryRepository.CreateAsync(newsCategory).Result;
                     Console.Write("| " + (i * 1.00 / chars.Length).ToString("P"));
                 }
               //    MaterialCategoryRepository.SaveChangesAsync().Wait();
@@ -1721,7 +1721,7 @@ namespace MigratorVnext
                             forumSection.Name += chars[i];
                             i++;
                         }
-                        ForumSectionRepository.AddAsync(forumSection);
+                        ForumSectionRepository.CreateAsync(forumSection);
                         while (chars[i] != 10)
                         {
                             i++;
@@ -1801,7 +1801,7 @@ namespace MigratorVnext
         private static void UpdateForumSubsectionsFromList()
         {
             Console.WriteLine("Start UpdateForumSubsections");
-            var sections = ForumSectionRepository.GetListAsync(true).Result;
+            var sections = ForumSectionRepository.GetListAsync().Result;
 
             foreach (var subsection in Subsections)
             {
@@ -2066,7 +2066,7 @@ namespace MigratorVnext
                     //     }
                     if (theme != null)
                     {
-                        var result = ForumMessageRepository.AddAsync(forumMessage).Result;
+                        var result = ForumMessageRepository.CreateAsync(forumMessage).Result;
                     }
 
                     Console.Write("| " + (i*1.00 / chars.Length).ToString("P"));
@@ -2198,7 +2198,7 @@ namespace MigratorVnext
         {
             Console.WriteLine("Start UpdateCommentsForum");
 
-            var posts = ForumMessageRepository.GetListAsync().Result;
+            var posts = ForumMessageRepository.GetListAsync(null, 15, true).Result;
             var themes = ForumThemeRepository.GetListAsync().Result;
             foreach (var theme in themes)
             {
@@ -2217,7 +2217,7 @@ namespace MigratorVnext
         public static void UpdateForumSectionAndSubsection()
         {
             Console.WriteLine("Start UpdateForumSectionAndSubsection");
-            var sections = ForumSectionRepository.GetListAsync(true).Result;
+            var sections = ForumSectionRepository.GetListAsync().Result;
             var subSections = ForumSubsectionRepository.GetListAsync().Result;
             foreach (var section in sections)
             {
@@ -2234,7 +2234,7 @@ namespace MigratorVnext
                     }
                 }
             }
-          //  ForumSubsectionRepository.SaveChangesAsync().RunSynchronously(); //todo above not duplicating?
+          //  ForumSubsectionRepository.SaveChangesAsync().RunSynchronously(); // above not duplicating?
 
         }
 
@@ -2256,7 +2256,7 @@ namespace MigratorVnext
                     subSection.Themes.Add(theme);
                 }
             }
-          //  ForumSubsectionRepository.SaveChangesAsync().RunSynchronously(); //todo above not duplicating?
+          //  ForumSubsectionRepository.SaveChangesAsync().RunSynchronously(); // above not duplicating?
         }
 
 

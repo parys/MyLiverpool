@@ -8,27 +8,39 @@ namespace MyLiverpool.Business.Services
 {
     public class HelperService : IHelperService
     {
-        private readonly IHelperEntityRepository _helperEntityRepository;
+        private readonly IGenericRepository<HelpEntity> _helpEntityRepository;
 
-        public HelperService(IHelperEntityRepository helperEntityRepository)
+        public HelperService(IGenericRepository<HelpEntity> helpEntityRepository)
         {
-            _helperEntityRepository = helperEntityRepository;
+            _helpEntityRepository = helpEntityRepository;
         }
 
-        public async Task<string> GetAsync(HelperEntityType type)
+        public async Task<string> GetValueAsync(HelperEntityType type)
         {
-            var entity = await _helperEntityRepository.GetByTypeAsync(type);
+            var entity = await _helpEntityRepository.GetFirstByPredicateAsync(x => x.Type == type);
             return entity?.Value;
         }
 
-        public async Task<bool> UpdateAsync(HelperEntityType type, string newValue)
+        public async Task<HelpEntity> GetAsync(HelperEntityType type)
         {
-            var entity = await _helperEntityRepository.GetByTypeAsync(type) ?? new HelpEntity
+            return await _helpEntityRepository.GetFirstByPredicateAsync(x => x.Type == type);
+        }
+        
+        public async Task<bool> CreateOrUpdateAsync(HelperEntityType type, string newValue)
+        {
+            var entity = await _helpEntityRepository.GetFirstByPredicateAsync(x => x.Type == type) ?? new HelpEntity
             {
                 Type = type
             };
             entity.Value = newValue;
-            await _helperEntityRepository.UpdateAndSaveAsync(entity);
+            if (entity.Id == 0)
+            {
+                await _helpEntityRepository.CreateAsync(entity);
+            }
+            else
+            {
+                await _helpEntityRepository.UpdateAsync(entity);
+            }
             return true;
         }
     }

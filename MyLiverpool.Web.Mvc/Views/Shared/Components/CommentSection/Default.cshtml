@@ -1,22 +1,42 @@
-﻿@model PageableData<CommentDto>
+﻿@model CommentSectionVm
 
-<div id="comments" class="full-width">Комментарии: @Model.TotalItems @*<button (click)="update()"><span class="glyphicon glyphicon-refresh text-success"></span></button>*@</div>
-@foreach (var comment in Model.List)
+<div id="comments" class="full-width">Комментарии: @Model.Comments.TotalItems @*<button (click)="update()"><span class="glyphicon glyphicon-refresh text-success"></span></button>*@</div>
+@foreach (var comment in Model.Comments.List)
 {
     @await Component.InvokeAsync("CommentDetail", new { comment, deep = 0})
     @*<comment-detail [item]="comment" [deep]="0" [materialId]="materialId" [canCommentary]="canCommentary" [type]="type" [matchId]="matchId"></comment-detail>*@
 }
 @if (User.Identity.IsAuthenticated)
 {
-    <form >
-        <textarea class="tiny" id="newComment"></textarea>
-        <button id="sendNewComment"></button>
+    <form>
+        <input hidden name="materialId" value="@Model.MaterialId"/>
+        <input hidden name="matchId" value="@Model.MatchId"/>
+        <textarea hidden class="tiny" id="newComment"></textarea>
+        <alert-error class="text-danger"></alert-error>
+        <button id="sendNewComment" type="button">Добавить</button>
     </form>
 
 @*<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.8.2/tinymce.min.js"
     integrity="sha256-2DEM8ybpCSGNF32f4l2CcIx5gTWZvKIQn+3bZDL4Qkc="
     crossorigin="anonymous"></script>*@
     <script>
+        $("#sendNewComment").on('click',
+            function () {
+                if ($(form).find("#newComment").val()) {
+                    let form = $(this).parent().get(0);
+                    console.log($(form).find("[name=matchId]").val());
+                    console.log($(form).find("[name=materialId]").val());
+                    console.log($(form).find("#newComment").val());
+                    let comment = {
+                        matchId: $(form).find("[name=matchId]").val(),
+                        materialId: $(form).find("[name=materialId]").val(),
+                        message: $(form).find("#newComment").val()
+                    }
+                    $("alert-error").text("");
+                } else {
+                    $("alert-error").text("Пожалуйста, введите сообщение");
+                }
 
+            });
     </script>
 }

@@ -1,3 +1,2 @@
-﻿export * from "./season.model";
-export * from "./season.service";
-export * from "./season-core.module";
+﻿export * from "./core";
+export * from "./model";

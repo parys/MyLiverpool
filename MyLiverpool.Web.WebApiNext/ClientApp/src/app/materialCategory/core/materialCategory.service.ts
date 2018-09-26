@@ -2,13 +2,14 @@
 import { Observable } from "rxjs";
 import { MaterialCategory, MaterialType } from "../model";
 import { HttpWrapper } from "@app/+httpWrapper";
+import { MATERIAL_CATEGORIES_ROUTE } from "@app/+constants";
 
 @Injectable()
 export class MaterialCategoryService {
     private actionUrl: string;
 
     constructor(private http: HttpWrapper) {
-        this.actionUrl = "materialCategory/";
+        this.actionUrl = MATERIAL_CATEGORIES_ROUTE + "/";
     }
 
     public getAll(type: MaterialType): Observable<MaterialCategory[]> {

@@ -17,7 +17,7 @@
                 <div *ngIf="!roles.isInformer" > <b [textContent]="transfer.personName"></b></div>
                 <div *ngIf="transfer.clubName"> Из <img class="mini-logo" [src]="transfer.clubLogo" [alt]="transfer.clubName" /><span [textContent]="transfer.clubName"></span></div>
                 <div>
-                    Дата: <span [textContent]="transfer.startDate | date: 'yMMMMd'"></span>
+                    Дата: <span [textContent]="transfer.startDate | date: 'd MMMM y'"></span>
                 </div>
                 <div *ngIf="transfer.onLoan" class="full-width">В аренде</div>
                 <div>
@@ -46,7 +46,7 @@
                 <div *ngIf="!roles.isInformer"> <b [textContent]="transfer.personName"></b></div>
                 <div *ngIf="transfer.clubName">В <img class="mini-logo" [src]="transfer.clubLogo" [alt]="transfer.clubName"/><span [textContent]="transfer.clubName"></span></div>
                 <div>
-                    Дата: <span [textContent]="transfer.startDate | date: 'yMMMMd'"></span>
+                    Дата: <span [textContent]="transfer.startDate | date: 'd MMMM y'"></span>
                 </div>
                 <div *ngIf="transfer.onLoan" class="full-width">В аренде</div>
                 <div>Сумма: <span *ngIf="transfer.amount>0"[textContent]="transfer.amount | currency:'GBP'"></span>

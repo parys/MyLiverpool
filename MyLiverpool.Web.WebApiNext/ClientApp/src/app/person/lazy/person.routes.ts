@@ -2,26 +2,24 @@
 import { PersonListComponent } from "./person-list";
 import { StuffListComponent } from "./stuff-list";
 import { SquadComponent } from "./squad";
-import { RoleGuard } from "@app/+auth";
-import { PersonEditComponent } from "@app/person/core";
+import { PersonEditComponent } from "../core/+person-edit";
 
 export const personRoutes: Routes = [
-    { path: "", component: PersonListComponent, data: { title: "Люди" }, },
+    {
+        path: "",
+        component: PersonListComponent,
+        data: { title: "Люди" },
+    },
     {
         path: ":id/edit",
-        component: PersonEditComponent,
-        data: {
-            title: "Редактирование человека",
-            roles: ["infoStart"]
-        },
-        canActivate: [RoleGuard]
+        component: PersonEditComponent
     },
     {
         path: "stuff",
         children: [
             { path: "", redirectTo: "/stuff/first", pathMatch: "full" },
-            { path: "first", component: StuffListComponent, data: { title: "Тренерский состав", type: "First" } },
-            { path: "academy", component: StuffListComponent, data: { title: "Тренерский состав", type: "Academy" } },
+            { path: "first", component: StuffListComponent, data: { title: "Тренерский штаб", type: "First" } },
+            { path: "academy", component: StuffListComponent, data: { title: "Тренерский штаб", type: "Academy" } },
         ]
     },
     {

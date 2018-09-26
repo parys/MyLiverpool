@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MyLfc.Common.Web.Hubs;
 using MyLiverpool.Business.Contracts;
 using MyLiverpool.Business.Dto;
@@ -30,8 +31,10 @@ namespace MyLiverpool.Business.Services
 
         public async Task<PrivateMessagesDto> GetListAsync(int id)
         {
-            var messages = await _pmRepository.GetListAsync(true, x => x.ReceiverId == id || x.SenderId == id,
-                SortOrder.Ascending, x => x.SentTime, x => x.Receiver, y => y.Sender);
+            var messages = await _pmRepository.GetListAsync(filter: x => x.ReceiverId == id || x.SenderId == id,
+                order: SortOrder.Ascending,
+                orderBy:x => x.SentTime,
+                include: p => p.Include(x => x.Receiver).Include(y => y.Sender));
             var dto = new PrivateMessagesDto
             {
                 Received = _mapper.Map<ICollection<PrivateMessageMiniDto>>(messages.Where(x => x.ReceiverId == id).OrderByDescending(x => x.SentTime)),
@@ -42,7 +45,9 @@ namespace MyLiverpool.Business.Services
 
         public async Task<PrivateMessageDto> GetAsync(int messageId, int userId)
         {
-            var message = await _pmRepository.GetByIdAsync(messageId, false, x => x.Receiver, y => y.Sender);
+            var message = await _pmRepository.GetFirstByPredicateAsync(x => x.Id == messageId, false, 
+                x => x.Include(m => m.Receiver)
+                    .Include(m => m.Sender));
             if (message == null || message.ReceiverId != userId && message.SenderId != userId)
             {
                 throw new UnauthorizedAccessException();
@@ -89,7 +94,7 @@ namespace MyLiverpool.Business.Services
             if (countUserMessages > GlobalConstants.PmsPerUser)
             {
                 var messages =
-                    await _pmRepository.GetListAsync(false, x => x.ReceiverId == userId || x.SenderId == userId);
+                    await _pmRepository.GetListAsync(asNoTracking: false, filter: x => x.ReceiverId == userId || x.SenderId == userId);
                 await _pmRepository.DeleteRangeAsync(messages.Take(GlobalConstants.PmsPerUser / 2).ToList());
             }
         }

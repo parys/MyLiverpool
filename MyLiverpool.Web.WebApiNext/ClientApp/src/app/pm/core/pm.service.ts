@@ -3,10 +3,11 @@ import { Observable } from "rxjs";
 import { HttpWrapper } from "@app/+httpWrapper";
 import { Pm } from "../model";
 import { User } from "@app/user";
+import { PMS_ROUTE } from "@app/+constants";
 
 @Injectable()
 export class PmService {
-    private actionUrl: string = "pm/";
+    private actionUrl: string = PMS_ROUTE + "/";
 
     constructor(private http: HttpWrapper) {
     }

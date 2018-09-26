@@ -2,7 +2,6 @@
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { HttpWrapperModule } from "@app/+httpWrapper";
-import { Configuration } from "@app/app.constants";
 import { AuthService } from "./auth.service";
 import { StorageModule } from "@app/+storage";
 import { RoleGuard } from "./role-guard.service";
@@ -17,7 +16,6 @@ import { RolesCheckedService } from "./roles-checked.service";
         StorageModule
     ],
     providers: [
-        Configuration,
         AuthService,
         RoleGuard,
         UnSignedGuard,

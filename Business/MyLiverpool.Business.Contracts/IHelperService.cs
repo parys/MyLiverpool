@@ -1,12 +1,15 @@
 ﻿using System.Threading.Tasks;
 using MyLiverpool.Data.Common;
+using MyLiverpool.Data.Entities;
 
 namespace MyLiverpool.Business.Contracts
 {
     public interface IHelperService
     {
-        Task<string> GetAsync(HelperEntityType type);
+        Task<string> GetValueAsync(HelperEntityType type);
 
-        Task<bool> UpdateAsync(HelperEntityType type, string newValue);
+        Task<HelpEntity> GetAsync(HelperEntityType type);
+
+        Task<bool> CreateOrUpdateAsync(HelperEntityType type, string newValue);
     }
 }

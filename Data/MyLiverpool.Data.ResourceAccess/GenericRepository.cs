@@ -5,12 +5,12 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using MyLiverpool.Data.Entities;
+using Microsoft.EntityFrameworkCore.Query;
 using MyLiverpool.Data.ResourceAccess.Interfaces;
 
 namespace MyLiverpool.Data.ResourceAccess
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class, IEntity
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         private readonly LiverpoolContext _context;
 
@@ -19,95 +19,100 @@ namespace MyLiverpool.Data.ResourceAccess
             _context = context;
         }
 
-        public async Task<T> CreateAsync(T entity)
+        public async Task<TEntity> CreateAsync(TEntity entity)
         {
-            var entityEntry = await _context.Set<T>().AddAsync(entity);
+            var entityEntry = await _context.Set<TEntity>().AddAsync(entity);
             await _context.SaveChangesAsync();
             return entityEntry.Entity;
         }
-
-        public async Task<T> GetByIdAsync(int id, bool noTracking = false, params Expression<Func<T, object>>[] includes)
+        
+        public async Task<TEntity> GetFirstByPredicateAsync(Expression<Func<TEntity, bool>> predicate,
+            bool noTracking = false,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
         {
-            IQueryable<T> query = _context.Set<T>();
+            IQueryable<TEntity> query = _context.Set<TEntity>();
             if (noTracking)
             {
                 query = query.AsNoTracking();
             }
-            if (includes != null && includes.Any())
+            if (include != null)
             {
-                query = includes.Aggregate(query, (current, include) => current.Include(include));
+                query = include(query);
             }
-            return await query.FirstOrDefaultAsync(x => x.Id == id);
+            return await query.FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<T> GetByComplexIdAsync(int id, int id2)
+        public async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            return await _context.Set<T>().FindAsync(id, id2);//todo include props
-        }
-
-        public async Task<T> UpdateAsync(T entity)
-        {
-            _context.Set<T>().Update(entity);
+            _context.Set<TEntity>().Update(entity);
             await _context.SaveChangesAsync();
             return entity;
         }
 
-        public async Task UpdateRangeAsync(IEnumerable<T> entities)
+        public async Task UpdateRangeAsync(IEnumerable<TEntity> entities)
         {
-            _context.Set<T>().UpdateRange(entities);
+            _context.Set<TEntity>().UpdateRange(entities);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> DeleteAsync(T entity)
+        public async Task<bool> DeleteAsync(TEntity entity)
         {
-            _context.Set<T>().Remove(entity);
+            _context.Set<TEntity>().Remove(entity);
             await _context.SaveChangesAsync();
             return true;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            var entity = await _context.Set<T>().FindAsync(id);
-            if (entity == null)
+            if (predicate != null)
             {
-                return false;
+
+                var entity = await _context.Set<TEntity>().FirstOrDefaultAsync(predicate);
+                if (entity != null)
+                {
+                    return await DeleteAsync(entity);
+                }
             }
-            return await DeleteAsync(entity);
+
+            return false;
         }
 
-        public async Task DeleteRangeAsync(IEnumerable<T> entities)
+        public async Task DeleteRangeAsync(IEnumerable<TEntity> entities)
         {
             if (entities.Any())
             {
-                _context.Set<T>().RemoveRange(entities);
+                _context.Set<TEntity>().RemoveRange(entities);
                 await _context.SaveChangesAsync();
             }
         }
 
-        public async Task<int> CountAsync(Expression<Func<T, bool>> filter = null)
+        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> filter = null)
         {
-            IQueryable<T> query = _context.Set<T>().AsNoTracking();
+            IQueryable<TEntity> query = _context.Set<TEntity>().AsNoTracking();
             if (filter != null)
             {
                 query = query.Where(filter);
             }
             return await query.CountAsync();
         }
-
-        public async Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> filter = null, SortOrder order = SortOrder.Ascending, Expression<Func<T, object>> orderBy = null,
-            params Expression<Func<T, object>>[] includes)
+        
+        public async Task<IEnumerable<TEntity>> GetListAsync(int? page = null, int itemPerPage = 15, bool asNoTracking = true,
+            Expression<Func<TEntity, bool>> filter = null, SortOrder order = SortOrder.Ascending,
+            Expression<Func<TEntity, object>> orderBy = null,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
         {
-            return await GetListAsync(null, 0, true, filter, order, orderBy, includes);
+            return await GetQueryableList(page, itemPerPage, asNoTracking, filter, order, orderBy, include).ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetListAsync(int? page = null, int itemPerPage = 15, bool asNoTracking = true,
-            Expression<Func<T, bool>> filter = null, SortOrder order = SortOrder.Ascending,
-            Expression<Func<T, object>> orderBy = null, params Expression<Func<T, object>>[] includes)
+        public IQueryable<TEntity> GetQueryableList(int? page = null, int itemPerPage = 15, bool asNoTracking = true,
+            Expression<Func<TEntity, bool>> filter = null, SortOrder order = SortOrder.Ascending,
+            Expression<Func<TEntity, object>> orderBy = null,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
         {
-            IQueryable<T> query = _context.Set<T>();
-            if (includes != null && includes.Any())
+            IQueryable<TEntity> query = _context.Set<TEntity>();
+            if (include != null)
             {
-                query = includes.Aggregate(query, (current, include) => current.Include(include));
+                query = include(query);
             }
             if (filter != null)
             {
@@ -126,34 +131,7 @@ namespace MyLiverpool.Data.ResourceAccess
             {
                 query = query.AsNoTracking();
             }
-            return await query.ToListAsync();
-        }
-
-        public async Task<IEnumerable<T>> GetListAsync(bool asNoTracking = true,Expression<Func<T, bool>> filter = null, 
-            SortOrder order = SortOrder.Ascending, Expression<Func<T, object>> orderBy = null,
-            params Expression<Func<T, object>>[] includes)
-        {
-            return await GetListAsync(null, 0, asNoTracking, filter, order, orderBy, includes);
-        }
-
-        public async Task<T> GetFirstByFilterAsync(Expression<Func<T, bool>> filter)
-        {
-            IQueryable<T> query = _context.Set<T>();
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-            return await query.FirstOrDefaultAsync();
-        }
-
-        public async Task<T> GetSingleByFilterAsync(Expression<Func<T, bool>> filter)
-        {
-            IQueryable<T> query = _context.Set<T>();
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-            return await query.SingleOrDefaultAsync();
+            return query;
         }
     }
 }

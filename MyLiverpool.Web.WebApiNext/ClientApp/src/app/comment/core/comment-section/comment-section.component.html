@@ -8,9 +8,7 @@
     </a>
 </div>
 
-<div *ngFor="let comment of items | paginate: { itemsPerPage: itemsPerPage,
-                                                      currentPage: page,
-                                                      totalItems: totalItems }">
+<div *ngFor="let comment of items">
     <comment-detail [item]="comment" [deep]="0" [materialId]="materialId" [canCommentary]="canCommentary" [type]="type" [matchId]="matchId"></comment-detail>
 </div>
 
@@ -22,14 +20,3 @@
         </div>
     </div>
 </form>
-
-<div class="pagination">
-    <pagination-controls (pageChange)="pageChanged($event)"
-                         directionLinks="true"
-                         autoHide="true"
-                         previousLabel="Назад"
-                         nextLabel="Вперед"
-                         screenReaderPaginationLabel="Постраничный вид"
-                         screenReaderPageLabel="Страница"
-                         screenReaderCurrentLabel="Вы на странице"></pagination-controls>
-</div>

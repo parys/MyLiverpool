@@ -7,7 +7,7 @@ import { MaterialCoreModule } from "../../core/material-core.module";
 import { MaterialEditComponent } from "./material-edit.component";
 import { materialEditRoutes } from "./material-edit.routes";
 import { EditorModule } from "@app/editor";
-import { MaterialGuardDialogComponent } from "./material-guard-dialog/material-guard-dialog.component";
+import { MaterialGuardDialogComponent } from "./material-guard-dialog";
 import { MaterialLeaveGuard } from "./leave-guard/leave-guard.service";
 
 @NgModule({

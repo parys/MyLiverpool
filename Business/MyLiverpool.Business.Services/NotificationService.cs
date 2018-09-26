@@ -41,8 +41,7 @@ namespace MyLiverpool.Business.Services
 
         public async Task<bool> DeleteAsync(int id)
         {
-            await _notificationRepository.DeleteAsync(id);
-            return true;
+            return await _notificationRepository.DeleteAsync(x => x.Id == id);
         }
 
         public Task<NotificationDto> GetByIdAsync(int id)
@@ -57,15 +56,15 @@ namespace MyLiverpool.Business.Services
 
         public async Task<IEnumerable<NotificationDto>> GetListAsync(int userId)
         {
-            var list = await _notificationRepository.GetListAsync(x => x.UserId == userId, SortOrder.Descending,
-                y => y.DateTime);
+            var list = await _notificationRepository.GetListAsync(filter: x => x.UserId == userId, order: SortOrder.Descending,
+                orderBy: y => y.DateTime);
             return _mapper.Map<IEnumerable<NotificationDto>>(list);
         }
 
         public async Task<bool> MarkAsReadAsync(int[] ids, int userId)
         {
             var entities =
-                (await _notificationRepository.GetListAsync(x => ids.Contains(x.Id) && !x.IsRead && x.UserId == userId))
+                (await _notificationRepository.GetListAsync(filter: x => ids.Contains(x.Id) && !x.IsRead && x.UserId == userId))
                 .ToList();
             entities.ForEach(x =>x.IsRead = true);
             await _notificationRepository.UpdateRangeAsync(entities);
@@ -78,7 +77,7 @@ namespace MyLiverpool.Business.Services
             var count = await _notificationRepository.CountAsync(x => x.UserId == userId);
             if (count >= GlobalConstants.NotificationsCount)
             {
-                var list = await _notificationRepository.GetListAsync(x => x.IsRead);
+                var list = await _notificationRepository.GetListAsync(filter: x => x.IsRead);
                 foreach (var notification in list)
                 {
                     await DeleteAsync(notification.Id);

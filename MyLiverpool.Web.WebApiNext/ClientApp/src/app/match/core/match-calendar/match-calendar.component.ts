@@ -36,15 +36,15 @@ export class MatchCalendarComponent implements OnInit, OnDestroy {
                 e => console.log(e));
         }
     }
-    private parse(mathes: Match[]): void {
-        if (mathes.length === 1) {
-            if (mathes[0].scoreHome) {
-                this.last = mathes[0];
+    private parse(matches: Match[]): void {
+        if (matches.length === 1) {
+            if (matches[0].scoreHome) {
+                this.last = matches[0];
             } else {
-                this.next = mathes[0];
+                this.next = matches[0];
             }
         } else {
-            [this.last, this.next] = mathes;
+            [this.last, this.next] = matches;
         }
         this.cd.markForCheck();
     }

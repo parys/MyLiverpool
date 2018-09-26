@@ -10,7 +10,7 @@
                     <img class="mini-avatar" [src]="user.photo" [alt]="user.userName" />
                     <span [textContent]="user.userName"></span>
                 </a>
-                <span class="text-danger" tooltip="Почта не подтверждена" *ngIf="!user.emailConfirmed && (roles.isAdminAssist || roles.isSelf(user.id))"> *</span>
+                <span class="text-danger" tooltip="Почта не подтверждена" *ngIf="!user.emailConfirmed && (roles.isAdminAssistant || roles.isSelf(user.id))"> *</span>
             </td>
         </ng-container>
 
@@ -48,8 +48,13 @@
                 <mat-option *ngFor="let roleGroup of roleGroups" [value]="roleGroup.id" [textContent]="roleGroup.russianName">
                 </mat-option>
             </mat-select>
-        </mat-form-field>    
+        </mat-form-field>
         <mat-form-field>
             <input matInput #userInput placeholder="Логин">
         </mat-form-field>
+        <span [hidden]="!roles.isAdminAssistant">
+            <mat-form-field>
+                <input matInput #ipInput placeholder="Ip">
+            </mat-form-field>
+        </span>
     </div>

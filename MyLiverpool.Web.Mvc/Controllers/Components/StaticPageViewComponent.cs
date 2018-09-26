@@ -22,7 +22,7 @@ namespace MyLiverpool.Web.Mvc.Controllers.Components
         public async Task<IViewComponentResult> InvokeAsync(HelperEntityType type)
         {
             var result = await _cacheManager.GetOrCreateStringAsync(GlobalConstants.HelperEntity + (int)type, 
-                async () => await _helperService.GetAsync(type));
+                async () => await _helperService.GetValueAsync(type));
             return View(model:result);
         }
     }

@@ -8,6 +8,7 @@ import { UserCoreModule } from "@app/user";
 import { UserDetailComponent } from "./user-detail";
 import { UserConfigComponent } from "./user-config";
 import { RoleGroupCoreModule } from "@app/roleGroup";
+import { MatNativeDateModule, MatDatepickerModule, MatInputModule } from "@angular/material";
 //import { SignalRModule } from "@app/+signalr";
 
 @NgModule({
@@ -15,7 +16,10 @@ import { RoleGroupCoreModule } from "@app/roleGroup";
         SharedModule,
         UserCoreModule,
         RouterModule.forChild(userRoutes),
-        RoleGroupCoreModule
+        RoleGroupCoreModule,
+        MatNativeDateModule,
+        MatInputModule,
+        MatDatepickerModule
 
      //   SignalRModule
     ],
@@ -23,7 +27,7 @@ import { RoleGroupCoreModule } from "@app/roleGroup";
         UserDetailComponent,
         UserConfigComponent,
         UserEditComponent,
-        UserListComponent,
+        UserListComponent
     ]
 })
 export class UserModule { }

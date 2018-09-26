@@ -1,7 +1,5 @@
-﻿export class InjuryFilters {
+﻿import { BaseRestFilter } from "@app/+infrastructure";
+
+export class InjuryFilters extends BaseRestFilter {
     public name: string;
-    public page: number;
-    itemsPerPage: number = 15;
-    order: string;
-    sortBy: string;
 }

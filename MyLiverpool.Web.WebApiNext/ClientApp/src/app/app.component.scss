@@ -24,9 +24,11 @@
     flex-direction: column;
     font-size: large;
 
-    div {
-        margin: 10px;
-    }
+   
+}
+
+navbar-menu ::ng-deep div {
+    margin: 10px;
 }
 
 .sidenav {

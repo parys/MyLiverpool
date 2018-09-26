@@ -35,14 +35,14 @@ export class ChangePasswordComponent implements OnInit {
 
         this.service.changePassword(model).subscribe(data => {
             if (data) {
-                this.snackBar.open("Пароль успешно изменен.", null);
+                this.snackBar.open("Пароль изменен.");
             } else {
-                this.snackBar.open("Пароль НЕ БЫЛ изменен.", null);
+                this.snackBar.open("Пароль НЕ изменен.");
             }
             },
             error => {
                 console.log(error);
-                this.snackBar.open("Пароль НЕ БЫЛ изменен.", null);
+                this.snackBar.open("Пароль НЕ изменен.");
             });
         this.isHuman = false;
     }

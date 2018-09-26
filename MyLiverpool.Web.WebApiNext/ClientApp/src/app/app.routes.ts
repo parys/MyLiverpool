@@ -2,90 +2,105 @@
 import { MaterialListComponent } from "./material";
 import { helperRoutes } from "./admin/admin.routes";
 import { homeRoutes } from "./home/home.routes";
+import { WISHES_ROUTE, NEWS_ROUTE, ACCOUNT_ROUTE, BLOGS_ROUTE, BLOG_CATEGORIES_ROUTE, COMMENTS_ROUTE, CLUBS_ROUTE,
+    IMAGES_ROUTE,
+    INJURIES_ROUTE,
+    MATCHES_ROUTE,
+    NOTIFICATIONS_ROUTE,
+    NEWS_CATEGORIES_ROUTE,
+    PERSONS_ROUTE,
+    PMS_ROUTE,
+    ROLE_GROUPS_ROUTE,
+    SEASONS_ROUTE,
+    STADIUMS_ROUTE,
+    TRANSFERS_ROUTE,
+    USERS_ROUTE,
+    TITLE_RU
+} from "@app/+constants";
 
 export const routes: Routes = [
     ...helperRoutes,
     ...homeRoutes,
     {
-        path: "account",
+        path: ACCOUNT_ROUTE,
         loadChildren: "./account/lazy/account.module#AccountModule"
     },
     {
-        path: "blogs",
+        path: BLOGS_ROUTE,
         loadChildren: "./material/lazy/material.module#MaterialModule"
     },
     {
-        path: "blogCategories",
+        path: BLOG_CATEGORIES_ROUTE,
         loadChildren: "./materialCategory/lazy/materialCategory.module#MaterialCategoryModule"
     },
     {
-        path: "materialComments",
+        path: COMMENTS_ROUTE,
         loadChildren: "./comment/lazy/comment.module#CommentModule"
     },
     {
-        path: "clubs",
+        path: CLUBS_ROUTE,
         loadChildren: "./club/lazy/club.module#ClubModule"
     },
     {
-        path: "images",
+        path: IMAGES_ROUTE,
         loadChildren: "./image/lazy/image.module#ImageModule"
     },
     {
-        path: "injuries",
+        path: INJURIES_ROUTE,
         loadChildren: "./injury/lazy/injury.module#InjuryModule"
     },
     {
-        path: "matches",
+        path: MATCHES_ROUTE,
         loadChildren: "./match/lazy/match.module#MatchModule"
     },
     {
-        path: "news",
+        path: NEWS_ROUTE,
         loadChildren: "./material/lazy/material.module#MaterialModule"
     },
     {
-        path: "newsCategories",
+        path: NEWS_CATEGORIES_ROUTE,
         loadChildren: "./materialCategory/lazy/materialCategory.module#MaterialCategoryModule"
     },
     {
-        path: "notifications",
+        path: NOTIFICATIONS_ROUTE,
         loadChildren: "./notification/lazy/notification.module#NotificationModule"
     },
     {
-        path: "persons",
+        path: PERSONS_ROUTE,
         loadChildren: "./person/lazy/person.module#PersonModule"
     },
     {
-        path: "pms",
+        path: PMS_ROUTE,
         loadChildren: "./pm/lazy/pm.module#PmModule"
     },
     {
-        path: "roleGroups",
+        path: ROLE_GROUPS_ROUTE,
         loadChildren: "./roleGroup/lazy/roleGroup.module#RoleGroupModule"
     },
     {
-        path: "seasons",
+        path: SEASONS_ROUTE,
         loadChildren: "./season/lazy/season.module#SeasonModule"
     },
     {
-        path: "stadiums",
+        path: STADIUMS_ROUTE,
         loadChildren: "./stadium/lazy/stadium.module#StadiumModule"
     },
     {
-        path: "transfers",
+        path: TRANSFERS_ROUTE,
         loadChildren: "./transfer/lazy/transfer.module#TransferModule"
     },
     {
-        path: "users",
+        path: USERS_ROUTE,
         loadChildren: "./user/lazy/user.module#UserModule"
     },
     {
-        path: "wishes",
-        loadChildren: "./wish/wish.module#WishModule"
+        path: WISHES_ROUTE,
+        loadChildren: "./wish/lazy/wish.module#WishModule"
     },
     {
         path: "",
         component: MaterialListComponent,
-        data: { title: "MyLFC.ru - Сайт русскоязычных болельщиков ФК \"Ливерпуль\"" },
+        data: { title: TITLE_RU },
         runGuardsAndResolvers: "always"
     }
 ];

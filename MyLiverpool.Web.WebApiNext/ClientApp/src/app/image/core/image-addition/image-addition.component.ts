@@ -1,6 +1,5 @@
 ﻿import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
-import { Configuration } from "@app/app.constants";
 import { ImageService } from "../image.service";
 
 @Component({
@@ -19,8 +18,7 @@ export class ImageAdditionComponent {
     @Output()
     public loadedImage: EventEmitter<string> = new EventEmitter<string>();
 
-    constructor(private configuration: Configuration,
-        private service: ImageService,
+    constructor(private service: ImageService,
         private snackBar: MatSnackBar
     ) {
     }
@@ -35,10 +33,10 @@ export class ImageAdditionComponent {
                 .subscribe(result => {
                         if (this.isMultiple) {
                             this.uploadedFiles = result;
-                            this.snackBar.open("Изображения успешно загружены", null);
+                            this.snackBar.open("Изображения загружены", null);
                         } else {
                             this.loadedImage.emit(result[0]);
-                            this.snackBar.open("Изображение успешно загружено", null);
+                            this.snackBar.open("Изображение загружено", null);
                         }
                     },
                     error => {

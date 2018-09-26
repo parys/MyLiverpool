@@ -1,9 +1,7 @@
 ﻿<div>
     <button mat-raised-button color="primary" type="button" [routerLink]="[0, 'edit']">Добавить</button>
 
-    <div class="top20" *ngFor="let item of items | paginate: { itemsPerPage: itemsPerPage,
-                                                      currentPage: page,
-                                                      totalItems: totalItems }; let i = index;">
+    <div class="top20" *ngFor="let item of items; let i = index;">
         <div class="panel panel-default clearfix">
             <div class="panel-heading">
                 <h3 class="panel-title">
@@ -30,13 +28,4 @@
         </div>
     </div>
 </div>
-<div class="pagination">
-    <pagination-controls (pageChange)="pageChanged($event)"
-                         directionLinks="true"
-                         autoHide="true"
-                         previousLabel="Назад"
-                         nextLabel="Вперед"
-                         screenReaderPaginationLabel="Постраничный вид"
-                         screenReaderPageLabel="Страница"
-                         screenReaderCurrentLabel="Вы на странице"></pagination-controls>
-</div>
+<mat-paginator [showFirstLastButtons]="true" [pageSizeOptions]="[15, 25, 50]"></mat-paginator>

@@ -1,0 +1,20 @@
+﻿export const TITLE_RU: string = "MyLFC.ru - Сайт русскоязычных болельщиков ФК \"Ливерпуль\"";
+export const BLOGS_RU: string = "Блоги";
+export const BLOG_RU: string = "Блог";
+export const CALENDAR_RU: string = "Календарь";
+export const CLUBS_RU: string = "Клубы";
+export const COMMENTS_RU: string = "Комментарии";
+export const CREATION_RU: string = "Создание";
+export const EDITING_RU: string = "Редактирование";
+export const INJURIES_RU: string = "Травмы";
+export const MATCHES_RU: string = "Матчи";
+export const MATCH_RU: string = "Матч";
+export const NEWSS_RU: string = "Новости";
+export const NEWS_RU: string = "Новость";
+export const STATISTICS_RU: string = "Статистика";
+export const STADIUMS_RU: string = "Стадионы";
+export const TRANSFERS_RU: string = "Трансферы";
+export const USER_RU: string = "Пользователь";
+export const USERS_RU: string = "Пользователи";
+
+export const WISHES_RU: string = "Пожелания";

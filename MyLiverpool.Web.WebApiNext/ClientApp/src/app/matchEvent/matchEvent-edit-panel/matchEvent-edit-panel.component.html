@@ -1,12 +1,12 @@
 ﻿<hr class="full-width" />
 <h6 class="text-center">Добавление события матча</h6>
 <form class="full-width" role="form" [formGroup]="editMatchEventForm" (ngSubmit)="onSubmit()">
-    <mat-slide-toggle formControlName="isOur">Наш(игрок ЛФК)</mat-slide-toggle>
+    <mat-slide-toggle formControlName="isOur">Наше событие</mat-slide-toggle>
     <mat-form-field class="full-width">
         <input matInput placeholder="Игрок" [matAutocomplete]="person" formControlName="personName">
         <mat-autocomplete #person="matAutocomplete">
-            <mat-option *ngFor="let person of persons$ | async" [value]="person.value" (click)="selectPerson(person.key)">
-                <span>{{ person.value }}</span>
+            <mat-option *ngFor="let person of persons$ | async" [value]="person.russianName" (click)="selectPerson(person.id)">
+                <span>{{ person.russianName }}</span>
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>

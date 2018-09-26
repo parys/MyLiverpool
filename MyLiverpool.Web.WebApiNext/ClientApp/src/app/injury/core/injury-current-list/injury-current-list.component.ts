@@ -8,7 +8,7 @@ import { RolesCheckedService } from "@app/+auth";
 const INJURY_CURRENT_KEY = makeStateKey<Injury[]>("injury-current");
 
 @Component({
-    selector: "<injury-current-list>",
+    selector: "injury-current-list",
     templateUrl: "./injury-current-list.component.html",
     styleUrls: ["./injury-current-list.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush,

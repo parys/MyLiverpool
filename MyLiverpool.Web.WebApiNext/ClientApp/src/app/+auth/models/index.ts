@@ -5,3 +5,4 @@ export * from "./profile-model";
 export * from "./refresh-grant-model";
 export * from "./register-model";
 export * from "./userProfile.model";
+export * from "./roles.enum";
