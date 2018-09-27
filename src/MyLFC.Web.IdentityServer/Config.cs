@@ -23,7 +23,7 @@ namespace MyLFC.Web.IdentityServer
         {
             return new List<ApiResource>
             {
-                new ApiResource("api1", "My API")
+                new ApiResource("apiV1", "My LFC API V1")
             };
         }
 
@@ -42,7 +42,7 @@ namespace MyLFC.Web.IdentityServer
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "api1" }
+                    AllowedScopes = { "apiV1" }
                 },
 
                 // resource owner password grant client
@@ -62,7 +62,7 @@ namespace MyLFC.Web.IdentityServer
                 new Client
                 {
                     ClientId = "mvc",
-                    ClientName = "MVC Client",
+                    ClientName = "MyLFC Lite",
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
 
                     RequireConsent = true,
@@ -72,8 +72,8 @@ namespace MyLFC.Web.IdentityServer
                         new Secret("secret".Sha256())
                     },
 
-                    RedirectUris = { "http://localhost:5002/signin-oidc" },
-                    PostLogoutRedirectUris = { "http://localhost:5002/signout-callback-oidc" },
+                    RedirectUris = { "http://localhost:1668/signin-oidc" },
+                    PostLogoutRedirectUris = { "http://localhost:1668/signout-callback-oidc" },
 
                     AllowedScopes =
                     {
