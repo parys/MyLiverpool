@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
@@ -101,19 +102,37 @@ namespace MyLiverpool.Web.WebApiNext
 
             services.AddCustomIdentitySettings();
 
-            services.AddAuthentication()
-                .AddOAuthValidation(options =>
-                {
-                    options.Events.OnRetrieveToken = context =>
-                    {
-                        context.Token = context.Request.Query["access_token"];
-                        return Task.CompletedTask;
-                    };
-                });
-            services.ApplyCustomOpenIdDict(Env);
+            //services.AddAuthentication()
+            //    .AddOAuthValidation(options =>
+            //    {
+            //        options.Events.OnRetrieveToken = context =>
+            //        {
+            //            context.Token = context.Request.Query["access_token"];
+            //            return Task.CompletedTask;
+            //        };
+            //    });
+
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                o.Authority = Configuration["IdentityServerAddress"];
+                o.Audience = "apiV1";
+                o.RequireHttpsMetadata = false;
+                //todo o.Events.OnRetrieveToken = context =>
+                //{
+                //    context.Token = context.Request.Query["access_token"];
+                //    return Task.CompletedTask;
+                //};
+            });
+
+            //  services.ApplyCustomOpenIdDict(Env);
 
             services.AddSignalR()
-              //  .AddMessagePackProtocol()
+                //  .AddMessagePackProtocol()
                 ;
 
             RegisterCoreHelpers(services);
@@ -163,9 +182,11 @@ namespace MyLiverpool.Web.WebApiNext
 
             services.AddNodeServices(options =>
             {
-                  options.DebuggingPort = 9229;
-                   options.LaunchWithDebugging = true;
-
+                options.DebuggingPort = 9229;
+                if (Env.IsDevelopment())
+                {
+                    options.LaunchWithDebugging = true;
+                }
                 //   options.InvocationTimeoutMilliseconds = 140000;
             });
             var dbContext = (LiverpoolContext)services.BuildServiceProvider().GetService(typeof(LiverpoolContext));
@@ -193,8 +214,8 @@ namespace MyLiverpool.Web.WebApiNext
             // app.UseXsrf();
             if (env.IsDevelopment())
             {
-               // loggerFactory.AddConsole(Configuration.GetSection("Logging"));
- //               loggerFactory.AddDebug();
+                // loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+                //               loggerFactory.AddDebug();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
 
@@ -232,6 +253,9 @@ namespace MyLiverpool.Web.WebApiNext
                 app.UseSpaStaticFiles(new StaticFileOptions());
             }
 
+
+
+            //  app.UseAuthentication();
             app.UseAuthentication();
 
             app.UseSignalR(routes =>
@@ -268,7 +292,7 @@ namespace MyLiverpool.Web.WebApiNext
                             options.BootModulePath = $"{spa.Options.SourcePath}/dist-server/main.js";
                             options.BootModuleBuilder =
                                 env.IsDevelopment() ? new AngularCliBuilder(npmScript: "build3") : null;
-                           //     env.IsDevelopment() ? new AngularCliBuilder(npmScript: "build:ssr") : null;
+                            //     env.IsDevelopment() ? new AngularCliBuilder(npmScript: "build:ssr") : null;
                             options.ExcludeUrls = new[] { "/sockjs-node", "/src", "/content", "/hubs", "/null", "/users" };
                             options.SupplyData = (requestContext, obj) =>
                             {

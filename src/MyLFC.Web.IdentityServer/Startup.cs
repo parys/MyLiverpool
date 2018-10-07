@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -96,7 +93,7 @@ namespace MyLFC.Web.IdentityServer
                 //})
                 .AddOpenIdConnect("oidc", "OpenID Connect", options =>
                 {
-                    options.Authority = "https://demo.identityserver.io/";
+                    options.Authority = "https://auth.mylfc.ru/";
                     options.ClientId = "implicit";
                     options.SaveTokens = true;
 

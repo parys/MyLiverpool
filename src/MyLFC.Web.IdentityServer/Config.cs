@@ -55,7 +55,7 @@ namespace MyLFC.Web.IdentityServer
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "api1" }
+                    AllowedScopes = { "apiV1" }
                 },
 
                 // OpenID Connect hybrid flow and client credentials client (MVC)
@@ -79,9 +79,29 @@ namespace MyLFC.Web.IdentityServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "api1"
+                        "apiV1"
                     },
                     AllowOfflineAccess = true
+                },
+                // OpenID Connect implicit flow client (Angular)
+                new Client
+                {
+                    ClientId = "ng",
+                    ClientName = "Angular Client",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+                    RequireConsent = true,
+
+                    RedirectUris = { "http://localhost:1669/" },
+                    PostLogoutRedirectUris = { "http://localhost:1669/" },
+                    AllowedCorsOrigins = { "http://localhost:1669" },
+
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "apiV1"
+                    },
                 }
             };
         }

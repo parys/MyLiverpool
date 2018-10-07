@@ -48,7 +48,8 @@
     "rxjs": "6.3.2",
     "swagger-ui": "3.19.0",
     "@swimlane/ngx-charts": "9.0.0",
-    "zone.js": "0.8.26"
+    "zone.js": "0.8.26",
+    "angular-auth-oidc-client": "6.0.10"
   },
   "devDependencies": {
     "@angular/cli": "6.2.3",
