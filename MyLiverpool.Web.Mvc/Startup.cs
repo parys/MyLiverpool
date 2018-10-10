@@ -21,10 +21,16 @@ using MyLiverpool.Data.ResourceAccess;
 using MyLiverpool.Data.ResourceAccess.Helpers;
 using Newtonsoft.Json.Serialization;
 using MyLfc.Common.Web.Middlewares;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using IdentityModel;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+
 
 namespace MyLiverpool.Web.Mvc
 {
-
     public class Startup
     {
         public Startup(IHostingEnvironment env)
@@ -37,6 +43,7 @@ namespace MyLiverpool.Web.Mvc
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
             Env = env;
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         }
 
         private IConfigurationRoot Configuration { get; }
@@ -63,19 +70,59 @@ namespace MyLiverpool.Web.Mvc
             
             services.AddCustomDbContext(Configuration);
 
-            services.AddDataProtection().SetApplicationName("liverpoolfc-app")
-                .PersistKeysToFileSystem(new DirectoryInfo(Directory.GetCurrentDirectory()));
+        //    services.AddDataProtection().SetApplicationName("liverpoolfc-app")
+         //       .PersistKeysToFileSystem(new DirectoryInfo(Directory.GetCurrentDirectory()));
 
             services.AddCustomIdentitySettings();
 
-            services.AddAuthentication()
+            //services.AddAuthentication()
+            //    .AddCookie(options =>
+            //    {
+            //        options.LoginPath = "/Account/Login/";
+            //        options.LogoutPath = "/Account/Logout/";
+            //    });
+
+            // services.ApplyCustomOpenIdDict(Env);
+
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = "oidc";
+                })
                 .AddCookie(options =>
                 {
-                    options.LoginPath = "/Account/Login/";
-                    options.LogoutPath = "/Account/Logout/";
-                });
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                    options.Cookie.Name = "mvchybrid";
+                })
+                .AddOpenIdConnect("oidc", options =>
+                {
+                    options.Authority = Configuration.GetSection("AuthSettings")["Authority"];
+                    options.RequireHttpsMetadata = false;
 
-            services.ApplyCustomOpenIdDict(Env);
+                    options.ClientSecret = Configuration.GetSection("AuthSettings")["ClientSecret"];
+                    options.ClientId = Configuration.GetSection("AuthSettings")["ClientId"];
+
+                    options.ResponseType = "code id_token";
+
+                    options.Scope.Clear();
+                    options.Scope.Add("openid");
+                    options.Scope.Add("profile");
+                    options.Scope.Add("email");
+                    options.Scope.Add("apiV1");
+                    options.Scope.Add("offline_access");
+
+                    options.ClaimActions.Remove("amr");
+                    options.ClaimActions.MapJsonKey("website", "website");
+
+                    options.GetClaimsFromUserInfoEndpoint = true;
+                    options.SaveTokens = true;
+
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        NameClaimType = JwtClaimTypes.Name,
+                        RoleClaimType = JwtClaimTypes.Role,
+                    };
+                });
 
             RegisterCoreHelpers(services);
             services.RegisterRepositories();

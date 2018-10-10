@@ -61,7 +61,7 @@ namespace MyLFC.Web.IdentityServer
                 // OpenID Connect hybrid flow and client credentials client (MVC)
                 new Client
                 {
-                    ClientId = "mvc",
+                    ClientId = "mvc.hybrid",
                     ClientName = "MyLFC Lite",
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
 

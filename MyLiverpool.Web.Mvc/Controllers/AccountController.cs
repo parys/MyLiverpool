@@ -54,6 +54,13 @@ namespace MyLiverpool.Web.Mvc.Controllers
         public string ErrorMessage { get; set; }
 
         [HttpGet]
+        public async Task<IActionResult> LL(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return RedirectToLocal(returnUrl);
+        }
+
+        [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
