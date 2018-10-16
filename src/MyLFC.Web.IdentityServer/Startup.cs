@@ -93,9 +93,13 @@ namespace MyLFC.Web.IdentityServer
                 //})
                 .AddOpenIdConnect("oidc", "OpenID Connect", options =>
                 {
-                    options.Authority = "https://auth.mylfc.ru/";
+                    options.Authority = Configuration.GetSection("AuthSettings")["Authority"];
                     options.ClientId = "implicit";
                     options.SaveTokens = true;
+                    if (Environment.IsDevelopment())
+                    {
+                        options.RequireHttpsMetadata = false;
+                    }
 
                     options.TokenValidationParameters = new TokenValidationParameters
                     {

@@ -23,10 +23,13 @@ using Newtonsoft.Json.Serialization;
 using MyLfc.Common.Web.Middlewares;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
 using IdentityModel;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace MyLiverpool.Web.Mvc
@@ -43,7 +46,6 @@ namespace MyLiverpool.Web.Mvc
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
             Env = env;
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         }
 
         private IConfigurationRoot Configuration { get; }
@@ -67,35 +69,36 @@ namespace MyLiverpool.Web.Mvc
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
-            
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             services.AddCustomDbContext(Configuration);
 
-        //    services.AddDataProtection().SetApplicationName("liverpoolfc-app")
-         //       .PersistKeysToFileSystem(new DirectoryInfo(Directory.GetCurrentDirectory()));
+            //    services.AddDataProtection().SetApplicationName("liverpoolfc-app")
+            //       .PersistKeysToFileSystem(new DirectoryInfo(Directory.GetCurrentDirectory()));
+
+            //   services.AddTransient<CookieEventHandler>();
+            //   services.AddSingleton<LogoutSessionManager>();
 
             services.AddCustomIdentitySettings();
 
-            //services.AddAuthentication()
-            //    .AddCookie(options =>
-            //    {
-            //        options.LoginPath = "/Account/Login/";
-            //        options.LogoutPath = "/Account/Logout/";
-            //    });
-
-            // services.ApplyCustomOpenIdDict(Env);
-
             services.AddAuthentication(options =>
                 {
-                    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultScheme = "Cookies";//CookieAuthenticationDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = "oidc";
+
+                    options.SchemeMap.Clear();
+                    options.DefaultSignInScheme = null;
+                    options.DefaultAuthenticateScheme = null;
                 })
-                .AddCookie(options =>
-                {
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                    options.Cookie.Name = "mvchybrid";
-                })
+                //.AddCookie(options =>
+                //{
+                //    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                //    options.Cookie.Name = "mvchybrid";
+                //})
+                .AddCookie("Cookies")
                 .AddOpenIdConnect("oidc", options =>
                 {
+                    options.SignInScheme = "Cookies";
                     options.Authority = Configuration.GetSection("AuthSettings")["Authority"];
                     options.RequireHttpsMetadata = false;
 
@@ -104,23 +107,27 @@ namespace MyLiverpool.Web.Mvc
 
                     options.ResponseType = "code id_token";
 
-                    options.Scope.Clear();
-                    options.Scope.Add("openid");
-                    options.Scope.Add("profile");
-                    options.Scope.Add("email");
+                  //  options.Scope.Add("openid");
+                  //  options.Scope.Add("profile");
+                    options.Scope.Add("role");
                     options.Scope.Add("apiV1");
                     options.Scope.Add("offline_access");
-
-                    options.ClaimActions.Remove("amr");
-                    options.ClaimActions.MapJsonKey("website", "website");
-
+                    
                     options.GetClaimsFromUserInfoEndpoint = true;
                     options.SaveTokens = true;
+                  //  options.ClaimActions.MapJsonKey("role", "role");
 
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         NameClaimType = JwtClaimTypes.Name,
                         RoleClaimType = JwtClaimTypes.Role,
+                    };
+                    options.Events = new OpenIdConnectEvents
+                    {
+                        OnUserInformationReceived = usr =>
+                        {
+                            return Task.FromResult(usr);
+                        }
                     };
                 });
 
@@ -135,18 +142,21 @@ namespace MyLiverpool.Web.Mvc
             var context = (LiverpoolContext)services.BuildServiceProvider().GetService(typeof(LiverpoolContext));
             context.Database.Migrate();
 
-            services.AddMvc();
+            services.Configure<AuthenticationOptions>(options =>
+            {
+                var vv = options;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
+            //app.UseForwardedHeaders(new ForwardedHeadersOptions
+            //{
+            //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            //});
 
-            app.UseCustomResponseCompression();
+          //  app.UseCustomResponseCompression();
 
             if (env.IsDevelopment())
             {
@@ -158,6 +168,7 @@ namespace MyLiverpool.Web.Mvc
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseAuthentication();
             app.UseDefaultFiles();
             app.UseStaticFiles(new StaticFileOptions
             {
@@ -167,14 +178,8 @@ namespace MyLiverpool.Web.Mvc
                 }
             });
 
-            app.UseAuthentication();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseMvcWithDefaultRoute();
         }
 
         private void RegisterCoreHelpers(IServiceCollection services)

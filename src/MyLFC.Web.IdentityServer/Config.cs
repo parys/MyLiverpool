@@ -9,6 +9,7 @@ namespace MyLFC.Web.IdentityServer
 {
     public class Config
     {
+        private const string ApiV1 = "apiV1";
         // scopes define the resources in your system
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
@@ -16,6 +17,7 @@ namespace MyLFC.Web.IdentityServer
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResource("role", "role", new[] {"role"})
             };
         }
 
@@ -23,7 +25,7 @@ namespace MyLFC.Web.IdentityServer
         {
             return new List<ApiResource>
             {
-                new ApiResource("apiV1", "My LFC API V1")
+                new ApiResource(ApiV1, "My LFC API V1")
             };
         }
 
@@ -42,7 +44,7 @@ namespace MyLFC.Web.IdentityServer
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "apiV1" }
+                    AllowedScopes = { ApiV1 }
                 },
 
                 // resource owner password grant client
@@ -55,16 +57,16 @@ namespace MyLFC.Web.IdentityServer
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "apiV1" }
+                    AllowedScopes = { ApiV1 }
                 },
 
                 // OpenID Connect hybrid flow and client credentials client (MVC)
                 new Client
                 {
-                    ClientId = "mvc.hybrid",
+                    ClientId = "mvc",
                     ClientName = "MyLFC Lite",
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
-
+                    AlwaysIncludeUserClaimsInIdToken = true,
                     RequireConsent = true,
 
                     ClientSecrets =
@@ -72,14 +74,21 @@ namespace MyLFC.Web.IdentityServer
                         new Secret("secret".Sha256())
                     },
 
-                    RedirectUris = { "http://localhost:1668/signin-oidc" },
-                    PostLogoutRedirectUris = { "http://localhost:1668/signout-callback-oidc" },
+                    RedirectUris = { "http://localhost:1668/signin-oidc",
+                                     "http://localhost:5003/signin-oidc", },
+                    PostLogoutRedirectUris = {
+                        "http://localhost:1668/signout-callback-oidc",
+                        "http://localhost:5003/signout-callback-oidc"
+
+                    },
 
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "apiV1"
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "role",
+                        ApiV1
                     },
                     AllowOfflineAccess = true
                 },
@@ -100,7 +109,7 @@ namespace MyLFC.Web.IdentityServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "apiV1"
+                        ApiV1
                     },
                 }
             };

@@ -16,7 +16,6 @@ namespace MyLiverpool.Web.Mvc.Controllers
     /// <summary>
     /// Manages user accounts.
     /// </summary>
-    [Authorize]
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
@@ -53,11 +52,12 @@ namespace MyLiverpool.Web.Mvc.Controllers
         [TempData]
         public string ErrorMessage { get; set; }
 
+        [Authorize]
         [HttpGet]
-        public async Task<IActionResult> LL(string returnUrl = null)
+        public IActionResult LL()
         {
-            ViewData["ReturnUrl"] = returnUrl;
-            return RedirectToLocal(returnUrl);
+          //  ViewData["ReturnUrl"] = returnUrl;
+            return View();
         }
 
         [HttpGet]

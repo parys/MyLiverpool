@@ -165,7 +165,7 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
                 // this might be where you might initiate a custom workflow for user registration
                 // in this sample we don't show how that would be done, as our sample implementation
                 // simply auto-provisions new external user
-            //todo !!! for external    user = await AutoProvisionUserAsync(provider, providerUserId, claims); 
+                user = await AutoProvisionUserAsync(provider, providerUserId, claims); 
             }
 
             // this allows us to collect any additonal claims or properties
@@ -182,9 +182,9 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
             // it doesn't expose an API to issue additional claims from the login workflow
             var principal = await _signInManager.CreateUserPrincipalAsync(user);
             additionalLocalClaims.AddRange(principal.Claims);
-            //todo   var name = principal.FindFirst(JwtClaimTypes.Name)?.Value ?? user.Id;
-            //todo   await _events.RaiseAsync(new UserLoginSuccessEvent(provider, providerUserId, user.Id, name));
-            //todo   await HttpContext.SignInAsync(user.Id, name, provider, localSignInProps, additionalLocalClaims.ToArray());
+            var name = principal.FindFirst(JwtClaimTypes.Name)?.Value ?? user.Id.ToString();
+            await _events.RaiseAsync(new UserLoginSuccessEvent(provider, providerUserId, user.Id.ToString(), name));
+            await HttpContext.SignInAsync(user.Id.ToString(), name, provider, localSignInProps, additionalLocalClaims.ToArray());
 
             // delete temporary cookie used during external authentication
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
