@@ -20,7 +20,7 @@ import { AdComponent } from "./ad";
 import { getRussianPaginatorIntl } from './intl/russian-paginator-intl';
 import { SignalRModule } from "@app/+signalr";
 import { StorageModule, StorageService } from "@app/+storage";
-import { AuthModule } from "@app/+auth";
+import { AuthCustomModule } from "@app/+auth";
 import { CustomTitleModule } from "./titleService";
 //import { DeferLoadDirective } from "./lazy/defer-load.directive";
 
@@ -32,7 +32,7 @@ import { CustomTitleModule } from "./titleService";
         NgxPaginationModule,
         SignalRModule,
         StorageModule,
-        AuthModule, //todo temporary?
+        AuthCustomModule, //todo temporary?
       //  McBreadcrumbsModule.forRoot(),
 
         MatAutocompleteModule,

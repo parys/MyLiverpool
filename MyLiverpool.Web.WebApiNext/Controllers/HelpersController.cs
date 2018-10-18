@@ -2,6 +2,7 @@
 using AspNet.Security.OAuth.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using MyLfc.Common.Web.DistributedCache;
 using MyLiverpool.Business.Contracts;
 using MyLiverpool.Common.Utilities;
@@ -17,16 +18,18 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
     {
         private readonly IHelperService _helperService;
         private readonly IDistributedCacheManager _cacheManager;
+        private readonly IConfigurationRoot _configuration;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="helperService"></param>
         /// <param name="cache"></param>
-        public HelpersController(IHelperService helperService, IDistributedCacheManager cache)
+        public HelpersController(IHelperService helperService, IDistributedCacheManager cache, IConfigurationRoot configuration)
         {
             _helperService = helperService;
             _cacheManager = cache;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -51,6 +54,12 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
             var result = await _helperService.CreateOrUpdateAsync((HelperEntityType)id, value);
             _cacheManager.SetString(GlobalConstants.HelperEntity + id, value);
             return Json(result);
+        }
+
+        [AllowAnonymous, HttpGet("AuthAddress")]
+        public IActionResult GetAuthServiceAddress()
+        {
+            return Json(_configuration.GetSection("AuthSettings")["Authority"]);
         }
     }
 }

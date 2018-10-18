@@ -27,7 +27,7 @@ import { NotificationCoreModule } from "./notification";
 import { UserCoreModule } from "./user";
 
 registerLocaleData(localeRU);
-import { PollCoreModule } from "./poll";
+//import { PollCoreModule } from "./poll";
 
 declare var Hammer: any;
 

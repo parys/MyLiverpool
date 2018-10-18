@@ -67,7 +67,7 @@ namespace MyLFC.Web.IdentityServer
                     ClientName = "MyLFC Lite",
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
                     AlwaysIncludeUserClaimsInIdToken = true,
-                    RequireConsent = true,
+                    RequireConsent = false,
 
                     ClientSecrets =
                     {
@@ -97,9 +97,14 @@ namespace MyLFC.Web.IdentityServer
                 {
                     ClientId = "ng",
                     ClientName = "Angular Client",
+                    AccessTokenLifetime = 60*60,// 60 minutes
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
-                    RequireConsent = true,
+                    AlwaysSendClientClaims=true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
+                    RequireConsent = false,
+                    AllowOfflineAccess = true,
+                    AccessTokenType = AccessTokenType.Jwt,
 
                     RedirectUris = { "http://localhost:1669/" },
                     PostLogoutRedirectUris = { "http://localhost:1669/" },
@@ -109,6 +114,7 @@ namespace MyLFC.Web.IdentityServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
+                        "role",
                         ApiV1
                     },
                 }
