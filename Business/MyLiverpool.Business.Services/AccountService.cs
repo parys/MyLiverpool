@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using MyLiverpool.Business.Contracts;
 using MyLiverpool.Business.Dto;
+using MyLiverpool.Business.Dto.Accounts;
 using MyLiverpool.Common.Utilities;
 using MyLiverpool.Data.Entities;
 using MyLiverpool.Data.ResourceAccess.Interfaces;
@@ -27,9 +28,9 @@ namespace MyLiverpool.Business.Services
             _userRepository = userRepository;
         }
 
-        public async Task<bool> ChangePasswordAsync(int userId, ChangePasswordDto dto)
+        public async Task<bool> ChangePasswordAsync(int userId, ChangePasswordViewModel viewModel)
         {
-            var result = await _userRepository.ChangePasswordAsync(userId, dto.OldPassword, dto.NewPassword);
+            var result = await _userRepository.ChangePasswordAsync(userId, viewModel.OldPassword, viewModel.NewPassword);
             return result.Succeeded;
         }
 

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
+using IdentityServer4.Models;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -113,21 +114,30 @@ namespace MyLiverpool.Web.WebApiNext
             //    });
 
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(o =>
-            {
-                o.Authority = Configuration["IdentityServerAddress"];
-                o.Audience = "apiV1";
-                o.RequireHttpsMetadata = false;
-                //todo o.Events.OnRetrieveToken = context =>
-                //{
-                //    context.Token = context.Request.Query["access_token"];
-                //    return Task.CompletedTask;
-                //};
-            });
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(o =>
+            //{
+            //    o.Authority = Configuration["IdentityServerAddress"];
+            //    o.Audience = "apiV1";
+            //    o.RequireHttpsMetadata = false;
+            //    //todo o.Events.OnRetrieveToken = context =>
+            //    //{
+            //    //    context.Token = context.Request.Query["access_token"];
+            //    //    return Task.CompletedTask;
+            //    //};
+            //});
+            services.AddAuthorization()
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = Configuration.GetSection("AuthSettings")["Authority"];
+                    options.RequireHttpsMetadata = false;
+                    options.ApiName = "apiV1";
+                    options.ApiSecret = "secret".Sha256();
+                });
 
             //  services.ApplyCustomOpenIdDict(Env);
 
@@ -252,10 +262,7 @@ namespace MyLiverpool.Web.WebApiNext
             {
                 app.UseSpaStaticFiles(new StaticFileOptions());
             }
-
-
-
-            //  app.UseAuthentication();
+            
             app.UseAuthentication();
 
             app.UseSignalR(routes =>

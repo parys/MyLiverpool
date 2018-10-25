@@ -25,6 +25,7 @@ import { TransferCoreModule } from "./transfer";
 import { CommentCoreModule } from "./comment";
 import { NotificationCoreModule } from "./notification";
 import { UserCoreModule } from "./user";
+import { AuthCustomModule } from "./+auth/auth.custom.module";
 
 registerLocaleData(localeRU);
 //import { PollCoreModule } from "./poll";
@@ -75,10 +76,11 @@ export class UIErrorHandler extends ErrorHandler {
         RouterModule.forRoot(routes, {
             onSameUrlNavigation: "reload",
             initialNavigation: "enabled",
-            anchorScrolling: "enabled",
+            anchorScrolling: "disabled",
             scrollPositionRestoration: "enabled"
         }),
-        UserCoreModule
+        UserCoreModule,
+        AuthCustomModule, //todo temporary?
     ],
     declarations: [
         home.StaticPageComponent,

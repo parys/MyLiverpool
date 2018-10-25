@@ -56,7 +56,7 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
         /// <summary>
         /// Authorizes user by password grant type.
         /// </summary>
-        /// <returns>Result of authentification.</returns>
+        /// <returns>Result of authentication.</returns>
         [HttpPost("~/connect/token")]
         public async Task<IActionResult> Exchange(OpenIdConnectRequest request)
         {

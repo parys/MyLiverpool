@@ -1,6 +1,15 @@
 ﻿<ul class="maroon-panel login-list-panel padding10"> <!--todo add else-->
-    <li *ngIf="!roles.isLogined">
-        <account-signin></account-signin>
+    <li *ngIf="!roles.isLogined" class="flex-space-around">
+        <div class="flex-space-around flex-v-c">
+            <span>
+                <a role="button" (click)="forgot()" class="text-white">Забыл пароль</a></span>
+            <span>
+                <button mat-raised-button (click)="login()">Войти</button>
+            </span>
+            <span>
+                <a role="button" (click)="register()" class="text-white">Регистрация</a>
+            </span>
+        </div>
     </li>
     <li *ngIf="roles.isLogined" class="flex-space-around flex-v-c">
         <a [routerLink]="['/users', 0]" class="text-white flex-space-around flex-v-c"><mat-icon>person</mat-icon>Профиль</a>

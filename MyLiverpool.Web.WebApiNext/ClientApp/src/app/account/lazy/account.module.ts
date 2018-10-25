@@ -2,7 +2,6 @@
 import { RouterModule } from "@angular/router";
 import { SharedModule } from "@app/shared";
 import { accountRoutes } from "./account.routes";
-import { AccountSignupComponent } from "./account-signup";
 import { ChangePasswordComponent } from "./changePassword";
 import { ConfirmEmailComponent } from "./confirmEmail";
 import { ForgotPasswordComponent } from "./forgotPassword";
@@ -21,7 +20,7 @@ import { RecaptchaModule } from "@app/shared/modules";
         RecaptchaModule
     ],
     declarations: [
-        AccountSignupComponent,
+    //    AccountSignupComponent,
         ChangePasswordComponent,
         ConfirmEmailComponent,
         ForgotPasswordComponent,

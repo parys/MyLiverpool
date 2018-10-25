@@ -1,6 +1,5 @@
 ﻿import { Routes } from "@angular/router";
 import { UnSignedGuard, RoleGuard } from "@app/+auth";
-import { AccountSignupComponent } from "./account-signup";
 import { ConfirmEmailComponent } from "./confirmEmail";
 import { ForgotPasswordComponent } from "./forgotPassword";
 import { UnconfirmedEmailComponent } from "./unconfirmedEmail";
@@ -8,12 +7,12 @@ import { ResetPasswordComponent } from "./resetPassword";
 import { ChangePasswordComponent } from "./changePassword";
 
 export const accountRoutes: Routes = [
-    {
-        path: "signup",
-        component: AccountSignupComponent,
-        data: { title: "Регистрация" },
-        canActivate: [UnSignedGuard]
-    },
+    //{
+    //    path: "signup",
+    //    component: AccountSignupComponent,
+    //    data: { title: "Регистрация" },
+    //    canActivate: [UnSignedGuard]
+    //},
     {
         path: "confirmEmail",
         component: ConfirmEmailComponent,

@@ -11,14 +11,19 @@ using IdentityServer4.Models;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MyLiverpool.Business.Contracts;
+using MyLiverpool.Business.Dto;
+using MyLiverpool.Business.Dto.Accounts;
+using MyLiverpool.Common.Utilities.Extensions;
 using MyLiverpool.Data.Entities;
 
 namespace MyLFC.Web.IdentityServer.Controllers.Account
 {
-    [SecurityHeaders]
+ //   [SecurityHeaders]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -27,6 +32,7 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEventService _events;
+        private readonly IAccountService _accountService;
 
         public AccountController(
             UserManager<User> userManager,
@@ -34,7 +40,7 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
-            IEventService events)
+            IEventService events, IAccountService accountService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -42,6 +48,7 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
             _clientStore = clientStore;
             _schemeProvider = schemeProvider;
             _events = events;
+            _accountService = accountService;
         }
 
         /// <summary>
@@ -92,10 +99,20 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
 
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberLogin, lockoutOnFailure: true);
+                var user = await _userManager.FindByNameAsync(model.Username);
+                if (user == null)
+                {
+                //    return BadRequest(new OpenIdConnectResponse
+                //    {
+                //        Error = OpenIdConnectConstants.Errors.InvalidGrant,
+                //        ErrorDescription = "The username/password couple is invalid."
+                //    });
+                }
+                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password,
+                    model.RememberLogin, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    var user = await _userManager.FindByNameAsync(model.Username);
+                    user = await _userManager.FindByNameAsync(model.Username);
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName));
 
                     // make sure the returnUrl is still valid, and if so redirect back to authorize endpoint or a local page
@@ -174,8 +191,6 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
             var additionalLocalClaims = new List<Claim>();
             var localSignInProps = new AuthenticationProperties();
             ProcessLoginCallbackForOidc(result, additionalLocalClaims, localSignInProps);
-            ProcessLoginCallbackForWsFed(result, additionalLocalClaims, localSignInProps);
-            ProcessLoginCallbackForSaml2p(result, additionalLocalClaims, localSignInProps);
 
             // issue authentication cookie for user
             // we must issue the cookie maually, and can't use the SignInManager because
@@ -251,6 +266,156 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
 
             return View("LoggedOut", vm);
         }
+
+        [Authorize, HttpGet("ChangePassword")]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Changes user password.
+        /// </summary>
+        /// <param name="viewModel">Contains new and old passwords.</param>
+        /// <returns></returns>
+        [Authorize, HttpPost("ChangePassword")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var result = await _accountService.ChangePasswordAsync(User.GetUserId(), viewModel);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Confirms email.
+        /// </summary>
+        /// <param name="userId">User id.</param>
+        /// <param name="code">Secret code.</param>
+        /// <returns>Returns confirmation result.</returns>
+        [AllowAnonymous, HttpGet("ConfirmEmail")]
+        public async Task<IActionResult> ConfirmEmail([FromQuery]int userId, [FromQuery]string code)
+        {
+            if (userId <= 0 || code == null)
+            {
+                return new BadRequestResult();
+            }
+            var result = await _accountService.ConfirmEmailAsync(userId, code);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Sends recovery mail to email.
+        /// </summary>
+        /// <param name="email">Forgotten email.</param>
+        /// <returns>Always returns true result.</returns>
+        [AllowAnonymous, HttpPost("ForgotPassword")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword([FromQuery]string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return BadRequest();
+            }
+
+            var result = await _accountService.ForgotPasswordAsync(email);
+            return Ok(true);
+        }
+
+        /// <summary>
+        /// Checks if email isn't already used.
+        /// </summary>
+        /// <param name="email">Verifiable email.</param>
+        /// <returns>Result of checking.</returns>
+        [AllowAnonymous, HttpGet("IsEmailUnique")]
+        public async Task<IActionResult> IsEmailUnique([FromQuery]string email)
+        {
+            var result = await _accountService.IsEmailUniqueAsync(email);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Checks if username isn't already used.
+        /// </summary>
+        /// <param name="username">Verifiable userName.</param>
+        /// <returns>Result of checking.</returns>
+        [AllowAnonymous, HttpGet("IsUsernameUnique")]
+        public async Task<IActionResult> IsUsernameUnique([FromQuery]string username)
+        {
+            var result = await _accountService.IsUserNameUniqueAsync(username);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Resends confirmation email.
+        /// </summary>
+        /// <param name="email">User email.</param>
+        /// <returns>Result of resend.</returns>
+        [AllowAnonymous, HttpGet("ResendConfirmEmail")]
+        public async Task<IActionResult> ResendConfirmEmail([FromQuery]string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                return BadRequest();
+            }
+            var result = await _accountService.ResendConfirmEmail(email);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Registers new user local account.
+        /// </summary>
+        /// <param name="dto">Register user model.</param>
+        /// <returns>Result of registration.</returns>
+        [AllowAnonymous, HttpPost("Register")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register([FromBody] RegisterUserDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _accountService.RegisterUserAsync(dto);
+
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            return Ok(true);
+        }
+
+        /// <summary>
+        /// Resets password by code.
+        /// </summary>
+        /// <param name="dto">Reset password model.</param>
+        /// <returns>Result of reseting password.</returns>
+        [AllowAnonymous, HttpPost("ResetPassword")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var result = await _accountService.ResetPasswordAsync(dto);
+            return Ok(result);
+        }
+
+
 
         /*****************************************/
         /* helper APIs for the AccountController */
@@ -526,12 +691,37 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
             }
         }
 
-        private void ProcessLoginCallbackForWsFed(AuthenticateResult externalResult, List<Claim> localClaims, AuthenticationProperties localSignInProps)
+        #region Helpers
+
+        private IActionResult GetErrorResult(IdentityResult result)
         {
+            if (result == null)
+            {
+                //  return InternalS();
+            }
+
+            if (!result.Succeeded)
+            {
+                if (result.Errors != null)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Code);
+                    }
+                }
+
+                if (ModelState.IsValid)
+                {
+                    // No ModelState errors are available to send, so just return an empty BadRequest.
+                    return BadRequest();
+                }
+
+                return BadRequest(ModelState);
+            }
+
+            return null;
         }
 
-        private void ProcessLoginCallbackForSaml2p(AuthenticateResult externalResult, List<Claim> localClaims, AuthenticationProperties localSignInProps)
-        {
-        }
+        #endregion
     }
 }

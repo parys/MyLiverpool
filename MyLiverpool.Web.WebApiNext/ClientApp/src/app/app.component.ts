@@ -3,8 +3,7 @@ import { isPlatformBrowser } from "@angular/common";
 import { MatSidenav } from "@angular/material";  
 import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { Observable } from "rxjs"
-import { filter, map } from "rxjs/operators"
-import { AuthService, IAuthStateModel } from "@app/+auth";
+import { filter, map } from "rxjs/operators";
 import { trigger, keyframes, animate, transition, state, style } from "@angular/animations";
 import * as kf from "./+keyframes";
 import { CustomTitleService } from "@app/shared";
@@ -52,26 +51,16 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.updateGestureState();
     }
 
-// public isRoot: boolean = false;
-    private authState$: Observable<IAuthStateModel>;
     @ViewChild("sidenav") sidenav: MatSidenav;
     constructor(private router: Router,
-        private authService: AuthService,
         private activatedRoute: ActivatedRoute,
         private titleService: CustomTitleService,
         @Inject(PLATFORM_ID) private platformId: Object
-    ) {       
+    ) {
     }
 
     public ngOnInit(): void {
         if (isPlatformBrowser(this.platformId)) {
-            this.authState$ = this.authService.state$;
-            // This starts up the token refresh preocess for the app
-            this.authService.init()
-                .subscribe(
-                    () => { console.info("Startup success"); },
-                    e => console.warn(e)
-            );
             this.updateGestureState();
         }
 

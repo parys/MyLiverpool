@@ -25,7 +25,7 @@ namespace MyLFC.Web.IdentityServer
         {
             return new List<ApiResource>
             {
-                new ApiResource(ApiV1, "My LFC API V1")
+                new ApiResource(ApiV1, "My LFC API V1", new List<string> { "name", "role" })
             };
         }
 
@@ -35,31 +35,6 @@ namespace MyLFC.Web.IdentityServer
             // client credentials client
             return new List<Client>
             {
-                new Client
-                {
-                    ClientId = "client",
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    },
-                    AllowedScopes = { ApiV1 }
-                },
-
-                // resource owner password grant client
-                new Client
-                {
-                    ClientId = "ro.client",
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    },
-                    AllowedScopes = { ApiV1 }
-                },
-
                 // OpenID Connect hybrid flow and client credentials client (MVC)
                 new Client
                 {
@@ -100,20 +75,21 @@ namespace MyLFC.Web.IdentityServer
                     AccessTokenLifetime = 60*60,// 60 minutes
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
-                    AlwaysSendClientClaims=true,
+                    AlwaysSendClientClaims = true,
                     AlwaysIncludeUserClaimsInIdToken = true,
                     RequireConsent = false,
                     AllowOfflineAccess = true,
                     AccessTokenType = AccessTokenType.Jwt,
 
-                    RedirectUris = { "http://localhost:1669/" },
-                    PostLogoutRedirectUris = { "http://localhost:1669/" },
+                    RedirectUris = { "http://localhost:1669" },
+                    PostLogoutRedirectUris = { "http://localhost:1669" },
                     AllowedCorsOrigins = { "http://localhost:1669" },
-
+                    
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
                         "role",
                         ApiV1
                     },

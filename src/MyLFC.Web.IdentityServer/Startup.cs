@@ -10,8 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using MyLfc.Common.Web.Middlewares;
+using MyLiverpool.Business.Services.Helpers;
 using MyLiverpool.Data.Entities;
 using MyLiverpool.Data.ResourceAccess;
+using MyLiverpool.Data.ResourceAccess.Helpers;
 
 namespace MyLFC.Web.IdentityServer
 {
@@ -40,6 +42,9 @@ namespace MyLFC.Web.IdentityServer
 
             services.AddCustomIdentitySettings();
 
+
+            services.RegisterRepositories();
+            services.RegisterServices();
 
             services.AddMvc();
 

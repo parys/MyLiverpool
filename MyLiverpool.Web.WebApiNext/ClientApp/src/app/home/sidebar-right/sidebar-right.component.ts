@@ -1,5 +1,5 @@
 ﻿import { Component, ChangeDetectionStrategy } from "@angular/core";
-import { RolesCheckedService, AuthService } from "@app/+auth";
+import { RolesCheckedService, OidcCustomConfigService } from "@app/+auth";
 
 @Component({
     selector: "sidebar-right",
@@ -9,10 +9,22 @@ import { RolesCheckedService, AuthService } from "@app/+auth";
 })
 export class SidebarRightComponent {
     constructor(public roles: RolesCheckedService,
-        private authService: AuthService) {
+        private oidc: OidcCustomConfigService) {
+    }
+
+    public login(): void {
+        this.roles.login();
     }
 
     public logout(): void {
-        this.authService.logout();
+        this.roles.logout();
+    }
+
+    public register(): void {
+        window.open(`${this.oidc.authAddr}/account/register`, "_blank");
+    }
+
+    public forgot(): void {
+        window.open(`${this.oidc.authAddr}/account/forgotPassword`, "_blank");
     }
 }

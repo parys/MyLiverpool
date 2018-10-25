@@ -2,12 +2,13 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using MyLiverpool.Business.Dto;
+using MyLiverpool.Business.Dto.Accounts;
 
 namespace MyLiverpool.Business.Contracts
 {
     public interface IAccountService
     {
-        Task<bool> ChangePasswordAsync(int userId, ChangePasswordDto dto);
+        Task<bool> ChangePasswordAsync(int userId, ChangePasswordViewModel viewModel);
 
         Task<bool> ConfirmEmailAsync(int userId, string code);
 

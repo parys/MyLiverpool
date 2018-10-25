@@ -2,22 +2,16 @@
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { HttpWrapperModule } from "@app/+httpWrapper";
-import { AuthService } from "./auth.service";
 import { StorageModule } from "@app/+storage";
 import { RoleGuard } from "./role-guard.service";
 import { UnSignedGuard } from "./unsigned-guard.service";
 import { RolesCheckedService } from "./roles-checked.service";
-
-import {
-    AuthModule,
-    OidcSecurityService,
-    OpenIDImplicitFlowConfiguration,
-    OidcConfigService,
-    AuthWellKnownEndpoints
-} from 'angular-auth-oidc-client';
+import { AuthModule, OidcSecurityService } from 'angular-auth-oidc-client';
 import { OidcCustomConfigService } from "./oidc-custom-config.service";
-import { RoleGuard2 } from "./role-guard2.service";
-
+//import { StorageService } from "../+storage/storage.service";
+import { LoaderService } from "../shared/loader/loader.service";
+import { BearerInterceptor } from "./interceptors/bearer.interceptor";
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
 
 export function loadConfig(configService: OidcCustomConfigService) {
     console.log('APP_INITIALIZER STARTING');
@@ -33,10 +27,10 @@ export function loadConfig(configService: OidcCustomConfigService) {
         AuthModule.forRoot()
     ],
     providers: [
-        AuthService,
+ //       AuthService,
         OidcSecurityService,
         RoleGuard,
-        RoleGuard2,
+      //  RoleGuard2,
         UnSignedGuard,
         RolesCheckedService,
         {
@@ -44,6 +38,12 @@ export function loadConfig(configService: OidcCustomConfigService) {
             useFactory: loadConfig,
             multi: true,
             deps: [OidcCustomConfigService]
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: BearerInterceptor,
+            multi: true,
+            //deps: []
         },
         OidcCustomConfigService
     ]

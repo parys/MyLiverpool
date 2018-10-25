@@ -1,5 +1,4 @@
 ﻿import { Injectable } from "@angular/core";
-import { Location } from "@angular/common";
 import { CanActivate, Router,
     ActivatedRouteSnapshot,
     RouterStateSnapshot } from "@angular/router";
@@ -8,13 +7,11 @@ import { RolesCheckedService } from "./roles-checked.service";
 @Injectable()
 export class RoleGuard implements CanActivate {
     constructor(private rolesService: RolesCheckedService,
-        private router: Router,
-        private location: Location) { }
+        private router: Router) { }
 
     public canActivate(route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): boolean {
         if (!this.rolesService.userRoles.isLogined) {
-            this.location.replaceState("/");
             this.router.navigate(["/"]);
              return false;
         }
@@ -30,7 +27,6 @@ export class RoleGuard implements CanActivate {
             }
         }
 
-        this.location.replaceState("/");
         this.router.navigate(["/"]);
         return false;
     }

@@ -10,7 +10,7 @@ import {
     ErrorStateMatcher, ShowOnDirtyErrorStateMatcher, MatSidenavModule
 } from "@angular/material";
 import { LoaderComponent, LoaderService } from "./loader";
-import { BearerInterceptor } from "./interceptors";
+//import { BearerInterceptor } from "./interceptors";
 import { CustomDatePipe, SafePipe } from "./pipes";
 import { BreadcrumbComponent, BreadcrumbService } from "./breadcrumb";
 import { NgxPaginationModule } from "ngx-pagination";
@@ -32,7 +32,6 @@ import { CustomTitleModule } from "./titleService";
         NgxPaginationModule,
         SignalRModule,
         StorageModule,
-        AuthCustomModule, //todo temporary?
       //  McBreadcrumbsModule.forRoot(),
 
         MatAutocompleteModule,
@@ -101,7 +100,7 @@ import { CustomTitleModule } from "./titleService";
     providers: [
         LoaderService,
         BreadcrumbService,
-        { provide: HTTP_INTERCEPTORS, useClass: BearerInterceptor, multi: true, deps: [StorageService, LoaderService] },
+       // { provide: HTTP_INTERCEPTORS, useClass: BearerInterceptor, multi: true, deps: [StorageService, LoaderService] },
         { provide: MatPaginatorIntl, useValue: getRussianPaginatorIntl() },
         { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000 } },
         { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
