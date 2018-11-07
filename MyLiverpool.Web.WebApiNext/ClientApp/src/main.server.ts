@@ -43,8 +43,6 @@ export default createServerRenderer(params => {
 
 });
 
-//import "zone.js/dist/zone-node";
-//import "./polyfills/server.polyfills";
 //import { enableProdMode } from "@angular/core";
 //import { createServerRenderer } from "aspnet-prerendering";
 //import { AppModule } from "./app/app.module.server";

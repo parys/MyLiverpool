@@ -9,7 +9,9 @@ import { TransferCoreModule } from "../core";
 import { TransferCurrentListComponent } from "./transfer-current-list";
 import { ClubCoreModule } from "@app/club";
 import { SeasonCoreModule } from "@app/season";
-import { MatNativeDateModule, MatDatepickerModule } from "@angular/material";
+import { MatNativeDateModule, MatDatepickerModule, MatTableModule } from "@angular/material";
+import { BreadcrumbService } from "@app/shared/breadcrumb";
+import { TRANSFERS_ROUTE, TRANSFERS_RU } from "@app/+constants";
 
 @NgModule({
     imports: [
@@ -20,7 +22,8 @@ import { MatNativeDateModule, MatDatepickerModule } from "@angular/material";
         SeasonCoreModule,
         TransferCoreModule,
         MatNativeDateModule,
-        MatDatepickerModule
+        MatDatepickerModule,
+        MatTableModule
     ],
     declarations: [
         TransferEditComponent,
@@ -28,4 +31,12 @@ import { MatNativeDateModule, MatDatepickerModule } from "@angular/material";
         TransferCurrentListComponent
     ]
 })
-export class TransferModule { }
+export class TransferModule {
+    constructor(
+        private breadcrumbService: BreadcrumbService
+    ) {
+        this.breadcrumbService.addFriendlyNameForRouteRegex(`/${TRANSFERS_ROUTE}`, TRANSFERS_RU);
+        this.breadcrumbService.addFriendlyNameForRoute(`/${TRANSFERS_ROUTE}/current`, "Текущие");
+        this.breadcrumbService.hideRouteRegex(`^/${TRANSFERS_ROUTE}/[0-9]+$`);
+    }
+}

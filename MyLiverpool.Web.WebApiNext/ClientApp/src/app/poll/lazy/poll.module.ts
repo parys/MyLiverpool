@@ -5,6 +5,8 @@ import { pollRoutes } from "./poll.routes";
 import { PollCoreModule } from "../core";
 import { PollListComponent } from "./poll-list";
 import { PollDetailComponent } from "./poll-detail";
+import { BreadcrumbService } from "../../shared/breadcrumb";
+import { POLLS_ROUTE } from "@app/+constants";
 
 @NgModule({
     imports: [
@@ -17,4 +19,11 @@ import { PollDetailComponent } from "./poll-detail";
         PollDetailComponent
     ]
 })
-export class PollModule { }
+export class PollModule {
+    constructor(
+        private breadcrumbService: BreadcrumbService
+    ) {
+        this.breadcrumbService.addFriendlyNameForRoute(`/${POLLS_ROUTE}`, "Опросы");
+        this.breadcrumbService.addFriendlyNameForRoute(`^/${POLLS_ROUTE}/[0-9]+$`, "Опрос");
+    }
+}

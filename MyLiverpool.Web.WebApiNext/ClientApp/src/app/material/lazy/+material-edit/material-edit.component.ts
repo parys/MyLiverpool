@@ -2,7 +2,7 @@
 import { Location } from "@angular/common";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
-import { MatSnackBar, MatDialog } from "@angular/material";
+import { MatSnackBar, MatDialog, MatDialogConfig } from "@angular/material";
 import { Observable } from "rxjs";
 import { MaterialService } from "../../core";
 import { Material } from "../../model";
@@ -50,7 +50,7 @@ export class MaterialEditComponent implements OnInit {
             this.item = new Material();
         };
         this.materialCategoryService.getAll(this.type)
-            .subscribe(data => this.parseCategories(data),
+            .subscribe((data : MaterialCategory[]) => this.parseCategories(data),
                 error => console.log(error));
 
     }
@@ -111,7 +111,7 @@ export class MaterialEditComponent implements OnInit {
             });
     }
 
-    public showLeaveModal(): Observable<boolean> | boolean {
+    public showLeaveModal(): any { //todo Observable<boolean> | boolean {
         if (this.editForm.dirty) {
             const dialogRef = this.dialog.open(MaterialGuardDialogComponent);
             return dialogRef.afterClosed();

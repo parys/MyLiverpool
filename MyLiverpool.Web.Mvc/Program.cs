@@ -15,7 +15,6 @@ namespace MyLiverpool.Web.Mvc
                 .Build();
 
             var host = WebHost.CreateDefaultBuilder(args)
-                 .UseApplicationInsights()
                 .UseConfiguration(config)
                 //.CaptureStartupErrors(true)
                 .UseKestrel()

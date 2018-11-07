@@ -3,7 +3,7 @@
         Новости<mat-icon style="font-size: 100%; height: 18px; width: 18px;">arrow_drop_down</mat-icon>
     </a>
     <mat-menu #newsMenu="matMenu">
-        <a [routerLink]="['/news']" [queryParams]="{page: 1}" mat-menu-item>Новости</a>
+        <a [routerLink]="['/news']" mat-menu-item>Новости</a>
         <a *ngIf="roles.isNewsmaker" [routerLink]="['/news', 0, 'edit']" mat-menu-item>Добавить</a>
         <a [routerLink]="['/newsCategories']" mat-menu-item>Категории</a>
     </mat-menu>
@@ -13,7 +13,7 @@
         Блоги<mat-icon style="font-size: 100%; height: 18px; width: 18px;">arrow_drop_down</mat-icon>
     </a>
     <mat-menu #blogsMenu="matMenu">
-        <a [routerLink]="['/blogs']" [queryParams]="{page: 1}" mat-menu-item>Блоги</a>
+        <a [routerLink]="['/blogs']" mat-menu-item>Блоги</a>
         <a *ngIf="roles.isAuthor" [routerLink]="['/blogs', 0, 'edit']" mat-menu-item>Добавить</a>
         <a [routerLink]="['/blogCategories']" mat-menu-item>Категории</a>
     </mat-menu>
@@ -43,7 +43,7 @@
     </mat-menu>
 </div>
 <div>
-    <a role="button" [routerLink]="['/users']" [queryParams]="{page: 1}">Пользователи</a>
+    <a role="button" [routerLink]="['/users']">Пользователи</a>
 </div>
 <div>
     <a role="button" [routerLink]="['/rules']"><b class="text-danger color-red beauty-font">Правила</b></a>
@@ -58,10 +58,12 @@
         <a class="color-tomato" [routerLink]="['/job']" mat-menu-item>Вакансии</a>
         <a [routerLink]="['/copyright']" mat-menu-item>О перепечатке информации</a>
         <a [routerLink]="['/cooperation']" mat-menu-item>Сотрудничество</a>
-        <a [routerLink]="['/comments']" [queryParams]="{page: 1}" mat-menu-item>Комментарии</a>
-        <a *ngIf="roles.isAdminAssistant" [routerLink]="['/roleGroups']" mat-menu-item>Роли</a>
-        <a *ngIf="roles.isAdminAssistant" [routerLink]="['/plans']" mat-menu-item>Планы</a>
-        <a *ngIf="roles.isAdminAssistant" [routerLink]="['/instructions']" mat-menu-item>Инструкции</a>
+        <a [routerLink]="['/comments']" mat-menu-item>Комментарии</a>
+        <span *ngIf="roles.isAdminAssistant">
+            <a [routerLink]="['/roleGroups']" mat-menu-item>Роли</a>
+            <a [routerLink]="['/plans']" mat-menu-item>Планы</a>
+            <a [routerLink]="['/instructions']" mat-menu-item>Инструкции</a>
+        </span>
         <!--<a *ngIf="roles.isNewsmaker || roles.isAuthor" [routerLink]="['/polls']" [queryParams]="{page: 1}" mat-menu-item>Опросы</a>-->
     </mat-menu>
 </div>
@@ -70,11 +72,13 @@
         Админка<mat-icon style="font-size: 100%; height: 18px; width: 18px;">arrow_drop_down</mat-icon>
     </a>
     <mat-menu #adminMenu="matMenu">
-        <a *ngIf="roles.isInformer" [routerLink]="['/matches']" mat-menu-item>Матчи</a>
-        <a *ngIf="roles.isInformer" [routerLink]="['/clubs']" mat-menu-item>Клубы</a>
-        <a *ngIf="roles.isInformer" [routerLink]="['/persons']" mat-menu-item>Люди</a>
-        <a *ngIf="roles.isInformer" [routerLink]="['/stadiums']" mat-menu-item>Стадионы</a>
-        <a *ngIf="roles.isInformer" [routerLink]="['/injuries']" mat-menu-item>Травмы</a>
+        <span *ngIf="roles.isInformer">
+            <a [routerLink]="['/matches']" mat-menu-item>Матчи</a>
+            <a [routerLink]="['/clubs']" mat-menu-item>Клубы</a>
+            <a [routerLink]="['/persons']" mat-menu-item>Люди</a>
+            <a [routerLink]="['/stadiums']" mat-menu-item>Стадионы</a>
+            <a [routerLink]="['/injuries']" mat-menu-item>Травмы</a>
+        </span>
         <a *ngIf="roles.isNewsmaker || roles.isAuthor" [routerLink]="['/images']" mat-menu-item>Изображения</a>
         <!--<a *ngIf="roles.isNewsmaker || roles.isAuthor" [routerLink]="['/polls']" [queryParams]="{page: 1}" mat-menu-item>Опросы</a>-->
     </mat-menu>

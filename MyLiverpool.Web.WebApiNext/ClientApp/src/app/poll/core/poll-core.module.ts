@@ -3,7 +3,7 @@ import { RouterModule } from "@angular/router";
 import { SharedModule } from "@app/shared";
 import { PollService } from "./poll.service";
 import { pollCoreRoutes } from "./poll.routes";
-import { NgxChartsModule } from "@swimlane/ngx-charts";
+//import { NgxChartsModule } from "@swimlane/ngx-charts";
 
 @NgModule({
     imports: [

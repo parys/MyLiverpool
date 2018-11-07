@@ -1,4 +1,4 @@
-﻿import "zone.js/dist/zone";
-import "reflect-metadata";
+﻿import "zone.js/dist/zone.min";
+//import "reflect-metadata";
 
 import "hammerjs";

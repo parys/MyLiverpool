@@ -3,16 +3,18 @@ import { CommonModule } from "@angular/common";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DeleteDialogComponent } from "./delete-dialog";
+import { MatBadgeModule } from '@angular/material/badge';
 import {
-    MatAutocompleteModule, MatBadgeModule, MatButtonModule, MatCardModule, MatCheckboxModule, MatDialogModule, MatExpansionModule,
-    MatIconModule, MatInputModule, MatMenuModule, MatProgressBarModule, MatSelectModule, MatSlideToggleModule,
-    MatSnackBarModule, MatTableModule, MatTooltipModule, MatSortModule, MatPaginatorModule, MatPaginatorIntl, MAT_SNACK_BAR_DEFAULT_OPTIONS,
+    MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule, MatDialogModule, MatExpansionModule,
+    MatIconModule, MatInputModule, MatMenuModule, MatProgressBarModule, MatSlideToggleModule,
+    MatSnackBarModule, MatTooltipModule, MatSortModule, MatPaginatorModule, MatPaginatorIntl,
+    MAT_SNACK_BAR_DEFAULT_OPTIONS,
     ErrorStateMatcher, ShowOnDirtyErrorStateMatcher, MatSidenavModule
 } from "@angular/material";
 import { LoaderComponent, LoaderService } from "./loader";
 //import { BearerInterceptor } from "./interceptors";
 import { CustomDatePipe, SafePipe } from "./pipes";
-import { BreadcrumbComponent, BreadcrumbService } from "./breadcrumb";
+import { BreadcrumbComponent } from "./breadcrumb";
 import { NgxPaginationModule } from "ngx-pagination";
 //import { DeferLoadDirective } from "./lazy";
 import { AdComponent } from "./ad";
@@ -45,15 +47,12 @@ import { CustomTitleModule } from "./titleService";
         MatInputModule,
         MatMenuModule,
         MatProgressBarModule,
-        MatSelectModule,
         MatSlideToggleModule,
         MatSnackBarModule,
         MatPaginatorModule,
         MatSortModule,
-        MatTableModule,
         MatTooltipModule,
-        MatSidenavModule,
-        CustomTitleModule
+        MatSidenavModule
 
     ],
     declarations: [
@@ -89,11 +88,9 @@ import { CustomTitleModule } from "./titleService";
         MatInputModule,
         MatMenuModule,
         MatPaginatorModule,
-        MatSelectModule,
         MatSlideToggleModule,
         MatSnackBarModule,
         MatSortModule,
-        MatTableModule,
         MatTooltipModule,
         MatSidenavModule
     ],

@@ -5,6 +5,8 @@ import { SharedModule } from "@app/shared";
 import { notificationRoutes } from "./notification.routes";
 import { NotificationListComponent } from "./notification-list";
 import { NotificationCoreModule } from "@app/notification";
+import { BreadcrumbService } from "@app/shared/breadcrumb";
+import { NOTIFICATIONS_ROUTE } from "@app/+constants";
 
 @NgModule({
     imports: [
@@ -17,4 +19,10 @@ import { NotificationCoreModule } from "@app/notification";
         NotificationListComponent
     ]
 })
-export class NotificationModule { }
+export class NotificationModule {
+    constructor(
+        private breadcrumbService: BreadcrumbService
+    ) {
+        this.breadcrumbService.addFriendlyNameForRoute(`/${NOTIFICATIONS_ROUTE}`, "Уведомления");
+    }
+}

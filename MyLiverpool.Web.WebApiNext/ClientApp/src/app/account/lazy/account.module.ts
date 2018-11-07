@@ -10,7 +10,8 @@ import { UnconfirmedEmailComponent } from "./unconfirmedEmail";
 import { AccountValidators } from "./account.validators";
 import { AccountCoreModule } from "../core";
 import { RecaptchaModule } from "@app/shared/modules";
-//import { AccountInitComponent } from "./account-init.component";
+import { BreadcrumbService } from "@app/shared/breadcrumb";
+import { ACCOUNT_ROUTE } from "@app/+constants";
 
 @NgModule({
     imports: [
@@ -35,4 +36,16 @@ import { RecaptchaModule } from "@app/shared/modules";
   //      AccountInitComponent
     ]
 })
-export class AccountModule { }
+export class AccountModule {
+    constructor(
+        private breadcrumbService: BreadcrumbService
+    ) {
+        this.breadcrumbService.hideRouteRegex(`^/${ACCOUNT_ROUTE}$`);
+        this.breadcrumbService.addFriendlyNameForRoute(`/${ACCOUNT_ROUTE}/signup`, "Регистрация");
+        this.breadcrumbService.addFriendlyNameForRouteRegex(`/${ACCOUNT_ROUTE}/confirmEmail`, "Подтверждение пароля");
+        this.breadcrumbService.addFriendlyNameForRoute(`/${ACCOUNT_ROUTE}/forgotPassword`, "Восстановление забытого пароля");
+        this.breadcrumbService.addFriendlyNameForRoute(`/${ACCOUNT_ROUTE}/unconfirmedEmail`, "Ваша почта не подтверждена");
+        this.breadcrumbService.addFriendlyNameForRouteRegex(`/${ACCOUNT_ROUTE}/resetPassword`, "Сброс пароля");
+        this.breadcrumbService.addFriendlyNameForRoute(`/${ACCOUNT_ROUTE}/changePassword`, "Изменение пароля");
+    }
+}

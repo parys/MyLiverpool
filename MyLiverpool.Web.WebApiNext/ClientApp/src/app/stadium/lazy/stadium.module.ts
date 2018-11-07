@@ -5,6 +5,8 @@ import { StadiumEditComponent } from "./stadium-edit";
 import { stadiumRoutes } from "./stadium.routes";
 import { SharedModule } from "@app/shared";
 import { StadiumCoreModule } from "../core";
+import { BreadcrumbService } from "@app/shared/breadcrumb";
+import { STADIUMS_ROUTE, STADIUMS_RU } from "@app/+constants";
 
 @NgModule({
     imports: [
@@ -17,4 +19,11 @@ import { StadiumCoreModule } from "../core";
         StadiumListComponent
     ]
 })
-export class StadiumModule { }
+export class StadiumModule {
+    constructor(
+        private breadcrumbService: BreadcrumbService
+    ) {
+        this.breadcrumbService.addFriendlyNameForRouteRegex(`/${STADIUMS_ROUTE}`, STADIUMS_RU);
+        this.breadcrumbService.hideRouteRegex(`^/${STADIUMS_ROUTE}/[0-9]+$`);
+    }
+}

@@ -5,6 +5,8 @@ import { ImageCoreModule } from "../core";
 import { ImageDetailComponent } from "./image-detail";
 import { ImageListComponent } from "./image-list";
 import { imageRoutes } from "./image.routes";
+import { BreadcrumbService } from "@app/shared/breadcrumb";
+import { IMAGES_ROUTE } from "@app/+constants";
 
 @NgModule({
     imports: [
@@ -17,4 +19,10 @@ import { imageRoutes } from "./image.routes";
         ImageListComponent
     ]
 })
-export class ImageModule { }
+export class ImageModule {
+    constructor(
+        private breadcrumbService: BreadcrumbService
+    ) {
+        this.breadcrumbService.addFriendlyNameForRouteRegex(`/${IMAGES_ROUTE}`, "Изображения");
+    }
+}

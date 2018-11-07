@@ -18,7 +18,7 @@ import { InjuryCoreModule } from "./injury";
 import { MatchCoreModule } from "./match";
 import { MaterialCoreModule } from "./material";
 import { PersonCoreModule } from "./person";
-import { SharedModule } from "./shared";
+import { SharedModule, CustomTitleService } from "./shared";
 import * as admin from "./admin";
 import { AccountCoreModule } from "./account";
 import { TransferCoreModule } from "./transfer";
@@ -29,6 +29,7 @@ import { AuthCustomModule } from "./+auth/auth.custom.module";
 
 registerLocaleData(localeRU);
 //import { PollCoreModule } from "./poll";
+import { BreadcrumbService } from "@app/shared/breadcrumb";
 
 declare var Hammer: any;
 
@@ -43,7 +44,6 @@ export class MyHammerConfig extends HammerGestureConfig {
         return mc;
     }
 }
-
 
 @Injectable()
 export class UIErrorHandler extends ErrorHandler {
@@ -98,6 +98,8 @@ export class UIErrorHandler extends ErrorHandler {
     ],
     providers: [// services
         admin.AdminService,
+        BreadcrumbService,
+        CustomTitleService,
         { provide: LOCALE_ID, useValue: "ru-RU" },
         {
             // hammer instantion with custom config

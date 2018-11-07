@@ -13,6 +13,8 @@ import { ClubCoreModule } from "@app/club";
 import { StadiumCoreModule } from "@app/stadium";
 import { SeasonCoreModule } from "@app/season";
 import { MatNativeDateModule, MatDatepickerModule } from "@angular/material";
+import { BreadcrumbService } from "@app/shared/breadcrumb";
+import { MATCHES_ROUTE, MATCHES_RU, MATCH_RU  } from "@app/+constants";
 
 @NgModule({
     imports: [
@@ -34,4 +36,11 @@ import { MatNativeDateModule, MatDatepickerModule } from "@angular/material";
         MatchDetailComponent
     ]
 })
-export class MatchModule { }  
+export class MatchModule {
+    constructor(
+        private breadcrumbService: BreadcrumbService
+    ) {
+        this.breadcrumbService.addFriendlyNameForRouteRegex(`/${MATCHES_ROUTE}`, MATCHES_RU);
+        this.breadcrumbService.addFriendlyNameForRouteRegex(`^/${MATCHES_ROUTE}/[0-9]+$`, MATCH_RU); 
+    }
+}  

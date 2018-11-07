@@ -8,6 +8,8 @@ import { PmEditComponent } from "./pm-edit";
 import { PmCoreModule } from "../core";
 import { EditorModule } from "@app/editor";
 import { MatTabsModule } from "@angular/material";
+import { BreadcrumbService } from "@app/shared/breadcrumb";
+import { PMS_ROUTE } from "@app/+constants";
 
 @NgModule({
     imports: [
@@ -23,4 +25,11 @@ import { MatTabsModule } from "@angular/material";
         PmListComponent
     ]
 })
-export class PmModule { }
+export class PmModule {
+    constructor(
+        private breadcrumbService: BreadcrumbService
+    ) {
+        this.breadcrumbService.addFriendlyNameForRouteRegex(`/${PMS_ROUTE}`, "Личные сообщения");
+        this.breadcrumbService.addFriendlyNameForRouteRegex(`/${PMS_ROUTE}/[0-9]+$`, "Сообщение");
+    }
+}

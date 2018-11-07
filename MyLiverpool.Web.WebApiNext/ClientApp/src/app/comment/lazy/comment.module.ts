@@ -5,6 +5,8 @@ import { commentRoutes } from "./comment.routes";
 import { CommentListComponent } from "./comment-list";
 import { EditorModule } from "@app/editor";
 import { CommentCoreModule } from "../core";
+import { BreadcrumbService } from "@app/shared/breadcrumb";
+import { COMMENTS_ROUTE, COMMENTS_RU } from "@app/+constants";
 
 @NgModule({
     imports: [
@@ -17,4 +19,9 @@ import { CommentCoreModule } from "../core";
         CommentListComponent,
     ]
 })
-export class CommentModule { }
+export class CommentModule {
+    constructor(
+        private breadcrumbService: BreadcrumbService
+    ) {
+        this.breadcrumbService.addFriendlyNameForRouteRegex(`/${COMMENTS_ROUTE}`, COMMENTS_RU);
+    }}

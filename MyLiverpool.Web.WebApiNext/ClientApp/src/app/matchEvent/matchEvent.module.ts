@@ -4,11 +4,13 @@ import { SharedModule } from "@app/shared";
 import { MatchEventEditPanelComponent } from "./matchEvent-edit-panel";
 import { MatchEventService } from "./matchEvent.service";
 import { MatchEventMatchPanelComponent } from "./matchEvent-match-panel";
+import { MatSelectModule } from "@angular/material";
 
 @NgModule({
     imports: [
         CommonModule,
-        SharedModule
+        SharedModule,
+        MatSelectModule
     ],
     declarations: [
         MatchEventEditPanelComponent,
@@ -16,7 +18,8 @@ import { MatchEventMatchPanelComponent } from "./matchEvent-match-panel";
     ],
     exports: [
         MatchEventEditPanelComponent,
-        MatchEventMatchPanelComponent
+        MatchEventMatchPanelComponent,
+        MatSelectModule
     ],
     providers: [
         MatchEventService

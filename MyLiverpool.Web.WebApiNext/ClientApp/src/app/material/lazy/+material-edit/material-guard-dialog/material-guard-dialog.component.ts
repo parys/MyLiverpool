@@ -6,5 +6,5 @@ import { MatDialogRef } from "@angular/material";
     templateUrl: "./material-guard-dialog.component.html"
 })
 export class MaterialGuardDialogComponent {
-    constructor(public dialogRef: MatDialogRef<MaterialGuardDialogComponent>) { }
+    constructor(public dialogRef: MatDialogRef<MaterialGuardDialogComponent, boolean>) { }
 }
