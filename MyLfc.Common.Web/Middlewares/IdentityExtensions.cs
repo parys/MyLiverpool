@@ -1,5 +1,4 @@
 ﻿using System;
-using AspNet.Security.OpenIdConnect.Primitives;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using MyLiverpool.Data.Entities;
@@ -31,9 +30,9 @@ namespace MyLfc.Common.Web.Middlewares
 
             services.Configure<IdentityOptions>(options =>
             {
-                options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
-                options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
-                options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
+           //     options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
+           //     options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
+           //     options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
             });
 
             return services;

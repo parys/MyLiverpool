@@ -1,12 +1,11 @@
-﻿using AspNet.Security.OAuth.Validation;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 
 namespace MyLfc.Common.Web.Hubs
 {
     /// <summary>
     /// Hub for athenticated users.
     /// </summary>
-    [Authorize(AuthenticationSchemes = OAuthValidationDefaults.AuthenticationScheme)]
+    [Authorize()]
     public class AuthHub : AnonymHub
     {
         /// <summary>

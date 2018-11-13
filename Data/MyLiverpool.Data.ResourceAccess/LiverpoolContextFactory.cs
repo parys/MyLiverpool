@@ -12,7 +12,7 @@ namespace MyLiverpool.Data.ResourceAccess
         public LiverpoolContext Create()
         {
         var optionsBuilder = new DbContextOptionsBuilder<LiverpoolContext>();
-        optionsBuilder.UseOpenIddict<int>();
+    //    optionsBuilder.UseOpenIddict<int>();
         optionsBuilder.UseSqlServer(connectionString);
 
         return new LiverpoolContext(optionsBuilder.Options);
@@ -21,7 +21,7 @@ namespace MyLiverpool.Data.ResourceAccess
         public LiverpoolContext Create(DbContextFactoryOptions options)
         {
             var optionsBuilder = new DbContextOptionsBuilder<LiverpoolContext>();
-            optionsBuilder.UseOpenIddict<int>();
+       //     optionsBuilder.UseOpenIddict<int>();
             optionsBuilder.UseSqlServer(connectionString);
 
             return new LiverpoolContext(optionsBuilder.Options);
@@ -30,7 +30,7 @@ namespace MyLiverpool.Data.ResourceAccess
         public LiverpoolContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<LiverpoolContext>();
-            optionsBuilder.UseOpenIddict<int>();
+      //      optionsBuilder.UseOpenIddict<int>();
             optionsBuilder.UseSqlServer(connectionString);
 
             return new LiverpoolContext(optionsBuilder.Options);

@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using AspNet.Security.OAuth.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyLfc.Common.Web;
@@ -14,7 +13,7 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
     /// <summary>
     /// Controller for manage admin functions.
     /// </summary>
-    [Authorize(AuthenticationSchemes = OAuthValidationDefaults.AuthenticationScheme, Roles = nameof(RolesEnum.AdminStart)), Route("api/v1/[controller]")]
+    [Authorize(Roles = nameof(RolesEnum.AdminStart)), Route("api/v1/[controller]")]
     public class AdminController : Controller
     {
         private readonly IAdminService _adminService;

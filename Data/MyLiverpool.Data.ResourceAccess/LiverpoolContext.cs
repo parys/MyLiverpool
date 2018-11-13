@@ -214,7 +214,7 @@ namespace MyLiverpool.Data.ResourceAccess
             modelBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             if (_isMigrator)
             {
-                modelBuilder.UseOpenIddict<int>();
+            //    modelBuilder.UseOpenIddict<int>();
                 modelBuilder.UseSqlServer(
                     "Server=User-pc;Database=MyLiverpool1123Migrator;Trusted_Connection=True;MultipleActiveResultSets=true");
             }

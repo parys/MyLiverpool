@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using AspNet.Security.OAuth.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyLiverpool.Business.Contracts;
@@ -12,7 +11,7 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
     /// <summary>
     /// Manages news categories.
     /// </summary>
-    [Authorize(AuthenticationSchemes = OAuthValidationDefaults.AuthenticationScheme), Route("api/v1/[controller]")]
+    [Authorize, Route("api/v1/[controller]")]
     public class MaterialCategoriesController : Controller
     {
         private readonly IMaterialCategoryService _materialCategoryService;
@@ -46,8 +45,7 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
         [AllowAnonymous, HttpGet("{type}")]
         public async Task<IActionResult> Get(string type)
         {
-            MaterialType parsedType;
-            if (!Enum.TryParse(type, true, out parsedType))
+            if (!Enum.TryParse(type, true, out MaterialType parsedType))
             {
                 return BadRequest("Cannot parse material type!");
             }
@@ -64,8 +62,7 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
         [Authorize(Roles = nameof(RolesEnum.NewsFull) + "," + nameof(RolesEnum.BlogFull)), HttpPost("{type}")]
         public async Task<IActionResult> CreateAsync(string type, [FromBody] MaterialCategoryDto dto)
         {
-            MaterialType parsedType;
-            if (!Enum.TryParse(type, true, out parsedType))
+            if (!Enum.TryParse(type, true, out MaterialType parsedType))
             {
                 return BadRequest("Cannot parse material type!");
             }

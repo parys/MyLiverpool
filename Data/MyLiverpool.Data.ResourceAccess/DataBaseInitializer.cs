@@ -15,9 +15,6 @@ using MyLiverpool.Data.Entities;
 
 namespace MyLiverpool.Data.ResourceAccess
 {
-    using OpenIddict.Abstractions;
-    using OpenIddict.EntityFrameworkCore.Models;
-
     public class DatabaseInitializer
     {
         private readonly LiverpoolContext _context;
@@ -68,7 +65,7 @@ namespace MyLiverpool.Data.ResourceAccess
             await InitMatches();
             await InitPersonsAsync();
 
-            await AddApplication();
+          //  await AddApplication();
         }
 
         #region roles
@@ -1239,36 +1236,36 @@ src='http://s4.hostingkartinok.com/uploads/images/2013/07/8a7fed2ee9f513c0e75655
             await _context.SaveChangesAsync();
         }
 
-        private async Task AddApplication()
-        {
-            var applications = _context.Set<OpenIddictApplication<int>>();
-            if (applications.Any()) return;
+      //  private async Task AddApplication()
+        //{
+            //var applications = _context.Set<OpenIddictApplication<int>>();
+            //if (applications.Any()) return;
 
-            var app = new OpenIddictApplication<int>() 
-            {
-                ClientId = "client_id3",
-                ClientSecret = "client_secret44",
-                Type = OpenIddictConstants.ClientTypes.Public,
-              //  Id = Guid.NewGuid().ToString(),
-                DisplayName = "MVC Core client application",
-                RedirectUris = "http://localhost:1669/",
-                PostLogoutRedirectUris = "http://localhost:1669/",
-            };
-            applications.Add(app);
+            //var app = new OpenIddictApplication<int>() 
+            //{
+            //    ClientId = "client_id3",
+            //    ClientSecret = "client_secret44",
+            //    Type = OpenIddictConstants.ClientTypes.Public,
+            //  //  Id = Guid.NewGuid().ToString(),
+            //    DisplayName = "MVC Core client application",
+            //    RedirectUris = "http://localhost:1669/",
+            //    PostLogoutRedirectUris = "http://localhost:1669/",
+            //};
+            //applications.Add(app);
 
-            app = new OpenIddictApplication<int>()
-            {
-                ClientId = "client_id_swagger",
-                ClientSecret = "client_secret_swagger",
-                Type = OpenIddictConstants.ClientTypes.Public,
-                //Id = Guid.NewGuid().ToString(),
-                DisplayName = "Swagger client application",
-                RedirectUris = "http://localhost:1669/swagger/o2c.html",
-                PostLogoutRedirectUris = "http://localhost:1669/swagger/index.html",
-            };
-            applications.Add(app);
-            await _context.SaveChangesAsync();
-        }
+            //app = new OpenIddictApplication<int>()
+            //{
+            //    ClientId = "client_id_swagger",
+            //    ClientSecret = "client_secret_swagger",
+            //    Type = OpenIddictConstants.ClientTypes.Public,
+            //    //Id = Guid.NewGuid().ToString(),
+            //    DisplayName = "Swagger client application",
+            //    RedirectUris = "http://localhost:1669/swagger/o2c.html",
+            //    PostLogoutRedirectUris = "http://localhost:1669/swagger/index.html",
+            //};
+            //applications.Add(app);
+            //await _context.SaveChangesAsync();
+        //}
 
         #region season-stadium-club-match
         private async Task InitSeasons()

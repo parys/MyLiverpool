@@ -23,7 +23,6 @@ import { getRussianPaginatorIntl } from './intl/russian-paginator-intl';
 import { SignalRModule } from "@app/+signalr";
 import { StorageModule, StorageService } from "@app/+storage";
 import { AuthCustomModule } from "@app/+auth";
-import { CustomTitleModule } from "./titleService";
 //import { DeferLoadDirective } from "./lazy/defer-load.directive";
 
 @NgModule({
@@ -96,7 +95,6 @@ import { CustomTitleModule } from "./titleService";
     ],
     providers: [
         LoaderService,
-        BreadcrumbService,
        // { provide: HTTP_INTERCEPTORS, useClass: BearerInterceptor, multi: true, deps: [StorageService, LoaderService] },
         { provide: MatPaginatorIntl, useValue: getRussianPaginatorIntl() },
         { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000 } },

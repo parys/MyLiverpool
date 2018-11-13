@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using AspNet.Security.OAuth.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyLiverpool.Business.Contracts;
@@ -10,7 +9,7 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
     /// <summary>
     /// Manages role groups.
     /// </summary>
-    [Authorize(AuthenticationSchemes = OAuthValidationDefaults.AuthenticationScheme, Roles = nameof(RolesEnum.AdminFull)), Route("api/v1/[controller]")]
+    [Authorize(Roles = nameof(RolesEnum.AdminFull)), Route("api/v1/[controller]")]
     public class RoleGroupsController : Controller
     {
         private readonly IRoleService _roleService;
