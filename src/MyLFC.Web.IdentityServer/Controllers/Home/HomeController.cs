@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using IdentityServer4.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MyLFC.Web.IdentityServer.Controllers.Home
@@ -14,6 +15,7 @@ namespace MyLFC.Web.IdentityServer.Controllers.Home
             _interaction = interaction;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View();

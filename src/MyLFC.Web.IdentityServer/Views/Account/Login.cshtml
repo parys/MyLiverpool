@@ -2,10 +2,10 @@
 
 <div class="login-page">
     <div class="page-header">
-        <h1>Login</h1>
+        <h1>Вход</h1>
     </div>
 
-    @Html.Partial("_ValidationSummary")
+    @await Html.PartialAsync("_ValidationSummary")
 
     <div class="row">
 
@@ -14,7 +14,7 @@
             <div class="col-sm-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Local Login</h3>
+                        <h3 class="panel-title">Локальный вход</h3>
                     </div>
                     <div class="panel-body">
 
@@ -24,29 +24,25 @@
                             <fieldset>
                                 <div class="form-group">
                                     <label asp-for="Username"></label>
-                                    <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
+                                    <input class="form-control" placeholder="Логин" asp-for="Username" autofocus>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="Password"></label>
-                                    <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
+                                    <input type="password" class="form-control" placeholder="Пароль" asp-for="Password" autocomplete="off">
                                 </div>
                                 @if (Model.AllowRememberLogin)
                                 {
                                     <div class="form-group login-remember">
                                         <label asp-for="RememberLogin">
                                             <input asp-for="RememberLogin">
-                                            <strong>Remember My Login</strong>
+                                            <strong>Запомнить Меня</strong>
                                         </label>
                                     </div>
                                 }
 
-                                <div>
-                                    <p>The default users are alice/bob, password: Pass123$</p>
-                                </div>
-
                                 <div class="form-group">
-                                    <button class="btn btn-primary" name="button" value="login">Login</button>
-                                    <button class="btn btn-default" name="button" value="cancel">Cancel</button>
+                                    <button class="btn btn-primary" name="button" value="login">Войти</button>
+                                    <button class="btn btn-default" name="button" value="cancel">Отмена</button>
                                 </div>
                             </fieldset>
                         </form>
@@ -60,7 +56,7 @@
             <div class="col-md-6 col-sm-6 external-providers">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">External Login</h3>
+                        <h3 class="panel-title">Вход с помощью других сайтов</h3>
                     </div>
                     <div class="panel-body">
                         <ul class="list-inline">
@@ -84,8 +80,8 @@
         @if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
         {
             <div class="alert alert-warning">
-                <strong>Invalid login request</strong>
-                There are no login schemes configured for this client.
+                <strong>Неправильный запрос на авторизицию</strong>
+                Для данного пользователя не настроена возможность входа.
             </div>
         }
     </div>

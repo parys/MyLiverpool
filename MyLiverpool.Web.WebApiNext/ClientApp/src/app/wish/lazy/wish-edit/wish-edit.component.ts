@@ -46,8 +46,7 @@ export class WishEditComponent implements OnInit, OnDestroy {
             if (this.id > 0) {
                 this.sub2 = this.service
                     .getSingle(this.id)
-                    .subscribe(data => this.editWishForm.patchValue(data),
-                    error => console.log(error));
+                    .subscribe(data => this.editWishForm.patchValue(data));
             }
         });
         this.updateTypes();

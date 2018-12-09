@@ -23,7 +23,7 @@ using MyLiverpool.Data.Entities;
 
 namespace MyLFC.Web.IdentityServer.Controllers.Account
 {
- //   [SecurityHeaders]
+    //   [SecurityHeaders]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -374,6 +374,16 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
         }
 
         /// <summary>
+        /// Returns default register view.
+        /// </summary>
+        /// <returns>Sign up page.</returns>
+        [AllowAnonymous, HttpGet("Register")]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        /// <summary>
         /// Registers new user local account.
         /// </summary>
         /// <param name="dto">Register user model.</param>
@@ -394,7 +404,7 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
                 return GetErrorResult(result);
             }
 
-            return Ok(true);
+            return View(true);
         }
 
         /// <summary>
