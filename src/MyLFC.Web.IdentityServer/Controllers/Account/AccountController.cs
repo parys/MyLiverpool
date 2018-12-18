@@ -24,6 +24,7 @@ using MyLiverpool.Data.Entities;
 namespace MyLFC.Web.IdentityServer.Controllers.Account
 {
     //   [SecurityHeaders]
+    [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -267,7 +268,7 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
             return View("LoggedOut", vm);
         }
 
-        [Authorize, HttpGet("ChangePassword")]
+        [Authorize, HttpGet]
         public IActionResult ChangePassword()
         {
             return View();
@@ -278,7 +279,7 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
         /// </summary>
         /// <param name="viewModel">Contains new and old passwords.</param>
         /// <returns></returns>
-        [Authorize, HttpPost("ChangePassword")]
+        [Authorize, HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordViewModel viewModel)
         {
@@ -297,7 +298,7 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
         /// <param name="userId">User id.</param>
         /// <param name="code">Secret code.</param>
         /// <returns>Returns confirmation result.</returns>
-        [AllowAnonymous, HttpGet("ConfirmEmail")]
+        [AllowAnonymous, HttpGet]
         public async Task<IActionResult> ConfirmEmail([FromQuery]int userId, [FromQuery]string code)
         {
             if (userId <= 0 || code == null)
@@ -320,7 +321,7 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
         /// </summary>
         /// <param name="email">Forgotten email.</param>
         /// <returns>Always returns true result.</returns>
-        [AllowAnonymous, HttpPost("ForgotPassword")]
+        [AllowAnonymous, HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword([FromQuery]string email)
         {
@@ -377,9 +378,10 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
         /// Returns default register view.
         /// </summary>
         /// <returns>Sign up page.</returns>
-        [AllowAnonymous, HttpGet("Register")]
-        public IActionResult Register()
+        [AllowAnonymous, HttpGet]
+        public IActionResult Register(string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
@@ -388,30 +390,31 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
         /// </summary>
         /// <param name="dto">Register user model.</param>
         /// <returns>Result of registration.</returns>
-        [AllowAnonymous, HttpPost("Register")]
+        [AllowAnonymous, HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([FromBody] RegisterUserDto dto)
+        public async Task<IActionResult> Register([FromBody] RegisterUserDto model, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var result = await _accountService.RegisterUserAsync(dto);
+            var result = await _accountService.RegisterUserAsync(model);
 
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
 
-            return View(true);
+            return View(model);
         }
 
         /// <summary>
         /// Resets password by code.
         /// </summary>
         /// <param name="dto">Reset password model.</param>
-        /// <returns>Result of reseting password.</returns>
+        /// <returns>Result of resetting password.</returns>
         [AllowAnonymous, HttpPost("ResetPassword")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)

@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MyLiverpool.Business.Contracts;
-using MyLiverpool.Business.Dto;
 using MyLiverpool.Data.Entities;
 using MyLiverpool.Web.Mvc.Models.AccountViewModels;
 
@@ -23,7 +21,6 @@ namespace MyLiverpool.Web.Mvc.Controllers
         private readonly SignInManager<User> _signInManager;
       //  private readonly IEmailSender _emailSender;
       //  private readonly IUserService _userService;
-        private readonly IAccountService _accountService;
         private readonly ILogger _logger;
 
         /// <summary>
@@ -31,22 +28,17 @@ namespace MyLiverpool.Web.Mvc.Controllers
         /// </summary>
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
-        /// <param name="emailSender"></param>
         /// <param name="logger"></param>
-        /// <param name="accountService"></param>
         /// <param name="userService"></param>
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
       //      IEmailSender emailSender,
-            ILogger<AccountController> logger,
-            IAccountService accountService,
-            IUserService userService)
+            ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-            _accountService = accountService;
         }
 
         [TempData]
@@ -216,50 +208,7 @@ namespace MyLiverpool.Web.Mvc.Controllers
         //        return View();
         //    }
         //}
-
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public IActionResult Lockout()
-        //{
-        //    return View();
-        //}
-
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult Register(string returnUrl = null)
-        {
-            ViewData["ReturnUrl"] = returnUrl;
-            return View();
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterUserDto model, string returnUrl = null)
-        {
-            ViewData["ReturnUrl"] = returnUrl;
-            if (ModelState.IsValid)
-            {
-                var user = await _accountService.RegisterUserAsync(model);
-                //if (result.Succeeded)
-                //{
-                //    _logger.LogInformation("User created a new account with password.");
-
-                //    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                //    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                //    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
-
-                //    await _signInManager.SignInAsync(user, isPersistent: false);
-                //    _logger.LogInformation("User created a new account with password.");
-                //    return RedirectToLocal(returnUrl);
-                //}
-                //AddErrors(result);
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
+        
         /// <summary>
         /// Signs out user.
         /// </summary>
