@@ -2,8 +2,8 @@
     <mat-form-field class="full-width">
         <input matInput placeholder="Cоперник" [matAutocomplete]="club" formControlName="clubName">
         <mat-autocomplete #club="matAutocomplete">
-            <mat-option *ngFor="let club of clubs$ | async" [value]="club.value" (click)="selectClub(club.key)">
-                <span>{{ club.value }}</span>
+            <mat-option *ngFor="let club of clubs$ | async" [value]="club.name" (click)="selectClub(club.id)">
+                <span>{{ club.name }}</span>
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>

@@ -47,7 +47,7 @@ export class SignalRService {
 
         this.hubConnection = new HubConnectionBuilder()
             .withUrl(`${this.baseUrl}hubs/${hubUrl}`, options)
-        //         .withHubProtocol(new MessagePackHubProtocol())
+ //                .withHubProtocol(new MessagePackHubProtocol())
             .configureLogging(LogLevel.Error)
             .build();
         this.hubConnection.on("updateChat", (data: ChatMessage) => {
