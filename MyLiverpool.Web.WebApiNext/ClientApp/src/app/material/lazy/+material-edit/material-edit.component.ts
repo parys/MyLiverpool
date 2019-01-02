@@ -2,14 +2,19 @@
 import { Location } from "@angular/common";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
-import { MatSnackBar, MatDialog, MatDialogConfig } from "@angular/material";
-import { Observable } from "rxjs";
+import { MatSnackBar, MatDialog } from "@angular/material";
 import { MaterialService } from "../../core";
 import { Material } from "../../model";
 import { MaterialCategoryService, MaterialCategory, MaterialType } from "@app/materialCategory";
 import { RolesCheckedService } from "@app/+auth";
 import { MaterialGuardDialogComponent } from "./material-guard-dialog";
 import { EDIT_ROUTE, MESSAGE } from "@app/+constants";
+
+import "tinymce/plugins/fullscreen/plugin.min.js";
+import "tinymce/plugins/code/plugin.min.js";
+import "tinymce/plugins/spellchecker/plugin.min.js";
+import "tinymce/plugins/table/plugin.min.js";
+import "tinymce/plugins/visualblocks/plugin.min.js";
 
 @Component({
     selector: "material-edit",

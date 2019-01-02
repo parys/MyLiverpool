@@ -3,11 +3,13 @@
   "assetGroups": [
     {
       "name": "app",
-      "installMode": "prefetch",
+      "installMode": "lazy",
       "resources": {
         "files": [
           "/favicon.ico",
-          "/index.html",
+          "/index.html"
+        ],
+        "versionedFiles": [
           "/scripts.*.js",
           "/*.css",
           "/*.js"
