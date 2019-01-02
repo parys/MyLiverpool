@@ -1,35 +1,100 @@
-﻿<div class="welcome-page">
-    <div class="row page-header">
-        <div class="col-sm-10">
-            <h1>
-                <img class="icon" src="~/icon.jpg">
-                Welcome to IdentityServer4
-                @*<small>(build {version})</small>*@
-            </h1>
+﻿@model UserDto
+
+@{
+    ViewBag.Title = Model.UserName;
+    Layout = "_Layout";
+}
+
+<h2>
+    <span>@Model.UserName</span>
+</h2>
+
+<div class="col-xs-12">
+    <div class="col-xs-4 col-sm-4">
+        <img class="avatar" src="@Model.Photo" alt="@Model.UserName" />
+    </div>
+    <div class="col-xs-8 col-sm-8">
+        @*@if (User.IsInRole(nameof(RolesEnum.UserStart)))
+            {
+            <div *ngIf="roles.isSelf(item.id) || roles.isModerator">
+                <label for="update-avatar-input"
+                       *ngIf="roles.isSelf(item.id)"
+                       class="btn btn-info">Обновить аватар</label>
+                <input type="file"
+                       class="hidden"
+                       accept="image/*"
+                       (change)="onChangeAvatar($event)"
+                       id="update-avatar-input" />
+                <button mat-raised-button color="primary" (click)="resetAvatar()">
+                    Сбросить аватар
+                </button>
+
+                <button mat-raised-button *ngIf="roles.isSelf(item.id)" [routerLink]="['./settings']">Изменить настройки</button>
+                <button mat-raised-button *ngIf="roles.isSelf(item.id)" [routerLink]="['./edit']">Изменить профиль</button>
+                <br><br>
+            </div>
+        }*@
+        <a href="['/changePassword']">Изменить пароль</a>
+    </div>
+</div>
+
+<div class="form-horizontal top10" role="form">
+    <div class="form-group">
+        <label class="col-xs-2 control-label">Группа</label>
+        <div class="col-xs-10">
+            <span class="form-control">@Model.RoleGroupName</span>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-8">
-            <p>
-                IdentityServer publishes a
-                <a href="~/.well-known/openid-configuration">discovery document</a>
-                where you can find metadata and links to all the endpoints, key material, etc.
-            </p>
-        </div>
-        <div class="col-sm-8">
-            <p>
-                Click <a href="~/grants">here</a> to manage your stored grants.
-            </p>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">Почта</label>
+        <div class="col-xs-10">
+            <span class="form-control">@Model.Email</span>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-8">
-            <p>
-                Here are links to the
-                <a href="https://github.com/identityserver/IdentityServer4">source code repository</a>,
-                and <a href="https://github.com/identityserver/IdentityServer4.Samples">ready to use samples</a>.
-            </p>
+
+    <div class="form-group">
+        <label class="col-xs-2 control-label">Последний вход</label>
+        <div class="col-xs-10">
+            <span class="form-control">@Model.LastModifiedOn.ToString("dd MMMM yyyy HH:mm")</span>
         </div>
     </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">Дата регистрации</label>
+        <div class="col-xs-10">
+            <span class="form-control">@Model.RegistrationDate.ToString("dd MMMM yyyy HH:mm")</span>
+        </div>
+    </div>
+    @if (!string.IsNullOrWhiteSpace(Model.FullName))
+    {
+        <div class="form-group">
+            <label class="col-xs-2 control-label">Полное имя</label>
+            <div class="col-xs-10">
+                <span class="form-control">@Model.FullName</span>
+            </div>
+        </div>
+    }
+    @if (Model.Birthday.HasValue)
+    {
+        <div class="form-group">
+            <label class="col-xs-2 control-label">День рождения</label>
+            <div class="col-xs-10">
+                <span class="form-control">@Model.Birthday.Value.ToString("G")</span>
+            </div>
+        </div>
+    }
+    <div class="form-group">
+        <label class="col-xs-2 control-label">Пол</label>
+        <div class="col-xs-10">
+            @if (Model.Gender)
+            {
+                <span class="form-control">Женский</span>
+            }
+            else
+            {
+                <span class="form-control">Мужской</span>
+            }
+        </div>
+    </div>
+
 </div>

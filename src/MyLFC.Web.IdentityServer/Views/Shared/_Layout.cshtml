@@ -58,8 +58,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Account" asp-action="Login">Домой</a></li>
-                    @*<li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>*@
+                    <li><a asp-area="" asp-controller="Home" asp-action="Rules" class="text-danger">Правила</a></li>
+                    @*<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>*@
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -77,7 +77,7 @@
     <environment include="Development">
         <script src="~/lib/jquery/jquery.js"></script>
         <script src="~/lib/bootstrap/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+        @*<script src="~/js/site.js" asp-append-version="true"></script>*@
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
@@ -92,7 +92,7 @@
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        @*<script src="~/js/site.min.js" asp-append-version="true"></script>*@
     </environment>
     @RenderSection("scripts", required: false)
 </body>

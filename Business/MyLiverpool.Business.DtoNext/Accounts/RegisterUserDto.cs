@@ -1,19 +1,20 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MyLiverpool.Business.Dto
 {
     public class RegisterUserDto : IDto
     {
         [Required(ErrorMessage = "Поле обязательно к заполнению.")]
-        [EmailAddress]
-     //   [UniqueEmail]
+        [EmailAddress(ErrorMessage = "Введенное значение не является допустимым адресом электронной почты.")]
+        [Remote("IsEmailUnique", "Account", HttpMethod = "POST", ErrorMessage = "Пользователь с таким адресом почты уже существует. Пожалуйста, введите другой адрес. Или напишите на andrew_parys@tut.by")]
         [Display(Name = "Электронная почта")] 
       //  [Display(ResourceType = typeof(UsersMessages), Name = "Email")] 
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Поле обязательно к заполнению.")]
-        [StringLength(100)]//, ErrorMessageResourceType = typeof(ErrorMessages), ErrorMessageResourceName = "MinimumLength", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Значение не должно превышать 100 символов.")]
         [DataType(DataType.Password, ErrorMessage = "")]
         [Display(Name = "Пароль")]
         //   [Display(ResourceType = typeof(UsersMessages), Name = "Password")]
@@ -22,14 +23,13 @@ namespace MyLiverpool.Business.Dto
         [Required(ErrorMessage = "Поле обязательно к заполнению.")]
         [DataType(DataType.Password)]
         [Display(Name = "Подтверждение пароля")]
-        //   [Display(ResourceType = typeof(UsersMessages), Name = "PasswordConfirmation")]
-        [Compare("Password")]//, ErrorMessageResourceType = typeof(ErrorMessages), ErrorMessageResourceName = "PasswordsNotMatch")]
+        [Compare("Password", ErrorMessage = "Пароли должны совпадать.")]
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "Поле обязательно к заполнению.")]
-        //   [UniqueUserName]
-        [MinLength(3)]
-        [MaxLength(30)]
+        [Remote("IsUserNameUnique", "Account", HttpMethod = "POST", ErrorMessage = "Пользователь с таким именем уже существует. Пожалуйста, выберите другое имя.")]
+        [MinLength(3, ErrorMessage = "Значение должно превышать 3 символа.")]
+        [MaxLength(30, ErrorMessage = "Значение не должно превышать 30 символов.")]
         [Display(Name = "Логин")]
         //  [Display(ResourceType = typeof(UsersMessages), Name = "UserName")]
         public string UserName { get; set; }

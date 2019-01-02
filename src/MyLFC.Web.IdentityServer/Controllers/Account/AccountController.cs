@@ -11,10 +11,12 @@ using IdentityServer4.Models;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using MyLiverpool.Business.Contracts;
 using MyLiverpool.Business.Dto;
 using MyLiverpool.Business.Dto.Accounts;
@@ -103,17 +105,35 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
                 var user = await _userManager.FindByNameAsync(model.Username);
                 if (user == null)
                 {
-                //    return BadRequest(new OpenIdConnectResponse
-                //    {
-                //        Error = OpenIdConnectConstants.Errors.InvalidGrant,
-                //        ErrorDescription = "The username/password couple is invalid."
-                //    });
+                    await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials"));
+
+                    ModelState.AddModelError("", AccountOptions.InvalidCredentialsErrorMessage);
+                    return BadRequest(new 
+                                {
+                                     Error = "Not Found",
+                                     ErrorDescription = "The username/password couple is invalid."
+                                 });;
                 }
-                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password,
-                    model.RememberLogin, lockoutOnFailure: false);
+                var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password,
+                    lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    user = await _userManager.FindByNameAsync(model.Username);
+                    if (!user.EmailConfirmed)
+                    {
+                        return RedirectToAction("ResendConfirmEmail");
+                        return BadRequest(new
+                        {
+                            Error = "unconfirmed_email",
+                            ErrorDescription = "User should check his email."
+                        });
+                    }
+
+                    if (_userManager.SupportsUserLockout && !await _userManager.IsLockedOutAsync(user))
+                    {
+                        await _userManager.ResetAccessFailedCountAsync(user);
+                    }
+
+                    await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberLogin, false);
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName));
 
                     // make sure the returnUrl is still valid, and if so redirect back to authorize endpoint or a local page
@@ -124,6 +144,21 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
                     }
 
                     return Redirect("~/");
+                }
+                else
+                {
+                    if (result.IsNotAllowed)
+                    {
+                        if (!user.EmailConfirmed)
+                        {
+                            return RedirectToAction("ResendConfirmEmail");
+                            return BadRequest(new
+                            {
+                                Error = "unconfirmed_email",
+                                ErrorDescription = "User should check his email."
+                            });
+                        }
+                    }
                 }
 
                 await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials"));
@@ -219,8 +254,12 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
         /// Show logout page
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Logout(string logoutId)
+        public async Task<IActionResult> Logout(string logoutId = null)
         {
+            if (logoutId == null)
+            {
+                RedirectToAction("Index", "Home");
+            }
             // build a model so the logout page knows what to display
             var vm = await BuildLogoutViewModelAsync(logoutId);
 
@@ -301,12 +340,19 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
         [AllowAnonymous, HttpGet]
         public async Task<IActionResult> ConfirmEmail([FromQuery]int userId, [FromQuery]string code)
         {
-            if (userId <= 0 || code == null)
+            if (userId > 0 && !string.IsNullOrWhiteSpace(code))
             {
-                return new BadRequestResult();
+                var result = await _accountService.ConfirmEmailAsync(userId, code);
+
+                if (result)
+                { //todo add redirect by return url!!
+                    var user = await _userManager.FindByIdAsync(userId.ToString());
+                    await _signInManager.SignInAsync(user, true);
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            var result = await _accountService.ConfirmEmailAsync(userId, code);
-            return Ok(result);
+            
+            return RedirectToAction(nameof(ResendConfirmEmail));
         }
 
         [HttpGet]
@@ -334,28 +380,11 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
             return Ok(true);
         }
 
-        /// <summary>
-        /// Checks if email isn't already used.
-        /// </summary>
-        /// <param name="email">Verifiable email.</param>
-        /// <returns>Result of checking.</returns>
-        [AllowAnonymous, HttpGet("IsEmailUnique")]
-        public async Task<IActionResult> IsEmailUnique([FromQuery]string email)
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResendConfirmEmail()
         {
-            var result = await _accountService.IsEmailUniqueAsync(email);
-            return Ok(result);
-        }
-
-        /// <summary>
-        /// Checks if username isn't already used.
-        /// </summary>
-        /// <param name="username">Verifiable userName.</param>
-        /// <returns>Result of checking.</returns>
-        [AllowAnonymous, HttpGet("IsUsernameUnique")]
-        public async Task<IActionResult> IsUsernameUnique([FromQuery]string username)
-        {
-            var result = await _accountService.IsUserNameUniqueAsync(username);
-            return Ok(result);
+            return View();
         }
 
         /// <summary>
@@ -363,15 +392,16 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
         /// </summary>
         /// <param name="email">User email.</param>
         /// <returns>Result of resend.</returns>
-        [AllowAnonymous, HttpGet("ResendConfirmEmail")]
-        public async Task<IActionResult> ResendConfirmEmail([FromQuery]string email)
+        [AllowAnonymous, HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResendConfirmEmail(string email)
         {
             if (string.IsNullOrEmpty(email))
             {
                 return BadRequest();
             }
             var result = await _accountService.ResendConfirmEmail(email);
-            return Ok(result);
+            return RedirectToAction("EmailSentSuccessfully");
         }
 
         /// <summary>
@@ -392,7 +422,7 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
         /// <returns>Result of registration.</returns>
         [AllowAnonymous, HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([FromBody] RegisterUserDto model, string returnUrl = null)
+        public async Task<IActionResult> Register(RegisterUserDto model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             if (!ModelState.IsValid)
@@ -402,10 +432,12 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
 
             var result = await _accountService.RegisterUserAsync(model);
 
-            if (!result.Succeeded)
+            if (result.Succeeded)
             {
-                return GetErrorResult(result);
+                return RedirectToAction(nameof(RegisterSuccessfully));
             }
+
+            AddErrors(result);
 
             return View(model);
         }
@@ -428,7 +460,29 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
             return Ok(result);
         }
 
+        [HttpPost]
+        public async Task<JsonResult> IsUserNameUnique(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+            return Json(user == null);
+        }
 
+        [HttpPost]
+        public async Task<JsonResult> IsEmailUnique(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            return Json(user == null);
+        }
+
+        public IActionResult RegisterSuccessfully()
+        {
+            return View();
+        }
+
+        public IActionResult EmailSentSuccessfully()
+        {
+            return View();
+        }
 
         /*****************************************/
         /* helper APIs for the AccountController */
@@ -733,6 +787,14 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
             }
 
             return null;
+        }
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
         }
 
         #endregion

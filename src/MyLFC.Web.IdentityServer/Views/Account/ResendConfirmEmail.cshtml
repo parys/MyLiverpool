@@ -1,0 +1,43 @@
+﻿@model ConfirmEmailVm
+
+@{
+    ViewBag.Title = "Почта не подтверждена.";
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="agreement col-xs-8 col-xs-offset-2">
+        <h4>
+            В процессе подтверждения адреса электронной почты что-то пошло не так. Попробуйте еще раз. 
+            При возникновении вопросов пишите <a href="mailto:andrew_parys@tut.by">на эту почту</a>.
+        </h4>
+        <div class="g-recaptcha" data-sitekey="6Ld0AxEUAAAAAA9BH17mRd8MDPqLGDzSomOEeeIY" data-callback="enableForm"></div>
+    </div>
+</div>
+<div class="row hidden main-form">
+    <div class="col-md-offset-2 col-md-8">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+            @*<div asp-validation-summary="All" class="text-danger"></div>*@
+            <div class="form-group">
+                <label asp-for="@Model.Email"></label>
+                <input asp-for="@Model.Email" class="form-control" />
+                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+            </div>   
+           
+            <button type="submit" class="btn btn-default">Отправить письмо еще раз</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    
+    <script>
+        function enableForm() {
+            $(".agreement").hide();
+            $(".main-form").removeClass("hidden");
+        };
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+}
+

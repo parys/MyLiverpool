@@ -4,17 +4,33 @@
     ViewBag.Title = "Регистрация";
     Layout = "_Layout";
 }
-
 <div class="row">
-    <div class="col-md-4">
+    <div class="agreement col-xs-8 col-xs-offset-2">
+        <h4>
+            Друзья, если у вас уже был аккаунт на старом сайте, то не нужно регистрироваться заново. Мы можем и вернуть вам к нему доступ, и поменять почту, и поменять логин(по желанию). Если это так, то напишите, пожалуйста,
+            <a href="mailto:andrew_parys@tut.by">на эту почту</a>.
+        </h4>
+        <div class="">
+            Регистрируясь на сайте вы автоматически соглашаетесь с <a asp-action="Rules" asp-controller="Home" target="_blank"> правилами поведения на сайте</a> (ссылка откроется в новом окне).
+        </div>
+        <div class="g-recaptcha" data-sitekey="6Ld0AxEUAAAAAA9BH17mRd8MDPqLGDzSomOEeeIY" data-callback="enableForm"></div>
+    </div>
+</div>
+<div class="row hidden register-form">
+    <div class="col-md-offset-2 col-md-8">
         <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
             <h4>Регистрация нового пользователя.</h4>
             <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
+            @*<div asp-validation-summary="All" class="text-danger"></div>*@
             <div class="form-group">
                 <label asp-for="Email"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
+            </div>   
+            <div class="form-group">
+                <label asp-for="UserName"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password"></label>
@@ -33,4 +49,12 @@
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
+    
+    <script>
+        function enableForm() {
+            $(".agreement").hide();
+            $(".register-form").removeClass("hidden");
+        };
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 }

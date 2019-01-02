@@ -2,6 +2,9 @@
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyLiverpool.Business.Contracts;
+using MyLiverpool.Common.Utilities.Extensions;
+using MyLiverpool.Data.Common;
 
 namespace MyLFC.Web.IdentityServer.Controllers.Home
 {
@@ -9,16 +12,28 @@ namespace MyLFC.Web.IdentityServer.Controllers.Home
     public class HomeController : Controller
     {
         private readonly IIdentityServerInteractionService _interaction;
+        private readonly IHelperService _helperService;
+        private readonly IUserService _userService;
 
-        public HomeController(IIdentityServerInteractionService interaction)
+        public HomeController(IIdentityServerInteractionService interaction, IHelperService helperService, IUserService userService)
         {
             _interaction = interaction;
+            _helperService = helperService;
+            _userService = userService;
         }
 
         [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var user = await _userService.GetUserAsync(User.GetUserId());
+            return View(user);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Rules()
+        {
+            var rules = await _helperService.GetValueAsync(HelperEntityType.Rules);
+            return View(nameof(Rules), rules);
         }
 
         /// <summary>

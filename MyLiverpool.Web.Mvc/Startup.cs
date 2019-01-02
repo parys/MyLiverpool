@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.IO.Compression;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
@@ -21,15 +18,12 @@ using MyLiverpool.Data.ResourceAccess;
 using MyLiverpool.Data.ResourceAccess.Helpers;
 using Newtonsoft.Json.Serialization;
 using MyLfc.Common.Web.Middlewares;
-using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using IdentityModel;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Identity;
 
 
 namespace MyLiverpool.Web.Mvc

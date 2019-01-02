@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using MyLfc.Common.Web.Middlewares;
 using MyLiverpool.Business.Services.Helpers;
+using MyLiverpool.Common.Utilities;
 using MyLiverpool.Data.Entities;
 using MyLiverpool.Data.ResourceAccess;
 using MyLiverpool.Data.ResourceAccess.Helpers;
@@ -45,6 +46,7 @@ namespace MyLFC.Web.IdentityServer
 
             services.RegisterRepositories();
             services.RegisterServices();
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
 
             services.AddMvc();
 
