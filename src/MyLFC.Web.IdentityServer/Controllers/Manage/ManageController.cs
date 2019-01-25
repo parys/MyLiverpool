@@ -54,7 +54,7 @@ namespace MyLFC.Web.IdentityServer.Controllers.Manage
         /// <returns></returns>
         [Authorize, HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordViewModel viewModel)
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {

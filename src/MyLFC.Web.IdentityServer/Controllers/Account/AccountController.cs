@@ -161,9 +161,9 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
                     }
                 }
 
-                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials"));
+                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username,  "invalid credentials"));
 
-                ModelState.AddModelError("", AccountOptions.InvalidCredentialsErrorMessage);
+                ModelState.AddModelError("Ашипка", AccountOptions.InvalidCredentialsErrorMessage);
             }
 
             // something went wrong, show form with error
@@ -307,29 +307,29 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
             return View("LoggedOut", vm);
         }
 
-        [Authorize, HttpGet]
-        public IActionResult ChangePassword()
-        {
-            return View();
-        }
+        //[Authorize, HttpGet]
+        //public IActionResult ChangePassword()
+        //{
+        //    return View();
+        //}
 
-        /// <summary>
-        /// Changes user password.
-        /// </summary>
-        /// <param name="viewModel">Contains new and old passwords.</param>
-        /// <returns></returns>
-        [Authorize, HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
+        ///// <summary>
+        ///// Changes user password.
+        ///// </summary>
+        ///// <param name="viewModel">Contains new and old passwords.</param>
+        ///// <returns></returns>
+        //[Authorize, HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordViewModel viewModel)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            var result = await _accountService.ChangePasswordAsync(User.GetUserId(), viewModel);
-            return Ok(result);
-        }
+        //    var result = await _accountService.ChangePasswordAsync(User.GetUserId(), viewModel);
+        //    return Ok(result);
+        //}
 
         /// <summary>
         /// Confirms email.
@@ -369,15 +369,17 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
         /// <returns>Always returns true result.</returns>
         [AllowAnonymous, HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ForgotPassword([FromQuery]string email)
+        public async Task<IActionResult> ForgotPassword(ConfirmEmailVm model)
         {
-            if (string.IsNullOrWhiteSpace(email))
+            if (ModelState.IsValid)
             {
-                return BadRequest();
+                var result = await _accountService.ForgotPasswordAsync(model.Email);
+                if (result)
+                {
+                    return RedirectToAction("EmailSentSuccessfully");
+                }
             }
-
-            var result = await _accountService.ForgotPasswordAsync(email);
-            return Ok(true);
+            return View(model);
         }
 
         [HttpGet]
