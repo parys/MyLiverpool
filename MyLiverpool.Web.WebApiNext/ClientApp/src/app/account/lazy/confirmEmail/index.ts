@@ -1,1 +1,1 @@
-﻿export * from "./confirmEmail.component";
+﻿//export * from "./confirmEmail.component";

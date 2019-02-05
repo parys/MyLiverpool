@@ -2,7 +2,7 @@
 import { MaterialListComponent } from "./material";
 import { helperRoutes } from "./admin/admin.routes";
 import { homeRoutes } from "./home/home.routes";
-import { WISHES_ROUTE, NEWS_ROUTE, ACCOUNT_ROUTE, BLOGS_ROUTE, BLOG_CATEGORIES_ROUTE, COMMENTS_ROUTE, CLUBS_ROUTE,
+import { WISHES_ROUTE, NEWS_ROUTE, BLOGS_ROUTE, BLOG_CATEGORIES_ROUTE, COMMENTS_ROUTE, CLUBS_ROUTE,
     IMAGES_ROUTE,
     INJURIES_ROUTE,
     MATCHES_ROUTE,
@@ -21,10 +21,6 @@ import { WISHES_ROUTE, NEWS_ROUTE, ACCOUNT_ROUTE, BLOGS_ROUTE, BLOG_CATEGORIES_R
 export const routes: Routes = [
     ...helperRoutes,
     ...homeRoutes,
-    {
-        path: ACCOUNT_ROUTE,
-        loadChildren: "./account/lazy/account.module#AccountModule"
-    },
     {
         path: BLOGS_ROUTE,
         loadChildren: "./material/lazy/material.module#MaterialModule"

@@ -7,16 +7,21 @@ namespace MyLiverpool.Business.Dto
         [Required(AllowEmptyStrings = false)]
         public string Code { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
-        [EmailAddress]
+        [Required(ErrorMessage = "Поле обязательно к заполнению.")]
+        [EmailAddress(ErrorMessage = "Введенное значение не является допустимым адресом электронной почты.")]
+        [Display(Name = "Электронная почта")]
         public string Email { get; set; }
 
-        [DataType(DataType.Password)]
-        [Required(AllowEmptyStrings = false)]
+        [Required(ErrorMessage = "Поле обязательно к заполнению.")]
+        [StringLength(100, ErrorMessage = "Значение не должно превышать 100 символов.")]
+        [DataType(DataType.Password, ErrorMessage = "")]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "Поле обязательно к заполнению.")]
         [DataType(DataType.Password)]
-        [Compare("Password")]//, ErrorMessageResourceType = typeof (CommonMessages), ErrorMessageResourceName = "PasswordsNotMatch")]
+        [Display(Name = "Подтверждение пароля")]
+        [Compare("Password", ErrorMessage = "Пароли должны совпадать.")]
         public string ConfirmPassword { get; set; }
     }
 }

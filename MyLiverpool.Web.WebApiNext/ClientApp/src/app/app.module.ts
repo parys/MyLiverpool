@@ -20,7 +20,7 @@ import { MaterialCoreModule } from "./material";
 import { PersonCoreModule } from "./person";
 import { SharedModule, CustomTitleService } from "./shared";
 import * as admin from "./admin";
-import { AccountCoreModule } from "./account";
+//import { AccountCoreModule } from "./account";
 import { TransferCoreModule } from "./transfer";
 import { CommentCoreModule } from "./comment";
 import { NotificationCoreModule } from "./notification";
@@ -62,7 +62,7 @@ export class UIErrorHandler extends ErrorHandler {
         //    PrebootModule.withConfig({ appRoot: "app" }),
         SharedModule,
         HttpClientModule,
-        AccountCoreModule,
+        //AccountCoreModule,
         //  ForumModule,
         InjuryCoreModule,
         ChatModule,

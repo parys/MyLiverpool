@@ -1,11 +1,11 @@
-﻿<h3 class="text-center">Адрес электронной почты не подтвержден</h3>
-<form class="form-horizontal" role="form" [formGroup]="unconfirmedForm" (ngSubmit)="onSubmit()" *ngIf="!finish">
+﻿<!--<h3 class="text-center">Адрес электронной почты не подтвержден</h3>-->
+<!--<form class="form-horizontal" role="form" [formGroup]="unconfirmedForm" (ngSubmit)="onSubmit()" *ngIf="!finish">
     <mat-form-field class="full-width">
         <input matInput formControlName="email" placeholder="Адрес электронной почты" />
     </mat-form-field>
     <div class="alert alert-danger" *ngIf="unconfirmedForm.controls['email'].touched && !unconfirmedForm.controls['email'].valid">
         <div *ngIf="unconfirmedForm.controls['email'].hasError('required')">Необходимо заполнить поле.</div>
-        <div *ngIf="unconfirmedForm.controls['email'].hasError('minlength')">Значение должно превышать 6 символов.</div> <!--todo move to config-->
+        <div *ngIf="unconfirmedForm.controls['email'].hasError('minlength')">Значение должно превышать 6 символов.</div> <!--todo move to config->
         <div *ngIf="unconfirmedForm.controls['email'].hasError('email')">Введенное значение не является допустимым адресом.</div>
     </div>
 
@@ -19,5 +19,5 @@
         </button>
         <recaptcha [hidden]="isHuman" (isHuman)="isHuman = $event"></recaptcha>
     </div>
-</form>
-<div *ngIf="finish">Письмо успешно отправлено</div>
+</form>-->
+<!--<div *ngIf="finish">Письмо успешно отправлено</div>-->

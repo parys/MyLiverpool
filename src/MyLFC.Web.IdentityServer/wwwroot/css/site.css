@@ -5,6 +5,9 @@
   position: relative;
   top: -4px;
 }
+.navbar-brand {
+    line-height: 25.7px;
+}
 .navbar-brand > .icon-banner {
   position: relative;
   top: -2px;

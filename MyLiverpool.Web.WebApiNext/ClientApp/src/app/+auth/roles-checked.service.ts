@@ -96,7 +96,7 @@ export class RolesCheckedService {
 
     private doCallbackLogicIfRequired() {
         if (window.location.hash) {
-            this.oidcSecurityService.authorizedCallback();
+            this.oidcSecurityService.authorizedImplicitFlowCallback();
         }
     }
 

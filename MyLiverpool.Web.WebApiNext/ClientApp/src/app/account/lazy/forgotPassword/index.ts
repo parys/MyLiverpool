@@ -1,1 +1,1 @@
-﻿export * from "./forgotPassword.component";
+﻿//export * from "./forgotPassword.component";

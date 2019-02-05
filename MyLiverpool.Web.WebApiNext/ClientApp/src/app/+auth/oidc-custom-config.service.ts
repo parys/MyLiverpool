@@ -54,10 +54,11 @@ export class OidcCustomConfigService {
         c.log_console_warning_active = true;
         c.log_console_debug_active = true;
         c.max_id_token_iat_offset_allowed_in_seconds = 10;
-        c.start_checksession = false;
-        c.silent_renew = false;
+        c.start_checksession = true;
+        c.silent_renew = true;
         const wn = new AuthWellKnownEndpoints();
         wn.setWellKnownEndpoints(this.wellKnownEndpoints);
         oidcSecurityService.setupModule(c, wn);
+
     }
 }

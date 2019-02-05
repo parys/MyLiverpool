@@ -277,7 +277,7 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
         /// Handle logout page postback
         /// </summary>
         [HttpPost]
-        [ValidateAntiForgeryToken]
+      //  [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout(LogoutInputModel model)
         {
             // build a model so the logged out page knows what to display
@@ -444,22 +444,39 @@ namespace MyLFC.Web.IdentityServer.Controllers.Account
             return View(model);
         }
 
+        [AllowAnonymous, HttpGet]
+        public IActionResult ResetPassword([FromQuery] string code)
+        {
+            var dto = new ResetPasswordDto
+            {
+                Code = code
+            };
+            return View(dto);
+        }
         /// <summary>
         /// Resets password by code.
         /// </summary>
         /// <param name="dto">Reset password model.</param>
         /// <returns>Result of resetting password.</returns>
-        [AllowAnonymous, HttpPost("ResetPassword")]
+        [AllowAnonymous, HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
+        public async Task<IActionResult> ResetPassword(ResetPasswordDto dto)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return View(dto);
             }
 
             var result = await _accountService.ResetPasswordAsync(dto);
-            return Ok(result);
+            if (result.Succeeded)
+            {
+                //todo add redirect by return url!!
+                var user = await _userManager.FindByEmailAsync(dto.Email);
+                await _signInManager.SignInAsync(user, true);
+            }
+
+            //todo add something wrong action on else
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

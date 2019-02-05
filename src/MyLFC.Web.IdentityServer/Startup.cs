@@ -91,7 +91,6 @@ namespace MyLFC.Web.IdentityServer
             {
                 throw new Exception("need to configure key material");
             }
-
             services.AddAuthentication()
                 //.AddGoogle(options =>
                 //{
