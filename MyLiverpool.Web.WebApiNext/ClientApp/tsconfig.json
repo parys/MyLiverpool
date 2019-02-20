@@ -18,6 +18,7 @@
     "skipLibCheck": true, // Workaround for https://github.com/angular/angular/issues/17863. Remove this if you upgrade to a fixed version of Angular.
     // "allowSyntheticDefaultImports": true,
     "suppressImplicitAnyIndexErrors": true,
+
     "lib": [
       "es2017",
       "dom"
@@ -34,5 +35,8 @@
     "tinymce"
   ],
   "compileOnSave": false,
-  "atom": { "rewriteTsconfig": false }
+  "atom": { "rewriteTsconfig": false },
+  "angularCompilerOptions": {
+    "enableIvy": true
+  }
 }

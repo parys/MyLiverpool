@@ -1,6 +1,5 @@
 import { NgModule, LOCALE_ID, Injectable, ErrorHandler } from "@angular/core";
 import {
-    BrowserModule,
     HammerGestureConfig,
     HAMMER_GESTURE_CONFIG, } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
@@ -29,7 +28,7 @@ import { UserCoreModule } from "./user";
 registerLocaleData(localeRU);
 import { PollCoreModule } from "./poll";
 import { BreadcrumbService } from "@app/shared/breadcrumb";
-import { EditorModule } from "@app/editor"; //todo need for static page edit, move to separate module when will split
+import { EditorModule } from "./editor"; //todo need for static page edit, move to separate module when will split
 
 declare var Hammer: any;
 
@@ -58,7 +57,7 @@ export class UIErrorHandler extends ErrorHandler {
 
 @NgModule({
     imports: [
-        BrowserModule.withServerTransition({ appId: "mylfc" }),
+      //  BrowserModule.withServerTransition({ appId: "mylfc" }),
         //    PrebootModule.withConfig({ appRoot: "app" }),
         SharedModule,
         HttpClientModule,
