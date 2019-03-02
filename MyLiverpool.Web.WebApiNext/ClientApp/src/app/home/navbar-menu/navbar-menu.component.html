@@ -64,7 +64,6 @@
             <a [routerLink]="['/plans']" mat-menu-item>Планы</a>
             <a [routerLink]="['/instructions']" mat-menu-item>Инструкции</a>
         </span>
-        <!--<a *ngIf="roles.isNewsmaker || roles.isAuthor" [routerLink]="['/polls']" [queryParams]="{page: 1}" mat-menu-item>Опросы</a>-->
     </mat-menu>
 </div>
 <div *ngIf="roles.isNewsmaker || roles.isAuthor || roles.isInformer">

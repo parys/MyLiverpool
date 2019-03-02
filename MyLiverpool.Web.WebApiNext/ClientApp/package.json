@@ -14,7 +14,8 @@
     "ngc": "ngc",
     "start": "ng serve",
     "lint": "ng lint",
-    "analyze": "npm run build -- --stats-json && webpack-bundle-analyzer dist/aspnetcorespa/stats.json"
+    "analyze": "npm run build -- --stats-json && webpack-bundle-analyzer dist/aspnetcorespa/stats.json",
+    "source-map": "npm run build -- --sourceMap=true --outputHashing=none && source-map-explorer dist/aspnetcorespa/main.js dist/aspnetcorespa/main.js.map"
   },
   "dependencies": {
     "@angular/animations": "8.0.0-beta.4",
@@ -46,7 +47,7 @@
     "node-sass": "4.11.0",
     "preboot": "7.0.0",
     "rxjs": "6.4.0",
-    "swagger-ui": "3.20.8",
+    "swagger-ui": "3.20.9",
     "zone.js": "0.8.29"
   },
   "devDependencies": {
@@ -55,13 +56,14 @@
     "@angular/pwa": "0.14.0-beta.1",
     "typescript": "3.2.4",
     "ts-node": "8.0.2",
-    "tslint": "5.12.1",
+    "tslint": "5.13.0",
     "codelyzer": "4.5.0",
     "tinymce": "4.9.3",
-    "@types/node": "11.9.3",
+    "@types/node": "11.9.5",
     "@types/tinymce": "4.5.18",
     "webpack-bundle-analyzer": "3.0.4",
-    "acorn": "6.1.0"
+    "acorn": "6.1.1",
+    "source-map-explorer": "1.7.0"
   },
   "main": "package.json",
   "author": "Andrei Kapitanchik",

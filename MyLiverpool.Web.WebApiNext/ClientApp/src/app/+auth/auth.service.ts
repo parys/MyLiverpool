@@ -1,57 +1,41 @@
 ﻿import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { filter, map, tap, catchError, flatMap, first } from "rxjs/operators";
 import { Observable, Subscription, BehaviorSubject, of, interval, throwError } from "rxjs";
 import { IRefreshGrantModel } from "./models/refresh-grant-model";
-import { IProfileModel, IAuthStateModel, IAuthTokenModel, IRegisterModel, ILoginModel, IUserProfile } from "./models";
+import { IAuthStateModel, IAuthTokenModel, IRegisterModel, ILoginModel } from "./models";
 import { HttpWrapper } from "@app/+httpWrapper";
 import { StorageService } from "@app/+storage";
 import { RolesCheckedService } from "./roles-checked.service";
 import { SignalRService } from "@app/+signalr";
-//const jwtDecode = require("jwt-decode");
+import { UriEncoder } from "./uri-encoder";
 
 @Injectable()
 export class AuthService {
-    public roles: string[] = [];
 
-    private initalState: IAuthStateModel = { profile: null, tokens: null, authReady: false };
-    private authReady$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    private initialState: IAuthStateModel = { tokens: null, authReady: false };
     private state: BehaviorSubject<IAuthStateModel>;
     private refreshSubscription$: Subscription;
 
-    public state$: Observable<IAuthStateModel>;
     public tokens$: Observable<IAuthTokenModel>;
-    public profile$: Observable<IProfileModel>;
     public loggedIn$: Observable<boolean>;
 
     constructor(private http: HttpWrapper,
         private http1: HttpClient,
         private storage: StorageService,
-        private signalRservice: SignalRService,
+        private signalRService: SignalRService,
         private rolesCheckedService: RolesCheckedService
     ) {
 
-        this.state = new BehaviorSubject<IAuthStateModel>(this.initalState);
-        this.state$ = this.state.asObservable();
+        this.state = new BehaviorSubject<IAuthStateModel>(this.initialState);
 
         this.tokens$ = this.state.pipe(
             filter((state: IAuthStateModel) => state.authReady),
             map((state: IAuthStateModel) => state.tokens));
 
-        this.profile$ = this.state.pipe(
-            filter((state: IAuthStateModel) => state.authReady),
-            map((state: IAuthStateModel) => state.profile));
-
         this.loggedIn$ = this.tokens$.pipe(map(tokens => !!tokens));
     }
-
-    public isUserInRole(role: string): boolean {
-        if (this.roles.find(x => x.toLowerCase() === role.toLowerCase())) {
-            return true;
-        }
-        return false;
-    }
-
+    
     public init(): Observable<IAuthTokenModel> {
         return this.startupTokenRefresh().pipe(
             tap(() => this.scheduleRefresh()));
@@ -71,7 +55,7 @@ export class AuthService {
     }
 
     public logout(): void {
-        this.updateState({ profile: null, tokens: null });
+        this.updateState({ tokens: null });
         
         this.storage.removeAuthTokens();
         this.rolesCheckedService.checkRoles();
@@ -79,8 +63,8 @@ export class AuthService {
         if (this.refreshSubscription$) {
             this.refreshSubscription$.unsubscribe();
 
-            console.warn("init hub from logout");
-            this.signalRservice.initializeHub();
+    //        console.warn("init hub from logout");
+            this.signalRService.initializeHub();
         }
     }
 
@@ -90,30 +74,28 @@ export class AuthService {
     }
 
     private updateState(newState: IAuthStateModel): void {
-        const previoudState = this.state.getValue();
-        this.state.next(Object.assign({}, previoudState, newState));
+            this.state.next(Object.assign({}, this.state.getValue(), newState));
     }
 
     private getTokens(data: IRefreshGrantModel | ILoginModel, grantType: string): Observable<IAuthTokenModel> {
         const headers = new HttpHeaders({ 'Content-Type': "application/x-www-form-urlencoded; charset=UTF-8;" });
 
-        Object.assign(data, { grant_type: grantType, scope: "openid offline_access" });
+        Object.assign(data, { scope: "openid offline_access" });
 
-        const params = new URLSearchParams();
+        let params2 = new HttpParams({ fromString: "", encoder: new UriEncoder() });
+        params2 = params2.set("grant_type", grantType);
         Object.keys(data)
-            .forEach(key => params.append(key, data[key]));
-        return this.http1.post<IAuthTokenModel>("/connect/token", params.toString(), { headers: headers }).pipe(
+            .forEach(key => params2 = params2.append(key, data[key]));
+
+        return this.http1.post<IAuthTokenModel>("/connect/token", params2.toString(), { headers: headers }).pipe(
             tap((tokens: IAuthTokenModel) => {
                 
                 tokens.expiration_date = new Date(new Date().getTime() + tokens.expires_in * 1000).getTime().toString();
-
-                //   const profile: IProfileModel = new Object();// jwtDecode(tokens.id_token);
-
+                
                 this.storage.setAuthTokens(tokens);
                 if (tokens.refresh_token) {
                     this.storage.setRefreshToken(tokens.refresh_token);
                 }
-                //  this.updateState({ authReady: true, tokens, profile });
                 this.updateState({ authReady: true, tokens });
                 this.getUserProfile();
             }));
@@ -125,13 +107,11 @@ export class AuthService {
                 if (!tokens) {
                     this.updateState({ authReady: true });
 
-                    console.warn("init hub from refresh");
-                    this.signalRservice.initializeHub();
+        //            console.warn("init hub from refresh");
+                    this.signalRService.initializeHub();
                     return throwError("No token");
                 }
-               // const profile = jwtDecode(tokens.id_token);
 
-             //   this.updateState({ tokens, profile });
                 this.updateState({ tokens });
 
                 if (+tokens.expiration_date > new Date().getTime()) {
@@ -141,8 +121,6 @@ export class AuthService {
                 return this.refreshTokens();
             }),
             catchError(e => {
-                console.warn("logout = ");
-                console.warn(e);
                 this.logout();
                 this.updateState({ authReady: true });
                 return throwError(e);
@@ -159,16 +137,15 @@ export class AuthService {
     }
     
     private getUserProfile(): void {
-        this.http.get<IUserProfile>("role") //bug make list request form service
-            .subscribe((data: IUserProfile) => {
+        this.http.get<any>("role") //bug make list request form service
+            .subscribe((data: any) => {
                     this.storage.setUserId(+data.userId);
                     this.storage.setRoles(data.roles.split(", "));
                 this.rolesCheckedService.checkRoles();
 
-                    console.warn("init hub from getUserProfile");
-                    this.signalRservice.initializeHub();//WARNING---------------------------------------------------------
-                },
-                e => console.log(e)
+     //               console.warn("init hub from getUserProfile");
+                    this.signalRService.initializeHub();//WARNING---------------------------------------------------------
+                }
             );
     }
 }

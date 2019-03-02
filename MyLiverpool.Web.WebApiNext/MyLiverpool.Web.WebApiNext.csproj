@@ -15,7 +15,7 @@
 
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
-    <RemoveHashFromTiny>false</RemoveHashFromTiny>
+    <RemoveHashFromTiny>true</RemoveHashFromTiny>
     <ApplicationIcon />
     <StartupObject />
     </PropertyGroup>
@@ -127,6 +127,10 @@
 
   <ItemGroup>
     <None Remove="ClientApp\dist\aspnetcorespa\main.8bf2d0d1dedba8ac9d3c.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\+auth\uri-encoder.ts" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,8 +11,7 @@ const MATCH_CALENDAR_KEY = makeStateKey<Match[]>("match-calendar");
     selector: "match-calendar",
     templateUrl: "./match-calendar.component.html",
     styleUrls: ["./match-calendar.component.scss"],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    preserveWhitespaces: true
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MatchCalendarComponent implements OnInit, OnDestroy {
     private sub: Subscription;
@@ -32,8 +31,7 @@ export class MatchCalendarComponent implements OnInit, OnDestroy {
             this.sub = this.service.getForCalendar().subscribe(data => {
                 this.parse(data);
                 this.transferState.set(MATCH_CALENDAR_KEY, data);
-            },
-                e => console.log(e));
+            });
         }
     }
     private parse(matches: Match[]): void {

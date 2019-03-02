@@ -3,8 +3,8 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { MatSnackBar } from "@angular/material";
 import { Subscription } from "rxjs";
-import { AdminService } from "../admin.service";
-import { HelperType } from "../helperType.enum";
+import { StaticPageService } from "../staticPage.service";
+import { HelperType } from "@app/home";
 
 @Component({
     selector: "page-editor",
@@ -21,7 +21,7 @@ export class PageEditorComponent implements OnInit, OnDestroy {
     public content: string;
     
 
-    constructor(private service: AdminService,
+    constructor(private service: StaticPageService,
         private cd: ChangeDetectorRef,
         private route: ActivatedRoute,
         private snackBar: MatSnackBar,
@@ -34,16 +34,14 @@ export class PageEditorComponent implements OnInit, OnDestroy {
                 this.id = +data["id"];
                 if (this.id > 0) {
                     this.title = HelperType[this.id];
-                    this.sub2 = this.service.getValue(this.id).subscribe(pageData => {
+                    this.sub2 = this.service.getValue(this.id).subscribe((pageData: string) => {
                             if (pageData) {
                                 this.content = pageData;
                                 this.editPageForm.get("content").patchValue(pageData);
                             }
-                        },
-                        e => console.log(e));
+                        });
                 }
-            },
-            e => console.log(e));
+            });
     }
 
     public ngOnDestroy(): void {

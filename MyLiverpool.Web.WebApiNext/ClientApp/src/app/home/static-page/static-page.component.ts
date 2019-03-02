@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
-import { AdminService } from "@app/admin";
+import { AdminService } from "@app/admin/admin.service";
 import { RolesCheckedService } from "@app/+auth";
 
 @Component({

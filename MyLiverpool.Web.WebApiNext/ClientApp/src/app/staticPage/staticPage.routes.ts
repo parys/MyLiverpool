@@ -3,9 +3,8 @@ import { PageEditorComponent } from "./page-editor";
 import { RoleGuard, RolesEnum } from "@app/+auth";
 import { EDITING_RU } from "@app/+constants/ru.constants";
 
-export const helperRoutes: Routes = [
+export const staticPageRoutes: Routes = [
     {
-        path: "editPage",
         children: [
             { path: "", pathMatch: "full", redirectTo: "/" },
             {

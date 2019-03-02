@@ -7,29 +7,29 @@ export class CustomTitleService {
     private count: number = 0;
     private title: string = TITLE_RU;
     constructor(private titleService: Title) {
-        console.log("t c");
+ //       console.log("t c");
     }
 
     public addCount(newCount: number): void {
-        console.log("t a");
+   //     console.log("t a");
         this.count += newCount;
         this.updateTitle();
     }
 
     public removeCount(newCount: number): void {
-        console.log("t r");
+ //       console.log("t r");
         this.count -= newCount;
         this.updateTitle();
     }
 
     public setTitle(newTitle: string): void {
-        console.log("t s");
+ //       console.log("t s");
         this.title = newTitle;
         this.updateTitle();
     }
 
     private updateTitle(): void {
-        console.log("t u");
+  //      console.log("t u");
         if (this.count !== 0) {
             this.titleService.setTitle(`(${this.count}) ${this.title}`);
         } else {

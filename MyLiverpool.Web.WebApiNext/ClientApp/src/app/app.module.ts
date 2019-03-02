@@ -26,9 +26,8 @@ import { NotificationCoreModule } from "./notification";
 import { UserCoreModule } from "./user";
 
 registerLocaleData(localeRU);
-import { PollCoreModule } from "./poll";
+//import { PollCoreModule } from "./poll";
 import { BreadcrumbService } from "@app/shared/breadcrumb";
-import { EditorModule } from "./editor"; //todo need for static page edit, move to separate module when will split
 
 declare var Hammer: any;
 
@@ -44,16 +43,16 @@ export class MyHammerConfig extends HammerGestureConfig {
     }
 }
 
-@Injectable()
-export class UIErrorHandler extends ErrorHandler {
-    constructor() {
-        super();
-    }
-    handleError(error: any) {
-        super.handleError(error);
-        alert(`Error occurred:${error.message}`);
-    }
-}
+//@Injectable()
+//export class UIErrorHandler extends ErrorHandler {
+//    constructor() {
+//        super();
+//    }
+//    handleError(error: any) {
+//        super.handleError(error);
+//        alert(`Error occurred:${error.message}`);
+//    }
+//}
 
 @NgModule({
     imports: [
@@ -70,7 +69,6 @@ export class UIErrorHandler extends ErrorHandler {
         TransferCoreModule,
         MaterialCoreModule,
         NotificationCoreModule,
-        EditorModule,
      //   PollCoreModule,
         PersonCoreModule,
         RouterModule.forRoot(routes, {
@@ -89,8 +87,7 @@ export class UIErrorHandler extends ErrorHandler {
         home.SidebarRightComponent,
         AppComponent,
         admin.CupTableComponent,
-        admin.EplTableComponent,
-        admin.PageEditorComponent,
+        admin.EplTableComponent
     ],
     exports: [
         home.NavbarMenuComponent

@@ -11,7 +11,5 @@
                    [resizeToWidth]="300"
                    format="jpeg"
                    (imageCropped)="imageCropped($event)"></image-cropper>
-
-    <img [src]="croppedImage" alt="" />
     <button mat-raised-button color="warn" *ngIf="imageChangedEvent" (click)="crop()" type="button">Обрезать</button>
 </div>

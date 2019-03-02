@@ -18,6 +18,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/aspnetcorespa",
+            "es5BrowserSupport": true,
             "index": "src/index.html",
             "main": "src/main.browser.ts",
             "polyfills": "src/polyfills/polyfills.ts",
@@ -96,7 +97,7 @@
           },
           "configurations": {
             "production": {
-              "optimization": false,
+              "optimization": true,
               "outputHashing": "media",
               "sourceMap": false,
               "namedChunks": false,

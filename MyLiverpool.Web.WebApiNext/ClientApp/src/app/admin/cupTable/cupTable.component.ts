@@ -2,7 +2,7 @@
 import { TransferState, makeStateKey } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { AdminService } from "../admin.service";
-import { HelperType } from "../helperType.enum";
+import { HelperType } from "@app/home/helperType.enum";
 import { RolesCheckedService } from "@app/+auth";
 
 const CUP_TABLE_KEY = makeStateKey<string>("cup-table");

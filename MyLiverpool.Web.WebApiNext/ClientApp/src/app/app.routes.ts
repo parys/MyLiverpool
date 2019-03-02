@@ -1,6 +1,5 @@
 ﻿import { Routes } from "@angular/router";
 import { MaterialListComponent } from "./material";
-import { helperRoutes } from "./admin/admin.routes";
 import { homeRoutes } from "./home/home.routes";
 import { WISHES_ROUTE, NEWS_ROUTE, ACCOUNT_ROUTE, BLOGS_ROUTE, BLOG_CATEGORIES_ROUTE, COMMENTS_ROUTE, CLUBS_ROUTE,
     IMAGES_ROUTE,
@@ -19,8 +18,11 @@ import { WISHES_ROUTE, NEWS_ROUTE, ACCOUNT_ROUTE, BLOGS_ROUTE, BLOG_CATEGORIES_R
 } from "@app/+constants";
 
 export const routes: Routes = [
-    ...helperRoutes,
     ...homeRoutes,
+    {
+        path: "editPage",
+        loadChildren: "./staticPage/staticPage.module#StaticPageModule"
+    },
     {
         path: ACCOUNT_ROUTE,
         loadChildren: "./account/lazy/account.module#AccountModule"

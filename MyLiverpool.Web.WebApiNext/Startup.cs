@@ -68,8 +68,14 @@ namespace MyLiverpool.Web.WebApiNext
         /// <param name="services">IServiceCollection.</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<GzipCompressionProviderOptions>(options => options.Level = CompressionLevel.Optimal);
-            services.AddCustomResponseCompression();
+            services.Configure<SsrSettings>(Configuration.GetSection("Settings"));
+
+            if (Configuration.GetSection("Settings") != null &&
+                Convert.ToBoolean(Configuration.GetSection("Settings")["Compression"]))
+            {
+                services.Configure<GzipCompressionProviderOptions>(options => options.Level = CompressionLevel.Optimal);
+                services.AddCustomResponseCompression();
+            }
 
             services.Configure<RequestLocalizationOptions>(options =>
             {
@@ -213,7 +219,11 @@ namespace MyLiverpool.Web.WebApiNext
                 {
                     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
                 });
-                app.UseCustomResponseCompression();
+                if (Configuration.GetSection("Settings") != null &&
+                    Convert.ToBoolean(Configuration.GetSection("Settings")["Compression"]))
+                {
+                    app.UseCustomResponseCompression();
+                }
             }
 
             app.UseCors("MyPolicy");
@@ -221,7 +231,7 @@ namespace MyLiverpool.Web.WebApiNext
 
             app.UseDefaultFiles();
 
-            var cachePeriod = env.IsDevelopment() ? "600" : "604800";
+            var cachePeriod = env.IsDevelopment() ? "600" : "6048000";
             app.UseStaticFiles(new StaticFileOptions
             {
                 OnPrepareResponse = ctx =>

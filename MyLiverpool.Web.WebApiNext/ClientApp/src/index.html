@@ -12,13 +12,13 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Сайт футбольного клуба Ливерпуль. FC Liverpool. Новости, матчи, история, турнирные таблицы, статистика, статьи, составы команд. Русскоязычные болельщики.">
     <meta name="keywords" content="ливерпуль, liverpool, ливерпуль фк, liverpool fc, lfc, liverpoolfc, клуб ливерпуль, ливерпуль футбольный клуб, сайт ливерпуля, трансляция ливерпуль, ливерпуль видео">
     <meta name="theme-color" content="#731010">
     <link title="MyLFC.ru - Последние материалы" type="application/rss+xml" rel="alternate" href="~/rss" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="10427.ttf" rel="preload" as="font" type="font/ttf" crossorigin="anonymous">
+    <link href="10427.721bd1b8284243373456.ttf" rel="preload" as="font" type="font/ttf" crossorigin="anonymous">
     <link rel="manifest" href="manifest.json">
 </head>
 <body>
@@ -27,7 +27,7 @@
     </app>
 <noscript>
     <p>
-        Извините, но для этого приложения нужно включить JavaScript. <a href="https://m.mylfc.ru/">Воспользуйтесь облегченной версией</a>, пожалуйста.
+        Извините, но для этого сайта нужно включить JavaScript. <a href="https://m.mylfc.ru/">Воспользуйтесь облегченной версией</a>, пожалуйста.
     </p>
 </noscript>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79219562-3"></script>
@@ -45,28 +45,31 @@
     gtag('config', 'UA-79219562-3');
 </script>
 <script type="text/javascript">
-
+    var global = global || window;
     var crawlerAgent = (/bot|google|aolbuild|baidu|bing|msn|duckduckgo|teoma|slurp|yandex/i).test(navigator.userAgent);
-    if (!crawlerAgent) {
-
-        var global = global || window;
-        (function (w, d, n, s, t) {
-            w[n] = w[n] || [];
-            w[n].push(function () {
-                addAd("R-A-255349-2");
-                addAd("R-A-255349-3");
-            });
-            t = d.getElementsByTagName("script")[0];
-            s = d.createElement("script");
-            s.type = "text/javascript";
-            s.src = "https://an.yandex.ru/system/context.js";
-            s.async = true;
-            t.parentNode.insertBefore(s, t);
-        })(this, this.document, "yandexContextAsyncCallbacks");
+    var yaLoaded = false;
+    function loadYa() {
+        if (!crawlerAgent && !yaLoaded) {
+            (function (w, d, n, s, t) {
+                console.log("LOAD YANDEX");
+                yaLoaded = true;
+                w[n] = w[n] || [];
+                w[n].push(function () {
+                    addAd("R-A-255349-2");
+                    addAd("R-A-255349-3");
+                });
+                t = d.getElementsByTagName("script")[0];
+                s = d.createElement("script");
+                s.type = "text/javascript";
+                s.src = "https://an.yandex.ru/system/context.js";
+                s.async = true;
+                t.parentNode.insertBefore(s, t);
+            })(this, this.document, "yandexContextAsyncCallbacks");
+        }
     }
 
     function addAd(name) {
-        if (location.hostname === "localhost" || !window.Ya || !window.Ya.Context || !window.Ya.Context.AdvManager) return false;
+        if (location.hostname === "localhost" || !window.Ya || !window.Ya.Context || !window.Ya.Context.AdvManager) return true;
         Ya.Context.AdvManager.render({
             blockId: name,
             renderTo: "yandex_rtb_" + name,
@@ -105,5 +108,6 @@
         }
     }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.2.20171210/classList.min.js" type="text/javascript"></script>
 </body>
 </html>

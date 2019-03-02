@@ -1,4 +1,7 @@
-﻿import "zone.js/dist/zone.min";
-//import "reflect-metadata";
+﻿import "zone.js/dist/zone";
 
 import "hammerjs";
+
+if (!Element.prototype.matches) {
+    Element.prototype.matches = Element.prototype.msMatchesSelector;
+}
