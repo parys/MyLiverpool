@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
 import { Router, ActivatedRoute } from "@angular/router";
-import { AccountService } from "../../core";
+import { AccountService } from "../account.service";
 import { USER_ID } from "@app/+constants";
 
 @Component({
@@ -22,12 +22,11 @@ export class ConfirmEmailComponent implements OnInit, OnDestroy {
             const id = +params[USER_ID];
             const code = params["code"];
             this.accountService.confirmEmail(id, code)
-                .subscribe(data => {
+                .subscribe((data: boolean) => {
                     if (data) {
                         this.router.navigate(["/"]);
                     }
-                },
-                error => console.log(error));
+                });
         });
     }
 

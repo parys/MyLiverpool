@@ -44,7 +44,6 @@ export class MaterialListComponent implements OnInit, OnDestroy {
                 this.parseQueryParamsAndUpdate();
             }
         });
-
     }
 
     public showActivateModal(index: number): void {
@@ -53,7 +52,7 @@ export class MaterialListComponent implements OnInit, OnDestroy {
             if (result) {
                 this.activate(index);
             }
-        }, e => console.log(e));
+        });
     }
 
     public showDeleteModal(index: number): void {
@@ -62,7 +61,7 @@ export class MaterialListComponent implements OnInit, OnDestroy {
             if (result) {
                 this.delete(index);
             }
-        }, e => console.log(e));
+        });
     }
 
     public ngOnInit(): void {
@@ -103,36 +102,27 @@ export class MaterialListComponent implements OnInit, OnDestroy {
     }
 
     private activate(index: number): void {
-        let result: boolean;
-
         const news: Material = this.items[index];
         this.materialService.activate(news.id)
-            .subscribe(res => result = res,
-                e => console.log(e),
-                () => {
-                    if (result) {
-                        news.pending = false;
-                        this.snackBar.open("Материал активирован");
-                    } else {
-                        this.snackBar.open("Материал НЕ активирован");
-                    }
+            .subscribe(res => {
+                if (res) {
+                    news.pending = false;
+                    this.snackBar.open("Материал активирован");
+                } else {
+                    this.snackBar.open("Материал НЕ активирован");
                 }
-            );
+            });
     }
 
     private delete(index: number): void {
-        let result: boolean;
         this.materialService.delete(this.items[index].id)
-            .subscribe(res => result = res,
-                e => console.log(e),
-                () => {
-                    if (result) {
-                        this.items.splice(index, 1);
-                    } else {
-                        this.snackBar.open("Ошибка удаления");
-                    }
+            .subscribe(res => {
+                if (res) {
+                    this.items.splice(index, 1);
+                } else {
+                    this.snackBar.open("Ошибка удаления");
                 }
-            );
+            });
     }
 
     private parsePageable(pageable: Pageable<Material>): void {
@@ -152,8 +142,7 @@ export class MaterialListComponent implements OnInit, OnDestroy {
 
         this.sub = this.materialService
             .getAll(filters)
-            .subscribe(data => this.parsePageable(data),
-                error => console.log(error));
+            .subscribe(data => this.parsePageable(data));
     }
 
     private parseQueryParamsAndUpdate(): void {
@@ -162,8 +151,7 @@ export class MaterialListComponent implements OnInit, OnDestroy {
                 this.categoryId = qParams["categoryId"] || null;
                 this.userName = qParams["userName"] || "";
                 this.userId = qParams["userId"] || null;
-            },
-            error => console.log(error));
+            });
         this.update();
     }
 }

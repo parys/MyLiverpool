@@ -31,14 +31,14 @@ export class NotificationCounterComponent implements OnInit, OnDestroy {
         this.updateCount();
 
         this.signalR.readNotify.subscribe((data: number) => {
-            this.count -= data;
-                this.titleService.removeCount(this.count);
+                this.count -= data;
+                this.titleService.removeCount(data);
             },
             () => {
                 this.cd.markForCheck();
             });
         this.signalR.newNotify.subscribe((data: Notification) => {
-            this.count++;
+                this.count++;
                 this.titleService.addCount(1);
                 this.snackBar.open("Новое уведомление", this.action)
                     .onAction()
@@ -68,7 +68,6 @@ export class NotificationCounterComponent implements OnInit, OnDestroy {
                         .subscribe(_ => this.router.navigate([NOTIFICATIONS_ROUTE]));
                 }
                 },
-            e => console.log(e),
             () => {
                 this.cd.markForCheck();
             });

@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { AccountService } from "../../core";
+import { AccountService } from "../account.service";
 
 @Component({
     selector: "unconfirmedEmail",
@@ -12,7 +12,8 @@ export class UnconfirmedEmailComponent implements OnInit {
     public finish: boolean;
     public isHuman: boolean = false;
 
-    constructor(private service: AccountService, private formBuilder: FormBuilder) {
+    constructor(private service: AccountService,
+        private formBuilder: FormBuilder) {
     }
 
     public ngOnInit(): void {
@@ -26,13 +27,11 @@ export class UnconfirmedEmailComponent implements OnInit {
 
     public onSubmit(): void {
         const email = this.unconfirmedForm.controls["email"].value;
-        this.service.resendConfirmEmail(email).subscribe(data => {
+        this.service.resendConfirmEmail(email).subscribe((data: boolean) => {
                 if (data) {
                     this.finish = true;
                 }
-            },
-            e => console.log(e)
-        );
+            });
         this.isHuman = false;
     }
 }

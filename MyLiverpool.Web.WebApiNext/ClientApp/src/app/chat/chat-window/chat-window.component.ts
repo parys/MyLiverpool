@@ -119,10 +119,10 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
                 this.snackBar.open("Комментарий удален");
             }
         },
-            e => {
-                console.log(e);
+            () => {
                 this.snackBar.open("Комментарий НЕ удален");
-            }, () => {
+            },
+            () => {
                 this.cd.markForCheck();
             });
     }

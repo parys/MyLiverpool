@@ -20,8 +20,7 @@ export class PersonBirthdayComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         this.sub = this.service.getBirthdays()
-            .subscribe(data => this.parse(data),
-            e => console.log(e),
+            .subscribe((data: Person[]) => this.parse(data),
             () => {
                 this.cd.markForCheck();
             });

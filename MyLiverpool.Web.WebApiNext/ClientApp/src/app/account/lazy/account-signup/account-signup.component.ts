@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { IRegisterModel, AuthService } from "@app/+auth";
-import { AccountService } from "../../core";
+import { AccountService } from "../account.service";
 import { AccountValidators } from "../account.validators";
 
 @Component({
@@ -44,8 +44,7 @@ export class AccountSignupComponent implements OnInit {
 
         this.authService
             .register(signup)
-            .subscribe((data: boolean) => this.result = data,
-                e => console.log(e));
+            .subscribe((data: boolean) => this.result = data);
         this.isHuman = false;
     }
 }

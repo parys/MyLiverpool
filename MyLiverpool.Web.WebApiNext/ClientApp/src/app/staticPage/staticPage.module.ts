@@ -4,6 +4,7 @@ import { SharedModule } from "@app/shared";
 import { staticPageRoutes } from "./staticPage.routes";
 import { EditorModule } from "@app/editor";
 import { PageEditorComponent } from "./page-editor";
+import { StaticPageService } from "./staticPage.service";
 
 @NgModule({
     imports: [
@@ -13,6 +14,9 @@ import { PageEditorComponent } from "./page-editor";
     ],
     declarations: [
         PageEditorComponent
+    ],
+    providers: [
+        StaticPageService
     ]
 })
 export class StaticPageModule {

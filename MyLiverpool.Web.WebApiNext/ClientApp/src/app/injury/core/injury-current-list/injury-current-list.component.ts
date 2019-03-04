@@ -31,11 +31,12 @@ export class InjuryCurrentListComponent implements OnInit, OnDestroy {
             this.cd.markForCheck();
         } else {
             this.sub = this.service.getCurrentAll().subscribe(data => {
-                this.items = data;
-                this.transferState.set(INJURY_CURRENT_KEY, data);
+                    this.items = data;
+                    this.transferState.set(INJURY_CURRENT_KEY, data);
                 },
-                e => console.log(e),
-                () => { this.cd.markForCheck(); });
+                () => {
+                    this.cd.markForCheck();
+                });
         }
     }
 

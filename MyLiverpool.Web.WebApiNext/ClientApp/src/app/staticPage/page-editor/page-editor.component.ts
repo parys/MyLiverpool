@@ -6,6 +6,12 @@ import { Subscription } from "rxjs";
 import { StaticPageService } from "../staticPage.service";
 import { HelperType } from "@app/home";
 
+import "tinymce/plugins/fullscreen/plugin.min.js";
+import "tinymce/plugins/code/plugin.min.js";
+import "tinymce/plugins/spellchecker/plugin.min.js";
+import "tinymce/plugins/table/plugin.min.js";
+import "tinymce/plugins/visualblocks/plugin.min.js";
+
 @Component({
     selector: "page-editor",
     templateUrl: "./page-editor.component.html",
@@ -46,6 +52,7 @@ export class PageEditorComponent implements OnInit, OnDestroy {
 
     public ngOnDestroy(): void {
         if (this.sub) this.sub.unsubscribe();
+        if (this.sub2) this.sub2.unsubscribe();
     }
     
     private initForm(): void {

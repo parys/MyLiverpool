@@ -31,8 +31,7 @@ export class UserBirthdayComponent implements OnInit, OnDestroy {
                 .subscribe(data => {
                     this.parse(data);
                     this.transferState.set(USER_BIRTHDAY_KEY, data);
-                },
-                e => console.log(e));
+                });
         }
     }
 

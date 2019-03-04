@@ -33,8 +33,7 @@ export class CupTableComponent implements OnInit, OnDestroy {
                 .subscribe(data => {
                         this.parse(data);
                     this.transferState.set(CUP_TABLE_KEY, data);
-                },
-                    error => console.log(error));
+                });
         }
     }
 

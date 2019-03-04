@@ -29,8 +29,7 @@ export class StaticPageComponent implements OnInit, OnDestroy {
                     this.content = pageData;
                     this.cd.markForCheck();
                 }
-            },
-            e => console.log(e));
+            });
     }
 
     public ngOnDestroy(): void {

@@ -1,7 +1,7 @@
 ﻿import { FormControl, FormGroup } from "@angular/forms";
 import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
-import { AccountService } from "../core";
+import { AccountService } from "./account.service";
 import { debounceTime, takeUntil, take, switchMap } from "rxjs/operators";
 import { DEBOUNCE_TIME, MIN_EMAIL_LENGTH, MIN_USERNAME_LENGTH } from "@app/+constants";
 
@@ -36,7 +36,6 @@ export class AccountValidators {
                     obs.complete();
                 },
                 error => {
-                    console.log(error);
                     obs.complete();
                 });
         });
@@ -62,7 +61,6 @@ export class AccountValidators {
                     obs.complete();
                 },
                 error => {
-                    console.log(error);
                     obs.complete();
                 });
         });

@@ -30,7 +30,7 @@ export class PmCounterComponent implements OnInit, OnDestroy {
         this.updateCount();
 
         this.signalR.readPm.subscribe((data: boolean) => {
-            this.count--;
+                this.count--;
                 this.titleService.removeCount(1);
             },
             () => this.cd.markForCheck());
@@ -62,7 +62,6 @@ export class PmCounterComponent implements OnInit, OnDestroy {
                         .subscribe(data => this.router.navigate([PMS_ROUTE]));
                 }
                 },
-                e => console.log(e),
                 () => this.cd.markForCheck());
     }
 }

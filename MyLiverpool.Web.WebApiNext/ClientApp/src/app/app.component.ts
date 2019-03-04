@@ -64,8 +64,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         if (isPlatformBrowser(this.platformId)) {
             // This starts up the token refresh preocess for the app
             this.authService.init()
-                .subscribe(
-                    () => { console.info("Startup success"); },
+                .subscribe(() => {},
                     e => console.warn(e)
             );
             this.updateGestureState();

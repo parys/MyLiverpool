@@ -1,4 +1,6 @@
-﻿import { Component, Input, OnInit, ChangeDetectionStrategy, Inject, PLATFORM_ID, NgZone } from "@angular/core";
+﻿import {
+    Component, Input, ChangeDetectionStrategy, Inject, PLATFORM_ID, NgZone, AfterContentInit
+} from "@angular/core";
 import { isPlatformServer } from "@angular/common";
 import { Subscription } from "rxjs";
 
@@ -9,7 +11,7 @@ import { Subscription } from "rxjs";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class AdComponent implements OnInit {
+export class AdComponent implements AfterContentInit {
     public name: string = null;
     private sub$: Subscription;
     @Input() blockName: string = "";
@@ -18,15 +20,14 @@ export class AdComponent implements OnInit {
         @Inject(PLATFORM_ID) private platformId: Object,
         private zone: NgZone) { }
 
-    ngOnInit(): void {
+    public ngAfterContentInit(): void {
         this.name = `yandex_rtb_${this.blockName}`;
-        this.sub$ = this.zone.onStable.subscribe(() => this.ololo());
+        this.sub$ = this.zone.onStable.subscribe(() => this.load());
     }
 
-    public ololo() {
+    public load() {
         if (isPlatformServer(this.platformId)) return;
         loadYa();
-        console.log(`yandex_rtb_${ this.blockName}`);
         if (addAd(this.blockName)) {
             this.sub$.unsubscribe();
         }

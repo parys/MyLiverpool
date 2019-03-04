@@ -47,8 +47,7 @@ export class PmReplyComponent implements OnInit {
                     this.closeWindow();
                     this.snackBar.open("Сообщение отправлено");
                 }
-            },
-            e => console.log(e));
+            });
     }
 
     public closeWindow(): void {

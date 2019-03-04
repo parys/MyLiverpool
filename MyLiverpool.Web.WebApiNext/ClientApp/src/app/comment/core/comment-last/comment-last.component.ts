@@ -32,10 +32,9 @@ export class CommentLastComponent implements OnInit, OnDestroy {
             this.sub2 = this.service
                 .getLastList()
                 .subscribe(data => {
-                    this.items = data;
-                    this.transferState.set(COMMENT_LAST_KEY, data);
+                        this.items = data;
+                        this.transferState.set(COMMENT_LAST_KEY, data);
                     },
-                e => console.log(e),
                     () => this.cd.markForCheck());
         }
 

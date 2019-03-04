@@ -13,6 +13,7 @@ import { AccountValidators } from "./account.validators";
 import { AccountCoreModule } from "../core";
 import { RecaptchaModule } from "@app/shared/modules";
 import { BreadcrumbService } from "@app/shared/breadcrumb";
+import { AccountService } from "./account.service";
 import { ACCOUNT_ROUTE } from "@app/+constants";
 
 @NgModule({
@@ -33,7 +34,8 @@ import { ACCOUNT_ROUTE } from "@app/+constants";
   //      AccountInitComponent
     ],
     providers: [
-        AccountValidators
+        AccountValidators,
+        AccountService
     ],
     bootstrap: [
   //      AccountInitComponent

@@ -4,18 +4,14 @@ import { RoleGuard, RolesEnum } from "@app/+auth";
 import { EDITING_RU } from "@app/+constants/ru.constants";
 
 export const staticPageRoutes: Routes = [
+    { path: "", pathMatch: "full", redirectTo: "/" },
     {
-        children: [
-            { path: "", pathMatch: "full", redirectTo: "/" },
-            {
-                path: ":id",
-                component: PageEditorComponent,
-                data: {
-                    title: EDITING_RU,
-                    roles: [RolesEnum[RolesEnum.AdminStart], RolesEnum[RolesEnum.InfoStart]]
-                },
-                canActivate: [RoleGuard]
-            }
-        ]
+        path: ":id",
+        component: PageEditorComponent,
+        data: {
+            title: EDITING_RU,
+            roles: [RolesEnum[RolesEnum.AdminStart], RolesEnum[RolesEnum.InfoStart]]
+        },
+        canActivate: [RoleGuard]
     }
 ];

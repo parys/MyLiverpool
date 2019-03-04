@@ -19,26 +19,19 @@ export class NotificationListComponent implements OnInit {
     public ngOnInit(): void {
         this.service
             .getAll()
-            .subscribe((data: Notification[]) => this.items = data,
-            e => console.log(e));
+            .subscribe((data: Notification[]) => this.items = data);
     }
 
     public read(index: number): void {
         if (!this.items[index].isRead) {
             this.service.read([this.items[index].id])
-                .subscribe((res: boolean) => this.items[index].isRead = res,
-                e => {
-                    console.log(e);
-                });
+                .subscribe((res: boolean) => this.items[index].isRead = res);
         }
     }
 
     public readAll(): void {
         this.service.read(this.items.filter(x => !x.isRead).map(x => x.id))
-            .subscribe((res: boolean) => this.items.forEach(x => x.isRead = res),
-            e => {
-                console.log(e);
-            });
+            .subscribe((res: boolean) => this.items.forEach(x => x.isRead = res));
     }
 
     public readAndGo(index: number): void {
@@ -48,18 +41,5 @@ export class NotificationListComponent implements OnInit {
 
     private goToNotification(index: number): void {
         this.router.navigate([`/${this.items[index].typeName}/${this.items[index].entityId}`], { fragment: this.items[index].commentId ? `com${this.items[index].commentId}` : "" });
-    }
-
-    private readArray(ids: number[]): boolean {
-        this.service.read(ids).subscribe((res: boolean) => {
-            if (res && ids.length > 1) {
-                this.items.forEach(x => x.isRead = true);
-            }
-            return res;
-        },
-            e => {
-                console.log(e);
-            });
-        return false;
     }
 }

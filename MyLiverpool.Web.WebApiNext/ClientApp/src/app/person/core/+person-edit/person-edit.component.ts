@@ -33,8 +33,7 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
             this.id = +this.route.snapshot.params["id"] || 0;
             if (this.id > 0) {
                 this.service.getSingle(this.id)
-                    .subscribe((data: Person) => this.parse(data),
-                        e => console.log(e));
+                    .subscribe((data: Person) => this.parse(data));
             }
         }
         this.updateTypes();
@@ -54,10 +53,7 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
                     this.photo = `${result.path}?${Math.random()}`;
                     this.snackBar.open("Фото успешно загружено");
                 },
-                e => {
-                    console.log(e);
-                    this.snackBar.open("Ошибка при загрузке фото");
-                });
+                () => this.snackBar.open("Ошибка при загрузке фото"));
         }
     }
     public onSubmit(): void {
@@ -78,10 +74,7 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
                         this.editPersonForm.get("lastRussianName").setValue(null);
                     }
                 },
-                e => {
-                    console.log(e);
-                    this.snackBar.open("Изменения НЕ сохранены");
-                });
+                () => this.snackBar.open("Изменения НЕ сохранены"));
 
     }
 

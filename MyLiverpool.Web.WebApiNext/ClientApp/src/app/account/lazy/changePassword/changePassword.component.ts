@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { AccountService } from "../../core";
+import { AccountService } from "../account.service";
 import { ChangePassword } from "../../model";
 import { MatSnackBar } from "@angular/material";
 import { AccountValidators } from "../account.validators";
@@ -41,7 +41,6 @@ export class ChangePasswordComponent implements OnInit {
             }
             },
             error => {
-                console.log(error);
                 this.snackBar.open("Пароль НЕ изменен.");
             });
         this.isHuman = false;

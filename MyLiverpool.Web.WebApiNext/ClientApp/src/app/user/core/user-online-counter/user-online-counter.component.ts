@@ -26,8 +26,7 @@ export class UserOnlineCounterComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.updateCount();
         this.signalRService.onlineSubject
-            .subscribe((data: UsersOnline) => this.parse(data),
-            e => console.log(e));
+            .subscribe((data: UsersOnline) => this.parse(data));
     }
 
     public ngOnDestroy(): void {
@@ -43,8 +42,7 @@ export class UserOnlineCounterComponent implements OnInit, OnDestroy {
                 .subscribe(data => {
                         this.parse(data);
                         this.transferState.set(USER_ONLINE_KEY, data);
-                    },
-                    e => console.log(e));
+                    });
         }
     }
 

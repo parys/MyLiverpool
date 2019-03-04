@@ -11,14 +11,13 @@ import { EDIT_ROUTE, PMS_ROUTE } from "../../../+constants/routes.constants";
 })
 
 export class PmListComponent implements OnInit, OnDestroy {
-
-    private navigationSubscription: Subscription;
+    private sub$: Subscription;
     public received: Pm[];
     public sent: Pm[];
 
     constructor(private pmService: PmService,
         private router: Router) {
-        this.navigationSubscription = this.router.events.subscribe((e: any) => {
+        this.sub$ = this.router.events.subscribe((e: any) => {
             if (e instanceof NavigationEnd) {
                 this.init();
             }
@@ -30,7 +29,7 @@ export class PmListComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if(this.navigationSubscription) this.navigationSubscription.unsubscribe();
+        if(this.sub$) this.sub$.unsubscribe();
     }
 
     private parse(model: any): void {
@@ -52,7 +51,6 @@ export class PmListComponent implements OnInit, OnDestroy {
     private init(): void {
         this.pmService
             .getAll()
-            .subscribe(data => this.parse(data),
-                error => console.log(error));
+            .subscribe(data => this.parse(data));
     }
 }

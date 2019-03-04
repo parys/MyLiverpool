@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { AccountService } from "../../core";
+import { AccountService } from "../account.service";
 
 @Component({
     selector: "forgot-password",
@@ -27,9 +27,7 @@ export class ForgotPasswordComponent implements OnInit {
 
     public onSubmit(): void {     
         this.email = this.forgotForm.controls["email"].value;        
-        this.service.forgotPassword(this.email).subscribe(data => data,
-            error => console.log(error)
-        );
+        this.service.forgotPassword(this.email).subscribe(data => data);
         this.finish = true;
         this.isHuman = false;
     }

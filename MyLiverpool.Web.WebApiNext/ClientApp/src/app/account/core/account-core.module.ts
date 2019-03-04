@@ -2,7 +2,6 @@
 import { RouterModule } from "@angular/router";
 import { SharedModule } from "@app/shared";
 import { AccountSigninComponent } from "./account-signin";
-import { AccountService } from "./account.service";
 
 @NgModule({
     imports: [
@@ -16,7 +15,6 @@ import { AccountService } from "./account.service";
         AccountSigninComponent,
     ],
     providers: [
-        AccountService
     ]
 })
 export class AccountCoreModule { }

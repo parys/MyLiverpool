@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { MatSnackBar } from "@angular/material";
 import { Subscription } from "rxjs";
-import { AccountService } from "../../core";
+import { AccountService } from "../account.service";
 import { ResetPassword } from "../../model";
 import { AccountValidators } from "../account.validators";
 
@@ -59,9 +59,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
                 if (!data.succeeded) {
                     this.snackBar.open(`Ошибка: ${data.errors[0].description}`, null);
                 }
-            },
-            e => console.log(e)
-        );
+            });
         this.isHuman = false;
     }
 }
