@@ -54,7 +54,7 @@ export class CommentDetailComponent implements OnInit, OnDestroy {
         this.materialCommentService
             .verify(this.item.id)
             .subscribe(data => result = data,
-                error => console.log(error),
+                () => {},
                 () => {
                     if (result) {
                         this.item.isVerified = true;
@@ -98,8 +98,7 @@ export class CommentDetailComponent implements OnInit, OnDestroy {
             .subscribe((data: Comment) => {
                     this.item.children.push(data);
                     this.cancelAdding();
-                },
-                e => console.log(e));
+                });
     }
 
     public vote(positive: boolean): void {
@@ -110,8 +109,7 @@ export class CommentDetailComponent implements OnInit, OnDestroy {
                 if (data) {
                     this.updateVotes(positive);
                 }
-            },
-            e => console.log(e));
+            });
     }
 
     private updateVotes(positive: boolean): void {
@@ -140,8 +138,7 @@ export class CommentDetailComponent implements OnInit, OnDestroy {
             .subscribe((data: Comment) => {
                     this.item = comment;
                     this.cancelEdit();
-                },
-                e => console.log(e));
+                });
     }
 
     public cancelEdit(): void {
@@ -164,7 +161,7 @@ export class CommentDetailComponent implements OnInit, OnDestroy {
                     this.item = undefined;
                 }
             },
-                e => console.log(e),
+                () => {},
                 () => {
                     this.cd.detectChanges();
                 }

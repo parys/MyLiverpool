@@ -8,7 +8,7 @@ import { ClubCoreModule } from "../core";
 import { StadiumCoreModule } from "@app/stadium";
 import { BreadcrumbService } from "@app/shared/breadcrumb";
 import { CLUBS_ROUTE, CLUBS_RU } from "@app/+constants";
-import { MatTableModule, MatAutocompleteModule, MatSortModule } from "@angular/material";
+import { MatTableModule, MatAutocompleteModule, MatSortModule, MatInputModule } from "@angular/material";
 
 @NgModule({
     imports: [
@@ -18,7 +18,8 @@ import { MatTableModule, MatAutocompleteModule, MatSortModule } from "@angular/m
         StadiumCoreModule,
         MatTableModule,
         MatAutocompleteModule,
-        MatSortModule
+        MatSortModule,
+        MatInputModule
     ],
     declarations: [
         ClubEditComponent,

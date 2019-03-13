@@ -1,8 +1,8 @@
 ﻿import { NgModule } from "@angular/core";
-import { PersonService } from "../person.service";
 import { SharedModule } from "@app/shared";
-import { PersonEditComponent } from "./person-edit.component";
+import { PersonEditComponent } from "./person-edit";
 import { MatInputModule, MatNativeDateModule, MatDatepickerModule, MatSelectModule } from "@angular/material";
+import { PersonCoreModule } from "../core";
 
 
 @NgModule({
@@ -11,18 +11,17 @@ import { MatInputModule, MatNativeDateModule, MatDatepickerModule, MatSelectModu
         MatInputModule,
         MatNativeDateModule,
         MatDatepickerModule,
-        MatSelectModule
+        MatSelectModule,
+        PersonCoreModule
     ],
     declarations: [
         PersonEditComponent
     ],
     exports: [
         PersonEditComponent,
+        MatInputModule,
         MatNativeDateModule,
         MatDatepickerModule
     ],
-    providers: [
-        PersonService
-    ]
 })
 export class PersonEditModule { }

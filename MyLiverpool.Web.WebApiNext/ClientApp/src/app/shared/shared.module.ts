@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DeleteDialogComponent } from "./delete-dialog";
 import {
     MatButtonModule, MatDialogModule, MatExpansionModule, MatCardModule,
-    MatIconModule, MatInputModule, MatMenuModule, MatProgressBarModule,
+    MatIconModule, MatMenuModule, MatProgressBarModule,
     MatSnackBarModule, MatTooltipModule, MatPaginatorModule, MatPaginatorIntl,
     MAT_SNACK_BAR_DEFAULT_OPTIONS, MatBadgeModule,
     ErrorStateMatcher, ShowOnDirtyErrorStateMatcher, MatSidenavModule
@@ -33,22 +33,16 @@ import { AuthModule } from "@app/+auth";
         SignalRModule,
         StorageModule,
         AuthModule, //todo temporary?
-      //  McBreadcrumbsModule.forRoot(),
 
         MatBadgeModule,
         MatButtonModule,
         MatCardModule,
-      //  MatCheckboxModule,
         MatDialogModule,
-      //  MatExpansionModule,
         MatIconModule,
-        MatInputModule,
         MatMenuModule,
         MatProgressBarModule,
-     //   MatSlideToggleModule,
         MatSnackBarModule,
         MatPaginatorModule,
-     //   MatSortModule,
         MatTooltipModule,
         MatSidenavModule
 
@@ -78,16 +72,12 @@ import { AuthModule } from "@app/+auth";
         MatBadgeModule,
         MatButtonModule,
         MatCardModule,
-      //  MatCheckboxModule,
         MatDialogModule,
         MatExpansionModule,
         MatIconModule,
-        MatInputModule,
         MatMenuModule,
         MatPaginatorModule,
-      //  MatSlideToggleModule,
         MatSnackBarModule,
-      //  MatSortModule,
         MatTooltipModule,
         MatSidenavModule
     ],

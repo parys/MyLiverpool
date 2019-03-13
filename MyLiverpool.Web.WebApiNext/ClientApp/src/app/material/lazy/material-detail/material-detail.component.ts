@@ -53,7 +53,7 @@ export class MaterialDetailComponent implements OnDestroy {
             if (result) {
                 this.activate();
             }
-        }, e => console.log(e));
+        });
     }
 
     public showDeleteModal(): void {
@@ -62,7 +62,7 @@ export class MaterialDetailComponent implements OnDestroy {
             if (result) {
                 this.delete();
             }
-        }, e => console.log(e));
+        });
     }
 
     private init(): void {
@@ -81,14 +81,13 @@ export class MaterialDetailComponent implements OnDestroy {
                 .subscribe(data => {
                     this.parse(data);
                 },
-                    e => console.log(e),
+                    () => {},
                     () => {
-                        if (isPlatformBrowser(this.platformId) && this.item.socialLinks) {
+                    if (this.item.socialLinks && isPlatformBrowser(this.platformId)) {
                             ssn();
                         }
                         this.cd.markForCheck();
                     });
-            // }
         });
     }
 
@@ -102,8 +101,7 @@ export class MaterialDetailComponent implements OnDestroy {
                 } else {
                     this.snackBar.open("Материал НЕ активирован");
                 }
-            },
-                e => console.log(e));
+            });
     }
 
     private delete(): void {
@@ -114,8 +112,7 @@ export class MaterialDetailComponent implements OnDestroy {
                 } else {
                     this.snackBar.open("Ошибка удаления");
                 }
-            },
-                e => console.log(e));
+            });
     }
 
     private parse(item: Material): void {

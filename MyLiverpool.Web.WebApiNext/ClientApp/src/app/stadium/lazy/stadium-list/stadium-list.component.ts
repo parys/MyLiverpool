@@ -32,8 +32,7 @@ export class StadiumListComponent implements OnInit, OnDestroy {
                 this.paginator.pageIndex = +qParams[PAGE] - 1 || 0;
                 this.paginator.pageSize = +qParams["itemsPerPage"] || 15;
 
-            },
-            e => console.log(e));
+            });
 
 
         merge(this.paginator.page)
@@ -55,8 +54,7 @@ export class StadiumListComponent implements OnInit, OnDestroy {
         ).subscribe((data: Stadium[]) => {
                     this.items = data;
                     this.updateUrl();
-                },
-                e => console.log(e));
+                });
     }
 
     public ngOnDestroy(): void {
@@ -70,8 +68,7 @@ export class StadiumListComponent implements OnInit, OnDestroy {
                 if (result) {
                     this.delete(index);
                 }
-            },
-            e => console.log(e));
+            });
     }
 
     public update(): Observable<Pageable<Stadium>> {
@@ -95,7 +92,6 @@ export class StadiumListComponent implements OnInit, OnDestroy {
                         this.items.splice(index, 1);
                         this.paginator.length -= 1;
                     }
-                },
-                e => console.log(e));
+                });
     }
 }

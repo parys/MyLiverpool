@@ -1,7 +1,9 @@
-﻿using MyLiverpool.Data.Common;
+﻿using System;
+using MyLiverpool.Data.Common;
 
 namespace MyLiverpool.Business.Dto
 {
+    [Serializable]
     public class MaterialCategoryDto : IDto
     {
         public int Id { get; set; }

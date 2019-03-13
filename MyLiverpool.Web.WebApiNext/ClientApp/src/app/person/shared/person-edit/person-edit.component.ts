@@ -2,7 +2,7 @@
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { MatSnackBar } from "@angular/material";
-import { PersonService } from "../person.service";
+import { PersonService } from "@app/person/core";
 import { Person, PersonType } from "@app/person/model";
 import { PERSONS_ROUTE } from "@app/+constants";
 

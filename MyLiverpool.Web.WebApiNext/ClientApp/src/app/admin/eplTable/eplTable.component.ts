@@ -25,7 +25,7 @@ export class EplTableComponent implements OnInit, OnDestroy {
         this.sub = this.service
             .getValue(HelperType.EplTable)
             .subscribe(data => this.eplTable = data,
-                error => console.log(error),
+                () => {},
                 () => {
                     this.cd.markForCheck();
                 });
@@ -42,7 +42,7 @@ export class EplTableComponent implements OnInit, OnDestroy {
             .subscribe((data: string) => {
                     this.eplTable = data;
                 },
-                error => console.log(error),
+                () => {},
                 () => {
                     this.cd.markForCheck();
                 });

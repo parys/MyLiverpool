@@ -2,7 +2,7 @@
 import { PersonListComponent } from "./person-list";
 import { StuffListComponent } from "./stuff-list";
 import { SquadComponent } from "./squad";
-import { PersonEditComponent } from "../core/+person-edit";
+import { PersonEditComponent } from "../shared/person-edit";
 
 export const personRoutes: Routes = [
     {

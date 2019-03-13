@@ -38,24 +38,20 @@ export class MatchEditComponent implements OnInit {
         let id = this.route.snapshot.params["id"];
         if (+id > 0) {
             this.matchService.getSingle(id)
-                .subscribe((data: Match) => this.parse(data),
-                    e => console.log(e));
+                .subscribe((data: Match) => this.parse(data));
         };
 
         this.matchService.getTypes()
-            .subscribe((data: MatchType[]) => this.types = data,
-                e => console.log(e));
+            .subscribe((data: MatchType[]) => this.types = data);
 
         this.seasonService.getAllWithoutFilter()
-            .subscribe((data: Season[]) => this.seasons = data,
-                e => console.log(e));
+            .subscribe((data: Season[]) => this.seasons = data);
     }
 
     public onSubmit(): void {
         const match = this.parseForm();
         this.matchService.createOrUpdate(this.id, match)
-            .subscribe((data: Match) => this.router.navigate([MATCHES_ROUTE, data.id]),
-                e => console.log(e));
+            .subscribe((data: Match) => this.router.navigate([MATCHES_ROUTE, data.id]));
     }
 
     public selectStadium(id: number) {

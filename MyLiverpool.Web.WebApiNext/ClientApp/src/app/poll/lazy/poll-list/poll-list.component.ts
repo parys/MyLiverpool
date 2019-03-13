@@ -1,8 +1,9 @@
 ﻿import { Component, OnInit } from "@angular/core";   
 import { ActivatedRoute, Router } from "@angular/router";
-import { Poll } from "../../models";
+import { Poll, PollFilters } from "../../models";
 import { RolesCheckedService } from "@app/+auth";
 import { PollService } from "../../core/poll.service";
+import { Pageable } from "@app/shared";
 
 @Component({
     selector: "poll-list",
@@ -19,17 +20,18 @@ export class PollListComponent implements OnInit {
 
     public ngOnInit(): void {
         this.service
-           .getAll()
-            .subscribe(data => this.items = data,
+           .getAll(new PollFilters())
+            .subscribe((data: Pageable<Poll>) => this.items = data.list,
                 e => console.log(e));
     }
     
     public delete(index: number): void {
-        this.service.delete(this.items[index].id).subscribe(data => {
+        this.service.delete(this.items[index].id)
+            .subscribe((data: boolean) => {
                 if (data) {
                     this.items.splice(index, 1);
                 }
             },
-            e => console.log(e));
+            () => {});
     }
 }

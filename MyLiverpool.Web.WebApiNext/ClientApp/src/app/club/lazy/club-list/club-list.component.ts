@@ -63,8 +63,7 @@ export class ClubListComponent implements OnInit {
             ).subscribe((data: Club[]) => {
                     this.items = data;
                     this.updateUrl();
-                },
-                e => console.log(e));
+                });
     }
 
     public showDeleteModal(index: number): void {
@@ -73,8 +72,7 @@ export class ClubListComponent implements OnInit {
                 if (result) {
                     this.delete(index);
                 }
-            },
-            e => console.log(e));
+            });
     }
 
     public update(): Observable<Pageable<Club>> {
@@ -101,8 +99,6 @@ export class ClubListComponent implements OnInit {
                         this.items.splice(index, 1);
                         this.paginator.length -= 1;
                     }
-                },
-                e => console.log(e)
-            );
+                });
     }
 }

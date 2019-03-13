@@ -36,10 +36,9 @@ export class UserDetailComponent implements OnInit, OnDestroy {
         this.initBanForm();
         this.sub = this.route.params.subscribe(params => {
             this.service.getSingle(+params["id"])
-                .subscribe((data: User) => this.parse(data),
-                    e => console.log(e));
+                .subscribe((data: User) => this.parse(data));
         });
-        if (this.roles.userRoles.isAdminAssistant) {
+        if (this.roles.isAdminAssistant) {
             this.loadRoleGroups();
         }
     }
@@ -81,15 +80,13 @@ export class UserDetailComponent implements OnInit, OnDestroy {
                 return;
             }
             this.service.updateAvatar(file)
-                .subscribe((result: any) => this.item.photo = `${result.path}?${Math.random()}`,
-                    e => console.log(e));
+                .subscribe((result: any) => this.item.photo = `${result.path}?${Math.random()}`);
         }
     }
 
     public resetAvatar(): void {
         this.service.resetAvatar(this.item.id)
-            .subscribe((result: any) => this.item.photo = `${result.path}?${Math.random()}`,
-            e => console.log(e));
+            .subscribe((result: any) => this.item.photo = `${result.path}?${Math.random()}`);
     }
 
     public unban(): void {
@@ -117,8 +114,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
 
     private loadRoleGroups(): void {
         this.roleGroupService.getAll()
-            .subscribe((data: RoleGroup[]) => this.roleGroups = data,
-                e => console.log(e));
+            .subscribe((data: RoleGroup[]) => this.roleGroups = data);
     }
 
     private initRoleForm(): void {

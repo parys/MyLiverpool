@@ -7,12 +7,14 @@ import { MaterialCategoryEditComponent } from "./materialCategory-edit";
 import { MaterialCategoryCoreModule } from "../core";
 import { BreadcrumbService } from "@app/shared/breadcrumb";
 import { BLOG_CATEGORIES_ROUTE, NEWS_CATEGORIES_ROUTE } from "@app/+constants";
+import { MatInputModule } from '@angular/material';
 
 @NgModule({
     imports: [
         SharedModule,
         RouterModule.forChild(materialCategoryRoutes),
-        MaterialCategoryCoreModule
+        MaterialCategoryCoreModule,
+        MatInputModule
     ],
     declarations: [
         MaterialCategoryListComponent,

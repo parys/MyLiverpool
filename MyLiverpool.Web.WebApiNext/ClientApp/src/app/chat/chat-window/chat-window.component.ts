@@ -21,7 +21,7 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
     public selectedEditIndex: number = null;
 
     @ViewChild("chatInput") private elementRef: EditorComponent;
-    @Input("type") public type: number;
+    @Input() public type: number;
     @Input() public height: number = 200;
 
     constructor(private service: ChatMessageService,
@@ -41,8 +41,8 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
                 this.putToChat(data, false);
             }
         });
-        this.roles.rolesChanged.subscribe(() =>
-            this.cd.markForCheck());
+        //this.roles.rolesChanged.subscribe(() =>
+        //    this.cd.markForCheck());
     }
 
     public ngAfterContentChecked(): void {
@@ -56,6 +56,7 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
             .subscribe((data: ChatMessage[]) => {
                     this.items = data.concat(this.items);
                 },
+                () => {},
                 () => this.cd.markForCheck());
     }
 
@@ -116,11 +117,11 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
             if (data) {
                 this.items.slice(index, 1);
                 this.items = this.items.concat([]);
-                this.snackBar.open("Комментарий удален");
+                this.snackBar.open("Коммент удален");
             }
         },
             () => {
-                this.snackBar.open("Комментарий НЕ удален");
+                this.snackBar.open("Коммент НЕ удален");
             },
             () => {
                 this.cd.markForCheck();

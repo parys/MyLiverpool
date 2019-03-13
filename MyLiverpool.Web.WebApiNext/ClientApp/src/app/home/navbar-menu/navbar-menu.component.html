@@ -1,26 +1,26 @@
 ﻿<div>
     <a role="button" [matMenuTriggerFor]="newsMenu">
-        Новости<mat-icon style="font-size: 100%; height: 18px; width: 18px;">arrow_drop_down</mat-icon>
+        Новости<mat-icon>arrow_drop_down</mat-icon>
     </a>
     <mat-menu #newsMenu="matMenu">
         <a [routerLink]="['/news']" mat-menu-item>Новости</a>
-        <a *ngIf="roles.isNewsmaker" [routerLink]="['/news', 0, 'edit']" mat-menu-item>Добавить</a>
+        <a *ngIf="roles.isNewsmaker" [routerLink]="['/news', 0, 'edit']" mat-menu-item>+</a>
         <a [routerLink]="['/newsCategories']" mat-menu-item>Категории</a>
     </mat-menu>
 </div>
 <div>
     <a role="button" [matMenuTriggerFor]="blogsMenu">
-        Блоги<mat-icon style="font-size: 100%; height: 18px; width: 18px;">arrow_drop_down</mat-icon>
+        Блоги<mat-icon>arrow_drop_down</mat-icon>
     </a>
     <mat-menu #blogsMenu="matMenu">
         <a [routerLink]="['/blogs']" mat-menu-item>Блоги</a>
-        <a *ngIf="roles.isAuthor" [routerLink]="['/blogs', 0, 'edit']" mat-menu-item>Добавить</a>
+        <a *ngIf="roles.isAuthor" [routerLink]="['/blogs', 0, 'edit']" mat-menu-item>+</a>
         <a [routerLink]="['/blogCategories']" mat-menu-item>Категории</a>
     </mat-menu>
 </div>
 <div>
     <a role="button" [matMenuTriggerFor]="fcClub">
-        ФК Ливерпуль<mat-icon style="font-size: 100%; height: 18px; width: 18px;">arrow_drop_down</mat-icon>
+        ФК Ливерпуль<mat-icon>arrow_drop_down</mat-icon>
     </a>
     <mat-menu #fcClub="matMenu">
         <ng-template matMenuContent>
@@ -33,7 +33,7 @@
 </div>
 <div>
     <a role="button" [matMenuTriggerFor]="seasonMenu">
-        Сезон<mat-icon style="font-size: 100%; height: 18px; width: 18px;">arrow_drop_down</mat-icon>
+        Сезон<mat-icon>arrow_drop_down</mat-icon>
     </a>
     <mat-menu #seasonMenu="matMenu">
         <a [routerLink]="['/seasons/0/calendar']" mat-menu-item>Календарь</a>
@@ -46,12 +46,12 @@
     <a role="button" [routerLink]="['/users']">Пользователи</a>
 </div>
 <div>
-    <a role="button" [routerLink]="['/rules']"><b class="text-danger color-red beauty-font">Правила</b></a>
+    <a role="button" [routerLink]="['/rules']"><b class="color-red beauty-font">Правила</b></a>
 </div>
 <!--li> <a [routerLink]="['/forum']">Форум</a></!--li>-->
 <div>
     <a role="button" [matMenuTriggerFor]="siteMenu">
-        Сайт<mat-icon style="font-size: 100%; height: 18px; width: 18px;">arrow_drop_down</mat-icon>
+        Сайт<mat-icon>arrow_drop_down</mat-icon>
     </a>
     <mat-menu #siteMenu="matMenu">
         <a [routerLink]="['/about']" mat-menu-item>О нас</a>
@@ -68,7 +68,7 @@
 </div>
 <div *ngIf="roles.isNewsmaker || roles.isAuthor || roles.isInformer">
     <a role="button" [matMenuTriggerFor]="adminMenu">
-        Админка<mat-icon style="font-size: 100%; height: 18px; width: 18px;">arrow_drop_down</mat-icon>
+        Админ<mat-icon>arrow_drop_down</mat-icon>
     </a>
     <mat-menu #adminMenu="matMenu">
         <span *ngIf="roles.isInformer">

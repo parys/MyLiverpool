@@ -12,7 +12,10 @@ import { MatchCoreModule } from "../core";
 import { ClubCoreModule } from "@app/club";
 import { StadiumCoreModule } from "@app/stadium";
 import { SeasonCoreModule } from "@app/season";
-import { MatNativeDateModule, MatDatepickerModule, MatAutocompleteModule, MatSelectModule, MatSlideToggleModule } from "@angular/material";
+import {
+    MatNativeDateModule, MatDatepickerModule, MatAutocompleteModule,
+    MatSelectModule, MatSlideToggleModule, MatInputModule
+} from "@angular/material";
 import { BreadcrumbService } from "@app/shared/breadcrumb";
 import { MATCHES_ROUTE, MATCHES_RU, MATCH_RU  } from "@app/+constants";
 
@@ -31,7 +34,8 @@ import { MATCHES_ROUTE, MATCHES_RU, MATCH_RU  } from "@app/+constants";
         MatDatepickerModule,
         MatAutocompleteModule,
         MatSelectModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatInputModule
     ],
     declarations: [
         MatchEditComponent,

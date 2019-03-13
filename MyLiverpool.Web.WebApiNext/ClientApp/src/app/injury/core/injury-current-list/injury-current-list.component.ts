@@ -34,6 +34,7 @@ export class InjuryCurrentListComponent implements OnInit, OnDestroy {
                     this.items = data;
                     this.transferState.set(INJURY_CURRENT_KEY, data);
                 },
+                () => {},
                 () => {
                     this.cd.markForCheck();
                 });

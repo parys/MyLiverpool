@@ -1,7 +1,6 @@
 ﻿import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { MatchEvent } from "./matchEvent.model";
-import { MatchEventType } from "./matchEventType.model";
+import { MatchEvent, MatchEventType } from "@app/matchEvent/models";
 import { HttpWrapper } from "@app/+httpWrapper";
 import { MATCH_EVENTS_ROUTE } from "@app/+constants";
 

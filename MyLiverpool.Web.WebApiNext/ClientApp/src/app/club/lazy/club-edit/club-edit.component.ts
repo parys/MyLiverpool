@@ -36,8 +36,7 @@ export class ClubEditComponent implements OnInit, OnDestroy {
             this.id = +params["id"];
             if (this.id > 0) {
                 this.sub2 = this.clubService.getSingle(this.id)
-                    .subscribe((data: Club) => this.parse(data),
-                    e => console.log(e));
+                    .subscribe((data: Club) => this.parse(data));
             }
         });
     }
@@ -49,9 +48,8 @@ export class ClubEditComponent implements OnInit, OnDestroy {
 
     public onSubmit(): void {
         const club: Club = this.parseForm();
-            this.clubService.createOrUpdate(this.id, club)
-                .subscribe((data: Club) => this.router.navigate([CLUBS_ROUTE]),
-                e => console.log(e));
+        this.clubService.createOrUpdate(this.id, club)
+            .subscribe((data: Club) => this.router.navigate([CLUBS_ROUTE]));
     }
 
     public onUploadImage(event: any): void {
@@ -60,8 +58,7 @@ export class ClubEditComponent implements OnInit, OnDestroy {
                 .subscribe((result: any) => {
                     this.imagePath = result.path + "?" + this.getRandomNumber();
                     this.editForm.controls["logo"].patchValue(result.path);
-                },
-                e => console.log(e));
+                });
         }
     }
 

@@ -21,6 +21,7 @@ export class PersonBirthdayComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.sub = this.service.getBirthdays()
             .subscribe((data: Person[]) => this.parse(data),
+                () => {},
             () => {
                 this.cd.markForCheck();
             });

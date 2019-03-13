@@ -12,7 +12,7 @@ export class UnSignedGuard implements CanActivate {
     constructor(private rolesService: RolesCheckedService, private router: Router) { }
 
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        if (this.rolesService.userRoles.isLogined) {
+        if (this.rolesService.isLogined) {
             this.router.navigate([NEWS_ROUTE]);              //bug need to go to root
              return false;
         }

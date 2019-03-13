@@ -5,7 +5,10 @@ import { InjuryListComponent } from "./injury-list";
 import { injuryRoutes } from "./injury.routes";
 import { SharedModule } from "@app/shared";
 import { InjuryCoreModule } from "../core";
-import { MatNativeDateModule, MatDatepickerModule, MatTableModule, MatAutocompleteModule, MatSortModule } from "@angular/material";
+import {
+    MatNativeDateModule, MatDatepickerModule, MatTableModule,
+    MatAutocompleteModule, MatSortModule, MatInputModule
+} from "@angular/material";
 import { BreadcrumbService } from "@app/shared/breadcrumb";
 import { INJURIES_ROUTE, INJURIES_RU } from "@app/+constants";
 @NgModule({
@@ -17,7 +20,8 @@ import { INJURIES_ROUTE, INJURIES_RU } from "@app/+constants";
         MatDatepickerModule,
         MatTableModule,
         MatAutocompleteModule,
-        MatSortModule
+        MatSortModule,
+        MatInputModule
     ],
     declarations: [
         InjuryEditComponent,

@@ -10,15 +10,15 @@
     <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.2.0" />
-    <PackageReference Include="OpenIddict" Version="2.0.0-rtm-1155" />
-    <PackageReference Include="OpenIddict.Core" Version="2.0.0-rtm-1155" />
-    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="2.0.0-rtm-1155" />
-    <PackageReference Include="OpenIddict.EntityFrameworkCore.Models" Version="2.0.0-rtm-1155" />
+    <PackageReference Include="OpenIddict" Version="2.0.0" />
+    <PackageReference Include="OpenIddict.Core" Version="2.0.0" />
+    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="2.0.0" />
+    <PackageReference Include="OpenIddict.EntityFrameworkCore.Models" Version="2.0.0" />
     <PackageReference Include="OpenIddict.Models" Version="2.0.0-rc3-0964" />
-    <PackageReference Include="OpenIddict.Mvc" Version="2.0.0-rtm-1155" />
-    <PackageReference Include="OpenIddict.Server" Version="2.0.0-rtm-1155" />
+    <PackageReference Include="OpenIddict.Mvc" Version="2.0.0" />
+    <PackageReference Include="OpenIddict.Server" Version="2.0.0" />
     <PackageReference Include="OpenIddict.Stores" Version="2.0.0-rc3-0964" />
-    <PackageReference Include="OpenIddict.Validation" Version="2.0.0-rtm-1155" />
+    <PackageReference Include="OpenIddict.Validation" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>

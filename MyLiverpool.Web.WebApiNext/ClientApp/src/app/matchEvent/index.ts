@@ -1,3 +1,3 @@
-﻿export * from "./matchEvent.service";
-export * from "./matchEvent.model";
-export * from "./matchEvent.module";
+﻿export * from "./core";
+export * from "./models";
+export * from "./shared";

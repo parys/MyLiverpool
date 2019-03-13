@@ -2,7 +2,7 @@
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
 import { Pm } from "../../model";
-import { PmService } from "../pm.service";
+import { PmService } from "../../core/pm.service";
 
 @Component({
     selector: "pm-reply",

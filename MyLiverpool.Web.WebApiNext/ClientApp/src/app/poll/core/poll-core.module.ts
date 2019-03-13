@@ -8,8 +8,7 @@ import { pollCoreRoutes } from "./poll.routes";
 @NgModule({
     imports: [
         SharedModule,
-        RouterModule.forChild(pollCoreRoutes),
-   //     NgxChartsModule
+        RouterModule.forChild(pollCoreRoutes)
     ],
     declarations: [
     ],

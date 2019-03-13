@@ -34,6 +34,7 @@ export class NotificationCounterComponent implements OnInit, OnDestroy {
                 this.count -= data;
                 this.titleService.removeCount(data);
             },
+            () => {},
             () => {
                 this.cd.markForCheck();
             });
@@ -47,7 +48,8 @@ export class NotificationCounterComponent implements OnInit, OnDestroy {
                             this.router.navigate([`/${data.typeName}/${data.entityId}`],
                                 { fragment: data.commentId ? `com${data.commentId}` : "" }));
                     });
-            },
+        },
+            () => {},
             () => {
                 this.cd.markForCheck();
             });
@@ -60,16 +62,17 @@ export class NotificationCounterComponent implements OnInit, OnDestroy {
     private updateCount() {
         this.sub = this.service.getUnreadCount()
             .subscribe(data => {
-                this.count = +data;
-                if (+data > 0) {
-                    this.titleService.addCount(this.count);
-                    this.snackBar.open("Есть новые уведомления", this.action)
-                        .onAction()
-                        .subscribe(_ => this.router.navigate([NOTIFICATIONS_ROUTE]));
-                }
+                    this.count = +data;
+                    if (+data > 0) {
+                        this.titleService.addCount(this.count);
+                        this.snackBar.open("Есть новые уведомления", this.action)
+                            .onAction()
+                            .subscribe(_ => this.router.navigate([NOTIFICATIONS_ROUTE]));
+                    }
                 },
-            () => {
-                this.cd.markForCheck();
-            });
+                () => {},
+                () => {
+                    this.cd.markForCheck();
+                });
     }
 }

@@ -49,15 +49,12 @@ export class MaterialEditComponent implements OnInit {
         this.initForm();
         if (+this.route.snapshot.params["id"]) {
             this.service.getSingle(+this.route.snapshot.params["id"])
-                .subscribe(data => this.parse(data),
-                    error => console.log(error));
+                .subscribe(data => this.parse(data));
         } else {
             this.item = new Material();
         };
         this.materialCategoryService.getAll(this.type)
-            .subscribe((data : MaterialCategory[]) => this.parseCategories(data),
-                error => console.log(error));
-
+            .subscribe((data : MaterialCategory[]) => this.parseCategories(data));
     }
 
     public onSubmit(): void {
@@ -72,7 +69,6 @@ export class MaterialEditComponent implements OnInit {
                     this.snackBar.open("Материал обновлен");
                 },
                     e => {
-                        console.log(e);
                         this.snackBar.open("Материал НЕ обновлен");
                     });
         } else {
@@ -86,7 +82,6 @@ export class MaterialEditComponent implements OnInit {
                     this.snackBar.open("Материал создан");
                 },
                     e => {
-                        console.log(e);
                         this.snackBar.open("Материал НЕ создан");
                     });
         }
@@ -110,7 +105,8 @@ export class MaterialEditComponent implements OnInit {
                 }
             }
         },
-            e => console.log(e), () => {
+            () => { },
+            () => {
                 const oldValue = this.editForm.get(MESSAGE).value;
                 this.editForm.get(MESSAGE).patchValue(oldValue + imgTags);
             });

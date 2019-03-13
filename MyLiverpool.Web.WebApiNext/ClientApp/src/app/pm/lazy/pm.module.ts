@@ -5,20 +5,21 @@ import { pmRoutes } from "./pm.routes";
 import { PmListComponent } from "./pm-list";
 import { PmDetailComponent } from "./pm-detail";
 import { PmEditComponent } from "./pm-edit";
-import { PmCoreModule } from "../core";
 import { EditorModule } from "@app/editor";
-import { MatTabsModule, MatAutocompleteModule } from "@angular/material";
+import { MatTabsModule, MatAutocompleteModule, MatInputModule } from "@angular/material";
 import { BreadcrumbService } from "@app/shared/breadcrumb";
 import { PMS_ROUTE } from "@app/+constants";
+import { PmSharedModule } from "../shared";
 
 @NgModule({
     imports: [
         SharedModule,
         RouterModule.forChild(pmRoutes),
         EditorModule,
-        PmCoreModule,
+        PmSharedModule,
         MatTabsModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        MatInputModule
     ],
     declarations: [
         PmEditComponent,

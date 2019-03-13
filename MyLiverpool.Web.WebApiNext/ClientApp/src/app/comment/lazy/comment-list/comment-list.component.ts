@@ -41,8 +41,7 @@ export class CommentListComponent implements OnDestroy, AfterViewInit {
                 this.userName = qParams["userName"] || "";
                 this.userId = qParams[USER_ID];
                 this.onlyUnverified.checked = qParams["onlyUnverified"] || false;
-            },
-            e => console.log(e));
+            });
 
         merge(this.paginator.page,
                 this.onlyUnverified.change
@@ -65,8 +64,7 @@ export class CommentListComponent implements OnDestroy, AfterViewInit {
         ).subscribe((data: Comment[]) => {
                     this.items = data;
                     this.updateUrl();
-                },
-                e => console.log(e));
+                });
     }
 
     public ngOnDestroy(): void {
@@ -97,8 +95,7 @@ export class CommentListComponent implements OnDestroy, AfterViewInit {
     public verify(index: number): void {
         this.materialCommentService
             .verify(this.items[index].id)
-            .subscribe((data: boolean) => this.items[index].isVerified = data,
-                e => console.log(e));
+            .subscribe((data: boolean) => this.items[index].isVerified = data);
     }
 
     private showDeleteModal(index: number): void {
@@ -107,18 +104,15 @@ export class CommentListComponent implements OnDestroy, AfterViewInit {
             if (result) {
                 this.delete(index);
             }
-        },
-            e => console.log(e));
+        });
     }
 
     private delete(index: number): void {
-        let result: boolean;
         this.materialCommentService.delete(this.items[index].id)
             .subscribe((res: boolean) => {
                 if (res) {
                     this.items.splice(index, 1);
                     this.paginator.length -= 1;
-                }},
-                e => console.log(e));
+                }});
     }
 }

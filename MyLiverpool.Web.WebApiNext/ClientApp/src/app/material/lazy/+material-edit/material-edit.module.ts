@@ -9,7 +9,7 @@ import { materialEditRoutes } from "./material-edit.routes";
 import { EditorModule } from "@app/editor";
 import { MaterialGuardDialogComponent } from "./material-guard-dialog";
 import { MaterialLeaveGuard } from "./leave-guard/leave-guard.service";
-import { MatSelectModule, MatCheckboxModule } from "@angular/material";
+import { MatSelectModule, MatCheckboxModule, MatInputModule } from "@angular/material";
 
 @NgModule({
     imports: [
@@ -20,7 +20,8 @@ import { MatSelectModule, MatCheckboxModule } from "@angular/material";
         MaterialCategoryCoreModule,
         ImageCoreModule,
         MatSelectModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatInputModule
     ],
     declarations: [
         MaterialEditComponent,

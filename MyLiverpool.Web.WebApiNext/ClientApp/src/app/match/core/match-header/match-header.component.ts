@@ -6,7 +6,7 @@ import { Match } from "@app/match/model";
     selector: "match-header",
     templateUrl: "./match-header.component.html",
     styleUrls: ["./match-header.component.scss"],
-    changeDetection: ChangeDetectionStrategy.Default //todo temporary
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class MatchHeaderComponent implements OnInit {
@@ -19,6 +19,7 @@ export class MatchHeaderComponent implements OnInit {
     public ngOnInit(): void {
             this.matchService.getHeaderMatch()
                 .subscribe(data => this.item = data,
+                () => {},
                 () => {
                     this.cd.markForCheck();
                 });

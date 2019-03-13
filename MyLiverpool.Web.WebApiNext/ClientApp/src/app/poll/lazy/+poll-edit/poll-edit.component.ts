@@ -29,11 +29,10 @@ export class PollEditComponent implements OnInit, OnDestroy {
         this.sub = this.route.params.subscribe(params => {
             if (+params["id"] !== 0) {  
                 this.sub2 = this.service.getSingle(+params["id"])
-                    .subscribe(data => {
+                    .subscribe((data: Poll) => {
                         this.item = data;
                         this.editPollForm.patchValue(data);
-                    },
-                        e => console.log(e));
+                    });
             }
         });
         this.initForm();
@@ -47,19 +46,12 @@ export class PollEditComponent implements OnInit, OnDestroy {
         this.item.question = this.editPollForm.get("question").value;
         this.item.answers = this.item.answers.filter(x => x.text);
 
-        if (this.item.id === 0) {
-            this.sub = this.service.create(this.item).subscribe(data => {
-                    this.editPollForm.patchValue({ message: "" });
-                    this.snackBar.open("Создан");
-                },
-                e => console.log(e));
-        } else {
-            this.sub = this.service.update(this.item.id, this.item).subscribe(data => {
-                    this.editPollForm.patchValue({ message: "" });
-                    this.snackBar.open("Обновлен");
-                },
-                e => console.log(e));
-        }
+        this.sub = this.service.createOrUpdate(this.item.id, this.item)
+            .subscribe((data: Poll) => {
+            this.editPollForm.patchValue({ message: "" });
+            this.snackBar.open("Создан или обновлен");
+        });
+
     }
 
     public addAnswer(): void {

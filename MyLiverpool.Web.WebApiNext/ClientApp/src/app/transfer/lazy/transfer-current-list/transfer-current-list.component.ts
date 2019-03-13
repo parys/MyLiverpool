@@ -31,8 +31,7 @@ export class TransferCurrentListComponent implements OnInit, OnDestroy {
     public update(): void {
         this.sub2 = this.service
             .getCurrentAll()
-            .subscribe((data: Transfer[]) => this.parseList(data),
-                e => console.log(e));
+            .subscribe((data: Transfer[]) => this.parseList(data));
     }
 
     private parseList(list: Transfer[]): void {

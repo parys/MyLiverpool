@@ -40,11 +40,10 @@ export class PollDetailComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.sub = this.route.params.subscribe(params => {
             this.sub2 = this.pollService.getSingle(+params["id"])
-                .subscribe(data => {
+                .subscribe((data: Poll) => {
                     this.item = data;
                     this.convertToChart();
-                },
-                    e => console.log(e));
+                });
         });
     }
 

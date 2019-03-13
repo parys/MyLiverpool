@@ -4,34 +4,10 @@ import { MatSidenav } from "@angular/material";
 import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { filter, map } from "rxjs/operators"
 import { AuthService } from "@app/+auth";
-import { trigger, keyframes, animate, transition, state, style } from "@angular/animations";
-import * as kf from "./+keyframes";
+import { SlideInOutAnimation } from "./+keyframes";
 import { CustomTitleService } from "@app/shared";
 import { SLIDE_OUT_LEFT, SLIDE_OUT_RIGHT, SLIDE_IN_RIGHT, SLIDE_IN_LEFT } from "@app/+constants";
 
-export const SlideInOutAnimation = [
-    trigger("slideInOut",
-        [
-            state(SLIDE_OUT_LEFT, style({
-                left: "-99%",
-                position: "fixed"
-            })),
-            state(SLIDE_OUT_RIGHT, style({
-                left: "99%",
-                position: "fixed"
-            })),
-            state(SLIDE_IN_RIGHT, style({
-                left: "0%",
-            })),
-            state(SLIDE_IN_LEFT, style({
-                left: "0%",
-            })),
-            transition("* => slideOutLeft", [animate(250, keyframes(kf.slideOutLeft))]),
-            transition("* => slideOutRight", [animate(250, keyframes(kf.slideOutRight))]),
-            transition("* => slideInRight", [animate(500, keyframes(kf.slideInRight))]),
-            transition("* => slideInLeft", [animate(500, keyframes(kf.slideInLeft))])
-        ])
-];
 
 @Component({
     selector: "app",
@@ -42,7 +18,7 @@ export const SlideInOutAnimation = [
 })
 export class AppComponent implements OnInit, AfterViewInit {
     public currentPageIndex = 1;
-    animationState = [SLIDE_OUT_LEFT, "", SLIDE_OUT_RIGHT];
+    animationState = ["", "", ""];
     orderState = [0, 1, 2];
     private resizeDisable: boolean = true;
 

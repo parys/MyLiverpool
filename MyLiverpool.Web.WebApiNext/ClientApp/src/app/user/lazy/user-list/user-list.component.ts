@@ -77,8 +77,7 @@ export class UserListComponent implements OnInit {
         ).subscribe((data: User[]) => {
                 this.items = data;
                 this.updateUrl();
-            },
-                e => console.log(e));
+            });
     }
 
     public writePm(index: number): void {
@@ -119,7 +118,6 @@ export class UserListComponent implements OnInit {
     }
 
     private updateRoleGroups() {
-        this.roleGroupService.getAll().subscribe((data: RoleGroup[]) => this.roleGroups = data,
-            e => console.log(e));
+        this.roleGroupService.getAll().subscribe((data: RoleGroup[]) => this.roleGroups = data);
     }
 }

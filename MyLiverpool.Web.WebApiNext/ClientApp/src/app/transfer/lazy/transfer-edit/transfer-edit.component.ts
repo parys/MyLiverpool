@@ -40,8 +40,7 @@ export class TransferEditComponent implements OnInit, OnDestroy {
 
         if (id > 0) {
             this.sub3 = this.transferService.getSingle(id)
-                .subscribe((data: Transfer) => this.parse(data),
-                    e => console.log(e));
+                .subscribe((data: Transfer) => this.parse(data));
         };
     }
 
@@ -74,8 +73,7 @@ export class TransferEditComponent implements OnInit, OnDestroy {
                 (-1) * transfer.finishDate.getTimezoneOffset() / 60);
         }
         this.transferService.createOrUpdate(this.id, transfer)
-            .subscribe((data: Transfer) => this.router.navigate([TRANSFERS_ROUTE]),
-                e => console.log(e));
+            .subscribe((data: Transfer) => this.router.navigate([TRANSFERS_ROUTE]));
     }
 
     private parse(data: Transfer): void {

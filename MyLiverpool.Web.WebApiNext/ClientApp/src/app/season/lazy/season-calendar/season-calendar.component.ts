@@ -35,8 +35,7 @@ export class SeasonCalendarComponent implements OnInit {
         });
 
         this.service.getAllWithoutFilter()
-            .subscribe(data => this.seasons = data,
-                e => console.log(e));
+            .subscribe(data => this.seasons = data);
 
         this.update(true);
     }
@@ -45,13 +44,13 @@ export class SeasonCalendarComponent implements OnInit {
         this.service.getSingleCalendarWithMatches(this.id)
             .subscribe((data: Season) => {
                     this.selected = data;
-                if (selectUpdate) {
-                    this.seasonSelect.value = data;
-                }
-            
+                    if (selectUpdate) {
+                        this.seasonSelect.value = data;
+                    }
                 },
-            e => console.log(e), () => {
-                this.cd.markForCheck();
-            });
+                () => {},
+                () => {
+                    this.cd.markForCheck();
+                });
     }
 }

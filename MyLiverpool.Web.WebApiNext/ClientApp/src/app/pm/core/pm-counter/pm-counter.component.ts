@@ -33,6 +33,7 @@ export class PmCounterComponent implements OnInit, OnDestroy {
                 this.count--;
                 this.titleService.removeCount(1);
             },
+            () => {},
             () => this.cd.markForCheck());
         this.signalR.newPm.subscribe((data: Pm) => {
             this.count++;
@@ -41,6 +42,7 @@ export class PmCounterComponent implements OnInit, OnDestroy {
                     .onAction()
                     .subscribe(_ => this.router.navigate([PMS_ROUTE, data.id]));
             },
+            () => {},
             () => this.cd.markForCheck());
     }
 
@@ -62,6 +64,7 @@ export class PmCounterComponent implements OnInit, OnDestroy {
                         .subscribe(data => this.router.navigate([PMS_ROUTE]));
                 }
                 },
+                () => {},
                 () => this.cd.markForCheck());
     }
 }

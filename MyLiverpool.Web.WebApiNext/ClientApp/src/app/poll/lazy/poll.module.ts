@@ -1,18 +1,19 @@
 ﻿import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { SharedModule } from "@app/shared";
+import { SharedModule, BreadcrumbService } from "@app/shared";
 import { pollRoutes } from "./poll.routes";
 import { PollCoreModule } from "../core";
 import { PollListComponent } from "./poll-list";
 import { PollDetailComponent } from "./poll-detail";
-import { BreadcrumbService } from "../../shared/breadcrumb";
 import { POLLS_ROUTE } from "@app/+constants";
+import { MatInputModule } from '@angular/material';
 
 @NgModule({
     imports: [
         SharedModule,
         RouterModule.forChild(pollRoutes),
-        PollCoreModule
+        PollCoreModule,
+        MatInputModule
     ],
     declarations: [
         PollListComponent,

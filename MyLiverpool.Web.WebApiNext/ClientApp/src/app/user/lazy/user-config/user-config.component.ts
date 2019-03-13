@@ -20,8 +20,7 @@ export class UserConfigComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {     
         this.initUserConfigForm();
         this.sub = this.service.getConfig()
-            .subscribe((data: UserConfig) => this.parse(data),
-                e => console.log(e));
+            .subscribe((data: UserConfig) => this.parse(data));
     }
 
     public ngOnDestroy(): void {

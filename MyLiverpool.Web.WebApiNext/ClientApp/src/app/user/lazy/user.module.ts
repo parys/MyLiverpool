@@ -11,7 +11,7 @@ import { RoleGroupCoreModule } from "@app/roleGroup";
 import { MatNativeDateModule, MatDatepickerModule, MatInputModule, MatTableModule, MatSelectModule, MatSlideToggleModule, MatSortModule } from "@angular/material";
 import { BreadcrumbService } from "@app/shared/breadcrumb";
 import { USERS_ROUTE, USERS_RU, USER_RU } from "@app/+constants";
-//import { SignalRModule } from "@app/+signalr";
+import { PmSharedModule } from "@app/pm/shared";
 
 @NgModule({
     imports: [
@@ -25,9 +25,8 @@ import { USERS_ROUTE, USERS_RU, USER_RU } from "@app/+constants";
         MatTableModule,
         MatSelectModule,
         MatSlideToggleModule,
-        MatSortModule
-
-     //   SignalRModule
+        MatSortModule,
+        PmSharedModule
     ],
     declarations: [
         UserDetailComponent,

@@ -119,18 +119,18 @@ export class CommentSectionComponent implements OnInit, OnChanges, AfterViewChec
             this.commentService
                 .getAllByMaterial(this.page, this.materialId)
                 .subscribe(data => this.parsePageable(data),
-                e => console.log(e),
-                () => {
-                    this.cd.markForCheck();
-                });
+                    () => {},
+                    () => {
+                        this.cd.markForCheck();
+                    });
         } else if (this.matchId) {
             this.commentService
                 .getAllByMatch(this.page, this.matchId)
                 .subscribe(data => this.parsePageable(data),
-                e => console.log(e),
-                () => {
-                    this.cd.markForCheck();
-                });
+                    () => {},
+                    () => {
+                        this.cd.markForCheck();
+                    });
         }
     }
 
@@ -149,13 +149,13 @@ export class CommentSectionComponent implements OnInit, OnChanges, AfterViewChec
         comment.type = this.type ? this.type : 3;//todo
         this.commentService.createOrUpdate(comment.id, comment)
             .subscribe((data: Comment) => {
-                this.items.push(data);
-                this.totalItems += 1;
-                this.commentAddForm.controls["message"].patchValue("");
-            },
-            e => console.log(e),
-            () => {
-                this.cd.markForCheck();
-            });
+                    this.items.push(data);
+                    this.totalItems += 1;
+                    this.commentAddForm.controls["message"].patchValue("");
+                },
+                () => {},
+                () => {
+                    this.cd.markForCheck();
+                });
     }
 }

@@ -35,6 +35,7 @@ export class CommentLastComponent implements OnInit, OnDestroy {
                         this.items = data;
                         this.transferState.set(COMMENT_LAST_KEY, data);
                     },
+                    () => {},
                     () => this.cd.markForCheck());
         }
 

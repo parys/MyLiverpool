@@ -4,11 +4,13 @@ import { ImageService } from "./image.service";
 import { ImageAdditionComponent } from "./image-addition";
 import { ImageCropperModule } from "ngx-image-cropper";
 import { ImageCropAdditionComponent } from "./image-crop-addition";
+import { MatInputModule } from "@angular/material";
 
 @NgModule({
     imports: [
         SharedModule,
-        ImageCropperModule
+        ImageCropperModule,
+        MatInputModule
     ],
     declarations: [
         ImageAdditionComponent,

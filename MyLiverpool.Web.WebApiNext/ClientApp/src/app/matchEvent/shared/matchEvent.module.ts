@@ -2,9 +2,9 @@
 import { CommonModule } from "@angular/common";
 import { SharedModule } from "@app/shared";
 import { MatchEventEditPanelComponent } from "./matchEvent-edit-panel";
-import { MatchEventService } from "./matchEvent.service";
 import { MatchEventMatchPanelComponent } from "./matchEvent-match-panel";
-import { MatSelectModule, MatAutocompleteModule, MatSlideToggleModule } from "@angular/material";
+import { MatSelectModule, MatAutocompleteModule, MatSlideToggleModule, MatInputModule } from "@angular/material";
+import { MatchEventCoreModule } from "../core";
 
 @NgModule({
     imports: [
@@ -12,7 +12,9 @@ import { MatSelectModule, MatAutocompleteModule, MatSlideToggleModule } from "@a
         SharedModule,
         MatSelectModule,
         MatAutocompleteModule,
-        MatSlideToggleModule
+        MatInputModule,
+        MatSlideToggleModule,
+        MatchEventCoreModule
     ],
     declarations: [
         MatchEventEditPanelComponent,
@@ -21,9 +23,6 @@ import { MatSelectModule, MatAutocompleteModule, MatSlideToggleModule } from "@a
     exports: [
         MatchEventEditPanelComponent,
         MatchEventMatchPanelComponent
-    ],
-    providers: [
-        MatchEventService
     ]
 })
 export class MatchEventModule { }

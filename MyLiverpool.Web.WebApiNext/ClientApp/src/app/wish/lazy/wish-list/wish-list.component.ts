@@ -110,7 +110,6 @@ export class WishListComponent implements OnInit {
                     this.items.splice(index, 1);
                     this.paginator.length -= 1;
                 }
-            },
-            e => console.log(e));
+            });
     }
 }

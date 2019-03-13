@@ -20,8 +20,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.initUserEditForm();
         this.sub = this.service.getSingle(0)
-            .subscribe((data: User) => this.parse(data),
-                e => console.log(e));
+            .subscribe((data: User) => this.parse(data));
     }
 
     public ngOnDestroy(): void {

@@ -3,8 +3,8 @@ import { MatDialog, MatSnackBar } from "@angular/material";
 import { DeleteDialogComponent } from "@app/shared";
 import { RolesCheckedService } from "@app/+auth";
 import { Observable } from "rxjs";
-import { MatchEventService } from "../matchEvent.service";
-import { MatchEvent } from "../matchEvent.model";
+import { MatchEventService } from "../../core";
+import { MatchEvent } from "@app/matchEvent/models";
 import { Person } from "@app/person";
 
 @Component({

@@ -14,6 +14,7 @@ import { WISHES_ROUTE, NEWS_ROUTE, ACCOUNT_ROUTE, BLOGS_ROUTE, BLOG_CATEGORIES_R
     STADIUMS_ROUTE,
     TRANSFERS_ROUTE,
     USERS_ROUTE,
+    POLLS_ROUTE,
     TITLE_RU
 } from "@app/+constants";
 
@@ -74,6 +75,10 @@ export const routes: Routes = [
     {
         path: PMS_ROUTE,
         loadChildren: "./pm/lazy/pm.module#PmModule"
+    },
+    {
+        path: POLLS_ROUTE,
+        loadChildren: "./poll/lazy/poll.module#PollModule"
     },
     {
         path: ROLE_GROUPS_ROUTE,

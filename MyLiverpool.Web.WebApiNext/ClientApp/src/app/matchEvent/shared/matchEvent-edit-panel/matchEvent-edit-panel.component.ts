@@ -2,9 +2,8 @@
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Observable, of } from "rxjs";
 import { debounceTime, distinctUntilChanged, switchMap } from "rxjs/operators";
-import { MatchEventService } from "../matchEvent.service";
-import { MatchEvent } from "../matchEvent.model";                        
-import { MatchEventType } from "../matchEventType.model";
+import { MatchEventService } from "../../core";
+import { MatchEvent, MatchEventType } from "@app/matchEvent/models";
 import { Person, PersonService, PersonFilters } from "@app/person";
 import { DEBOUNCE_TIME } from "@app/+constants";
 import { Pageable } from "@app/shared";
