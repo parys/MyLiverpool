@@ -38,6 +38,7 @@
   "compileOnSave": false,
   "atom": { "rewriteTsconfig": false },
   "angularCompilerOptions": {
-    "enableIvy": true
+    "enableIvy": true,
+    "allowEmptyCodegenFiles": true
   }
 }

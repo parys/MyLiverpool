@@ -47,7 +47,8 @@
               //"node_modules/tinymce/plugins/textcolor/plugin.min.js",
               //"src/app/editor/langs/ru.js",
               //"src/app/editor/customPlugins/plugin.min.js"
-            ]
+            ],
+            "aot": true
           },
           "configurations": {
             "production": {
@@ -73,7 +74,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular2app:build"
+            "browserTarget": "angular2app:build",
           },
           "configurations": {
             "production": {
