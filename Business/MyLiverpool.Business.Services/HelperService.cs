@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using MyLiverpool.Business.Contracts;
 using MyLiverpool.Data.Common;
 using MyLiverpool.Data.Entities;
@@ -9,6 +12,7 @@ namespace MyLiverpool.Business.Services
     public class HelperService : IHelperService
     {
         private readonly IGenericRepository<HelpEntity> _helpEntityRepository;
+        private static List<Regex> _rudWordsRegexes;
 
         public HelperService(IGenericRepository<HelpEntity> helpEntityRepository)
         {
@@ -42,6 +46,35 @@ namespace MyLiverpool.Business.Services
                 await _helpEntityRepository.UpdateAsync(entity);
             }
             return true;
+        }
+
+        public async Task<string> SanitizeRudWordsAsync(string message)
+        {
+            if (_rudWordsRegexes == null)
+            {
+                await LoadRudWordsAsync();
+            }
+
+            foreach (var regex in _rudWordsRegexes)
+            {
+                message = regex.Replace(message, string.Empty);
+            }
+
+            return message;
+        }
+
+        private async Task LoadRudWordsAsync()
+        {
+            _rudWordsRegexes = new List<Regex>();
+            var words = (await GetAsync(HelperEntityType.RudWords))?.Value?
+                .Replace(" ", "")?.Split(",", StringSplitOptions.RemoveEmptyEntries);
+            if (words != null)
+            {
+                foreach (var word in words)
+                {
+                    _rudWordsRegexes.Add(new Regex($"/{word}/igm", RegexOptions.Compiled));
+                }
+            }
         }
     }
 }

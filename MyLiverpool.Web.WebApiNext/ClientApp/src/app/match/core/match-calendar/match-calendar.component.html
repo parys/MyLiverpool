@@ -1,67 +1,8 @@
 ﻿<section class="flex">
     <div class="flex next match-calendar" *ngIf="next">
-        <div class="full-width flex-space-between">
-            <span>Следующая игра
-                <a *ngIf="roles.isInformer" [routerLink]="['/matches', next.id, 'edit']"><i class="material-icons color-red" style="font-size: 100%">edit</i></a>
-            </span>
-            <span>
-                <b style="font-size: 1.2em;" [textContent]="next.dateTime | customDate:false:true"></b>
-            </span>
-        </div>
-        
-        <div class="full-width flex-space-around flex-v-c">
-            <div class="text-center">
-                <img [src]="next.homeClubLogo" class="center" [alt]="next.homeClubName" [title]="next.homeClubName">
-                <strong style="font-size: 1.2em;" class="" [textContent]="next.homeClubName"></strong>
-            </div>
-            <div class="padding0 text-center">
-                <strong class="stadium center color-gold" [textContent]="next.stadiumName"></strong>
-            </div>
-            <div class="text-center">
-                <img [src]="next.awayClubLogo" class="center" [alt]="next.awayClubName" [title]="next.awayClubName">
-                <strong style="font-size: 1.2em;" class="text-center" [textContent]="next.awayClubName"></strong>
-            </div>
-        </div>
-        <div class="full-width flex-space-around top10">
-            <a *ngIf="next.previewId" [routerLink]="['/news', next.previewId]">Превью</a>
-            <a [routerLink]="['/seasons/0/calendar']">Календарь</a>
-            <a [routerLink]="['matches', next.id]">Обсуждение</a>
-        </div>
+        <match-calendar-entry [match]="next" title="Следующая игра"></match-calendar-entry>
     </div>
     <div class="last flex match-calendar" *ngIf="last">
-        <div class="full-width flex-space-between">
-            <span>
-                Последняя игра
-                <a *ngIf="roles.isInformer" [routerLink]="['/matches', last.id, 'edit']"><i class="material-icons color-red" style="font-size: 100%">edit</i></a>
-            </span><!--todo add back color for win|drar|lost-->
-            <span>
-                <span [textContent]="last.dateTime | customDate:false:true"></span>
-            </span>
-        </div>
-        <div class="full-width flex-space-around flex-v-c">
-            <div class="text-center">
-                <img [src]="last.homeClubLogo" class="center " [alt]="last.homeClub" [title]="last.homeClubName">
-                <strong style="font-size: 1.2em;" [textContent]="last.homeClubName"></strong>
-            </div>
-            <div class="flex-v-c flex-center-h padding0">
-                <a [routerLink]="['matches', last.id]" class="score text-center">
-                    <strong>
-                        <span [textContent]="last.scoreHome"></span><span>:</span><span [textContent]="last.scoreAway"></span>
-                        <span class="full-width" *ngIf="last.scorePenaltyHome || last.scorePenaltyAway">({{last.scorePenaltyHome}}-{{last.scorePenaltyAway}})</span>
-                    </strong>
-                </a>
-            </div>
-            <div>
-                <img [src]="last.awayClubLogo" class="center" [alt]="last.awayClubName" [title]="last.awayClubName">
-                <strong style="font-size: 1.2em;" [textContent]="last.awayClubName"></strong>
-            </div>
-        </div>
-        <div class="full-width flex-space-around infodate top10">
-            <a *ngIf="last.previewId" [routerLink]="['news', last.previewId]">Превью</a>
-            <a [routerLink]="['matches', last.id]">Обсуждение</a>
-            <a *ngIf="last.photoUrl" [routerLink]="['news', last.photoUrl]">Фото</a>
-            <a *ngIf="last.videoUrl" [href]="last.videoUrl" target="_blank">Видео</a>
-            <a *ngIf="last.reportId" [routerLink]="['news', last.reportId]">Вердикт</a>
-        </div>
+        <match-calendar-entry [match]="last" title="Предыдущая игра"></match-calendar-entry>
     </div>
 </section>

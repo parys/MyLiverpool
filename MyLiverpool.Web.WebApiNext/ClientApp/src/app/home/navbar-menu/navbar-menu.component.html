@@ -38,7 +38,6 @@
     <mat-menu #seasonMenu="matMenu">
         <a [routerLink]="['/seasons/0/calendar']" mat-menu-item>Календарь</a>
         <a [routerLink]="['/seasons/0/statistics']" mat-menu-item>Статистика игроков</a>
-        <a *ngIf="roles.isAdmin" [routerLink]="['/seasons']" mat-menu-item>Список сезонов</a>
         <a [routerLink]="['/transfers/current']" mat-menu-item>Трансферы</a>
     </mat-menu>
 </div>
@@ -59,26 +58,8 @@
         <a [routerLink]="['/copyright']" mat-menu-item>О перепечатке информации</a>
         <a [routerLink]="['/cooperation']" mat-menu-item>Сотрудничество</a>
         <a [routerLink]="['/comments']" mat-menu-item>Комментарии</a>
-        <span *ngIf="roles.isAdminAssistant">
-            <a [routerLink]="['/roleGroups']" mat-menu-item>Роли</a>
-            <a [routerLink]="['/plans']" mat-menu-item>Планы</a>
-            <a [routerLink]="['/instructions']" mat-menu-item>Инструкции</a>
-        </span>
     </mat-menu>
 </div>
 <div *ngIf="roles.isNewsmaker || roles.isAuthor || roles.isInformer">
-    <a role="button" [matMenuTriggerFor]="adminMenu">
-        Админ<mat-icon>arrow_drop_down</mat-icon>
-    </a>
-    <mat-menu #adminMenu="matMenu">
-        <span *ngIf="roles.isInformer">
-            <a [routerLink]="['/matches']" mat-menu-item>Матчи</a>
-            <a [routerLink]="['/clubs']" mat-menu-item>Клубы</a>
-            <a [routerLink]="['/persons']" mat-menu-item>Люди</a>
-            <a [routerLink]="['/stadiums']" mat-menu-item>Стадионы</a>
-            <a [routerLink]="['/injuries']" mat-menu-item>Травмы</a>
-        </span>
-        <a *ngIf="roles.isNewsmaker || roles.isAuthor" [routerLink]="['/images']" mat-menu-item>Изображения</a>
-        <!--<a *ngIf="roles.isNewsmaker || roles.isAuthor" [routerLink]="['/polls']" [queryParams]="{page: 1}" mat-menu-item>Опросы</a>-->
-    </mat-menu>
+    <a role="button" [routerLink]="['/admin']">Админ</a>
 </div>

@@ -1,0 +1,19 @@
+﻿e6yLLIkU-Bopo6yLLIku
+
+<div>
+        <span *ngIf="roles.isInformer">
+            <a [routerLink]="['/matches']" >Матчи</a>
+            <a [routerLink]="['/clubs']" >Клубы</a>
+            <a [routerLink]="['/persons']" >Люди</a>
+            <a [routerLink]="['/stadiums']" >Стадионы</a>
+            <a [routerLink]="['/injuries']" >Травмы</a>
+        </span>
+        <a [routerLink]="['/images']" mat-menu-item>Изображения</a>
+        <!--<a *ngIf="roles.isNewsmaker || roles.isAuthor" [routerLink]="['/polls']" [queryParams]="{page: 1}" mat-menu-item>Опросы</a>-->
+</div>
+<span *ngIf="roles.isAdminAssistant">
+    <a [routerLink]="['/roleGroups']" mat-menu-item>Роли</a>
+    <a [routerLink]="['/plans']" mat-menu-item>Планы</a>
+    <a [routerLink]="['/instructions']" mat-menu-item>Инструкции</a>
+    <a [routerLink]="['/seasons']" mat-menu-item>Список сезонов</a>
+</span>

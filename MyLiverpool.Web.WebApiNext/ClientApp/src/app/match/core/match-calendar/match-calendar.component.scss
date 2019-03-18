@@ -1,13 +1,4 @@
 ﻿:host {
-    .infodate {
-        text-align: center;
-        color: #000000;
-    }
-
-    .flex-center-h {
-        justify-content: center;
-    }
-
     .last {
         background-color: ghostwhite;
     }
@@ -22,20 +13,7 @@
         width: 100%;
     }
 
-    .match-calendar img {
-        display: block;
-        width: 45px;
-    }
-
     .next {
         background-color: darkgray;
-    }
-
-    .score {
-        font-size: 20px;
-    }
-
-    .stadium {
-        font-size: 15px;
     }
 }

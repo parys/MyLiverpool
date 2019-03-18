@@ -4,6 +4,7 @@ import { MatchCalendarComponent } from "./match-calendar";
 import { MatchService } from "./match.service";
 import { MatchHeaderComponent } from "./match-header";
 import { SharedModule } from "@app/shared";
+import { MatchCalendarEntryComponent } from "./match-calendar/match-calendar-entry";
 
 @NgModule({
     imports: [
@@ -11,6 +12,7 @@ import { SharedModule } from "@app/shared";
         RouterModule
     ],
     declarations: [
+        MatchCalendarEntryComponent,
         MatchCalendarComponent,
         MatchHeaderComponent,
     ],

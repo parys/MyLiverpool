@@ -11,5 +11,7 @@ namespace MyLiverpool.Business.Contracts
         Task<HelpEntity> GetAsync(HelperEntityType type);
 
         Task<bool> CreateOrUpdateAsync(HelperEntityType type, string newValue);
+
+        Task<string> SanitizeRudWordsAsync(string message);
     }
 }

@@ -28,13 +28,14 @@ namespace MyLiverpool.Business.Services
         private readonly IEmailSender _messageService;
         private readonly IHttpContextAccessor _accessor;
         private readonly ISignalRHubAggregator _signalRHubAggregator;
+        private readonly IHelperService _helperService;
 
         private const int ItemPerPage = GlobalConstants.CommentsPerPageList * 10 /*todo should be fixed*/;
 
         public CommentService(IMapper mapper, IMaterialCommentRepository commentService,
             IUserService userService, IHttpContextAccessor accessor,
             IEmailSender messageService, INotificationService notificationService,
-            ISignalRHubAggregator signalRHubAggregator)
+            ISignalRHubAggregator signalRHubAggregator, IHelperService helperService)
         {
             _mapper = mapper;
             _commentService = commentService;
@@ -43,6 +44,7 @@ namespace MyLiverpool.Business.Services
             _messageService = messageService;
             _notificationService = notificationService;
             _signalRHubAggregator = signalRHubAggregator;
+            _helperService = helperService;
         }
 
         public async Task<bool> DeleteAsync(int id)
@@ -64,6 +66,7 @@ namespace MyLiverpool.Business.Services
         {
             var comment = _mapper.Map<MaterialComment>(model);
             comment.AdditionTime = comment.LastModified = DateTime.Now;
+            comment.Message = await _helperService.SanitizeRudWordsAsync(comment.Message);
             try
             {
                 comment = await _commentService.AddAsync(comment);
@@ -91,7 +94,7 @@ namespace MyLiverpool.Business.Services
             }
             comment.LastModified = DateTime.Now;
             comment.Answer = model.Answer;
-            comment.Message = model.Message;
+            comment.Message = await _helperService.SanitizeRudWordsAsync(model.Message);
             try
             {
                 await _commentService.UpdateAsync(comment);

@@ -32,8 +32,10 @@ namespace MyLiverpool.Common.Mappings
                     src => src.MapFrom(x => GetScore(x.Score, x.DateTime, x.Events, !x.IsHome)))
                 .ForMember(x => x.ScoreHome,
                     src => src.MapFrom(x => GetScore(x.Score, x.DateTime, x.Events, x.IsHome)))
-                .ForMember(x => x.ScorePenaltyAway, src => src.MapFrom(x => GetPenaltyScore(x.DateTime, x.Events, !x.IsHome)))
-                .ForMember(x => x.ScorePenaltyHome, src => src.MapFrom(x => GetPenaltyScore(x.DateTime, x.Events, x.IsHome)))
+                .ForMember(x => x.ScorePenaltyAway, 
+                    src => src.MapFrom(x => GetPenaltyScore(x.DateTime, x.Events, !x.IsHome)))
+                .ForMember(x => x.ScorePenaltyHome, 
+                    src => src.MapFrom(x => GetPenaltyScore(x.DateTime, x.Events, x.IsHome)))
                 .ForMember(x => x.PhotoUrl, src => src.MapFrom(x => x.PhotoUrl))
                 .ForMember(x => x.StadiumName, src => src.MapFrom(x => x.Stadium.Name))
                 .ForMember(x => x.StadiumCity, src => src.MapFrom(x => x.Stadium.City))
@@ -68,9 +70,11 @@ namespace MyLiverpool.Common.Mappings
             {
                 return events.Any()
                     ? CalculateScore(events, isHome)
-                    : isHome
-                        ? score?.Split('-', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault()
-                        : score?.Split('-', StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
+                    : score == null
+                        ? "0-0"
+                        : isHome
+                            ? score?.Split('-', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault()
+                            : score?.Split('-', StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
             }
             return null;
         }

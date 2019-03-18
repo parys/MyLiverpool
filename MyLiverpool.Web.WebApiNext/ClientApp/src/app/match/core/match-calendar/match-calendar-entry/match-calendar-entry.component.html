@@ -1,0 +1,41 @@
+﻿<div class="full-width flex-space-between">
+    <span>
+        <span [textContent]="title"></span>
+        <a *ngIf="roles.isInformer" [routerLink]="['/matches', match.id, 'edit']"><i class="material-icons color-red" style="font-size: 100%">edit</i></a>
+    </span>
+    <span>
+        <b style="font-size: 1.2em;" [textContent]="match.dateTime | customDate:false:true"></b>
+    </span>
+</div>
+
+<div class="full-width flex-space-around flex-v-c">
+    <div class="text-center">
+        <img [src]="match.homeClubLogo" class="center" [alt]="match.homeClubName" [title]="match.homeClubName">
+        <strong style="font-size: 1.2em;" class="" [textContent]="match.homeClubName"></strong>
+    </div>
+    <div class="padding0 text-center">
+        <a [routerLink]="['matches', match.id]" class="score text-center">
+            <strong *ngIf="match.scoreHome == null; else scores"
+                    class="stadium center color-gold" 
+                    [textContent]="match.stadiumName"></strong>
+            <ng-template #scores>
+                <strong>
+                    <span [textContent]="match.scoreHome"></span><span>:</span><span [textContent]="match.scoreAway"></span>
+                    <span class="full-width" *ngIf="match.scorePenaltyHome || match.scorePenaltyAway">({{match.scorePenaltyHome}}-{{match.scorePenaltyAway}})</span>
+                </strong>
+            </ng-template>
+        </a>
+    </div>
+    <div class="text-center">
+        <img [src]="match.awayClubLogo" class="center" [alt]="match.awayClubName" [title]="match.awayClubName">
+        <strong style="font-size: 1.2em;" class="text-center" [textContent]="match.awayClubName"></strong>
+    </div>
+</div>
+<div class="full-width flex-space-around top10">
+    <a *ngIf="match.previewId" [routerLink]="['/news', match.previewId]">Превью</a>
+    <a [routerLink]="['/seasons/0/calendar']"><mat-icon matTooltip="Календарь">calendar_today</mat-icon></a>
+    <a [routerLink]="['matches', match.id]">Обсуждение</a>
+    <a *ngIf="match.photoUrl" [routerLink]="['news', match.photoUrl]">Фото</a>
+    <a *ngIf="match.videoUrl" [href]="match.videoUrl" target="_blank">Видео</a>
+    <a *ngIf="match.reportId" [routerLink]="['news', match.reportId]">Вердикт</a>
+</div>

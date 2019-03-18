@@ -1,4 +1,5 @@
 export const ACCOUNT_ROUTE: string = "account";
+export const ADMIN_ROUTE: string = "admin";
 export const BLOGS_ROUTE: string = "blogs";
 export const BLOG_CATEGORIES_ROUTE: string = "blogCategories";
 export const CHAT_MESSAGES_ROUTE: string = "chatMessages";

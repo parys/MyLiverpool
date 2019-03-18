@@ -1,7 +1,15 @@
 ﻿import { Routes } from "@angular/router";
 import { MaterialListComponent } from "./material";
 import { homeRoutes } from "./home/home.routes";
-import { WISHES_ROUTE, NEWS_ROUTE, ACCOUNT_ROUTE, BLOGS_ROUTE, BLOG_CATEGORIES_ROUTE, COMMENTS_ROUTE, CLUBS_ROUTE,
+import {
+    ADMIN_ROUTE,
+    WISHES_ROUTE,
+    NEWS_ROUTE,
+    ACCOUNT_ROUTE,
+    BLOGS_ROUTE,
+    BLOG_CATEGORIES_ROUTE,
+    COMMENTS_ROUTE,
+    CLUBS_ROUTE,
     IMAGES_ROUTE,
     INJURIES_ROUTE,
     MATCHES_ROUTE,
@@ -27,6 +35,10 @@ export const routes: Routes = [
     {
         path: ACCOUNT_ROUTE,
         loadChildren: "./account/lazy/account.module#AccountModule"
+    },
+    {
+        path: ADMIN_ROUTE,
+        loadChildren: "./admin/lazy/admin.module#AdminModule"
     },
     {
         path: BLOGS_ROUTE,
