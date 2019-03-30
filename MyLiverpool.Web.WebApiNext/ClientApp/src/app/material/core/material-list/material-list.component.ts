@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, OnDestroy } from "@angular/core";
+﻿import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
 import { Location } from "@angular/common";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
@@ -16,6 +16,7 @@ import { PAGE, TITLE_RU, NEWSS_RU, BLOGS_RU } from "@app/+constants";
     selector: "material-list",
     templateUrl: "./material-list.component.html",
     styleUrls: ["./material-list.component.scss"],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MaterialListComponent implements OnInit, OnDestroy {
     private type: MaterialType;
@@ -34,7 +35,9 @@ export class MaterialListComponent implements OnInit, OnDestroy {
         private materialService: MaterialService,
         private route: ActivatedRoute,
         private location: Location,
+        private cd: ChangeDetectorRef,
         public roles: RolesCheckedService,
+        
         private snackBar: MatSnackBar,
         private titleService: CustomTitleService,
         private dialog: MatDialog) {
@@ -105,13 +108,15 @@ export class MaterialListComponent implements OnInit, OnDestroy {
         const news: Material = this.items[index];
         this.materialService.activate(news.id)
             .subscribe(res => {
-                if (res) {
-                    news.pending = false;
-                    this.snackBar.open("Материал активирован");
-                } else {
-                    this.snackBar.open("Материал НЕ активирован");
-                }
-            });
+                    if (res) {
+                        news.pending = false;
+                        this.snackBar.open("Материал активирован");
+                    } else {
+                        this.snackBar.open("Материал НЕ активирован");
+                    }
+                },
+                () => {},
+                () => this.cd.markForCheck());
     }
 
     private delete(index: number): void {
@@ -122,7 +127,9 @@ export class MaterialListComponent implements OnInit, OnDestroy {
                 } else {
                     this.snackBar.open("Ошибка удаления");
                 }
-            });
+            },
+            () => { },
+            () => this.cd.markForCheck());
     }
 
     private parsePageable(pageable: Pageable<Material>): void {
@@ -142,7 +149,9 @@ export class MaterialListComponent implements OnInit, OnDestroy {
 
         this.sub = this.materialService
             .getAll(filters)
-            .subscribe(data => this.parsePageable(data));
+            .subscribe(data => this.parsePageable(data),
+                () => {},
+                () => this.cd.markForCheck());
     }
 
     private parseQueryParamsAndUpdate(): void {

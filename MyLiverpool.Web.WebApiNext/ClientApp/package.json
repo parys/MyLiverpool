@@ -45,8 +45,8 @@
     "node-sass": "4.11.0",
     "preboot": "7.0.0",
     "rxjs": "6.4.0",
-    "swagger-ui": "3.21.0",
-    "zone.js": "0.8.29"
+    "swagger-ui": "3.22.0",
+    "zone.js": "0.9.0"
   },
   "devDependencies": {
     "@angular/cli": "8.0.0-beta.8",
@@ -55,9 +55,9 @@
     "typescript": "3.3.4000",
     "ts-node": "8.0.3",
     "tslint": "5.14.0",
-    "codelyzer": "4.5.0",
+    "codelyzer": "5.0.0",
     "tinymce": "4.9.3",
-    "@types/node": "11.11.3",
+    "@types/node": "11.12.0",
     "@types/tinymce": "4.5.20",
     "webpack-bundle-analyzer": "3.1.0",
     "acorn": "6.1.1",

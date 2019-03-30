@@ -102,6 +102,7 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
             if (!string.IsNullOrWhiteSpace(helpEntity))
             {
                 var result = await _matchService.GetByIdAsync(int.Parse(helpEntity));//todo add cache?
+                result.Events = new List<MatchEventDto>(); //not need events on UI for header
                 return Json(result);
             }
             return Json(null);

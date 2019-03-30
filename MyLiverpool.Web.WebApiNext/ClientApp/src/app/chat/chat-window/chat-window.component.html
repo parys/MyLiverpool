@@ -2,7 +2,7 @@
     <div class="chatMessage-block" [style.height.px]="height">
         <div class="chat-message" *ngFor="let message of items; let i = index;">
             <div class="full-width flex-space-between">
-                <a [routerLink]="['/users', message.authorId]" [textContent]="message.authorUserName"></a>
+                <a [routerLink]="['/users', message.authorId]" [textContent]="message.userName"></a>
                 <span class="">
                     <a role="button" *ngIf="roles.isModerator || roles.isSelf(message.authorId)" (click)="edit(i)" class="material-icons" style="font-size: 100%">
                         edit

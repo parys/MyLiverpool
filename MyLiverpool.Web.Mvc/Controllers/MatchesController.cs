@@ -22,7 +22,7 @@ namespace MyLiverpool.Web.Mvc.Controllers
             _matchService = matchService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             return View();
         }

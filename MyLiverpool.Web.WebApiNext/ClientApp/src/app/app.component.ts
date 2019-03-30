@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, ViewEncapsulation, PLATFORM_ID, Inject, AfterViewInit, ViewChild, HostListener } from "@angular/core";  
+﻿import { Component, OnInit, ViewEncapsulation, PLATFORM_ID, Inject, AfterViewInit, ViewChild, HostListener, ChangeDetectorRef, ChangeDetectionStrategy } from "@angular/core";  
 import { isPlatformBrowser } from "@angular/common";  
 import { MatSidenav } from "@angular/material";  
 import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
@@ -14,7 +14,8 @@ import { SLIDE_OUT_LEFT, SLIDE_OUT_RIGHT, SLIDE_IN_RIGHT, SLIDE_IN_LEFT } from "
     templateUrl: "./app.component.html",
     styleUrls: ["./app.component.scss"],
     encapsulation: ViewEncapsulation.Emulated,
-    animations: [SlideInOutAnimation]
+    animations: [SlideInOutAnimation],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit, AfterViewInit {
     public currentPageIndex = 1;
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         private authService: AuthService,
         private activatedRoute: ActivatedRoute,
         private titleService: CustomTitleService,
+        private cd: ChangeDetectorRef,
         @Inject(PLATFORM_ID) private platformId: Object
     ) {       
     }
@@ -60,18 +62,17 @@ export class AppComponent implements OnInit, AfterViewInit {
             return;
         }
         this.animationState[this.currentPageIndex] = SLIDE_OUT_RIGHT;
- 
+
         if (this.currentPageIndex === 0) {
             this.orderState = [0, 1, 2];
             this.currentPageIndex = 2;
+        } else if (this.currentPageIndex === 1) {
+            this.orderState = [2, 0, 1];
         } else {
-            if (this.currentPageIndex === 1) {
-                this.orderState = [2, 0, 1];
-            } else {
-                this.orderState = [1, 2, 0];
-            }
-            this.currentPageIndex--;
+            this.orderState = [1, 2, 0];
         }
+        this.currentPageIndex--;
+
         this.animationState[this.currentPageIndex] = SLIDE_IN_LEFT;
     }
 
@@ -83,14 +84,13 @@ export class AppComponent implements OnInit, AfterViewInit {
         if (this.currentPageIndex === 2) {
             this.orderState = [1, 2, 0];
             this.currentPageIndex = 0;
+        } else if (this.currentPageIndex === 1) {
+            this.orderState = [2, 0, 1];
         } else {
-            if (this.currentPageIndex === 1) {
-                this.orderState = [2, 0, 1];
-            } else {
-                this.orderState = [1, 2, 0];
-            }
-            this.currentPageIndex++;
+            this.orderState = [1, 2, 0];
         }
+        this.currentPageIndex++;
+
         this.animationState[this.currentPageIndex] = SLIDE_IN_RIGHT;
     }
 

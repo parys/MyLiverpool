@@ -36,6 +36,6 @@
     <a *ngIf="next" [routerLink]="['/seasons/0/calendar']"><mat-icon matTooltip="Календарь">today</mat-icon></a>
     <a [routerLink]="['matches', match.id]"><mat-icon matTooltip="Обсуждение">forum</mat-icon></a>
     <a *ngIf="match.photoUrl" [routerLink]="['news', match.photoUrl]">Фото</a>
-    <a *ngIf="match.videoUrl" [href]="match.videoUrl" target="_blank"><mat-icon matTooltip="Видео">videocam</mat-icon></a>
+    <a *ngIf="match.videoUrl" [href]="match.videoUrl" target="_blank" rel="noopener"><mat-icon matTooltip="Видео">videocam</mat-icon></a>
     <a *ngIf="match.reportId" [routerLink]="['news', match.reportId]">Вердикт</a>
 </div>

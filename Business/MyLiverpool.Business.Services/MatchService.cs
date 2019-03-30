@@ -91,6 +91,7 @@ namespace MyLiverpool.Business.Services
                 {
                     FillClubsFields(dto, clubDto, liverpoolClub);
                 }
+                dto.Events = new List<MatchEventDto>(); //made events null because they don't need at UI calendar. Maybe create dto for match calendar only
                 dtos.Add(dto);
             }
             return dtos;

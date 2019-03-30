@@ -12,7 +12,8 @@ import { PAGE, WISHES_ROUTE } from "@app/+constants";
 
 @Component({
     selector: "wish-list",
-    templateUrl: "./wish-list.component.html"
+    templateUrl: "./wish-list.component.html",
+    styleUrls: ["./wish-list.component.scss"]
 })
 export class WishListComponent implements OnInit {
     public items: Wish[];

@@ -10,15 +10,16 @@ import { Subscription } from "rxjs";
     styleUrls: ["ad.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class AdComponent implements AfterContentInit {
     public name: string = null;
     private sub$: Subscription;
-    @Input() blockName: string = "";
+    @Input()
+    blockName: string = "";
 
     constructor(
         @Inject(PLATFORM_ID) private platformId: Object,
-        private zone: NgZone) { }
+        private zone: NgZone) {
+    }
 
     public ngAfterContentInit(): void {
         this.name = `yandex_rtb_${this.blockName}`;
@@ -27,9 +28,11 @@ export class AdComponent implements AfterContentInit {
 
     public load() {
         if (isPlatformServer(this.platformId)) return;
-        loadYa();
-        if (addAd(this.blockName)) {
-            this.sub$.unsubscribe();
-        }
+        this.zone.runOutsideAngular(() => {
+            loadYa();
+            if (addAd(this.blockName)) {
+                this.sub$.unsubscribe();
+            }
+        });
     }
 }

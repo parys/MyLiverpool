@@ -25,7 +25,7 @@
             <ul class="list-inline small small-offset padding5">
                 <li><label>Просмотры:</label>&nbsp; <span [textContent]="item.reads"></span></li>
                 <li class="">|</li>
-                <li *ngIf="item.source"><label>Источник:</label>&nbsp; <a [href]="item.source | safe: 'url'" target="_blank" [textContent]="item.shortLink"></a></li>
+                <li *ngIf="item.source"><label>Источник:</label>&nbsp; <a [href]="item.source | safe: 'url'" target="_blank" [textContent]="item.shortLink" rel="noopener"></a></li>
                 <li class="">|</li>
                 <li><label>Дата добавления:</label>&nbsp; <span [textContent]="item.additionTime | customDate:true"></span></li>
                 <li class="">|</li>

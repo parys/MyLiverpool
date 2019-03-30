@@ -1,13 +1,15 @@
-﻿<ul class="maroon-panel login-list-panel padding10"> <!--todo add else-->
-    <li *ngIf="!roles.isLogined">
+﻿<ul class="maroon-panel login-list-panel padding10">
+    <li *ngIf="!roles.isLogined;else logined">
         <account-signin></account-signin>
     </li>
-    <li *ngIf="roles.isLogined" class="flex-space-around flex-v-c">
-        <a [routerLink]="['/users', 0]" class="text-white flex-space-around flex-v-c"><mat-icon>person</mat-icon>Профиль</a>
-        <pm-counter></pm-counter>
-        <notification-counter></notification-counter>
-        <a role="button" (click)="logout()" class="text-white">Выйти</a>
-    </li>
+    <ng-template #logined>
+        <li *ngIf="roles.isLogined" class="flex-space-around flex-v-c">
+            <a [routerLink]="['/users', 0]" class="text-white flex-space-around flex-v-c"><mat-icon>person</mat-icon>Профиль</a>
+            <pm-counter></pm-counter>
+            <notification-counter></notification-counter>
+            <a role="button" (click)="logout()" class="text-white">Выйти</a>
+        </li>
+    </ng-template>
 </ul>
 <div class="full-width flex">
     <a mat-raised-button class="split-button color-back-gold" [routerLink]="['/news']" [queryParams]="{page: 1, categoryId: 90}"><b>Клуб Прогнозов</b></a>

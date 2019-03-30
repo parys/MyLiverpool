@@ -94,7 +94,7 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
 
     public addReply(index: number): void {
         let message: string = this.messageForm.get(MESSAGE).value;
-        let userName: string = this.items[index].authorUserName;
+        let userName: string = this.items[index].userName;
         let newMessage: string = `<i>${userName}</i>, ${message}`;
         this.messageForm.get(MESSAGE).patchValue(newMessage);
         this.elementRef.setFocus();
@@ -143,7 +143,9 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
 
     private initForm(message: string = ""): void {
         this.messageForm = this.formBuilder.group({
-            message: [message, Validators.compose([Validators.required, Validators.maxLength(MAX_CHAT_MESSAGE_LENGTH)])], //todo add visual warning
+            message: [message,
+                Validators.compose([Validators.required,
+                    Validators.maxLength(MAX_CHAT_MESSAGE_LENGTH)])], //todo add visual warning
             typeId: [this.type, Validators.required]
         });
         this.messageForm.valueChanges.subscribe(() => {

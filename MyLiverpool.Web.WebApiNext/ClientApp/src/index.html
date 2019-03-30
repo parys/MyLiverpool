@@ -23,11 +23,11 @@
 </head>
 <body>
     <app>
-        <span>Если загрузка не происходит,<a href="https://m.mylfc.ru/"> здесь </a> есть сильно облегченная версия сайта</span>
+        <span>Идет загрузка, а <a href="https://m.mylfc.ru/"> здесь </a> есть версия сайта для чтения</span>
     </app>
 <noscript>
     <p>
-        Извините, но для этого сайта нужно включить JavaScript. <a href="https://m.mylfc.ru/">Воспользуйтесь облегченной версией</a>, пожалуйста.
+        Извините, сайт использует JavaScript. <a href="https://m.mylfc.ru/">Воспользуйтесь облегченной версией</a>, пожалуйста.
     </p>
 </noscript>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79219562-3"></script>
@@ -46,7 +46,7 @@
 </script>
 <script type="text/javascript">
     var global = global || window;
-    var crawlerAgent = (/bot|google|aolbuild|baidu|bing|msn|duckduckgo|teoma|slurp|yandex/i).test(navigator.userAgent);
+    var crawlerAgent = (/bot|google|aolbuild|baidu|bing|msn|duckduckgo|teoma|slurp|lighthouse/i).test(navigator.userAgent);
     var yaLoaded = false;
     function loadYa() {
         if (!crawlerAgent && !yaLoaded) {
@@ -107,6 +107,6 @@
         }
     }
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.2.20171210/classList.min.js" type="text/javascript"></script>
+<script nomodule src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.2.20171210/classList.min.js" type="text/javascript"></script>
 </body>
 </html>

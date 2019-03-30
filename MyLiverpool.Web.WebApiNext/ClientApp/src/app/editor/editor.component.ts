@@ -1,4 +1,4 @@
-﻿import { Component, forwardRef, Input, NgZone, AfterViewInit, OnDestroy} from "@angular/core";
+﻿import { Component, forwardRef, Input, NgZone, AfterViewInit, OnDestroy, ChangeDetectionStrategy } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { Observable, ReplaySubject } from "rxjs";
 //import { Editor, Settings } from "tinymce";
@@ -15,7 +15,9 @@ declare let tinymce: any;
             multi: true
         }],
     styleUrls: ["./editor.component.scss"],
-    template: `<textarea id="{{elementId}}"></textarea>`
+    template: `<textarea id="{{elementId}}"></textarea>`,
+    changeDetection: ChangeDetectionStrategy.OnPush
+    
 })
 
 export class EditorComponent implements AfterViewInit, ControlValueAccessor, OnDestroy  {
