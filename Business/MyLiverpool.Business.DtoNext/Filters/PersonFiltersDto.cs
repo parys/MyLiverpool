@@ -7,5 +7,7 @@ namespace MyLiverpool.Business.Dto.Filters
         public PersonType? Type { get; set; }
 
         public string Name { get; set; }
+
+        public int? MatchId { get; set; }
     }
 }

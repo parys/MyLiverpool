@@ -35,9 +35,7 @@ export class NotificationCounterComponent implements OnInit, OnDestroy {
                 this.titleService.removeCount(data);
             },
             () => {},
-            () => {
-                this.cd.markForCheck();
-            });
+            () => this.cd.detectChanges());
         this.signalR.newNotify.subscribe((data: Notification) => {
                 this.count++;
                 this.titleService.addCount(1);
@@ -51,7 +49,7 @@ export class NotificationCounterComponent implements OnInit, OnDestroy {
         },
             () => {},
             () => {
-                this.cd.markForCheck();
+                this.cd.detectChanges();
             });
     }
 
@@ -72,7 +70,7 @@ export class NotificationCounterComponent implements OnInit, OnDestroy {
                 },
                 () => {},
                 () => {
-                    this.cd.markForCheck();
+                    this.cd.detectChanges();
                 });
     }
 }

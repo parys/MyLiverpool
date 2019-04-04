@@ -50,6 +50,11 @@ namespace MyLiverpool.Business.Services
                                          x.LastRussianName.Contains(dto.Name));
             }
 
+            if (dto.MatchId.HasValue)
+            {
+                filter = filter.And(x => x.Matches.Any(m => m.MatchId == dto.MatchId.Value));
+            }
+
             Expression<Func<Person, object>> sortBy = x => x.LastRussianName;
             if (!string.IsNullOrWhiteSpace(dto.SortBy))
             {

@@ -10,5 +10,5 @@
     <div class="full-width text-center">
             <a mat-raised-button color="warn" role="button" (click)="writePm()">Ответить</a>
     </div>
-    <pm-reply *ngIf="selectedUserId" [userId]="selectedUserId" (close)="closePmWindow($event);" [userName]="selectedUserName" [title]="item.title"></pm-reply>
+    <pm-reply *ngIf="selectedUserId" [userId]="selectedUserId" (close)="closePmWindow($event)" [userName]="selectedUserName" [title]="item.title"></pm-reply>
 </div>

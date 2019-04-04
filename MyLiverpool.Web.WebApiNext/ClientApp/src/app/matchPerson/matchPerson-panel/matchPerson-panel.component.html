@@ -2,7 +2,7 @@
     <div class="full-width flex">
         <div class="full-width text-center">
             Главный судья: {{mainRef?.personName}}
-            <span *ngIf="roles.isInformer && !mainRef" role="button" (click)="addMatchPerson(7)"><mat-icon>add</mat-icon></span>
+            <span *ngIf="roles.isInformer && !mainRef" role="button" (click)="addMatchPerson(7, 0, 1, 11)"><mat-icon>add</mat-icon></span>
             <span *ngIf="roles.isInformer && mainRef">
                 <i role="button" (click)="selectMatchPerson(mainRef)" class="material-icons" style="font-size: 100%;">edit</i>
                 <i role="button" (click)="showDeleteModal(mainRef)" class="material-icons" style="font-size: 100%;">clear</i>
@@ -12,11 +12,13 @@
             Помощники судьи: <span *ngFor="let ref of assistantRef; let last = last;">
                 {{ref.personName}}
                 <span *ngIf="roles.isInformer" role="button" (click)="selectMatchPerson(ref)" class="material-icons" style="font-size: 100%;">edit</span>
-                <span *ngIf="roles.isInformer" role="button" (click)="showDeleteModal(ref)" class="material-icons" style="font-size: 100%;">clear</span><span *ngIf="!last">, </span>
+                <span *ngIf="roles.isInformer" role="button" (click)="showDeleteModal(ref)" class="material-icons" style="font-size: 100%;">clear</span>
+                <span *ngIf="!last">, </span>
             </span>
-            <span *ngIf="roles.isInformer && assistantRef.length < 2" role="button" (click)="addMatchPerson(8)"><mat-icon>add</mat-icon></span>
+            <span *ngIf="roles.isInformer && assistantRef.length < 2" role="button"
+                  (click)="addMatchPerson(8, assistantRef.length, 2, 11)"><mat-icon>add</mat-icon></span>
         </div>
-        <div class="full-width text-center" *ngIf="additionalRef.length > 0">
+        <div class="full-width text-center" *ngIf="additionalRef.length > 0 || roles.isInformer">
             Дополнительные судьи: <span *ngFor="let ref of additionalRef; let last=last;">
                 {{ref.personName}}
                 <span *ngIf="roles.isInformer">
@@ -25,10 +27,12 @@
                 </span>
                 <span *ngIf="!last">, </span>
             </span>
+            <span *ngIf="roles.isInformer && additionalRef.length < 2" role="button"
+                  (click)="addMatchPerson(8, additionalRef.length, 2, 11)"><mat-icon>add</mat-icon></span>
         </div>
         <div class="full-width text-center">
             Резервный судья: {{fourthRef?.personName}}
-            <span *ngIf="roles.isInformer && !fourthRef" role="button" (click)="addMatchPerson(9)"><mat-icon>add</mat-icon></span>
+            <span *ngIf="roles.isInformer && !fourthRef" role="button" (click)="addMatchPerson(9, 0, 1, 11)"><mat-icon>add</mat-icon></span>
             <span *ngIf="roles.isInformer && fourthRef">
                 <span role="button" (click)="selectMatchPerson(fourthRef)" class="material-icons" style="font-size: 100%;">edit</span>
                 <span role="button" (click)="showDeleteModal(fourthRef)" class="material-icons" style="font-size: 100%;">clear</span>
@@ -37,7 +41,8 @@
         <div class="width50p container-row">
             <i class="full-width top10">
                 Главный тренер:
-                <span *ngIf="roles.isInformer && !homeCoach" role="button" (click)="addMatchPerson(isHome ? 5 : 6)"><mat-icon>add</mat-icon></span>
+                <span *ngIf="roles.isInformer && !homeCoach" role="button" 
+                      (click)="addMatchPerson(isHome ? 5 : 6, 0, 1, isHome ? 6 : 14)"><mat-icon>add</mat-icon></span>
                 <span *ngIf="roles.isInformer && homeCoach">
                     <span role="button" (click)="selectMatchPerson(homeCoach)" class="material-icons" style="font-size: 100%;">edit</span>
                     <span role="button" (click)="showDeleteModal(homeCoach)" class="material-icons" style="font-size: 100%;">clear</span>
@@ -46,7 +51,8 @@
             <div class="full-width" [textContent]="homeCoach?.personName"></div>
             <i class="full-width top10">
                 Состав:
-                <span *ngIf="roles.isInformer && homeTeam.length < 11" role="button" (click)="addMatchPerson(isHome ? 1 : 3)"><mat-icon>add</mat-icon></span>
+                <span *ngIf="roles.isInformer && homeTeam.length < 11" role="button" 
+                      (click)="addMatchPerson(isHome ? 1 : 3, homeTeam.length, 11, isHome ? 1 : 4)"><mat-icon>add</mat-icon></span>
             </i>
             <div class="full-width" *ngFor="let person of homeTeam">
                 {{person.number}} - {{person.personName}}
@@ -57,7 +63,8 @@
             </div>
             <i class="full-width top10">
                 Запасные:
-                <span *ngIf="roles.isInformer && homeBench.length < 7" role="button" (click)="addMatchPerson(isHome ? 2 : 4)"><mat-icon>add</mat-icon></span>
+                <span *ngIf="roles.isInformer && homeBench.length < 7" role="button" 
+                      (click)="addMatchPerson(isHome ? 2 : 4, homeBench.length, 7, isHome ? 1 : 4)"><mat-icon>add</mat-icon></span>
             </i>
             <div class="full-width" *ngFor="let person of homeBench">
                 {{person.number}} - {{person.personName}}     
@@ -66,8 +73,10 @@
                     <span role="button" (click)="showDeleteModal(person)" class="material-icons" style="font-size: 100%;">clear</span>
                 </span>
             </div>
-            <div class="full-width top10" *ngIf="homeBan.length > 0">
-                <i class="full-width">Дисквалифицированы:</i>
+            <div class="full-width top10" *ngIf="homeBan.length > 0 || roles.isInformer">
+                <i class="full-width">Дисквалифицированы:
+                    <span *ngIf="roles.isInformer" role="button" (click)="addMatchPerson(isHome ? 12 : 14, 0, 0, isHome ? 1 : 4)"><mat-icon>add</mat-icon></span>
+                    </i>
                 <div class="full-width" *ngFor="let person of homeBan">
                     {{person.number}} - {{person.personName}}
                     <span *ngIf="roles.isInformer">
@@ -76,8 +85,12 @@
                     </span>
                 </div>
             </div>
-            <div class="full-width top10" *ngIf="homeInjury.length > 0">
-                <i class="full-width">Травмированы:</i>
+            <div class="full-width top10" *ngIf="homeInjury.length > 0 || roles.isInformer">
+                <i class="full-width">
+                    Травмированы:
+                    <span *ngIf="roles.isInformer" role="button" 
+                          (click)="addMatchPerson(isHome ? 11 : 13, 0, 0, isHome ? 1 : 4)"><mat-icon>add</mat-icon></span>
+                </i>
                 <div class="full-width" *ngFor="let person of homeInjury">
                     {{person.number}} - {{person.personName}}
                     <span *ngIf="roles.isInformer">
@@ -90,7 +103,7 @@
         <div class="width50p text-right">
             <i class="full-width top10">
                 Главный тренер:
-                <span *ngIf="roles.isInformer && !awayCoach" role="button" (click)="addMatchPerson(isHome ? 6 : 5)"><mat-icon>add</mat-icon></span>     
+                <span *ngIf="roles.isInformer && !awayCoach" role="button" (click)="addMatchPerson(isHome ? 6 : 5, 0,1, isHome ? 14 : 6)"><mat-icon>add</mat-icon></span>     
                 <span *ngIf="roles.isInformer && awayCoach">
                     <span role="button" (click)="selectMatchPerson(awayCoach)" class="material-icons" style="font-size: 100%;">edit</span>
                     <span role="button" (click)="showDeleteModal(awayCoach)" class="material-icons" style="font-size: 100%;">clear</span>
@@ -99,7 +112,8 @@
             <div class="full-width" [textContent]="awayCoach?.personName"></div>
             <i class="full-width top10">
                 Состав:
-                <span *ngIf="roles.isInformer && awayTeam.length < 11" role="button" (click)="addMatchPerson(isHome ? 3 : 1)"><mat-icon>add</mat-icon></span>
+                <span *ngIf="roles.isInformer && awayTeam.length < 11" role="button" 
+                      (click)="addMatchPerson(isHome ? 3 : 1, awayTeam.length, 11, isHome ? 4 : 1)"><mat-icon>add</mat-icon></span>
             </i>
             <div class="full-width" *ngFor="let person of awayTeam">
                 {{person.number}} - {{person.personName}}                    
@@ -110,7 +124,8 @@
             </div>
             <i class="full-width top10">
                 Запасные:
-                <span *ngIf="roles.isInformer && awayBench.length < 7" role="button" (click)="addMatchPerson(isHome ? 4 : 2)"><mat-icon>add</mat-icon></span>
+                <span *ngIf="roles.isInformer && awayBench.length < 7" role="button" 
+                      (click)="addMatchPerson(isHome ? 4 : 2, awayBench.length, 7, isHome ? 4 : 1)"><mat-icon>add</mat-icon></span>
             </i>
             <div class="full-width" *ngFor="let person of awayBench">
                 {{person.number}} - {{person.personName}}
@@ -119,8 +134,11 @@
                     <span role="button" (click)="showDeleteModal(person)" class="material-icons" style="font-size: 100%;">clear</span>
                 </span>
             </div>
-            <div class="full-width top10" *ngIf="awayBan.length > 0">
-                <i class="full-width">Дисквалифицированы:</i>
+            <div class="full-width top10" *ngIf="awayBan.length > 0 || roles.isInformer">
+                <i class="full-width">
+                    Дисквалифицированы:
+                    <span *ngIf="roles.isInformer" role="button" (click)="addMatchPerson(isHome ? 14 : 12, 0, 0, isHome ? 4 : 1)"><mat-icon>add</mat-icon></span>
+                </i>
                 <div class="full-width" *ngFor="let person of awayBan">
                     {{person.number}} - {{person.personName}}
                     <span *ngIf="roles.isInformer">
@@ -129,8 +147,11 @@
                     </span>
                 </div>
             </div>
-            <div class="full-width top10" *ngIf="awayInjury.length > 0">
-                <i class="full-width">Травмированы:</i>
+            <div class="full-width top10" *ngIf="awayInjury.length > 0 || roles.isInformer">
+                <i class="full-width">
+                    Травмированы:
+                    <span *ngIf="roles.isInformer" role="button" (click)="addMatchPerson(isHome ? 13 : 11, 0, 0, isHome ? 4 : 1)"><mat-icon>add</mat-icon></span>
+                </i>
                 <div class="full-width" *ngFor="let person of awayInjury">
                     {{person.number}} - {{person.personName}}
                     <span *ngIf="roles.isInformer">
@@ -144,8 +165,16 @@
 </div>
 <div *ngIf="roles.isInformer" class="full-width">
     <button mat-raised-button color="warn" (click)="addMatchPerson()" class="full-width" *ngIf="!isEdit">Добавить человека</button>
-    <button mat-raised-button (click)="cancelMatchPersonEdit()" *ngIf="isEdit">Отменить редактирование</button>
-    <div class="full-width top20" *ngIf="isEdit">
-        <matchPerson-edit-panel [matchId]="matchId" [selectedMatchPerson]="selectedMatchPerson" [typeId]="selectedType" (matchPerson)="updateMatchPerson($event)"></matchPerson-edit-panel>
+    <div *ngIf="isEdit">
+        <button mat-raised-button (click)="cancelMatchPersonEdit()">Отменить редактирование</button>
+        <div class="full-width top20">
+            <matchPerson-edit-panel [matchId]="matchId"
+                                    [selectedMatchPerson]="selectedMatchPerson"
+                                    [currentCount]="currentCount"
+                                    [neededCount]="neededCount"
+                                    [personTypeId]="personTypeId"
+                                    [typeId]="selectedType"
+                                    (matchPerson)="updateMatchPerson($event)"></matchPerson-edit-panel>
+        </div>
     </div>
 </div>

@@ -10,7 +10,7 @@
             {
                 <div class="chat-message clearfix">
                     <div class="col-xs-12 col-sm-12 container-row clearfix">
-                        <a asp-action="Detail" asp-controller="Users" asp-route-id="@message.AuthorId">@message.AuthorUserName</a>
+                        <a asp-action="Detail" asp-controller="Users" asp-route-id="@message.AuthorId">@message.UserName</a>
                         <div class="pull-right"><span class="small timeConvert" data-date="@message.AdditionTime.ToString("O")" data-dow="true" data-sec="false"></span></div>
                         @*<span role="button" *ngIf="roles.isModerator || roles.isSelf(message.authorId)" (click)="edit(i)" class="glyphicon glyphicon-pencil"></span>
                             <span role="button" *ngIf="roles.isModerator" (click)="showDeleteModal(i)" class="glyphicon glyphicon-trash"></span>*@

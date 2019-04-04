@@ -20,7 +20,11 @@ export class MatchPersonEditPanelComponent implements OnInit, AfterViewInit {
     @Input() public matchId: number;
     @Input() public selectedMatchPerson: MatchPerson;
     @Input() public typeId: number;
+    @Input() public currentCount: number;
+    @Input() public neededCount: number;
+    @Input() public personTypeId: number;
     @Output() public matchPerson = new EventEmitter<MatchPerson>();
+    @Output() public exit = new EventEmitter();
     public editMatchPersonForm: FormGroup;
     public persons$: Observable<Person[]>;
     @ViewChild("mpInput") private elementRef: ElementRef;
@@ -36,9 +40,7 @@ export class MatchPersonEditPanelComponent implements OnInit, AfterViewInit {
         this.initForm();
 
         this.matchPersonService.getTypes()
-            .subscribe(data => this.types = data,
-            e => console.log(e));
-    //  this.types = this.enumSelector(MatchPersonTypeEnum);
+            .subscribe(data => this.types = data);
     }
 
     public ngAfterViewInit(): void {
@@ -55,14 +57,16 @@ export class MatchPersonEditPanelComponent implements OnInit, AfterViewInit {
         if (this.isEdit) {
             this.matchPersonService.update(matchPerson)
                 .subscribe(data => this.emitNewPerson(data),
-                e => console.log(e));
+                () => { },
+                () => this.checkExit());
         } else {
             this.matchPersonService.create(matchPerson)
                 .subscribe(data => this.emitNewPerson(data),
-                e => console.log(e));
-      }
-      this.editMatchPersonForm.get("personId").patchValue("");
-      this.editMatchPersonForm.get("personName").patchValue("");
+                    () => { },
+                    () => this.checkExit());
+        }
+        this.editMatchPersonForm.get("personId").patchValue("");
+        this.editMatchPersonForm.get("personName").patchValue("");
     }
 
     public setPerson(person: Person): void {
@@ -79,11 +83,7 @@ export class MatchPersonEditPanelComponent implements OnInit, AfterViewInit {
         this.matchPerson.emit(matchPerson);
         this.selectedMatchPerson = null;
     }
-
-    private parse(data: MatchPerson): void {
-        this.editMatchPersonForm.patchValue(data);
-    }
-
+    
     private parseForm(): MatchPerson {
         const item: MatchPerson = this.editMatchPersonForm.value;
         item.matchId = this.matchId;
@@ -92,6 +92,13 @@ export class MatchPersonEditPanelComponent implements OnInit, AfterViewInit {
 
     private focus(): void {
         this.elementRef.nativeElement.focus();
+    }
+
+    private checkExit(): void {
+        this.currentCount++;
+        if (this.currentCount === this.neededCount && this.neededCount !== 0) {
+            this.matchPerson.emit(null);
+        }
     }
 
     private initForm(): void {
@@ -108,6 +115,7 @@ export class MatchPersonEditPanelComponent implements OnInit, AfterViewInit {
             switchMap((value: string) => {
                 const filter = new PersonFilters();
                 filter.name = value;
+                filter.type = this.personTypeId;
                 return this.personService.getAll(filter);
             }),
             switchMap((pagingClubs: Pageable<Person>): Observable<Person[]> => {

@@ -11,9 +11,6 @@ namespace MyLiverpool.Business.Dto
         public int Id { get; set; }
 
         public int AuthorId { get; set; }
-
-        [Obsolete("Remove after 01.04.2019 use UserName")]
-        public string AuthorUserName { get; set; }
         
         public string UserName { get; set; }
 

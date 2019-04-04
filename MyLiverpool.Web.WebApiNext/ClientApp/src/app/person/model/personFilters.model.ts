@@ -3,4 +3,5 @@
 export class PersonFilters extends BaseRestFilter {
     public name: string;
     public type: number;
+    public matchId: number;
 }

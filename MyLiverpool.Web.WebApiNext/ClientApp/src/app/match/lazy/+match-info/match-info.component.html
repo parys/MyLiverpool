@@ -1,4 +1,4 @@
-﻿<div class="full-width" *ngIf="item">
+﻿<!--<div class="full-width" *ngIf="item">
     <div *ngIf="roles.isInformer" class="flex-space-between">
         <button mat-raised-button color="warn" (click)="pin(item.id)">Закрепить на главной</button>
         <button mat-raised-button (click)="pin(0)">Открепить от главной</button>
@@ -40,20 +40,12 @@
             </div>
         </div>
     </div>
-    <mat-tab-group mat-stretch-tabs color="warn" [selectedIndex]="item.events.length > 0 ? 1 : null">
-        <mat-tab label="Состав" isActive="!item.events">
-            <ng-template matTabContent>
-                <matchPerson-panel [matchId]="item.id" [isHome]="item.homeClubId === 1"></matchPerson-panel>
-            </ng-template>
-        </mat-tab>
-        <mat-tab label="События" >
-            <ng-template matTabContent>
-                <matchEvent-match-panel [events]="item.events" [matchId]="item.id" [seasonId]="item.seasonId" [isHome]="item.homeClubId === 1"></matchEvent-match-panel>
-                <button mat-raised-button class="full-width" (click)="ngOnInit()">Обновить события матча</button>
-            </ng-template>
-        </mat-tab>
-    </mat-tab-group>
-    <div class="full-width top10">
+    <div class="full-width clearfix">
+        <matchEvent-match-panel [events]="item.events" [matchId]="item.id" [seasonId]="item.seasonId" [isHome]="item.homeClubId === 1"></matchEvent-match-panel>
+        <matchPerson-panel [matchId]="item.id" [isHome]="item.homeClubId === 1"></matchPerson-panel>
+    </div>
+    <button mat-raised-button class="full-width" (click)="ngOnInit()">Обновить события матча</button>
+    <div class="full-widthclearfix top10">
         <comment-section id="comments" [matchId]="item.id" [canCommentary]="true"></comment-section>
     </div>
-</div>
+</div>-->

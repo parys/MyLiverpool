@@ -33,6 +33,10 @@ export class MatchPersonPanelComponent implements OnInit {
     public additionalRef: MatchPerson[] = [];
     public fourthRef: MatchPerson;
 
+    public currentCount: number;
+    public neededCount: number;
+    public personTypeId: number;
+
     constructor(private matchPersonService: MatchPersonService,
         public roles: RolesCheckedService,
         private snackBar: MatSnackBar,
@@ -41,13 +45,15 @@ export class MatchPersonPanelComponent implements OnInit {
 
     public ngOnInit(): void {
         this.matchPersonService.getForMatch(this.matchId)
-            .subscribe(data => this.parsePersons(data),
-            e => console.log(e));
+            .subscribe(data => this.parsePersons(data));
     }
 
-    public addMatchPerson(typeId: number = null): void {
+    public addMatchPerson(typeId: number = null, currentCount: number = 0, neededCount: number = 0, personTypeId: number = null): void {
         this.isEdit = true;
         this.selectedType = typeId;
+        this.currentCount = currentCount;
+        this.neededCount = neededCount;
+        this.personTypeId = personTypeId;
     }
 
     public cancelMatchPersonEdit(stayEdit: boolean = false): void {
@@ -57,16 +63,19 @@ export class MatchPersonPanelComponent implements OnInit {
         this.selectedType = null;
     }
 
-  public updateMatchPerson(person: MatchPerson) {
-    console.log(person);
-        if (this.selectedIndex) {
-            this.matchPersons[this.selectedIndex] = person;
-            this.selectedMatchPerson = person;
+    public updateMatchPerson(person: MatchPerson) {
+        if (person == null) {
+            this.cancelMatchPersonEdit(false);
         } else {
-            this.matchPersons.push(person);
-        }
+            if (this.selectedIndex) {
+                this.matchPersons[this.selectedIndex] = person;
+                this.selectedMatchPerson = person;
+            } else {
+                this.matchPersons.push(person);
+            }
 
-        this.cancelMatchPersonEdit(true);
+            this.cancelMatchPersonEdit(true);
+        }
         this.parsePersons(this.matchPersons);
     }
 
@@ -82,25 +91,21 @@ export class MatchPersonPanelComponent implements OnInit {
             if (result) {
                 this.delete(person);
             }
-        }, e => console.log(e));
+        });
     }
 
 
     private delete(person: MatchPerson): void {
-        let result: boolean;
         this.matchPersonService.delete(this.matchId, person.personId)
-            .subscribe(res => result = res,
-                e => console.log(e),
-                () => {
-                    if (result) {
-                        this.matchPersons.splice(this.matchPersons.indexOf(person), 1);
-                        this.parsePersons(this.matchPersons);
-                        this.snackBar.open("Удалено");
-                    } else {
-                        this.snackBar.open("Ошибка удаления");
-                    }
+            .subscribe((result: boolean) => {
+                if (result) {
+                    this.matchPersons.splice(this.matchPersons.indexOf(person), 1);
+                    this.parsePersons(this.matchPersons);
+                    this.snackBar.open("Удалено");
+                } else {
+                    this.snackBar.open("Ошибка удаления");
                 }
-            );
+            });
     }
 
     private parsePersons(persons: MatchPerson[]): void {

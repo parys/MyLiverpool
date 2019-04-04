@@ -33,20 +33,17 @@ export class MatchEventEditPanelComponent implements OnInit {
         this.initForm();
         
         this.matchEventService.getTypes()
-            .subscribe(data => this.types = data,
-                e => console.log(e));
+            .subscribe(data => this.types = data);
     }
 
     public onSubmit(): void {
         const matchEvent: MatchEvent = this.parseForm();
         if (this.id > 0) {
             this.matchEventService.update(this.id, matchEvent)
-                .subscribe(data => this.emitNewEvent(data),
-                e => console.log(e));
+                .subscribe(data => this.emitNewEvent(data));
         } else {
             this.matchEventService.create(matchEvent)
-                .subscribe(data => this.emitNewEvent(data),
-                e => console.log(e));
+                .subscribe(data => this.emitNewEvent(data));
         }
     }
     
@@ -88,10 +85,11 @@ export class MatchEventEditPanelComponent implements OnInit {
                 switchMap((value: string) => {
                     const filter = new PersonFilters();
                     filter.name = value;
+                    filter.matchId = this.matchId;
                     return this.personService.getAll(filter);
                 }),
-                switchMap((pagingClubs: Pageable<Person>): Observable<Person[]> => {
-                    return of(pagingClubs.list);
+                switchMap((pagingPersons: Pageable<Person>): Observable<Person[]> => {
+                    return of(pagingPersons.list);
                 }));
     }
 }

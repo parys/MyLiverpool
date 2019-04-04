@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, ViewEncapsulation, PLATFORM_ID, Inject, AfterViewInit, ViewChild, HostListener, ChangeDetectorRef, ChangeDetectionStrategy } from "@angular/core";  
+﻿import { Component, OnInit, ViewEncapsulation, PLATFORM_ID, Inject, ViewChild, HostListener, ChangeDetectorRef, ChangeDetectionStrategy } from "@angular/core";  
 import { isPlatformBrowser } from "@angular/common";  
 import { MatSidenav } from "@angular/material";  
 import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
@@ -17,7 +17,7 @@ import { SLIDE_OUT_LEFT, SLIDE_OUT_RIGHT, SLIDE_IN_RIGHT, SLIDE_IN_LEFT } from "
     animations: [SlideInOutAnimation],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
     public currentPageIndex = 1;
     animationState = ["", "", ""];
     orderState = [0, 1, 2];
@@ -49,12 +49,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         }
 
         this.initTitleSubscriber();
-    }
-
-    public ngAfterViewInit(): void {
-        if (isPlatformBrowser(this.platformId)) {
-            addAd();
-        }
     }
 
     public swiperight(evt: any): void {
@@ -119,7 +113,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     private updateGestureState(force: boolean = false): void {
-
         if (!isPlatformBrowser(this.platformId)) {
             return;
         }

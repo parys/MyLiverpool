@@ -46,7 +46,7 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
     }
 
     public ngAfterContentChecked(): void {
-        this.cd.markForCheck();
+        this.cd.detectChanges();
     }
 
     public update(): void {

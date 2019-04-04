@@ -1,7 +1,7 @@
 ﻿<hr class="full-width" />
 <h6 class="text-center">Добавление события матча</h6>
 <form class="full-width" role="form" [formGroup]="editMatchEventForm" (ngSubmit)="onSubmit()">
-    <mat-slide-toggle formControlName="isOur">Наше событие</mat-slide-toggle>
+    <mat-slide-toggle formControlName="isOur" color="warn">Наше событие</mat-slide-toggle>
     <mat-form-field class="full-width">
         <input matInput placeholder="Игрок" [matAutocomplete]="person" formControlName="personName">
         <mat-autocomplete #person="matAutocomplete">

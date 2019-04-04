@@ -1,8 +1,8 @@
 ﻿<section class="flex">
     <div class="flex next match-calendar" *ngIf="next">
-        <match-calendar-entry [match]="next" name="Следующая игра" [next]="true"></match-calendar-entry>
+        <match-calendar-entry class="full-width" [match]="next" name="Следующая игра" [next]="true"></match-calendar-entry>
     </div>
     <div class="last flex match-calendar" *ngIf="last">
-        <match-calendar-entry [match]="last" name="Предыдущая игра" [next]="false"></match-calendar-entry>
+        <match-calendar-entry class="full-width" [match]="last" name="Предыдущая игра" [next]="false"></match-calendar-entry>
     </div>
 </section>
