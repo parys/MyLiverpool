@@ -133,15 +133,15 @@ namespace MyLiverpool.Business.Services
             return null;
         }
 
-        public async Task SetBestPlayerAsync(int personId)
-        {
+        //public async Task SetBestPlayerAsync(int personId)
+        //{
             //var entity = new HelpEntity()
             //{
             //    Type = HelperEntityType.BestPlayer,
             //    Value = personId.ToString()
             //};
             //await _helperEntityService.UpdateAndSaveAsync(entity);
-        }
+        //}
 
         public async Task<IEnumerable<PersonDto>> GetStuffListAsync(PersonType personType)
         {

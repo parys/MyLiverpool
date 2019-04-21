@@ -15,7 +15,7 @@ namespace MyLiverpool.Business.Contracts
         Task<PersonDto> UpdateAsync(PersonDto dto);
         Task<bool> DeleteAsync(int id);
         Task<PersonDto> GetBestPlayerAsync();
-        Task SetBestPlayerAsync(int personId);
+    //    Task SetBestPlayerAsync(int personId);
         Task<IEnumerable<PersonDto>> GetStuffListAsync(PersonType personType);
         Task<SquadListDto> GetSquadListAsync(PersonType type);
         Task<IEnumerable<KeyValuePair<int, string>>> GetPersonsByNameAsync(string typed);

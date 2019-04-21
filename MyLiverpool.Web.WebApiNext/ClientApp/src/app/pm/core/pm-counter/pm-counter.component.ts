@@ -34,7 +34,7 @@ export class PmCounterComponent implements OnInit, OnDestroy {
                 this.titleService.removeCount(1);
             },
             () => { },
-            () => this.cd.detectChanges());
+            () => this.cd.markForCheck());
         this.signalR.newPm.subscribe((data: Pm) => {
                 this.count++;
                 this.titleService.addCount(1);
@@ -43,7 +43,7 @@ export class PmCounterComponent implements OnInit, OnDestroy {
                     .subscribe(_ => this.router.navigate([PMS_ROUTE, data.id]));
             },
             () => {},
-            () => this.cd.detectChanges());
+            () => this.cd.markForCheck());
     }
 
     public ngOnDestroy(): void {
@@ -65,6 +65,6 @@ export class PmCounterComponent implements OnInit, OnDestroy {
                 }
                 },
                 () => { },
-                () => this.cd.detectChanges());
+                () => this.cd.markForCheck());
     }
 }

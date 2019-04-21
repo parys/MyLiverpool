@@ -14,10 +14,8 @@
     <PackageReference Include="OpenIddict.Core" Version="2.0.0" />
     <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="2.0.0" />
     <PackageReference Include="OpenIddict.EntityFrameworkCore.Models" Version="2.0.0" />
-    <PackageReference Include="OpenIddict.Models" Version="2.0.0-rc3-0964" />
     <PackageReference Include="OpenIddict.Mvc" Version="2.0.0" />
     <PackageReference Include="OpenIddict.Server" Version="2.0.0" />
-    <PackageReference Include="OpenIddict.Stores" Version="2.0.0-rc3-0964" />
     <PackageReference Include="OpenIddict.Validation" Version="2.0.0" />
   </ItemGroup>
 

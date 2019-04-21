@@ -143,17 +143,17 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
             return Ok(result);
         }
 
-        /// <summary>
-        /// Setups best player.
-        /// </summary>
-        /// <returns>True if setup successfully.</returns>
-        [Authorize(Roles = nameof(RolesEnum.InfoStart)), HttpPut("bestPlayer/{personId:int}")]
-        public async Task<IActionResult> SetBestPlayerAsync(int personId)
-        {
-            await _personService.SetBestPlayerAsync(personId);
-            _cacheManager.Remove(CacheKeysConstants.BestPlayerMemKey);
-            return Ok(true);
-        }
+        // <summary>
+        // Setups best player.
+        // </summary>
+        // <returns>True if setup successfully.</returns>
+        //[Authorize(Roles = nameof(RolesEnum.InfoStart)), HttpPut("bestPlayer/{personId:int}")]
+        //public async Task<IActionResult> SetBestPlayerAsync(int personId)
+        //{
+        //    await _personService.SetBestPlayerAsync(personId);
+        //    _cacheManager.Remove(CacheKeysConstants.BestPlayerMemKey);
+        //    return Ok(true);
+        //}
 
         /// <summary>
         /// Returns persons list who celebrate birthday today.

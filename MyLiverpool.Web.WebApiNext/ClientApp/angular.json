@@ -45,7 +45,12 @@
               "node_modules/tinymce/plugins/paste/plugin.min.js",
               "node_modules/tinymce/plugins/textcolor/plugin.min.js",
               "src/app/editor/langs/ru.js",
-              "src/app/editor/customPlugins/plugin.min.js"
+              "src/app/editor/customPlugins/plugin.min.js",
+              "node_modules/tinymce/plugins/fullscreen/plugin.min.js",
+              "node_modules/tinymce/plugins/code/plugin.min.js",
+              "node_modules/tinymce/plugins/spellchecker/plugin.min.js",
+              "node_modules/tinymce/plugins/table/plugin.min.js",
+              "node_modules/tinymce/plugins/visualblocks/plugin.min.js"
             ]
           },
           "configurations": {
@@ -59,7 +64,7 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": false,
+              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -96,7 +101,7 @@
           },
           "configurations": {
             "production": {
-              "optimization": true,
+              "optimization": false,
               "outputHashing": "media",
               "sourceMap": false,
               "namedChunks": false,

@@ -14,7 +14,7 @@
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
 
     <!-- Set this to true if you enable server-side prerendering -->
-    <BuildServerSideRenderer>false</BuildServerSideRenderer>
+    <BuildServerSideRenderer>true</BuildServerSideRenderer>
     <RemoveHashFromTiny>true</RemoveHashFromTiny>
     <ApplicationIcon />
     <StartupObject />
@@ -28,7 +28,6 @@
     <Compile Remove="ClientApp\dist-server\**" />
     <Compile Remove="ClientApp\dist\**" />
     <Compile Remove="ClientApp\node_modules\**" />
-    <Content Remove="ClientApp\dist\**" />
     <Content Remove="wwwroot\src\**" />
     <Content Remove="wwwroot\content\**" />
     <Content Remove="wwwroot\fonts\**" />
@@ -44,7 +43,6 @@
     <None Remove="ClientApp\node_modules\**" />
     <None Remove="ClientApp\src\app\editor\langs\**" />
     <None Remove="ClientApp\src\fonts\**" />
-    <None Remove="ClientApp\src\fonts\**" />
     <None Remove="wwwroot\content\persons\**" />
     <None Remove="wwwroot\src\lightgray\**" />
     <None Remove="wwwroot\src\plugins\**" />
@@ -52,6 +50,11 @@
     <Content Include="ClientApp\src\manifest.json" />
     <Content Include="ClientApp\src\index.html" />
     <Content Include="ClientApp\src\tsconfig.cli.json" />
+    <Folder Include="ClientApp\dist-server\" />
+    <Folder Include="ClientApp\dist\aspnetcorespa\" />
+    <Folder Include="Connected Services\" />
+    <Folder Include="wwwroot\assets\icons\" />
+    <Folder Include="wwwroot\src\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -83,7 +86,7 @@
     <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.4" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
@@ -123,22 +126,6 @@
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="ClientApp\dist\aspnetcorespa\main.8bf2d0d1dedba8ac9d3c.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\app\+auth\uri-encoder.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ClientApp\dist-server\" />
-    <Folder Include="ClientApp\dist\aspnetcorespa\" />
-    <Folder Include="Connected Services\" />
-    <Folder Include="wwwroot\assets\icons\" />
-    <Folder Include="wwwroot\src\" />
-  </ItemGroup>
-
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
@@ -151,9 +138,9 @@
 
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-    <!--<Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />-->
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build3" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
 
     <!-- Removes hashing from scripts-->
     <ItemGroup>
@@ -166,16 +153,12 @@
     <ItemGroup>
       <DistFiles Include="$(SpaRoot)dist\**;" />
       <DistFiles Include="$(SpaRoot)dist-server\**" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
-      <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
+      <!--<DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />-->
       <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>%(DistFiles.Identity)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </ResolvedFileToPublish>
     </ItemGroup>
   </Target>
-
-  <ProjectExtensions><VisualStudio><UserProperties ClientApp_4angular_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>
-
-
 
 </Project>

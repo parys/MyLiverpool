@@ -72,14 +72,21 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
                     });
                 }
 
+                if (!user.EmailConfirmed)
+                {
+                    return BadRequest(new OpenIdConnectResponse
+                    {
+                        Error = "unconfirmed_email",
+                        ErrorDescription = "User should check his email."
+                    });
+                }
+
                 var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
                 if (!result.Succeeded)
                 {
                     if (result.IsLockedOut)
                     {
                         var lockDate = await _userManager.GetLockoutEndDateAsync(user);
-                        var c = lockDate.Value.ToUnixTimeMilliseconds();
-                        var c2 = lockDate.Value.ToUnixTimeSeconds();
                         return BadRequest(new OpenIdConnectResponse
                         {
                             Error = OpenIdConnectConstants.Errors.AccessDenied,
@@ -93,15 +100,6 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
                         ErrorDescription = "The username/password couple is invalid."
                     });
 
-                }
-
-                if (!user.EmailConfirmed)
-                {
-                    return BadRequest(new OpenIdConnectResponse
-                        {
-                            Error = "unconfirmed_email",
-                            ErrorDescription = "User should check his email."
-                        });
                 }
 
                 if (_userManager.SupportsUserLockout && !await _userManager.IsLockedOutAsync(user))

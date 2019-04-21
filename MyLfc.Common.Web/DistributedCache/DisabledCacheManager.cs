@@ -11,12 +11,12 @@ namespace MyLfc.Common.Web.DistributedCache
 
         public async Task<T> GetAsync<T>(string key)
         {
-            return default(T);
+            return await Task.FromResult(default(T));
         }
 
         public async Task<string> GetStringAsync(string key)
         {
-            return null;
+            return await Task.FromResult((string)null);
         }
 
         public void Remove(string key){}

@@ -6,11 +6,11 @@ import { Subscription } from "rxjs";
 import { StaticPageService } from "../staticPage.service";
 import { HelperType } from "@app/home";
 
-import "tinymce/plugins/fullscreen/plugin.min.js";
-import "tinymce/plugins/code/plugin.min.js";
-import "tinymce/plugins/spellchecker/plugin.min.js";
-import "tinymce/plugins/table/plugin.min.js";
-import "tinymce/plugins/visualblocks/plugin.min.js";
+//import "tinymce/plugins/fullscreen/plugin.min.js";
+//import "tinymce/plugins/code/plugin.min.js";
+//import "tinymce/plugins/spellchecker/plugin.min.js";
+//import "tinymce/plugins/table/plugin.min.js";
+//import "tinymce/plugins/visualblocks/plugin.min.js";
 
 @Component({
     selector: "page-editor",
