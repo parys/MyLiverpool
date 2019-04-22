@@ -25,4 +25,5 @@
     public prevMaterialId: number;
     public prevMaterialTitle: string;
     public usePhotoInBody: boolean;
+    public tags: string;
 }

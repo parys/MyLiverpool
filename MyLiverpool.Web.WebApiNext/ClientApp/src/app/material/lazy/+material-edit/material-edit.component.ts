@@ -60,6 +60,7 @@ export class MaterialEditComponent implements OnInit {
 
     public onSubmit(): void {
         const newsItem: Material = this.parseForm();
+        console.log(newsItem);
         this.editForm.markAsPristine();
         if (this.id > 0) {
             this.service.update(this.id, newsItem)
@@ -147,7 +148,8 @@ export class MaterialEditComponent implements OnInit {
             onTop: [false],
             pending: [true],
             stayOnPage: [true],
-            usePhotoInBody: [true]
+            usePhotoInBody: [true],
+            tags: [""]
         });
     }
 

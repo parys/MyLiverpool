@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AutoMapper;
 using MyLiverpool.Business.Dto;
 using MyLiverpool.Data.Entities;
@@ -50,7 +51,8 @@ namespace MyLiverpool.Common.Mappings
                 .ForMember(dest => dest.ShortLink, src => src.MapFrom(x => GetShortUrl(x.Source)))
                 .ForMember(dest => dest.Type, src => src.MapFrom(x => x.Type))
                 .ForMember(dest => dest.TypeName, src => src.MapFrom(x => x.Type.ToString().ToLowerInvariant()))
-                .ForMember(dest => dest.Title, src => src.MapFrom(x => x.Title));
+                .ForMember(dest => dest.Title, src => src.MapFrom(x => x.Title))
+                .ForMember(dest => dest.Tags, src => src.MapFrom(x => BeautifyTags(x.Tags)));
 
             CreateMap<MaterialDto, Material>()
                 .ForMember(dest => dest.AdditionTime, src => src.MapFrom(x => x.AdditionTime))
@@ -67,7 +69,8 @@ namespace MyLiverpool.Common.Mappings
                 .ForMember(dest => dest.Reads, src => src.MapFrom(x => x.Reads))
                 .ForMember(dest => dest.Source, src => src.MapFrom(x => x.Source))
                 .ForMember(dest => dest.Type, src => src.MapFrom(x => x.Type))
-                .ForMember(dest => dest.Title, src => src.MapFrom(x => x.Title));
+                .ForMember(dest => dest.Title, src => src.MapFrom(x => x.Title))
+                .ForMember(dest => dest.Tags, src => src.MapFrom(x => BeautifyTags(x.Tags)));
         }
 
         private string GetShortUrl(string url)
@@ -83,6 +86,16 @@ namespace MyLiverpool.Common.Mappings
         private bool ContainsSocialLinks(string message)
         {
             return message.Contains("twitter") || message.Contains("tweet") || message.Contains("instagram");
+        }
+
+        private string BeautifyTags(string tagsString)
+        {
+            var tags = tagsString.Split(',').ToList();
+            for (var i = 0; i < tags.Count; i++)
+            {
+                tags[i] = tags[i].Trim();
+            }
+            return string.Join(", ", tags);
         }
     }
 }

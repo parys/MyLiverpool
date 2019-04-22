@@ -28,6 +28,9 @@
         <mat-form-field class="full-width">
             <input matInput formControlName="photoPreview" placeholder="Фото для превью" />
         </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput formControlName="tags" placeholder="Тэги через запятую и пробел" />
+        </mat-form-field>
         <image-crop-addition (loadedImage)="updatePreviewImage($event)"></image-crop-addition>
 
         <mat-form-field class="full-width">

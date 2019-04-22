@@ -57,5 +57,7 @@ namespace MyLiverpool.Business.Dto
         public string PrevMaterialTitle { get; set; }
 
         public bool UsePhotoInBody { get; set; }
+
+        public string Tags { get; set; }
     }
 }

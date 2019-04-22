@@ -177,6 +177,7 @@ namespace MyLiverpool.Business.Services
             updatingItem.Category = null;
             updatingItem.CategoryId = model.CategoryId;
             updatingItem.UsePhotoInBody = model.UsePhotoInBody;
+            updatingItem.Tags = model.Tags;
 
             try
             {

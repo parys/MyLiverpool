@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyLiverpool.Data.ResourceAccess;
 
 namespace MyLiverpool.Data.ResourceAccess.Migrations
 {
     [DbContext(typeof(LiverpoolContext))]
-    partial class LiverpoolContextModelSnapshot : ModelSnapshot
+    [Migration("20190422161316_AddTagsToMaterial")]
+    partial class AddTagsToMaterial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

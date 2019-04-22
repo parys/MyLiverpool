@@ -71,5 +71,7 @@ namespace MyLiverpool.Data.Entities
         public MaterialType Type { get; set; }
 
         public bool UsePhotoInBody { get; set; }
+
+        public string Tags { get; set; }
     }
 }
