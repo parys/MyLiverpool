@@ -1,1 +1,1 @@
-﻿export * from "./season-edit.component";
+export * from './season-edit.component';

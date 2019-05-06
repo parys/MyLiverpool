@@ -1,4 +1,4 @@
-﻿import { MaterialType } from "./materialType.enum";
+import { MaterialType } from './materialType.enum';
 
 export class MaterialCategory {
     public id: number;

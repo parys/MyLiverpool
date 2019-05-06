@@ -1,6 +1,6 @@
-﻿import { Injectable } from "@angular/core";
-import { EDIT_ROUTE } from "@app/+constants";
-import { EDITING_RU } from "@app/+constants/ru.constants";
+import { Injectable } from '@angular/core';
+import { EDIT_ROUTE } from '@app/+constants';
+import { EDITING_RU } from '@app/+constants/ru.constants';
 
 @Injectable({
     providedIn: 'root'
@@ -41,17 +41,17 @@ export class BreadcrumbService {
      * Specify a callback for the corresponding route.
      * When a mathing url is navigatedd to, the callback function is invoked to get the name to be displayed in the breadcrumb.
      */
-    //addCallbackForRoute(route: string, callback: (id: string) => string): void {
+    // addCallbackForRoute(route: string, callback: (id: string) => string): void {
     //    this.routesWithCallback.set(route, callback);
-    //}
+    // }
 
     /**
      * Specify a callback for the corresponding route matching a regular expression.
      * When a mathing url is navigatedd to, the callback function is invoked to get the name to be displayed in the breadcrumb.
      */
-    //addCallbackForRouteRegex(routeRegex: string, callback: (id: string) => string): void {
+    // addCallbackForRouteRegex(routeRegex: string, callback: (id: string) => string): void {
     //    this.routesWithCallbackRegex.set(routeRegex, callback);
-    //}
+    // }
 
     /**
      * Show the friendly name for a given route (url). If no match is found the url (without the leading '/') is shown.
@@ -66,7 +66,7 @@ export class BreadcrumbService {
             return EDITING_RU;
         }
         let name: string;
-        const routeEnd = route.substr(route.lastIndexOf("/") + 1, route.length);
+        const routeEnd = route.substr(route.lastIndexOf('/') + 1, route.length);
 
         this.routesFriendlyNames.forEach((value, key, map) => {
             if (key === route) {
@@ -77,20 +77,20 @@ export class BreadcrumbService {
         this.routesFriendlyNamesRegex.forEach((value, key, map) => {
             if (new RegExp(key).exec(route)) {
                 name = value;
-            } 
+            }
         });
 
-        //this.routesWithCallback.forEach((value, key, map) => {
+        // this.routesWithCallback.forEach((value, key, map) => {
         //    if (key === route) {
         //        name = value(routeEnd);
         //    }
-        //});
+        // });
 
-        //this.routesWithCallbackRegex.forEach((value, key, map) => {
+        // this.routesWithCallbackRegex.forEach((value, key, map) => {
         //    if (new RegExp(key).exec(route)) {
         //        name = value(routeEnd);
         //    }
-        //});
+        // });
         return name ? name : routeEnd;
     }
 
@@ -128,29 +128,29 @@ export class BreadcrumbService {
     }
 
     private setUpBreadcrumbs(): void {
-        //this.addFriendlyNameForRoute("/", "Главная");
+        // this.addFriendlyNameForRoute("/", "Главная");
 
-        //this.addFriendlyNameForRoute("/forum", "Форум");
-        //this.addFriendlyNameForRouteRegex("^/forum/[0-9]+$", "Подсекция");
-        //this.hideRouteRegex("^/forum/[0-9]+/themes$");
-        //this.addFriendlyNameForRouteRegex("^/forum/[0-9]+/themes/[0-9]+$", "Тема");
-        
+        // this.addFriendlyNameForRoute("/forum", "Форум");
+        // this.addFriendlyNameForRouteRegex("^/forum/[0-9]+$", "Подсекция");
+        // this.hideRouteRegex("^/forum/[0-9]+/themes$");
+        // this.addFriendlyNameForRouteRegex("^/forum/[0-9]+/themes/[0-9]+$", "Тема");
+
         //  this.addFriendlyNameForRoute("/players", "Игроки");
 
-        this.addFriendlyNameForRoute("/about", "О нас");
-        this.addFriendlyNameForRoute("/aboutClub", "О клубе");
-        this.addFriendlyNameForRoute("/chat", "Чат");
-        this.addFriendlyNameForRoute("/clubHistory", "История клуба");
-        this.addFriendlyNameForRoute("/cooperation", "Сотрудничество");
-        this.addFriendlyNameForRoute("/copyright", "О перепечатке информации");
-        this.addFriendlyNameForRoute("/fantasy", "Fantasy Лига MyLFC");
-        this.addFriendlyNameForRoute("/instructions", "Инструкции");
-        this.addFriendlyNameForRoute("/job", "Работа на сайте");
-        this.addFriendlyNameForRoute("/plans", "Планы");
-        this.addFriendlyNameForRoute("/rules", "Правила");
+        this.addFriendlyNameForRoute('/about', 'О нас');
+        this.addFriendlyNameForRoute('/aboutClub', 'О клубе');
+        this.addFriendlyNameForRoute('/chat', 'Чат');
+        this.addFriendlyNameForRoute('/clubHistory', 'История клуба');
+        this.addFriendlyNameForRoute('/cooperation', 'Сотрудничество');
+        this.addFriendlyNameForRoute('/copyright', 'О перепечатке информации');
+        this.addFriendlyNameForRoute('/fantasy', 'Fantasy Лига MyLFC');
+        this.addFriendlyNameForRoute('/instructions', 'Инструкции');
+        this.addFriendlyNameForRoute('/job', 'Работа на сайте');
+        this.addFriendlyNameForRoute('/plans', 'Планы');
+        this.addFriendlyNameForRoute('/rules', 'Правила');
 
-        this.addFriendlyNameForRoute("/editPage", "Редактирование страницы");
-        this.hideRouteRegex("^/editPage/[0-9]+$");
+        this.addFriendlyNameForRoute('/editPage', 'Редактирование страницы');
+        this.hideRouteRegex('^/editPage/[0-9]+$');
 
       //  this.addFriendlyNameForRouteRegex(`^/[a-zA-Z]+/[0-9]+/${EDIT_ROUTE}`, EDITING_RU);
     }

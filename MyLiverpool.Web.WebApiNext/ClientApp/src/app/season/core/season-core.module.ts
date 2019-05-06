@@ -1,8 +1,8 @@
-﻿import { NgModule } from "@angular/core";
-import { RouterModule } from "@angular/router";
-import { SharedModule } from "@app/shared";
-import { seasonCoreRoutes } from "./season-core.routes";
-import { SeasonService } from "./season.service";
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { SharedModule } from '@app/shared';
+import { seasonCoreRoutes } from './season-core.routes';
+import { SeasonService } from './season.service';
 
 @NgModule({
     imports: [

@@ -1,4 +1,4 @@
-﻿export class Transfer {
+export class Transfer {
     public id: number;
 
     public coming: boolean;

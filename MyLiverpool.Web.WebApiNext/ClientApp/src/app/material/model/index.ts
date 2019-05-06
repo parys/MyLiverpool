@@ -1,2 +1,2 @@
-﻿export * from "./material.model";
-export * from "./materialFilters.model";
+export * from './material.model';
+export * from './materialFilters.model';

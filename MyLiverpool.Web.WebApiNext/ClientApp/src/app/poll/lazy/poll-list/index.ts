@@ -1,1 +1,1 @@
-﻿export * from "./poll-list.component";
+export * from './poll-list.component';

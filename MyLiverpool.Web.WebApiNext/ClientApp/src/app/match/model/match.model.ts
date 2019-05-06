@@ -1,4 +1,4 @@
-﻿import { MatchEvent } from "@app/matchEvent";
+import { MatchEvent } from '@app/matchEvent';
 
 export class Match {
     public id: number;

@@ -1,14 +1,14 @@
-﻿import { Component, OnInit, OnDestroy, PLATFORM_ID, Inject } from "@angular/core";
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
-import { Subscription } from "rxjs";
-import { RolesCheckedService } from "@app/+auth";
-import { CustomTitleMetaService } from "@app/shared";
-import { PersonService } from "../../core/person.service";
-import { Person } from "../../model";
+import { Component, OnInit, OnDestroy, PLATFORM_ID, Inject } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { RolesCheckedService } from '@app/+auth';
+import { CustomTitleMetaService } from '@app/shared';
+import { PersonService } from '../../core/person.service';
+import { Person } from '../../model';
 
 @Component({
-    selector: "person-detail",
-    templateUrl: "./person-detail.component.html",
+    selector: 'person-detail',
+    templateUrl: './person-detail.component.html',
 //    styleUrls: ["./person-detail.component.scss"]
 })
 export class PersonDetailComponent implements OnInit, OnDestroy {
@@ -34,7 +34,7 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if (this.sub2) this.sub2.unsubscribe();
+        if (this.sub2) { this.sub2.unsubscribe(); }
     }
 
     private init(): void {

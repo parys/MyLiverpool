@@ -1,2 +1,2 @@
-﻿export * from "./matchEvent.model";
-export * from "./matchEventType.model";
+export * from './matchEvent.model';
+export * from './matchEventType.model';

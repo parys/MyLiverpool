@@ -1,2 +1,2 @@
-﻿export * from "./club.model";
-export * from "./club-filters.model";
+export * from './club.model';
+export * from './club-filters.model';

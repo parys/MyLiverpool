@@ -1,2 +1,2 @@
-﻿export * from "./transfer.model";
-export * from "./transferFilters.model";
+export * from './transfer.model';
+export * from './transferFilters.model';

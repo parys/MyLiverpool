@@ -1,3 +1,3 @@
-﻿export * from "./admin.service";
-export * from "./eplTable";
-export * from "./cupTable";
+export * from './admin.service';
+export * from './eplTable';
+export * from './cupTable';

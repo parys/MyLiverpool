@@ -1,1 +1,1 @@
-﻿export * from "./material-guard-dialog.component";
+export * from './material-guard-dialog.component';

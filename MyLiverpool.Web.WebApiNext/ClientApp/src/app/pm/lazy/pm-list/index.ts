@@ -1,1 +1,1 @@
-﻿export * from "./pm-list.component";
+export * from './pm-list.component';

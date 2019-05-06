@@ -1,1 +1,1 @@
-﻿export * from "./transfer-edit.component";
+export * from './transfer-edit.component';

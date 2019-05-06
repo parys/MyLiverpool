@@ -1,22 +1,22 @@
-﻿import { Routes } from "@angular/router";
-import { StadiumEditComponent } from "./stadium-edit"
-import { StadiumListComponent } from "./stadium-list";
-import { RoleGuard, RolesEnum } from "@app/+auth";
-import { EDIT_ROUTE } from "@app/+constants/routes.constants";
-import { EDITING_RU } from "@app/+constants/ru.constants";
+import { Routes } from '@angular/router';
+import { StadiumEditComponent } from './stadium-edit';
+import { StadiumListComponent } from './stadium-list';
+import { RoleGuard, RolesEnum } from '@app/+auth';
+import { EDIT_ROUTE } from '@app/+constants/routes.constants';
+import { EDITING_RU } from '@app/+constants/ru.constants';
 
 export const stadiumRoutes: Routes = [
     {
-        path: "",
+        path: '',
         component: StadiumListComponent,
         data: {
-            title: "Стадионы",
+            title: 'Стадионы',
             roles: [RolesEnum[RolesEnum.InfoStart]]
         },
         canActivate: [RoleGuard]
     },
     {
-        path: ":id",
+        path: ':id',
         children: [
             {
                 path: EDIT_ROUTE,

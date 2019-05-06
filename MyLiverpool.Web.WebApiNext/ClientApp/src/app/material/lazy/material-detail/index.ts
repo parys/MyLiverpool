@@ -1,1 +1,1 @@
-﻿export * from "./material-detail.component";
+export * from './material-detail.component';

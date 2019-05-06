@@ -1,1 +1,1 @@
-﻿export * from "./maxiChat.component";
+export * from './maxiChat.component';

@@ -1,14 +1,14 @@
-﻿import { NgModule } from "@angular/core";
-import { RouterModule } from "@angular/router";
-import { CommonModule } from "@angular/common";
-import { ForumSectionListComponent, ForumSectionService } from "./forumSection";
-import * as forumSubsection from "./forumSubsection";
-import * as forumMessage from "./forumMessage";
-import * as forumTheme from "./forumTheme";
-import { forumRoutes } from "./forum.routes";
-import { EditorModule } from "@app/editor";
-import { SharedModule } from "@app/shared";
-import { NgxPaginationModule } from "ngx-pagination";
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ForumSectionListComponent, ForumSectionService } from './forumSection';
+import * as forumSubsection from './forumSubsection';
+import * as forumMessage from './forumMessage';
+import * as forumTheme from './forumTheme';
+import { forumRoutes } from './forum.routes';
+import { EditorModule } from '@app/editor';
+import { SharedModule } from '@app/shared';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
     imports: [

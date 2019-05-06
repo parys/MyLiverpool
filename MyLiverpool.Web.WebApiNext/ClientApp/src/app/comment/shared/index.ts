@@ -1,1 +1,1 @@
-﻿export * from "./comment-shared.module";
+export * from './comment-shared.module';

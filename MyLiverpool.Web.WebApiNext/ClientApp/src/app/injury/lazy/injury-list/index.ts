@@ -1,1 +1,1 @@
-﻿export * from "./injury-list.component";
+export * from './injury-list.component';

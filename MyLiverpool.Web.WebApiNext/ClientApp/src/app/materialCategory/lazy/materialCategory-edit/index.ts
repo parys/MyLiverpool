@@ -1,1 +1,1 @@
-﻿export * from "./materialCategory-edit.component";
+export * from './materialCategory-edit.component';

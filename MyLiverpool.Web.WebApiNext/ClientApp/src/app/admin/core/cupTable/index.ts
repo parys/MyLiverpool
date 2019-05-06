@@ -1,1 +1,1 @@
-﻿export * from "./cupTable.component";
+export * from './cupTable.component';

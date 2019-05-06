@@ -1,28 +1,28 @@
-﻿import { Component, OnInit, OnDestroy } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
-import { Location } from "@angular/common";
-import { MatDialog } from "@angular/material";
-import { Subscription } from "rxjs";
-import { ForumThemeService } from "./forumTheme.service";
-import { ForumMessage, ForumMessageService } from "@app/forum/forumMessage";
-import { ForumTheme } from "./forumTheme.model";
-import { DeleteDialogComponent } from "@app/shared";
-import { RolesCheckedService } from "@app/+auth";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+import { ForumThemeService } from './forumTheme.service';
+import { ForumMessage, ForumMessageService } from '@app/forum/forumMessage';
+import { ForumTheme } from './forumTheme.model';
+import { DeleteDialogComponent } from '@app/shared';
+import { RolesCheckedService } from '@app/+auth';
 
 @Component({
-    selector: "forumTheme-list",
-    templateUrl: "./forumTheme-list.component.html"
+    selector: 'forumTheme-list',
+    templateUrl: './forumTheme-list.component.html'
 })
 export class ForumThemeListComponent implements OnInit, OnDestroy {
     private sub: Subscription;
     public item: ForumTheme;
-    public items: ForumMessage[];  
-    public page: number = 1;
+    public items: ForumMessage[];
+    public page = 1;
     public itemsPerPage = 15;
     public totalItems: number;
     public commentForm: FormGroup;
-    public isEditMode: boolean = false;
+    public isEditMode = false;
     public selectedCommentIndex: number = null;
 
     constructor(private service: ForumThemeService,
@@ -36,23 +36,23 @@ export class ForumThemeListComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         this.sub = this.route.queryParams.subscribe(qParams => {
-                this.page = +qParams["page"] || 1;
+                this.page = +qParams['page'] || 1;
             },
             e => console.log(e));
-        this.update(+this.route.snapshot.params["id"]);
-    };
+        this.update(+this.route.snapshot.params['id']);
+    }
 
     public ngOnDestroy(): void {
-        if (this.sub) this.sub.unsubscribe();
+        if (this.sub) { this.sub.unsubscribe(); }
     }
 
     public pageChanged(event: any): void {
         this.page = event;
         this.update(this.item.id);
-        let newUrl = `forum/${this.item.subsectionId}/themes/${this.item.id}?page=${this.page}`;
+        const newUrl = `forum/${this.item.subsectionId}/themes/${this.item.id}?page=${this.page}`;
 
         this.location.replaceState(newUrl);
-    };
+    }
 
     public addNewMessage(message: ForumMessage) {
         this.items.push(message);
@@ -70,7 +70,7 @@ export class ForumThemeListComponent implements OnInit, OnDestroy {
         this.isEditMode = false;
     }
     public showDeleteModal(index: number): void {
-        let dialogRef = this.dialog.open(DeleteDialogComponent);
+        const dialogRef = this.dialog.open(DeleteDialogComponent);
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.delete(index);
@@ -79,8 +79,8 @@ export class ForumThemeListComponent implements OnInit, OnDestroy {
     }
 
     public editComment(index: number): void {
-        let comment = this.items[index];
-        comment.message = this.commentForm.get("message").value;
+        const comment = this.items[index];
+        comment.message = this.commentForm.get('message').value;
         this.messageService.update(comment.id, comment)
             .subscribe((data: ForumMessage) => {
                 this.items[index].message = data.message;
@@ -103,7 +103,7 @@ export class ForumThemeListComponent implements OnInit, OnDestroy {
     }
 
     private initForm(index: number = null) {
-        let initValue = index !== null ? this.items[index].message : "";
+        const initValue = index !== null ? this.items[index].message : '';
         this.commentForm = this.formBuilder.group({
             'message': [initValue, Validators.compose([
                 Validators.required])]

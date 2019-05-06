@@ -1,12 +1,12 @@
-﻿import { Routes } from "@angular/router";
-import { MaterialEditComponent } from "./material-edit.component";
-import { RoleGuard, RolesEnum } from "@app/+auth";
-import { MaterialLeaveGuard } from "./leave-guard/leave-guard.service";
-import { EDITING_RU } from "@app/+constants";
+import { Routes } from '@angular/router';
+import { MaterialEditComponent } from './material-edit.component';
+import { RoleGuard, RolesEnum } from '@app/+auth';
+import { MaterialLeaveGuard } from './leave-guard/leave-guard.service';
+import { EDITING_RU } from '@app/+constants';
 
 export const materialEditRoutes: Routes = [
     {
-        path: "",
+        path: '',
         component: MaterialEditComponent,
         data: {
             title: EDITING_RU,

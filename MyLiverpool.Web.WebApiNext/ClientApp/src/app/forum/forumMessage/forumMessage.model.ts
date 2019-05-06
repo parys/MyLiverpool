@@ -1,4 +1,4 @@
-﻿export class ForumMessage {
+export class ForumMessage {
     id: number;
     themeId: number;
     //   virtual ForumTheme Theme: ;

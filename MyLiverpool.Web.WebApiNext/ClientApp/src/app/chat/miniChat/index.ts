@@ -1,1 +1,1 @@
-﻿export * from "./miniChat.component";
+export * from './miniChat.component';

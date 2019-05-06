@@ -1,4 +1,4 @@
-﻿export class ResetPassword {
+export class ResetPassword {
     code: string;
     email: string;
     password: string;

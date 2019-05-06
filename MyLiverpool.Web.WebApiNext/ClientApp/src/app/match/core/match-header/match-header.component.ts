@@ -1,11 +1,11 @@
-﻿import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
-import { MatchService } from "../match.service";
-import { Match } from "@app/match/model";
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { MatchService } from '../match.service';
+import { Match } from '@app/match/model';
 
 @Component({
-    selector: "match-header",
-    templateUrl: "./match-header.component.html",
-    styleUrls: ["./match-header.component.scss"],
+    selector: 'match-header',
+    templateUrl: './match-header.component.html',
+    styleUrls: ['./match-header.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -23,6 +23,6 @@ export class MatchHeaderComponent implements OnInit {
                 () => {
                     this.cd.markForCheck();
                 });
-        };
-    
+        }
+
 }

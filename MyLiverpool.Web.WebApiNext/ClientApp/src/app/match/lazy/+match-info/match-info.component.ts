@@ -1,19 +1,19 @@
-﻿//import { Component, OnInit, OnDestroy, PLATFORM_ID, Inject } from "@angular/core";
-//import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
-//import { isPlatformBrowser } from "@angular/common";  
-//import { BehaviorSubject, Subscription, interval } from "rxjs";
-//import { map } from "rxjs/operators";
-//import { MatchService } from "@app/match/core";
-//import { Match } from "@app/match/model";
-//import { RolesCheckedService } from "@app/+auth";
-//import { CustomTitleMetaService } from "@app/shared";
+// import { Component, OnInit, OnDestroy, PLATFORM_ID, Inject } from "@angular/core";
+// import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
+// import { isPlatformBrowser } from "@angular/common";
+// import { BehaviorSubject, Subscription, interval } from "rxjs";
+// import { map } from "rxjs/operators";
+// import { MatchService } from "@app/match/core";
+// import { Match } from "@app/match/model";
+// import { RolesCheckedService } from "@app/+auth";
+// import { CustomTitleMetaService } from "@app/shared";
 
-//@Component({
+// @Component({
 //    selector: "match-detail",
 //    templateUrl: "./match-detail.component.html",
 //    styleUrls: ["./match-detail.component.scss"]
-//})
-//export class MatchInfoComponent implements OnInit, OnDestroy {
+// })
+// export class MatchInfoComponent implements OnInit, OnDestroy {
 //    private sub$: Subscription;
 //    private sub2: Subscription;
 //    public item: Match;
@@ -84,4 +84,4 @@
 //        }
 //        return `${days}д:${hours}ч:${minutes}м:${seconds}с`;
 //    }
-//}
+// }

@@ -1,1 +1,1 @@
-﻿export * from "./roleGroup-list.component";
+export * from './roleGroup-list.component';

@@ -1,22 +1,22 @@
-﻿import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from "@angular/core";
-import { MatSnackBar } from "@angular/material";
-import { Router } from "@angular/router";
-import { Subscription } from "rxjs";
-import { PmService } from "../pm.service";
-import { SignalRService } from "@app/+signalr";
-import { CustomTitleMetaService as CustomTitleService } from "@app/shared";
-import { PMS_ROUTE } from "@app/+constants";
-import { Pm } from "../../model/pm.model";
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { PmService } from '../pm.service';
+import { SignalRService } from '@app/+signalr';
+import { CustomTitleMetaService as CustomTitleService } from '@app/shared';
+import { PMS_ROUTE } from '@app/+constants';
+import { Pm } from '../../model/pm.model';
 
 @Component({
-    selector: "pm-counter",
-    templateUrl: "./pm-counter.component.html",
+    selector: 'pm-counter',
+    templateUrl: './pm-counter.component.html',
     changeDetection: ChangeDetectionStrategy.Default
 })
 export class PmCounterComponent implements OnInit, OnDestroy {
     private sub: Subscription;
-    public count: number = 0;
-    private action: string = "Перейти";
+    public count = 0;
+    private action = 'Перейти';
 
     constructor(private pmService: PmService,
         private snackBar: MatSnackBar,
@@ -38,7 +38,7 @@ export class PmCounterComponent implements OnInit, OnDestroy {
         this.signalR.newPm.subscribe((data: Pm) => {
                 this.count++;
                 this.titleService.addCount(1);
-                this.snackBar.open("Новое сообщение", this.action)
+                this.snackBar.open('Новое сообщение', this.action)
                     .onAction()
                     .subscribe(_ => this.router.navigate([PMS_ROUTE, data.id]));
             },
@@ -54,12 +54,12 @@ export class PmCounterComponent implements OnInit, OnDestroy {
 
     private updateCount() {
         this.sub = this.pmService.getUnreadCount()
-            .subscribe((data : string) => {
+            .subscribe((data: string) => {
                     this.count = +data;
                 if (+data > 0) {
                     this.titleService.addCount(this.count);
                     this.snackBar
-                        .open("Есть новые сообщения", this.action)
+                        .open('Есть новые сообщения', this.action)
                         .onAction()
                         .subscribe(data => this.router.navigate([PMS_ROUTE]));
                 }

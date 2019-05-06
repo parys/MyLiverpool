@@ -1,1 +1,1 @@
-﻿export * from "./eplTable.component";
+export * from './eplTable.component';

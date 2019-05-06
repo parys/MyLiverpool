@@ -1,17 +1,17 @@
-﻿import { Component, OnInit, OnDestroy, PLATFORM_ID, Inject } from "@angular/core";
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
-import { isPlatformBrowser } from "@angular/common";  
-import { BehaviorSubject, Subscription, interval } from "rxjs";
-import { map } from "rxjs/operators";
-import { MatchService } from "@app/match/core";
-import { Match } from "@app/match/model";
-import { RolesCheckedService } from "@app/+auth";
-import { CustomTitleMetaService } from "@app/shared";
+import { Component, OnInit, OnDestroy, PLATFORM_ID, Inject } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
+import { BehaviorSubject, Subscription, interval } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { MatchService } from '@app/match/core';
+import { Match } from '@app/match/model';
+import { RolesCheckedService } from '@app/+auth';
+import { CustomTitleMetaService } from '@app/shared';
 
 @Component({
-    selector: "match-detail",
-    templateUrl: "./match-detail.component.html",
-    styleUrls: ["./match-detail.component.scss"]
+    selector: 'match-detail',
+    templateUrl: './match-detail.component.html',
+    styleUrls: ['./match-detail.component.scss']
 })
 export class MatchDetailComponent implements OnInit, OnDestroy {
     private sub$: Subscription;
@@ -38,8 +38,8 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if (this.sub$) this.sub$.unsubscribe();
-        if (this.sub2) this.sub2.unsubscribe();
+        if (this.sub$) { this.sub$.unsubscribe(); }
+        if (this.sub2) { this.sub2.unsubscribe(); }
     }
 
     public pin(id?: number): void {
@@ -47,14 +47,14 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
     }
 
     private init(): void {
-        const id = this.route.snapshot.params["id"];
+        const id = this.route.snapshot.params['id'];
         if (id) {
             this.matchService.getSingle(id)
                 .subscribe((data: Match) => {
                     this.item = data;
                     const title = `${this.item.homeClubName} ${this.item.scoreHome
-                        ? this.item.scoreHome + "-" + this.item.scoreAway
-                        : "-"} ${this.item.awayClubName}`;
+                        ? this.item.scoreHome + '-' + this.item.scoreAway
+                        : '-'} ${this.item.awayClubName}`;
                     this.title.setTitle(title);
                     this.title.updateDescriptionMetaTag(
                         `${title}. Результат матча Ливерпуля. Составы команд. События матча. Обсуждение матча.`);
@@ -73,7 +73,7 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
                         }
                     }
                 });
-        };
+        }
     }
 
     private updateTimeRemaining(endtime: Date): string {
@@ -84,7 +84,7 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
         const days = Math.floor(t / (1000 * 60 * 60 * 24));
         if (t < 0 && this.sub$) {
             this.sub$.unsubscribe();
-            return "Матч начался!";
+            return 'Матч начался!';
         }
         return `${days}д:${hours}ч:${minutes}м:${seconds}с`;
     }

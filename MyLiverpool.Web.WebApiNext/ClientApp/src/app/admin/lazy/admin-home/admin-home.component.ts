@@ -1,11 +1,11 @@
-﻿import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
-import { Subscription } from "rxjs";
-import { RolesCheckedService } from "@app/+auth";
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { RolesCheckedService } from '@app/+auth';
 
 @Component({
-    selector: "admin-home",
-    templateUrl: "./admin-home.component.html",
-    styleUrls: ["./admin-home.component.scss"],
+    selector: 'admin-home',
+    templateUrl: './admin-home.component.html',
+    styleUrls: ['./admin-home.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdminHomeComponent implements OnInit, OnDestroy {
@@ -19,6 +19,6 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {}
 
     public ngOnDestroy(): void {
-        if (this.sub) this.sub.unsubscribe();
+        if (this.sub) { this.sub.unsubscribe(); }
     }
 }

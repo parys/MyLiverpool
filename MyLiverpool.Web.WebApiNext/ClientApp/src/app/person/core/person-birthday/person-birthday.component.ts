@@ -1,12 +1,12 @@
-﻿import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
-import { Subscription } from "rxjs";
-import { PersonService } from "../person.service";
-import { Person } from "@app/person/model";
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { PersonService } from '../person.service';
+import { Person } from '@app/person/model';
 
 @Component({
-    selector: "person-birthday",
-    templateUrl: "./person-birthday.component.html",
-    styleUrls: ["./person-birthday.component.scss"],
+    selector: 'person-birthday',
+    templateUrl: './person-birthday.component.html',
+    styleUrls: ['./person-birthday.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PersonBirthdayComponent implements OnInit, OnDestroy {

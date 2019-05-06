@@ -1,13 +1,14 @@
-﻿import { NgModule } from "@angular/core";
-import { RouterModule } from "@angular/router";
-import { WishListComponent } from "./wish-list";
-import { WishEditComponent } from "./wish-edit";
-import { WishService } from "./wish.service";
-import { wishRoutes } from "./wish.routes";
-import { SharedModule, BreadcrumbService } from "@app/shared";
-import { RecaptchaModule } from "@app/shared/modules";
-import { WISHES_ROUTE, WISHES_RU } from "@app/+constants";
-import { MatSelectModule, MatInputModule } from "@angular/material";
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { WishListComponent } from './wish-list';
+import { WishEditComponent } from './wish-edit';
+import { WishService } from './wish.service';
+import { wishRoutes } from './wish.routes';
+import { SharedModule, BreadcrumbService } from '@app/shared';
+import { RecaptchaModule } from '@app/shared/modules';
+import { WISHES_ROUTE, WISHES_RU } from '@app/+constants';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
     imports: [

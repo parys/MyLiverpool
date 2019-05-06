@@ -1,24 +1,25 @@
-﻿import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
-import { Location } from "@angular/common";
-import { ActivatedRoute } from "@angular/router";
-import { MatDialog, MatPaginator } from "@angular/material";
-import { Subscription, merge, of, Observable } from "rxjs";
-import { startWith, switchMap, map, catchError } from "rxjs/operators";
-import { Stadium, StadiumFilters } from "../../model";
-import { StadiumService } from "../../core";
-import { Pageable, DeleteDialogComponent } from "@app/shared";
-import { PAGE, STADIUMS_ROUTE } from "@app/+constants";
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { Subscription, merge, of, Observable } from 'rxjs';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { Stadium, StadiumFilters } from '../../model';
+import { StadiumService } from '../../core';
+import { Pageable, DeleteDialogComponent } from '@app/shared';
+import { PAGE, STADIUMS_ROUTE } from '@app/+constants';
 
 @Component({
-    selector: "stadium-list",
-    templateUrl: "./stadium-list.component.html"
+    selector: 'stadium-list',
+    templateUrl: './stadium-list.component.html'
 })
 export class StadiumListComponent implements OnInit, OnDestroy {
     private sub: Subscription;
     private sub2: Subscription;
     public items: Stadium[];
 
-    @ViewChild(MatPaginator)
+    @ViewChild(MatPaginator, { static: true })
     paginator: MatPaginator;
 
     constructor(private service: StadiumService,
@@ -30,7 +31,7 @@ export class StadiumListComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.sub = this.route.queryParams.subscribe(qParams => {
                 this.paginator.pageIndex = +qParams[PAGE] - 1 || 0;
-                this.paginator.pageSize = +qParams["itemsPerPage"] || 15;
+                this.paginator.pageSize = +qParams['itemsPerPage'] || 15;
 
             });
 
@@ -58,12 +59,12 @@ export class StadiumListComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if (this.sub) this.sub.unsubscribe();
-        if (this.sub2) this.sub2.unsubscribe();
+        if (this.sub) { this.sub.unsubscribe(); }
+        if (this.sub2) { this.sub2.unsubscribe(); }
     }
 
     public showDeleteModal(index: number): void {
-        let dialogRef = this.dialog.open(DeleteDialogComponent);
+        const dialogRef = this.dialog.open(DeleteDialogComponent);
         dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     this.delete(index);
@@ -81,9 +82,9 @@ export class StadiumListComponent implements OnInit, OnDestroy {
     }
 
     public updateUrl(): void {
-        let newUrl = `${STADIUMS_ROUTE}?${PAGE}=${this.paginator.pageIndex + 1}`;
+        const newUrl = `${STADIUMS_ROUTE}?${PAGE}=${this.paginator.pageIndex + 1}`;
         this.location.replaceState(newUrl);
-    };
+    }
 
     private delete(index: number): void {
         this.service.delete(this.items[index].id)

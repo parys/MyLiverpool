@@ -1,1 +1,1 @@
-﻿export * from "./matchEvent.module";
+export * from './matchEvent.module';

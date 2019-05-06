@@ -1,14 +1,14 @@
-﻿import { Component, OnInit, OnDestroy } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { Subscription } from "rxjs";
-import { PollService } from "../../core";
-import { RolesCheckedService } from "@app/+auth";
-import { Poll } from "../../models";
-import { PollChart } from "../../models/pollChart.model";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { PollService } from '../../core';
+import { RolesCheckedService } from '@app/+auth';
+import { Poll } from '../../models';
+import { PollChart } from '../../models/pollChart.model';
 
 @Component({
-    selector: "poll-detail",
-    templateUrl: "./poll-detail.component.html",
+    selector: 'poll-detail',
+    templateUrl: './poll-detail.component.html',
 })
 
 export class PollDetailComponent implements OnInit, OnDestroy {
@@ -39,7 +39,7 @@ export class PollDetailComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         this.sub = this.route.params.subscribe(params => {
-            this.sub2 = this.pollService.getSingle(+params["id"])
+            this.sub2 = this.pollService.getSingle(+params['id'])
                 .subscribe((data: Poll) => {
                     this.item = data;
                     this.convertToChart();
@@ -59,7 +59,7 @@ export class PollDetailComponent implements OnInit, OnDestroy {
 
     private convertToChart(): void {
         for (let i = 0; i < this.item.answers.length; i++) {
-            let pollChart = new PollChart();
+            const pollChart = new PollChart();
             pollChart.name = this.item.answers[i].text;
             pollChart.value = 44 / 3.0;
             this.pollCharts.push(pollChart);

@@ -1,14 +1,14 @@
-﻿import { Component, OnInit, OnDestroy } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Router, ActivatedRoute } from "@angular/router";
-import { Subscription } from "rxjs";
-import { StadiumService } from "../../core";
-import { Stadium } from "../../model";
-import { STADIUMS_ROUTE } from "@app/+constants";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { StadiumService } from '../../core';
+import { Stadium } from '../../model';
+import { STADIUMS_ROUTE } from '@app/+constants';
 
 @Component({
-    selector: "stadium-edit",
-    templateUrl: "./stadium-edit.component.html"
+    selector: 'stadium-edit',
+    templateUrl: './stadium-edit.component.html'
 })
 
 export class StadiumEditComponent implements OnInit, OnDestroy {
@@ -25,7 +25,7 @@ export class StadiumEditComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         this.initForm();
-        this.id = +this.route.snapshot.params["id"] || 0;
+        this.id = +this.route.snapshot.params['id'] || 0;
         if (this.id > 0) {
             this.sub2 = this.service.getSingle(this.id)
                 .subscribe((data: Stadium) => this.parse(data));
@@ -33,8 +33,8 @@ export class StadiumEditComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if(this.sub) { this.sub.unsubscribe(); }
-        if(this.sub2) { this.sub2.unsubscribe(); }
+        if (this.sub) { this.sub.unsubscribe(); }
+        if (this.sub2) { this.sub2.unsubscribe(); }
     }
 
     public onSubmit(): void {
@@ -50,8 +50,8 @@ export class StadiumEditComponent implements OnInit, OnDestroy {
 
     private initForm(): void {
         this.editForm = this.formBuilder.group({
-            name: ["", Validators.required],
-            city: ["", Validators.required],
+            name: ['', Validators.required],
+            city: ['', Validators.required],
             id: [0, Validators.required]
         });
     }

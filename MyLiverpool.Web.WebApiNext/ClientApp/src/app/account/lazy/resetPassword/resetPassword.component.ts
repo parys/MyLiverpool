@@ -1,24 +1,24 @@
-﻿import { Component, OnInit, OnDestroy } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Router, ActivatedRoute } from "@angular/router";
-import { MatSnackBar } from "@angular/material";
-import { Subscription } from "rxjs";
-import { AccountService } from "../account.service";
-import { ResetPassword } from "../../model";
-import { AccountValidators } from "../account.validators";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
+import { AccountService } from '../account.service';
+import { ResetPassword } from '../../model';
+import { AccountValidators } from '../account.validators';
 
 @Component({
-    selector: "reset-password",
-    templateUrl: "./resetPassword.component.html"
+    selector: 'reset-password',
+    templateUrl: './resetPassword.component.html'
 })
 
 export class ResetPasswordComponent implements OnInit, OnDestroy {
     private sub: Subscription;
     public resetForm: FormGroup;
     public finish: boolean;
-    public error: boolean = false;
+    public error = false;
     public code: string;
-    public isHuman: boolean = false;
+    public isHuman = false;
 
     constructor(private service: AccountService,
         private route: ActivatedRoute,
@@ -29,25 +29,25 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         this.sub = this.route.queryParams.subscribe(params => {
-            if (params["code"]) {
-                this.code = params["code"];
+            if (params['code']) {
+                this.code = params['code'];
             } else {
-                this.router.navigate(["/"]);
+                this.router.navigate(['/']);
             }
 
         });
         this.resetForm = this.formBuilder.group({
-            email: ["", Validators.compose([
+            email: ['', Validators.compose([
                 Validators.required, Validators.minLength(6), Validators.email])],
-            password: ["", Validators.compose([
+            password: ['', Validators.compose([
                 Validators.required, Validators.minLength(6)])],
-            confirmPassword: ["", Validators.compose([
+            confirmPassword: ['', Validators.compose([
                 Validators.required, Validators.minLength(6)])],
-        }, { validator: AccountValidators.matchingPasswords("password", "confirmPassword") });
+        }, { validator: AccountValidators.matchingPasswords('password', 'confirmPassword') });
     }
 
     public ngOnDestroy(): void {
-        if(this.sub) { this.sub.unsubscribe(); }
+        if (this.sub) { this.sub.unsubscribe(); }
     }
 
     public onSubmit(): void {

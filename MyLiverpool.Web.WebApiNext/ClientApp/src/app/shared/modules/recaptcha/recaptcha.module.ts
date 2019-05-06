@@ -1,7 +1,7 @@
-﻿import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { RecaptchaComponent } from "./recaptcha.component";
-import { ReCaptchaModule } from "angular2-recaptcha";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RecaptchaComponent } from './recaptcha.component';
+import { ReCaptchaModule } from 'angular2-recaptcha';
 
 @NgModule({
     imports: [
@@ -15,4 +15,4 @@ import { ReCaptchaModule } from "angular2-recaptcha";
         RecaptchaComponent
     ]
 })
-export class RecaptchaModule { }  
+export class RecaptchaModule { }

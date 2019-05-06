@@ -1,1 +1,1 @@
-﻿export * from "./account-signin.component";
+export * from './account-signin.component';

@@ -1,2 +1,2 @@
-﻿export * from "./role.model";
-export * from "./roleGroup.model";
+export * from './role.model';
+export * from './roleGroup.model';

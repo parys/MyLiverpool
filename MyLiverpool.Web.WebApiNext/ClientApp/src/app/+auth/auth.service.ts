@@ -1,14 +1,14 @@
-﻿import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { filter, map, tap, catchError, flatMap, first } from "rxjs/operators";
-import { Observable, Subscription, BehaviorSubject, of, interval, throwError } from "rxjs";
-import { IRefreshGrantModel } from "./models/refresh-grant-model";
-import { IAuthStateModel, IAuthTokenModel, IRegisterModel, ILoginModel } from "./models";
-import { HttpWrapper } from "@app/+httpWrapper";
-import { StorageService } from "@app/+storage";
-import { RolesCheckedService } from "./roles-checked.service";
-import { SignalRService } from "@app/+signalr";
-import { UriEncoder } from "./uri-encoder";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { filter, map, tap, catchError, flatMap, first } from 'rxjs/operators';
+import { Observable, Subscription, BehaviorSubject, of, interval, throwError } from 'rxjs';
+import { IRefreshGrantModel } from './models/refresh-grant-model';
+import { IAuthStateModel, IAuthTokenModel, IRegisterModel, ILoginModel } from './models';
+import { HttpWrapper } from '@app/+httpWrapper';
+import { StorageService } from '@app/+storage';
+import { RolesCheckedService } from './roles-checked.service';
+import { SignalRService } from '@app/+signalr';
+import { UriEncoder } from './uri-encoder';
 
 @Injectable()
 export class AuthService {
@@ -35,19 +35,19 @@ export class AuthService {
 
         this.loggedIn$ = this.tokens$.pipe(map(tokens => !!tokens));
     }
-    
+
     public init(): Observable<IAuthTokenModel> {
         return this.startupTokenRefresh().pipe(
             tap(() => this.scheduleRefresh()));
     }
 
     public register(data: IRegisterModel): Observable<any> {
-        return this.http1.post("api/v1/account/register", data).pipe(
+        return this.http1.post('api/v1/account/register', data).pipe(
             catchError(res => throwError(res.error)));
     }
 
     public login(user: ILoginModel): Observable<any> {
-        return this.getTokens(user, "password").pipe(
+        return this.getTokens(user, 'password').pipe(
             catchError(res => throwError(res.error)),
             tap(res => {
                 this.scheduleRefresh();
@@ -56,7 +56,7 @@ export class AuthService {
 
     public logout(): void {
         this.updateState({ tokens: null });
-        
+
         this.storage.removeAuthTokens();
         this.rolesCheckedService.checkRoles();
 
@@ -69,8 +69,8 @@ export class AuthService {
     }
 
     public refreshTokens(): Observable<IAuthTokenModel> {
-        return this.getTokens({ refresh_token: this.storage.getRefreshToken() }, "refresh_token")
-                .pipe(catchError(error => throwError("Expired")));
+        return this.getTokens({ refresh_token: this.storage.getRefreshToken() }, 'refresh_token')
+                .pipe(catchError(error => throwError('Expired')));
     }
 
     private updateState(newState: IAuthStateModel): void {
@@ -78,20 +78,20 @@ export class AuthService {
     }
 
     private getTokens(data: IRefreshGrantModel | ILoginModel, grantType: string): Observable<IAuthTokenModel> {
-        const headers = new HttpHeaders({ 'Content-Type': "application/x-www-form-urlencoded; charset=UTF-8;" });
+        const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8;' });
 
-        Object.assign(data, { scope: "openid offline_access" });
+        Object.assign(data, { scope: 'openid offline_access' });
 
-        let params2 = new HttpParams({ fromString: "", encoder: new UriEncoder() });
-        params2 = params2.set("grant_type", grantType);
+        let params2 = new HttpParams({ fromString: '', encoder: new UriEncoder() });
+        params2 = params2.set('grant_type', grantType);
         Object.keys(data)
             .forEach(key => params2 = params2.append(key, data[key]));
 
-        return this.http1.post<IAuthTokenModel>("/connect/token", params2.toString(), { headers: headers }).pipe(
+        return this.http1.post<IAuthTokenModel>('/connect/token', params2.toString(), { headers: headers }).pipe(
             tap((tokens: IAuthTokenModel) => {
-                
+
                 tokens.expiration_date = new Date(new Date().getTime() + tokens.expires_in * 1000).getTime().toString();
-                
+
                 this.storage.setAuthTokens(tokens);
                 if (tokens.refresh_token) {
                     this.storage.setRefreshToken(tokens.refresh_token);
@@ -109,7 +109,7 @@ export class AuthService {
 
         //            console.warn("init hub from refresh");
                     this.signalRService.initializeHub();
-                    return throwError("No token");
+                    return throwError('No token');
                 }
 
                 this.updateState({ tokens });
@@ -135,16 +135,16 @@ export class AuthService {
             flatMap(() => this.refreshTokens()))
             .subscribe();
     }
-    
+
     private getUserProfile(): void {
-        this.http.get<any>("role") //bug make list request form service
+        this.http.get<any>('role') // bug make list request form service
             .subscribe((data: any) => {
                     this.storage.setUserId(+data.userId);
-                    this.storage.setRoles(data.roles.split(", "));
+                    this.storage.setRoles(data.roles.split(', '));
                 this.rolesCheckedService.checkRoles();
 
      //               console.warn("init hub from getUserProfile");
-                    this.signalRService.initializeHub();//WARNING---------------------------------------------------------
+                    this.signalRService.initializeHub(); // WARNING---------------------------------------------------------
                 }
             );
     }

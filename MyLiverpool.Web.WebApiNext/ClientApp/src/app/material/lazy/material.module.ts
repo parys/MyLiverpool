@@ -1,13 +1,13 @@
-﻿import { NgModule } from "@angular/core";
-import { RouterModule } from "@angular/router";
-import { SharedModule } from "@app/shared";
-import { materialRoutes } from "./material.routes";
-import { MaterialCoreModule } from "../core/material-core.module";
-import { MaterialDetailComponent } from "./material-detail";
-import { CommentSharedModule } from "@app/comment";
-import { BreadcrumbService } from "@app/shared/breadcrumb";
-import { NEWS_ROUTE, BLOGS_ROUTE, NEWSS_RU, NEWS_RU, BLOGS_RU, BLOG_RU } from "@app/+constants";
-import { CanLoadEditMaterial } from "./canLoadEdit.guard";
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { SharedModule } from '@app/shared';
+import { materialRoutes } from './material.routes';
+import { MaterialCoreModule } from '../core/material-core.module';
+import { MaterialDetailComponent } from './material-detail';
+import { CommentSharedModule } from '@app/comment';
+import { BreadcrumbService } from '@app/shared/breadcrumb';
+import { NEWS_ROUTE, BLOGS_ROUTE, NEWSS_RU, NEWS_RU, BLOGS_RU, BLOG_RU } from '@app/+constants';
+import { CanLoadEditMaterial } from './canLoadEdit.guard';
 
 @NgModule({
     imports: [

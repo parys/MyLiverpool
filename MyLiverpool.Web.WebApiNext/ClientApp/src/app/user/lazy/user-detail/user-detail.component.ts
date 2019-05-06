@@ -1,17 +1,17 @@
-﻿import { Component, OnInit, OnDestroy } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Location } from "@angular/common";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { MatSnackBar } from "@angular/material";
-import { Subscription } from "rxjs";
-import { User, UserService } from "@app/user";
-import { RolesCheckedService } from "@app/+auth";
-import { RoleGroupService, RoleGroup } from "@app/roleGroup";
-import { CustomTitleMetaService as CustomTitleService } from "@app/shared";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
+import { User, UserService } from '@app/user';
+import { RolesCheckedService } from '@app/+auth';
+import { RoleGroupService, RoleGroup } from '@app/roleGroup';
+import { CustomTitleMetaService as CustomTitleService } from '@app/shared';
 
 @Component({
-    selector: "user-detail",
-    templateUrl: "./user-detail.component.html"
+    selector: 'user-detail',
+    templateUrl: './user-detail.component.html'
 })
 
 export class UserDetailComponent implements OnInit, OnDestroy {
@@ -21,7 +21,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     public roleForm: FormGroup;
     public banForm: FormGroup;
     public selectedUserId: number;
-    public banDaysCount: number = 0;    
+    public banDaysCount = 0;
 
     constructor(
         private service: UserService,
@@ -34,11 +34,11 @@ export class UserDetailComponent implements OnInit, OnDestroy {
         private location: Location,
         private titleService: CustomTitleService) { }
 
-    public ngOnInit(): void { 
+    public ngOnInit(): void {
         this.initRoleForm();
         this.initBanForm();
         this.sub = this.route.params.subscribe(params => {
-            this.service.getSingle(+params["id"])
+            this.service.getSingle(+params['id'])
                 .subscribe((data: User) => this.parse(data));
         });
         if (this.roles.isAdminAssistant) {
@@ -47,30 +47,30 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if(this.sub) { this.sub.unsubscribe(); }
+        if (this.sub) { this.sub.unsubscribe(); }
     }
 
     public onSubmit(): void {
-        let roleGroupId = this.roleForm.controls["roleGroupId"].value;
+        const roleGroupId = this.roleForm.controls['roleGroupId'].value;
         this.service.updateRoleGroup(this.item.id, roleGroupId)
             .subscribe((data: boolean) => {
                 if (data) {
                     this.roleForm.patchValue(roleGroupId);
-                    this.snackBar.open("Группа изменена");
+                    this.snackBar.open('Группа изменена');
                 } else {
-                    this.snackBar.open("Группа НЕ изменена");
+                    this.snackBar.open('Группа НЕ изменена');
                 }
             });
     }
 
     public onSubmitBan(): void {
-        let banDaysCount = this.banForm.controls["banDaysCount"].value;
+        const banDaysCount = this.banForm.controls['banDaysCount'].value;
         this.service.ban(this.item.id, banDaysCount)
             .subscribe((data: boolean) => {
                 if (data) {
-                    let time = new Date();
+                    const time = new Date();
                     this.item.lockoutEnd = new Date(time.setHours(time.getHours() + banDaysCount * 24 * 60 * 60));
-                    this.banForm.controls["banDaysCount"].patchValue(null);
+                    this.banForm.controls['banDaysCount'].patchValue(null);
                 }
             });
     }
@@ -79,7 +79,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
         const file = event.currentTarget.files[0];
         if (file) {
             if (file.size > 251 * 1024) {
-                alert("Размер изображения не должен превышать 250КБ");
+                alert('Размер изображения не должен превышать 250КБ');
                 return;
             }
             this.service.updateAvatar(file)
@@ -95,8 +95,8 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     public unban(): void {
         this.service.unban(this.item.id)
             .subscribe((data: boolean) => {
-                if (data) {               
-                    this.item.lockoutEnd = null;                            
+                if (data) {
+                    this.item.lockoutEnd = null;
                 }
             });
     }
@@ -113,7 +113,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
         this.item = item;
         this.titleService.setTitle(item.userName);
         this.roleForm.patchValue(item);
-        this.location.go(this.router.createUrlTree(["users", item.id]).toString());
+        this.location.go(this.router.createUrlTree(['users', item.id]).toString());
     }
 
     private loadRoleGroups(): void {
@@ -123,13 +123,13 @@ export class UserDetailComponent implements OnInit, OnDestroy {
 
     private initRoleForm(): void {
         this.roleForm = this.formBuilder.group({
-            roleGroupId: ["", Validators.required]
+            roleGroupId: ['', Validators.required]
         });
     }
 
     private initBanForm(): void {
         this.banForm = this.formBuilder.group({
-            banDaysCount: ["", Validators.min(1)]
+            banDaysCount: ['', Validators.min(1)]
         });
     }
 }

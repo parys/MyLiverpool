@@ -1,1 +1,1 @@
-﻿export * from "./wal.module";
+export * from './wal.module';

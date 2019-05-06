@@ -1,1 +1,1 @@
-﻿export * from "./best-player.component";
+export * from './best-player.component';

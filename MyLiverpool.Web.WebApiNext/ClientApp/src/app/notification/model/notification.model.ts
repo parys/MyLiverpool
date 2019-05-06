@@ -1,4 +1,4 @@
-﻿export class Notification {
+export class Notification {
     public id: number;
     public type: number;
     public typeName: string;
@@ -13,6 +13,6 @@
     }
 
     public getFragment(): string {
-        return this.commentId ? `com${this.commentId}` : "";
+        return this.commentId ? `com${this.commentId}` : '';
     }
 }

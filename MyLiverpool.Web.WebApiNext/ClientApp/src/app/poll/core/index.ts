@@ -1,2 +1,2 @@
-﻿export * from "./poll-core.module";
-export * from "./poll.service";
+export * from './poll-core.module';
+export * from './poll.service';

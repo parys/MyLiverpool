@@ -1,8 +1,8 @@
-﻿//import { ElementRef, EventEmitter, Output, AfterViewInit, Directive } from '@angular/core';
-//@Directive({
+// import { ElementRef, EventEmitter, Output, AfterViewInit, Directive } from '@angular/core';
+// @Directive({
 //    selector: "[deferLoad]"
-//})
-//export class DeferLoadDirective implements  AfterViewInit {
+// })
+// export class DeferLoadDirective implements  AfterViewInit {
 //    @Output() public deferLoad: EventEmitter<any> = new EventEmitter();
 
 //    private _intersectionObserver?: IntersectionObserver;
@@ -35,4 +35,4 @@
 //    private checkIfIntersecting(entry: IntersectionObserverEntry) {
 //        return entry.isIntersecting && entry.target === this._element.nativeElement;
 //    }
-//}
+// }

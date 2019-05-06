@@ -1,5 +1,5 @@
-﻿import { ForumMessage } from "../forumMessage/index";
-import { Pageable } from "../../shared/index";
+import { ForumMessage } from '../forumMessage/index';
+import { Pageable } from '../../shared/index';
 
 export class ForumTheme {
     id: number;

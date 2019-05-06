@@ -1,4 +1,4 @@
-﻿import { Statistics } from "./statistics.model";
+import { Statistics } from './statistics.model';
 
 export class PersonStatistics {
     public personId: number;

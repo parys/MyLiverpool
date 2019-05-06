@@ -1,18 +1,18 @@
-﻿import { Component, OnInit, OnDestroy } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
-import { Subscription } from "rxjs";
-import { ForumTheme } from "./forumTheme.model";
-import { ForumSubsectionService, ForumSubsection } from "../forumSubsection";
-import { ForumThemeService } from "./forumTheme.service";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { ForumTheme } from './forumTheme.model';
+import { ForumSubsectionService, ForumSubsection } from '../forumSubsection';
+import { ForumThemeService } from './forumTheme.service';
 
 @Component({
-    selector: "forumTheme-edit",
-    templateUrl: "./forumTheme-edit.component.html"
+    selector: 'forumTheme-edit',
+    templateUrl: './forumTheme-edit.component.html'
 })
 export class ForumThemeEditComponent implements OnInit, OnDestroy {
     editForm: FormGroup;
-    id: number = 0;
+    id = 0;
     private sub: Subscription;
     forumSubsections: ForumSubsection[];
 
@@ -24,12 +24,12 @@ export class ForumThemeEditComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.editForm = this.formBuilder.group({
-            subsectionId: ["", Validators.required],
-            name: ["", Validators.required],
-            description: ["", Validators.required]
+            subsectionId: ['', Validators.required],
+            name: ['', Validators.required],
+            description: ['', Validators.required]
         });
         this.sub = this.route.params.subscribe(params => {
-            this.id = +params["id"];
+            this.id = +params['id'];
             if (this.id > 0) {
                 this.service
                     .getSingle(this.id)
@@ -43,22 +43,22 @@ export class ForumThemeEditComponent implements OnInit, OnDestroy {
             () => { });
     }
 
-    ngOnDestroy() : void {
+    ngOnDestroy(): void {
         this.sub.unsubscribe();
     }
 
     onSubmit(): void {
-        let model = new ForumTheme();
+        const model = new ForumTheme();
         model.id = this.id;
-        model.subsectionId = this.editForm.controls["subsectionId"].value;
-        model.name = this.editForm.controls["name"].value;
-        model.description = this.editForm.controls["description"].value;
+        model.subsectionId = this.editForm.controls['subsectionId'].value;
+        model.name = this.editForm.controls['name'].value;
+        model.description = this.editForm.controls['description'].value;
 
         let res: any;
         if (this.id > 0) {
-            let result = this.service.update(this.id, model).subscribe(data => res = data);
+            const result = this.service.update(this.id, model).subscribe(data => res = data);
         } else {
-            let result = this.service.create(model).subscribe(data => res = data);
+            const result = this.service.create(model).subscribe(data => res = data);
         }
         if (res !== null) {
 

@@ -1,4 +1,4 @@
-﻿export class MatchPersonType {
+export class MatchPersonType {
   constructor(key: number, value: string) {
     this.key = key;
     this.value = value;

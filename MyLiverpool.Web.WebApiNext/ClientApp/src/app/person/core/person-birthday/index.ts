@@ -1,1 +1,1 @@
-﻿export * from "./person-birthday.component";
+export * from './person-birthday.component';

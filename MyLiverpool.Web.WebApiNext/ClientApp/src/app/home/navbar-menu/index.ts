@@ -1,1 +1,1 @@
-﻿export * from "./navbar-menu.component";
+export * from './navbar-menu.component';

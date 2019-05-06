@@ -1,1 +1,1 @@
-﻿export * from "./matchEvent-match-panel.component";
+export * from './matchEvent-match-panel.component';

@@ -1,4 +1,4 @@
-﻿export class Person {
+export class Person {
     public id: number;
     public birthday: Date;
     public firstName: string;

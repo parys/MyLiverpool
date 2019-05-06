@@ -1,12 +1,12 @@
-﻿import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { Subscription } from "rxjs";
-import { AdminService } from "@app/admin/core";
-import { RolesCheckedService } from "@app/+auth";
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AdminService } from '@app/admin/core';
+import { RolesCheckedService } from '@app/+auth';
 
 @Component({
-    selector: "<static-page>",
-    templateUrl: "./static-page.component.html",
+    selector: '<static-page>',
+    templateUrl: './static-page.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StaticPageComponent implements OnInit, OnDestroy {
@@ -19,7 +19,7 @@ export class StaticPageComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private cd: ChangeDetectorRef) {
 
-        this.typeId = +route.snapshot.data["type"];
+        this.typeId = +route.snapshot.data['type'];
     }
 
     public ngOnInit(): void {
@@ -33,6 +33,6 @@ export class StaticPageComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if (this.sub) this.sub.unsubscribe();
+        if (this.sub) { this.sub.unsubscribe(); }
     }
 }

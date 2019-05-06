@@ -1,27 +1,28 @@
-﻿import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
-import { Location } from "@angular/common";
-import { ActivatedRoute } from "@angular/router";
-import { Subscription, merge, of, Observable } from "rxjs";
-import { startWith, switchMap, map, catchError } from "rxjs/operators";
-import { TransferService } from "@app/transfer/core";
-import { Transfer, TransferFilters } from "@app/transfer/model";
-import { Pageable } from "@app/shared";
-import { RolesCheckedService } from "@app/+auth";
-import { TRANSFERS_ROUTE, PAGE } from "@app/+constants";
-import { MatSort, MatPaginator } from "@angular/material";
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription, merge, of, Observable } from 'rxjs';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { TransferService } from '@app/transfer/core';
+import { Transfer, TransferFilters } from '@app/transfer/model';
+import { Pageable } from '@app/shared';
+import { RolesCheckedService } from '@app/+auth';
+import { TRANSFERS_ROUTE, PAGE } from '@app/+constants';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
-    selector: "transfer-list",
-    templateUrl: "./transfer-list.component.html"
+    selector: 'transfer-list',
+    templateUrl: './transfer-list.component.html'
 })
 export class TransferListComponent implements OnInit, OnDestroy {
     private sub: Subscription;
     private sub2: Subscription;
     public items: Transfer[];
-    displayedColumns = ["personName", "clubName", "startDate", "onLoan", "amount"];
+    displayedColumns = ['personName', 'clubName', 'startDate', 'onLoan', 'amount'];
 
-    @ViewChild(MatSort) sort: MatSort;
-    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort, { static: true }) sort: MatSort;
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
     constructor(private service: TransferService,
         private route: ActivatedRoute,
@@ -32,7 +33,7 @@ export class TransferListComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.sub = this.route.queryParams.subscribe(qParams => {
             this.paginator.pageIndex = +qParams[PAGE] - 1 || 0;
-            this.paginator.pageSize = +qParams["itemsPerPage"] || 15;
+            this.paginator.pageSize = +qParams['itemsPerPage'] || 15;
 
         },
             e => console.log(e));
@@ -90,7 +91,7 @@ export class TransferListComponent implements OnInit, OnDestroy {
     }
 
     public updateUrl(): void {
-        let newUrl = `${TRANSFERS_ROUTE}?${PAGE}=${this.paginator.pageIndex + 1}`;
+        const newUrl = `${TRANSFERS_ROUTE}?${PAGE}=${this.paginator.pageIndex + 1}`;
         this.location.replaceState(newUrl);
-    };
+    }
 }

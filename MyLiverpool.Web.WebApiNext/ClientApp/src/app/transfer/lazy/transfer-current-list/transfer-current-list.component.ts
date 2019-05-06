@@ -1,20 +1,20 @@
-﻿import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Subscription } from "rxjs";
-import { TransferService } from "@app/transfer/core";
-import { Transfer } from "@app/transfer/model";
-import { RolesCheckedService } from "@app/+auth";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { TransferService } from '@app/transfer/core';
+import { Transfer } from '@app/transfer/model';
+import { RolesCheckedService } from '@app/+auth';
 
 @Component({
-    selector: "transfer-current-list",
-    templateUrl: "./transfer-current-list.component.html",
-    styleUrls: ["./transfer-current-list.component.scss"]
+    selector: 'transfer-current-list',
+    templateUrl: './transfer-current-list.component.html',
+    styleUrls: ['./transfer-current-list.component.scss']
 })
 export class TransferCurrentListComponent implements OnInit, OnDestroy {
     private sub2: Subscription;
     public comeIn: Transfer[];
     public comeOut: Transfer[];
-    public totalIn: number = 0;
-    public totalOut: number = 0;
+    public totalIn = 0;
+    public totalOut = 0;
 
     constructor(private service: TransferService,
         public roles: RolesCheckedService) {

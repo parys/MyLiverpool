@@ -1,6 +1,6 @@
-﻿import "zone.js/dist/zone";
+import 'zone.js/dist/zone';
 
-import "hammerjs";
+import 'hammerjs';
 
 if (!Element.prototype.matches) {
     Element.prototype.matches = Element.prototype.msMatchesSelector;

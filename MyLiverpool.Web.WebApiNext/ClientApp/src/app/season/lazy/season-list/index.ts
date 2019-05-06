@@ -1,1 +1,1 @@
-﻿export * from "./season-list.component";
+export * from './season-list.component';

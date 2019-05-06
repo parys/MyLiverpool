@@ -1,19 +1,19 @@
-﻿import { Component, OnInit, OnDestroy, Input, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Location } from "@angular/common";
-import { MatDialog } from "@angular/material";
-import { Subscription } from "rxjs"
-import { Comment } from "@app/+common-models";
-import { CommentVote } from "@app/comment/model";
-import { CommentService } from "../../core/comment.service";
-import { DeleteDialogComponent } from "@app/shared";
-import { RolesCheckedService } from "@app/+auth";
-import { EditorComponent } from "@app/editor";
+import { Component, OnInit, OnDestroy, Input, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+import { Comment } from '@app/+common-models';
+import { CommentVote } from '@app/comment/model';
+import { CommentService } from '../../core/comment.service';
+import { DeleteDialogComponent } from '@app/shared';
+import { RolesCheckedService } from '@app/+auth';
+import { EditorComponent } from '@app/editor';
 
 @Component({
-    selector: "comment-detail",
-    templateUrl: "./comment-detail.component.html",
-    styleUrls: ["./comment-detail.component.scss"],
+    selector: 'comment-detail',
+    templateUrl: './comment-detail.component.html',
+    styleUrls: ['./comment-detail.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -26,12 +26,12 @@ export class CommentDetailComponent implements OnInit, OnDestroy {
     @Input() public matchId: number;
     @Input() public parent: Comment;
     @Input() public type: number;
-    @ViewChild("replyInput") private elementRef: EditorComponent;
+    @ViewChild('replyInput', { static: false }) private elementRef: EditorComponent;
 
-    public commentForm: FormGroup;          
+    public commentForm: FormGroup;
     private oldCopy: Comment;
-    public isEditMode: boolean = false;
-    public isAddingMode: boolean = false;
+    public isEditMode = false;
+    public isAddingMode = false;
 
     constructor(private materialCommentService: CommentService,
         private location: Location,
@@ -46,7 +46,7 @@ export class CommentDetailComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if(this.vote$) { this.vote$.unsubscribe(); }
+        if (this.vote$) { this.vote$.unsubscribe(); }
     }
 
     public verify(): void {
@@ -93,7 +93,7 @@ export class CommentDetailComponent implements OnInit, OnDestroy {
 
     public addComment(): void {
         this.commentForm.markAsPending();
-        let comment = this.getNewComment();
+        const comment = this.getNewComment();
         this.materialCommentService.createOrUpdate(comment.id, comment)
             .subscribe((data: Comment) => {
                     this.item.children.push(data);
@@ -169,8 +169,8 @@ export class CommentDetailComponent implements OnInit, OnDestroy {
     }
 
     private initForm(): void {
-        const message: string = this.isEditMode ? this.item.message : "";
-        const answer: string = this.isEditMode ? this.item.answer : "";
+        const message: string = this.isEditMode ? this.item.message : '';
+        const answer: string = this.isEditMode ? this.item.answer : '';
         this.commentForm = this.formBuilder.group({
             message: [message, Validators.required],
             answer: [answer]
@@ -182,18 +182,18 @@ export class CommentDetailComponent implements OnInit, OnDestroy {
 
     private getComment(): Comment {
         const comment: Comment = this.item;
-        comment.message = this.commentForm.controls["message"].value;
-        comment.answer = this.commentForm.controls["answer"].value;
+        comment.message = this.commentForm.controls['message'].value;
+        comment.answer = this.commentForm.controls['answer'].value;
         return comment;
     }
 
     private getNewComment(): Comment {
         const comment: Comment = new Comment();
-        comment.message = this.commentForm.controls["message"].value;
+        comment.message = this.commentForm.controls['message'].value;
         comment.materialId = this.materialId;
         comment.matchId = this.matchId;
         comment.parentId = this.item.id;
         comment.type = this.type;
         return comment;
     }
-}                                                                                                                
+}

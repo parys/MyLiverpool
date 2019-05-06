@@ -1,1 +1,1 @@
-﻿export * from "./static-page.component";
+export * from './static-page.component';

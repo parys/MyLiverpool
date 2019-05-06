@@ -1,10 +1,10 @@
-﻿import { Injectable, Inject } from "@angular/core";
-import { HttpInterceptor, HttpRequest, HttpEvent, HttpHandler, HttpErrorResponse, HttpResponse, HttpHeaders, HttpClient } from "@angular/common/http";
-import { Observable, throwError } from "rxjs";
-import { tap, catchError, flatMap } from "rxjs/operators";
-import { StorageService } from "@app/+storage";
-import { IRefreshGrantModel, IAuthTokenModel } from "@app/+auth";
-import { LoaderService } from "../loader";
+import { Injectable, Inject } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpEvent, HttpHandler, HttpErrorResponse, HttpResponse, HttpHeaders, HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { tap, catchError, flatMap } from 'rxjs/operators';
+import { StorageService } from '@app/+storage';
+import { IRefreshGrantModel, IAuthTokenModel } from '@app/+auth';
+import { LoaderService } from '../loader';
 
 @Injectable()
 export class BearerInterceptor implements HttpInterceptor {
@@ -33,28 +33,28 @@ export class BearerInterceptor implements HttpInterceptor {
     private addAuth(req: HttpRequest<any>): HttpRequest<any> {
         const tokens = this.storage.getAccessToken();
         return req.clone({
-            headers: req.headers.set("Authorization", `Bearer ${tokens}`)
+            headers: req.headers.set('Authorization', `Bearer ${tokens}`)
         });
     }
 
     private updateTokens(handler: HttpHandler): Observable<IAuthTokenModel> {
         const data: IRefreshGrantModel = { refresh_token: this.storage.getRefreshToken() };
-        const headers = new HttpHeaders({ 'Content-Type': "application/x-www-form-urlencoded; charset=UTF-8;" });
+        const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8;' });
 
-        Object.assign(data, { grant_type: "refresh_token", scope: "openid offline_access" });
+        Object.assign(data, { grant_type: 'refresh_token', scope: 'openid offline_access' });
 
         const params = new URLSearchParams();
         Object.keys(data)
             .forEach(key => params.append(key, data[key]));
         const http = new HttpClient(handler);
-        return http.post<IAuthTokenModel>("/connect/token", params.toString(), { headers: headers }).pipe(
+        return http.post<IAuthTokenModel>('/connect/token', params.toString(), { headers: headers }).pipe(
             tap((tokens: IAuthTokenModel) => {
-                
+
                 tokens.expiration_date = new Date(new Date().getTime() + tokens.expires_in * 1000).getTime().toString();
 
                 this.storage.setAuthTokens(tokens);
 
-                console.warn("refreshed!");
+                console.warn('refreshed!');
             }));
     }
 }

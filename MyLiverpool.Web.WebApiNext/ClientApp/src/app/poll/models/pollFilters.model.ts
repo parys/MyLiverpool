@@ -1,4 +1,4 @@
-﻿import { BaseRestFilter } from "@app/+infrastructure";
+import { BaseRestFilter } from '@app/+infrastructure';
 
 export class PollFilters extends BaseRestFilter {
 }

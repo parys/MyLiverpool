@@ -1,4 +1,4 @@
-﻿export enum MatchPersonTypeEnum {
+export enum MatchPersonTypeEnum {
     Team = 1,
     TeamBench = 2,
     Competitor = 3,

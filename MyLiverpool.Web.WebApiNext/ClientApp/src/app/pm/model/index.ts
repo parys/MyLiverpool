@@ -1,1 +1,1 @@
-﻿export * from "./pm.model";
+export * from './pm.model';

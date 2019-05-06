@@ -1,1 +1,1 @@
-﻿export * from "./club-list.component";
+export * from './club-list.component';

@@ -1,1 +1,1 @@
-﻿export * from "./person-edit.module";
+export * from './person-edit.module';

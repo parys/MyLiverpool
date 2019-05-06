@@ -1,21 +1,21 @@
-﻿import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
-import { TransferState, makeStateKey } from "@angular/platform-browser";
-import { Subscription } from "rxjs";
-import { UserService } from "../user.service";
-import { IUserOnline, UsersOnline } from "@app/+common-models";
-import { SignalRService } from "@app/+signalr";
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { TransferState, makeStateKey } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
+import { UserService } from '../user.service';
+import { IUserOnline, UsersOnline } from '@app/+common-models';
+import { SignalRService } from '@app/+signalr';
 
-const USER_ONLINE_KEY = makeStateKey<UsersOnline>("user-online");
+const USER_ONLINE_KEY = makeStateKey<UsersOnline>('user-online');
 
 @Component({
-    selector: "user-online-counter",
-    templateUrl: "./user-online-counter.component.html",
+    selector: 'user-online-counter',
+    templateUrl: './user-online-counter.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserOnlineCounterComponent implements OnInit, OnDestroy {
     private sub: Subscription;
-    public allCount: number = 0;
-    public guestCount: number = 0;
+    public allCount = 0;
+    public guestCount = 0;
     public users: IUserOnline[] = new Array();
 
     constructor(private userService: UserService,
@@ -30,7 +30,7 @@ export class UserOnlineCounterComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if(this.sub) { this.sub.unsubscribe(); }
+        if (this.sub) { this.sub.unsubscribe(); }
     }
 
     private updateCount() {

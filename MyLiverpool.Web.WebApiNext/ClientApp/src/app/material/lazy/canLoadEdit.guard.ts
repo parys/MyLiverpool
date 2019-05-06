@@ -1,11 +1,11 @@
-﻿import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import {
     CanLoad,
     Route,
     UrlSegment
-} from "@angular/router";
-import { LazyLoadingLibraryService } from "@app/editor/lazyLoadingLibrary.service";
+} from '@angular/router';
+import { LazyLoadingLibraryService } from '@app/editor/lazyLoadingLibrary.service';
 
 @Injectable()
 export class CanLoadEditMaterial implements CanLoad {
@@ -13,6 +13,6 @@ export class CanLoadEditMaterial implements CanLoad {
 
     canLoad(route: Route, segments: UrlSegment[])
         : Observable<boolean> | Promise<boolean> | boolean {
-        return this.lazyLoadService.loadJs("./scripts.js");
+        return this.lazyLoadService.loadJs('./scripts.js');
     }
 }

@@ -1,1 +1,1 @@
-﻿export * from "./comment-last.component";
+export * from './comment-last.component';

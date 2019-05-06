@@ -1,4 +1,4 @@
-﻿import { Match } from "../../match/model/match.model";
+import { Match } from '../../match/model/match.model';
 
 export class SeasonMonth {
     public name: string;

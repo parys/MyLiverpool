@@ -1,12 +1,12 @@
-﻿import { Component, OnInit } from "@angular/core";
-import { RoleGroup } from "../../model";
-import { RoleGroupService } from "../../core/roleGroup.service";
+import { Component, OnInit } from '@angular/core';
+import { RoleGroup } from '../../model';
+import { RoleGroupService } from '../../core/roleGroup.service';
 
 @Component({
-    selector: "roleGroup-list",
-    templateUrl: "./roleGroup-list.component.html"
+    selector: 'roleGroup-list',
+    templateUrl: './roleGroup-list.component.html'
 })
-export class RoleGroupListComponent implements OnInit { 
+export class RoleGroupListComponent implements OnInit {
     public items: RoleGroup[];
 
     constructor(private service: RoleGroupService) {

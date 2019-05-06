@@ -1,14 +1,14 @@
-﻿import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild, AfterViewInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Router, ActivatedRoute } from "@angular/router";
-import { MatSnackBar } from "@angular/material";
-import { PersonService } from "@app/person/core";
-import { Person, PersonType } from "@app/person/model";
-import { PERSONS_ROUTE } from "@app/+constants";
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { PersonService } from '@app/person/core';
+import { Person, PersonType } from '@app/person/model';
+import { PERSONS_ROUTE } from '@app/+constants';
 
 @Component({
-    selector: "person-edit",
-    templateUrl: "./person-edit.component.html"
+    selector: 'person-edit',
+    templateUrl: './person-edit.component.html'
 })
 
 export class PersonEditComponent implements OnInit, AfterViewInit {
@@ -16,9 +16,9 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
     public editPersonForm: FormGroup;
     public photo: string;
     public types: PersonType[];
-    @Input() public isFull: boolean = true;
+    @Input() public isFull = true;
     @Output() public newPerson = new EventEmitter<Person>();
-    @ViewChild("pInput") private elementRef: ElementRef;
+    @ViewChild('pInput', { static: true }) private elementRef: ElementRef;
 
     constructor(private service: PersonService,
         private route: ActivatedRoute,
@@ -30,7 +30,7 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
     public ngOnInit(): void {
         this.initForm();
         if (this.isFull) {
-            this.id = +this.route.snapshot.params["id"] || 0;
+            this.id = +this.route.snapshot.params['id'] || 0;
             if (this.id > 0) {
                 this.service.getSingle(this.id)
                     .subscribe((data: Person) => this.parse(data));
@@ -45,15 +45,15 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
 
     public onUpload(event: any): void {
         const file = event.currentTarget.files[0];
-        const fullname = this.editPersonForm.controls["firstName"].value + " " + this.editPersonForm.controls["lastName"].value;
+        const fullname = this.editPersonForm.controls['firstName'].value + ' ' + this.editPersonForm.controls['lastName'].value;
         if (file) {
             this.service.updatePhoto(fullname, file)
                 .subscribe((result: any) => {
-                    this.editPersonForm.controls["photo"].patchValue(result.path);
+                    this.editPersonForm.controls['photo'].patchValue(result.path);
                     this.photo = `${result.path}?${Math.random()}`;
-                    this.snackBar.open("Фото успешно загружено");
+                    this.snackBar.open('Фото успешно загружено');
                 },
-                () => this.snackBar.open("Ошибка при загрузке фото"));
+                () => this.snackBar.open('Ошибка при загрузке фото'));
         }
     }
     public onSubmit(): void {
@@ -65,16 +65,16 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
         }
         this.service.createOrUpdate(this.id, person)
             .subscribe((data: Person) => {
-                    this.snackBar.open("Изменения сохранены");
+                    this.snackBar.open('Изменения сохранены');
                     if (this.isFull) {
                         this.router.navigate([PERSONS_ROUTE]);
                     } else {
                         this.newPerson.emit(data);
-                        this.editPersonForm.get("firstRussianName").setValue(null);
-                        this.editPersonForm.get("lastRussianName").setValue(null);
+                        this.editPersonForm.get('firstRussianName').setValue(null);
+                        this.editPersonForm.get('lastRussianName').setValue(null);
                     }
                 },
-                () => this.snackBar.open("Изменения НЕ сохранены"));
+                () => this.snackBar.open('Изменения НЕ сохранены'));
 
     }
 
@@ -103,15 +103,15 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
 
     private initForm(): void {
         this.editPersonForm = this.formBuilder.group({
-            firstName: ["", Validators.maxLength(30)],
+            firstName: ['', Validators.maxLength(30)],
             firstRussianName: [
-                "", Validators.compose([
+                '', Validators.compose([
                     Validators.required, Validators.maxLength(30)
                 ])
             ],
-            lastName: ["", Validators.maxLength(30)],
+            lastName: ['', Validators.maxLength(30)],
             lastRussianName: [
-                "", Validators.compose([
+                '', Validators.compose([
                     Validators.required, Validators.maxLength(30)
                 ])
             ],
@@ -120,7 +120,7 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
             birthday: [null],
             number: [null],
             photo: [null],
-            type: ["", Validators.required]
+            type: ['', Validators.required]
         });
     }
 }

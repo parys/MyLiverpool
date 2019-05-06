@@ -1,13 +1,13 @@
-﻿import { Routes } from "@angular/router";
-import { RoleGuard, RolesEnum } from "@app/+auth";
-import { MatchListComponent } from "./match-list";
-import { MatchDetailComponent } from "./match-detail";
-import { MatchEditComponent } from "./match-edit";
-import { EDITING_RU, MATCHES_RU, MATCH_RU, EDIT_ROUTE } from "@app/+constants";
+import { Routes } from '@angular/router';
+import { RoleGuard, RolesEnum } from '@app/+auth';
+import { MatchListComponent } from './match-list';
+import { MatchDetailComponent } from './match-detail';
+import { MatchEditComponent } from './match-edit';
+import { EDITING_RU, MATCHES_RU, MATCH_RU, EDIT_ROUTE } from '@app/+constants';
 
 export const matchRoutes: Routes = [
     {
-        path: "",
+        path: '',
         component: MatchListComponent,
         data: {
             title: MATCHES_RU,
@@ -16,14 +16,14 @@ export const matchRoutes: Routes = [
         canActivate: [RoleGuard]
     },
     {
-        path: ":id",
+        path: ':id',
         children: [
             {
-                path: "",
+                path: '',
                 component: MatchDetailComponent,
                 data: {
                     title: MATCH_RU,
-                    ogType: "sport"
+                    ogType: 'sport'
                 }
             },
             {

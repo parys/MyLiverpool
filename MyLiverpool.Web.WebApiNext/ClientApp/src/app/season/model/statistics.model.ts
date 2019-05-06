@@ -1,4 +1,4 @@
-﻿export class Statistics {
+export class Statistics {
     public epl: number;
 
     public ec: number;

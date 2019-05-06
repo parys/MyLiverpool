@@ -1,2 +1,2 @@
-﻿export * from "./comment-core.module";
-export * from "./comment.service";
+export * from './comment-core.module';
+export * from './comment.service';

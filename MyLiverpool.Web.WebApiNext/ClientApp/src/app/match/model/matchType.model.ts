@@ -1,4 +1,4 @@
-﻿export class MatchType {
+export class MatchType {
     public id: number;
     public name: string;
 }

@@ -1,7 +1,7 @@
-import { PollAnswer } from "./pollAnswer.model";
+import { PollAnswer } from './pollAnswer.model';
 
 export class Poll {
-    id: number = 0;
+    id = 0;
 
     answers: PollAnswer[] = new Array<PollAnswer>();
 

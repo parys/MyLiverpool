@@ -1,4 +1,4 @@
-﻿export class Material {
+export class Material {
     public id: number;
     public title: string;
     public categoryId: number;

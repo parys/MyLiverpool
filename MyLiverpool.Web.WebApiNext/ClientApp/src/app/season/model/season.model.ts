@@ -1,4 +1,4 @@
-﻿import { SeasonMonth } from "./seasonMonth.model";
+import { SeasonMonth } from './seasonMonth.model';
 
 export class Season {
     public id: number;

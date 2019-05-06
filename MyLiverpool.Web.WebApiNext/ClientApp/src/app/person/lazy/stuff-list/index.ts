@@ -1,1 +1,1 @@
-﻿export * from "./stuff-list.component";
+export * from './stuff-list.component';

@@ -1,4 +1,4 @@
-﻿import { IAuthTokenModel } from "./auth-token-model";
+import { IAuthTokenModel } from './auth-token-model';
 
 export interface IAuthStateModel {
     tokens?: IAuthTokenModel;

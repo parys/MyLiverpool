@@ -1,4 +1,4 @@
-﻿export class MatchPerson {
+export class MatchPerson {
     public matchId: number;
     public personId: number;
     public personName: string;

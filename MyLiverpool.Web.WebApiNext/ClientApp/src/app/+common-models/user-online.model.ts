@@ -1,4 +1,4 @@
-﻿export class UsersOnline {
+export class UsersOnline {
     public allCount: number;
     public guestCount: number;
     public users: IUserOnline[];

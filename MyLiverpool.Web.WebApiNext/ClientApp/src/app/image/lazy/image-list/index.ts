@@ -1,1 +1,1 @@
-﻿export * from "./image-list.component";
+export * from './image-list.component';

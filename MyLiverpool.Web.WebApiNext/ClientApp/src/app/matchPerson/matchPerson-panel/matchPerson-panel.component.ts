@@ -1,20 +1,21 @@
-﻿import { Component, OnInit, Input } from "@angular/core";
-import { MatDialog, MatSnackBar } from "@angular/material";
-import { DeleteDialogComponent } from "@app/shared";
-import { RolesCheckedService } from "@app/+auth";
-import { MatchPersonService } from "../matchPerson.service";
-import { MatchPerson } from "../matchPerson.model";
+import { Component, OnInit, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DeleteDialogComponent } from '@app/shared';
+import { RolesCheckedService } from '@app/+auth';
+import { MatchPersonService } from '../matchPerson.service';
+import { MatchPerson } from '../matchPerson.model';
 
 @Component({
-    selector: "matchPerson-panel",
-    templateUrl: "./matchPerson-panel.component.html",
-    styleUrls: ["./matchPerson-panel.component.scss"]
+    selector: 'matchPerson-panel',
+    templateUrl: './matchPerson-panel.component.html',
+    styleUrls: ['./matchPerson-panel.component.scss']
 })
 export class MatchPersonPanelComponent implements OnInit {
     private matchPersons: MatchPerson[] = [];
     @Input() public matchId: number;
     @Input() public isHome: boolean;
-    public isEdit: boolean = false;
+    public isEdit = false;
     public selectedMatchPerson: MatchPerson;
     public selectedIndex: number;
     public selectedType: number;
@@ -101,9 +102,9 @@ export class MatchPersonPanelComponent implements OnInit {
                 if (result) {
                     this.matchPersons.splice(this.matchPersons.indexOf(person), 1);
                     this.parsePersons(this.matchPersons);
-                    this.snackBar.open("Удалено");
+                    this.snackBar.open('Удалено');
                 } else {
-                    this.snackBar.open("Ошибка удаления");
+                    this.snackBar.open('Ошибка удаления');
                 }
             });
     }

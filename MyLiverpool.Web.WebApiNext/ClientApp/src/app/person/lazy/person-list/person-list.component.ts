@@ -1,28 +1,31 @@
-﻿import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import { Location } from "@angular/common";
-import { MatPaginator, MatSort, MatSelect, MatDialog } from "@angular/material";
-import { ActivatedRoute } from "@angular/router";
-import { merge, of, Observable, fromEvent } from "rxjs";
-import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged } from "rxjs/operators";
-import { PersonService } from "@app/person/core";
-import { Person, PersonType, PersonFilters } from "@app/person/model";
-import { Pageable, DeleteDialogComponent } from "@app/shared";
-import { KEYUP, DEBOUNCE_TIME, PERSONS_ROUTE, PAGE } from "@app/+constants";
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSelect } from '@angular/material/select';
+import { MatSort } from '@angular/material/sort';
+import { ActivatedRoute } from '@angular/router';
+import { merge, of, Observable, fromEvent } from 'rxjs';
+import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { PersonService } from '@app/person/core';
+import { Person, PersonType, PersonFilters } from '@app/person/model';
+import { Pageable, DeleteDialogComponent } from '@app/shared';
+import { KEYUP, DEBOUNCE_TIME, PERSONS_ROUTE, PAGE } from '@app/+constants';
 
 @Component({
-    selector: "person-list",
-    templateUrl: "./person-list.component.html"
+    selector: 'person-list',
+    templateUrl: './person-list.component.html'
 })
 
 export class PersonListComponent implements OnInit {
     public items: Person[];
     public personTypes: PersonType[];
-    displayedColumns = ["lastRussianName", "firstRussianName", "birthday", "position", "country"];
+    displayedColumns = ['lastRussianName', 'firstRussianName', 'birthday', 'position', 'country'];
 
-    @ViewChild(MatSort) sort: MatSort;
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild("typeSelect") typeSelect: MatSelect;
-    @ViewChild("nameInput") nameInput: ElementRef;
+    @ViewChild(MatSort, { static: true }) sort: MatSort;
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+    @ViewChild('typeSelect', { static: true }) typeSelect: MatSelect;
+    @ViewChild('nameInput', { static: true }) nameInput: ElementRef;
 
     constructor(private personService: PersonService,
         private route: ActivatedRoute,
@@ -123,9 +126,9 @@ export class PersonListComponent implements OnInit {
     }
 
     private parseQueryParams(): void {
-        this.paginator.pageIndex = +this.route.snapshot.queryParams["page"] - 1 || 0;
-        this.paginator.pageSize = +this.route.snapshot.queryParams["itemsPerPage"] || 15;
-        this.nameInput.nativeElement.value = this.route.snapshot.queryParams["name"] || null;
-        this.typeSelect.value = +this.route.snapshot.queryParams["typeId"] || null;
+        this.paginator.pageIndex = +this.route.snapshot.queryParams['page'] - 1 || 0;
+        this.paginator.pageSize = +this.route.snapshot.queryParams['itemsPerPage'] || 15;
+        this.nameInput.nativeElement.value = this.route.snapshot.queryParams['name'] || null;
+        this.typeSelect.value = +this.route.snapshot.queryParams['typeId'] || null;
     }
 }

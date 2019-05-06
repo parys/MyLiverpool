@@ -1,20 +1,20 @@
-﻿import {
+import {
     Component, Input, ChangeDetectionStrategy, Inject, PLATFORM_ID, NgZone, AfterContentInit
-} from "@angular/core";
-import { isPlatformServer } from "@angular/common";
-import { Subscription } from "rxjs";
+} from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
-    selector: "ad",
-    templateUrl: "ad.component.html",
-    styleUrls: ["ad.component.scss"],
+    selector: 'ad',
+    templateUrl: 'ad.component.html',
+    styleUrls: ['ad.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdComponent implements AfterContentInit {
     public name: string = null;
     private sub$: Subscription;
     @Input()
-    blockName: string = "";
+    blockName = '';
 
     constructor(
         @Inject(PLATFORM_ID) private platformId: Object,
@@ -27,7 +27,7 @@ export class AdComponent implements AfterContentInit {
     }
 
     public load() {
-        if (isPlatformServer(this.platformId)) return;
+        if (isPlatformServer(this.platformId)) { return; }
         this.zone.runOutsideAngular(() => {
             loadYa();
             if (addAd(this.blockName)) {

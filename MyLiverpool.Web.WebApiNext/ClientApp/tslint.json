@@ -3,6 +3,7 @@
     "node_modules/codelyzer"
   ],
   "rules": {
+
     "arrow-return-shorthand": true,
     "callable-types": true,
     "class-name": true,
@@ -129,6 +130,10 @@
     "rxjs-no-add": { "severity": "error" },
     "rxjs-no-operator": { "severity": "error" },
     "rxjs-no-patched": { "severity": "error" },
-    "rxjs-no-wholesale": { "severity": "error" }
-  }
+    "rxjs-no-wholesale": { "severity": "error" },
+    "no-lazy-module-paths": [ true, "async" ]
+  },
+  "extends": [
+      "@phenomnomnominal/angular-lazy-routes-fix"
+    ]
 }

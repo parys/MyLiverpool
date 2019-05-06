@@ -1,19 +1,19 @@
-﻿import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Router, ActivatedRoute } from "@angular/router";
-import { Observable, of } from "rxjs";
-import { debounceTime, distinctUntilChanged, switchMap } from "rxjs/operators";
-import { MatchService } from "@app/match/core";
-import { SeasonService, Season } from "@app/season";
-import { Match, MatchType } from "@app/match/model";
-import { Stadium, StadiumService, StadiumFilters } from "@app/stadium";
-import { Club, ClubService, ClubFilters } from "@app/club";
-import { DEBOUNCE_TIME, MATCHES_ROUTE } from "@app/+constants";
-import { Pageable } from "@app/shared";
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { MatchService } from '@app/match/core';
+import { SeasonService, Season } from '@app/season';
+import { Match, MatchType } from '@app/match/model';
+import { Stadium, StadiumService, StadiumFilters } from '@app/stadium';
+import { Club, ClubService, ClubFilters } from '@app/club';
+import { DEBOUNCE_TIME, MATCHES_ROUTE } from '@app/+constants';
+import { Pageable } from '@app/shared';
 
 @Component({
-    selector: "match-edit",
-    templateUrl: "./match-edit.component.html"
+    selector: 'match-edit',
+    templateUrl: './match-edit.component.html'
 })
 
 export class MatchEditComponent implements OnInit {
@@ -35,11 +35,11 @@ export class MatchEditComponent implements OnInit {
 
     public ngOnInit(): void {
         this.initForm();
-        let id = this.route.snapshot.params["id"];
+        const id = this.route.snapshot.params['id'];
         if (+id > 0) {
             this.matchService.getSingle(id)
                 .subscribe((data: Match) => this.parse(data));
-        };
+        }
 
         this.matchService.getTypes()
             .subscribe((data: MatchType[]) => this.types = data);
@@ -55,47 +55,47 @@ export class MatchEditComponent implements OnInit {
     }
 
     public selectStadium(id: number) {
-        this.editMatchForm.get("stadiumId").patchValue(id);
+        this.editMatchForm.get('stadiumId').patchValue(id);
     }
 
     public selectClub(id: number) {
-        this.editMatchForm.get("clubId").patchValue(id);
+        this.editMatchForm.get('clubId').patchValue(id);
     }
 
     private parse(data: Match): void {
         this.id = data.id;
         this.editMatchForm.patchValue(data);
-        this.editMatchForm.get("date").patchValue(new Date(data.dateTime));
-        this.editMatchForm.get("time").patchValue(new Date(data.dateTime).toTimeString().slice(0, 8));
+        this.editMatchForm.get('date').patchValue(new Date(data.dateTime));
+        this.editMatchForm.get('time').patchValue(new Date(data.dateTime).toTimeString().slice(0, 8));
     }
 
     private parseForm(): Match {
         const item = this.editMatchForm.value;
         item.id = this.id;
-        const date = this.editMatchForm.controls["date"].value;
-        const time = this.editMatchForm.controls["time"].value;
+        const date = this.editMatchForm.controls['date'].value;
+        const time = this.editMatchForm.controls['time'].value;
         item.dateTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.slice(0, 2), time.slice(3, 5));
         return item;
     }
 
     private initForm(): void {
         this.editMatchForm = this.formBuilder.group({
-            clubName: [""],
-            clubId: ["", Validators.required],
-            seasonId: ["", Validators.required],
+            clubName: [''],
+            clubId: ['', Validators.required],
+            seasonId: ['', Validators.required],
             isHome: [true, Validators.required],
             date: [null, Validators.required],
             time: [null, Validators.required],
-            typeId: ["", Validators.required],
-            stadiumId: ["", Validators.required],
-            stadiumName: ["", Validators.required],
+            typeId: ['', Validators.required],
+            stadiumId: ['', Validators.required],
+            stadiumName: ['', Validators.required],
             photoUrl: [null],
             videoUrl: [null],
             previewId: [null],
             reportId: [null]
         });
 
-        this.stadiums$ = this.editMatchForm.controls["stadiumName"].valueChanges.pipe(
+        this.stadiums$ = this.editMatchForm.controls['stadiumName'].valueChanges.pipe(
             debounceTime(DEBOUNCE_TIME),
             distinctUntilChanged(),
             switchMap((value: string) => {
@@ -107,7 +107,7 @@ export class MatchEditComponent implements OnInit {
                 return of(pagingStadiums.list);
             }));
 
-        this.clubs$ = this.editMatchForm.controls["clubName"].valueChanges.pipe(
+        this.clubs$ = this.editMatchForm.controls['clubName'].valueChanges.pipe(
             debounceTime(DEBOUNCE_TIME),
             distinctUntilChanged(),
             switchMap((value: string): Observable<Pageable<Club>> => {

@@ -1,4 +1,4 @@
-﻿import { ForumSubsection } from "../forumSubsection";
+import { ForumSubsection } from '../forumSubsection';
 
 export class ForumSection {
     id: number;

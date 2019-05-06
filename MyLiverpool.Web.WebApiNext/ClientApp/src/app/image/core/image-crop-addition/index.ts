@@ -1,1 +1,1 @@
-﻿export * from "./image-crop-addition.component";
+export * from './image-crop-addition.component';

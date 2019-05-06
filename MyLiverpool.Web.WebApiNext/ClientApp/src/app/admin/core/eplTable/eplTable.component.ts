@@ -1,20 +1,20 @@
-﻿import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
-import { Subscription } from "rxjs";
-import { AdminService } from "../admin.service";
-import { HelperType } from "@app/home/helperType.enum";
-import { RolesCheckedService } from "@app/+auth";
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { AdminService } from '../admin.service';
+import { HelperType } from '@app/home/helperType.enum';
+import { RolesCheckedService } from '@app/+auth';
 
 @Component({
-    selector: "epl-table",
-    templateUrl: "./eplTable.component.html",
-    styleUrls: ["./eplTable.component.scss"],
+    selector: 'epl-table',
+    templateUrl: './eplTable.component.html',
+    styleUrls: ['./eplTable.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EplTableComponent implements OnInit, OnDestroy {
     private sub: Subscription;
     private sub2: Subscription;
     public eplTable: string;
-    public opened: boolean = false;
+    public opened = false;
 
     constructor(private service: AdminService,
         private cd: ChangeDetectorRef,
@@ -32,8 +32,8 @@ export class EplTableComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if (this.sub) this.sub.unsubscribe();
-        if (this.sub2) this.sub2.unsubscribe();
+        if (this.sub) { this.sub.unsubscribe(); }
+        if (this.sub2) { this.sub2.unsubscribe(); }
     }
 
     public updateEplTable(): void {

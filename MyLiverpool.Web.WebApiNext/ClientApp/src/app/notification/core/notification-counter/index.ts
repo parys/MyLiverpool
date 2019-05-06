@@ -1,1 +1,1 @@
-﻿export * from "./notification-counter.component";
+export * from './notification-counter.component';

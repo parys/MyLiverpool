@@ -1,33 +1,35 @@
-﻿import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import { Location } from "@angular/common";
-import { MatPaginator, MatSort, MatSelect } from "@angular/material";
-import { ActivatedRoute } from "@angular/router";
-import { User, UserFilters, UserService } from "@app/user";
-import { merge, of, Observable, fromEvent } from "rxjs";
-import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged } from "rxjs/operators";
-import { RoleGroup, RoleGroupService } from "@app/roleGroup";
-import { Pageable } from "@app/shared";
-import { RolesCheckedService } from "@app/+auth";
-import { KEYUP, DEBOUNCE_TIME, PAGE, USERS_ROUTE } from "@app/+constants";
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Location } from '@angular/common';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSelect } from '@angular/material/select';
+import { MatSort } from '@angular/material/sort';
+import { ActivatedRoute } from '@angular/router';
+import { User, UserFilters, UserService } from '@app/user';
+import { merge, of, Observable, fromEvent } from 'rxjs';
+import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { RoleGroup, RoleGroupService } from '@app/roleGroup';
+import { Pageable } from '@app/shared';
+import { RolesCheckedService } from '@app/+auth';
+import { KEYUP, DEBOUNCE_TIME, PAGE, USERS_ROUTE } from '@app/+constants';
 
 
 @Component({
-    selector: "user-list",
-    templateUrl: "./user-list.component.html",
-    styleUrls: ["./user-list.component.scss"]
+    selector: 'user-list',
+    templateUrl: './user-list.component.html',
+    styleUrls: ['./user-list.component.scss']
 })
 
 export class UserListComponent implements OnInit {
     public items: User[];
     public roleGroups: RoleGroup[];
     public selectedUserIndex: number;
-    displayedColumns = ["userName", "lastModified", "commentsCount", "registrationDate", "roleGroupName"];
+    displayedColumns = ['userName', 'lastModified', 'commentsCount', 'registrationDate', 'roleGroupName'];
 
-    @ViewChild(MatSort) sort: MatSort;
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild("roleSelect") roleSelect: MatSelect;
-    @ViewChild("userInput") userInput: ElementRef;
-    @ViewChild("ipInput") ipInput: ElementRef;
+    @ViewChild(MatSort, { static: true }) sort: MatSort;
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+    @ViewChild('roleSelect', { static: true }) roleSelect: MatSelect;
+    @ViewChild('userInput', { static: true }) userInput: ElementRef;
+    @ViewChild('ipInput', { static: true }) ipInput: ElementRef;
 
     constructor(private userService: UserService,
         private location: Location,
@@ -37,11 +39,11 @@ export class UserListComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.paginator.pageIndex = +this.route.snapshot.queryParams["page"] - 1 || 0;
-        this.paginator.pageSize = +this.route.snapshot.queryParams["itemsPerPage"] || 15;
-        this.userInput.nativeElement.value = this.route.snapshot.queryParams["userName"] || "";
-        this.ipInput.nativeElement.value = this.route.snapshot.queryParams["ip"] || "";
-        this.roleSelect.value = this.route.snapshot.queryParams["roleGroupId"] || "";
+        this.paginator.pageIndex = +this.route.snapshot.queryParams['page'] - 1 || 0;
+        this.paginator.pageSize = +this.route.snapshot.queryParams['itemsPerPage'] || 15;
+        this.userInput.nativeElement.value = this.route.snapshot.queryParams['userName'] || '';
+        this.ipInput.nativeElement.value = this.route.snapshot.queryParams['ip'] || '';
+        this.roleSelect.value = this.route.snapshot.queryParams['roleGroupId'] || '';
         this.updateRoleGroups();
 
         merge(this.sort.sortChange,

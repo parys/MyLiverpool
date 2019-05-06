@@ -1,4 +1,4 @@
-﻿export class Club {
+export class Club {
     public id: number;
     public name: string;
     public englishName: string;

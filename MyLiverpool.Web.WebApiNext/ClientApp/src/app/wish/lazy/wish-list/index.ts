@@ -1,1 +1,1 @@
-﻿export * from "./wish-list.component";
+export * from './wish-list.component';

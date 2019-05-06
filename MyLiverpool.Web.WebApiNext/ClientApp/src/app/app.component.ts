@@ -1,40 +1,40 @@
-﻿import { Component, OnInit, ViewEncapsulation, PLATFORM_ID, Inject, ViewChild, HostListener, ChangeDetectionStrategy } from "@angular/core";  
-import { isPlatformBrowser } from "@angular/common";  
-import { MatSidenav } from "@angular/material";
-import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
-import { filter, map } from "rxjs/operators"
-import { AuthService } from "@app/+auth";
-import { SlideInOutAnimation } from "./+keyframes";
-import { CustomTitleMetaService as CustomTitleService } from "@app/shared";
-import { SLIDE_OUT_LEFT, SLIDE_OUT_RIGHT, SLIDE_IN_RIGHT, SLIDE_IN_LEFT } from "@app/+constants";
+import { Component, OnInit, ViewEncapsulation, PLATFORM_ID, Inject, ViewChild, HostListener, ChangeDetectionStrategy } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { MatSidenav } from '@angular/material/sidenav';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { filter, map } from 'rxjs/operators';
+import { AuthService } from '@app/+auth';
+import { SlideInOutAnimation } from './+keyframes';
+import { CustomTitleMetaService as CustomTitleService } from '@app/shared';
+import { SLIDE_OUT_LEFT, SLIDE_OUT_RIGHT, SLIDE_IN_RIGHT, SLIDE_IN_LEFT } from '@app/+constants';
 
 
 @Component({
-    selector: "app",
-    templateUrl: "./app.component.html",
-    styleUrls: ["./app.component.scss"],
+    selector: 'app',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
     encapsulation: ViewEncapsulation.Emulated,
     animations: [SlideInOutAnimation],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
-    public currentPageIndex = 1;
-    animationState = ["", "", ""];
-    orderState = [0, 1, 2];
-    private resizeDisable: boolean = true;
-
-    @HostListener("window:resize", ["$event"])
-    public sizeChange(event: any) {
-        this.updateGestureState();
-    }
-
-    @ViewChild("sidenav") sidenav: MatSidenav;
     constructor(private router: Router,
         private authService: AuthService,
         private activatedRoute: ActivatedRoute,
         private titleService: CustomTitleService,
         @Inject(PLATFORM_ID) private platformId: Object
-    ) {       
+    ) {
+    }
+    public currentPageIndex = 1;
+    animationState = ['', '', ''];
+    orderState = [0, 1, 2];
+    private resizeDisable = true;
+
+    @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
+
+    @HostListener('window:resize', ['$event'])
+    public sizeChange(event: any) {
+        this.updateGestureState();
     }
 
     public ngOnInit(): void {
@@ -103,13 +103,13 @@ export class AppComponent implements OnInit {
                 }
                 return null;
             })).subscribe((data: any) => {
-            if (data["title"]) {
-                this.titleService.setTitle(data["title"]);
+            if (data['title']) {
+                this.titleService.setTitle(data['title']);
             }
-            this.titleService.updateKeywordsMetaTag(data["keywords"] || "" );
-            this.titleService.updateDescriptionMetaTag(data["description"] || "" );
-            this.titleService.updateTypeMetaTag(data["ogType"] || "website" );
-                this.titleService.updateOgImageMetaTag("https://mylfc.ru/content/logo34.png");
+            this.titleService.updateKeywordsMetaTag(data['keywords'] || '' );
+            this.titleService.updateDescriptionMetaTag(data['description'] || '' );
+            this.titleService.updateTypeMetaTag(data['ogType'] || 'website' );
+                this.titleService.updateOgImageMetaTag('https://mylfc.ru/content/logo34.png');
         });
     }
 
@@ -121,9 +121,9 @@ export class AppComponent implements OnInit {
         if (this.resizeDisable === resizeDisableNow && !force) { return; }
         this.resizeDisable = resizeDisableNow;
         if (!resizeDisableNow) {
-            this.animationState = [SLIDE_OUT_LEFT, "", SLIDE_OUT_RIGHT];
+            this.animationState = [SLIDE_OUT_LEFT, '', SLIDE_OUT_RIGHT];
         } else {
-            this.animationState = ["", "", ""];
+            this.animationState = ['', '', ''];
         }
 
         this.currentPageIndex = 1;

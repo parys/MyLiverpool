@@ -1,1 +1,1 @@
-﻿export * from "./image-addition.component";
+export * from './image-addition.component';

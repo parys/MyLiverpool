@@ -1,2 +1,2 @@
-﻿export * from "./stadium.model";
-export * from "./stadiumFilters.model";
+export * from './stadium.model';
+export * from './stadiumFilters.model';

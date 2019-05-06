@@ -1,16 +1,16 @@
-﻿import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
-import { TransferState, makeStateKey } from "@angular/platform-browser";
-import { Subscription } from "rxjs";
-import { AdminService } from "../admin.service";
-import { HelperType } from "@app/home/helperType.enum";
-import { RolesCheckedService } from "@app/+auth";
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { TransferState, makeStateKey } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
+import { AdminService } from '../admin.service';
+import { HelperType } from '@app/home/helperType.enum';
+import { RolesCheckedService } from '@app/+auth';
 
-const CUP_TABLE_KEY = makeStateKey<string>("cup-table");
+const CUP_TABLE_KEY = makeStateKey<string>('cup-table');
 
 @Component({
-    selector: "cup-table",
-    templateUrl: "./cupTable.component.html",
-    styleUrls: ["./cupTable.component.scss"],
+    selector: 'cup-table',
+    templateUrl: './cupTable.component.html',
+    styleUrls: ['./cupTable.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CupTableComponent implements OnInit, OnDestroy {
@@ -38,7 +38,7 @@ export class CupTableComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if (this.sub) this.sub.unsubscribe();
+        if (this.sub) { this.sub.unsubscribe(); }
     }
 
     private parse(data: string): void {

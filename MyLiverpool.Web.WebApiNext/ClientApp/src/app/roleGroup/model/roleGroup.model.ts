@@ -1,4 +1,4 @@
-﻿import { Role } from "./role.model";
+import { Role } from './role.model';
 export class RoleGroup {
     public id: number;
     public name: string;

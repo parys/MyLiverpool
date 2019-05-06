@@ -1,4 +1,4 @@
-﻿export class Wish {
+export class Wish {
     public id: number;
     public title: string;
     public message: string;

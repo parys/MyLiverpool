@@ -1,1 +1,1 @@
-﻿export * from "./season.module";
+export * from './season.module';

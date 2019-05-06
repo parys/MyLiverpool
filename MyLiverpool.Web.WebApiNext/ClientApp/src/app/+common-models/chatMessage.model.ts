@@ -1,4 +1,4 @@
-﻿export class ChatMessage {
+export class ChatMessage {
     public id: number;
     public authorId: number;
     public userName: string;

@@ -1,12 +1,12 @@
-﻿import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { Notification } from "@app/notification/model";
-import { NotificationService } from "@app/notification/core";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Notification } from '@app/notification/model';
+import { NotificationService } from '@app/notification/core';
 
 @Component({
-        selector: "notification-list",
-        templateUrl: "./notification-list.component.html",
-        styleUrls: ["./notification-list.component.scss"]
+        selector: 'notification-list',
+        templateUrl: './notification-list.component.html',
+        styleUrls: ['./notification-list.component.scss']
     })
 
 export class NotificationListComponent implements OnInit {
@@ -40,6 +40,6 @@ export class NotificationListComponent implements OnInit {
     }
 
     private goToNotification(index: number): void {
-        this.router.navigate([`/${this.items[index].typeName}/${this.items[index].entityId}`], { fragment: this.items[index].commentId ? `com${this.items[index].commentId}` : "" });
+        this.router.navigate([`/${this.items[index].typeName}/${this.items[index].entityId}`], { fragment: this.items[index].commentId ? `com${this.items[index].commentId}` : '' });
     }
 }

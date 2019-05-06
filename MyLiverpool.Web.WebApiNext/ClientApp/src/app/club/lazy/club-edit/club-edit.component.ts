@@ -1,18 +1,18 @@
-﻿import { Component, OnInit, OnDestroy } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Router, ActivatedRoute } from "@angular/router";
-import { Observable, Subscription, of } from "rxjs";
-import { debounceTime, distinctUntilChanged, switchMap } from "rxjs/operators";
-import { ClubService } from "@app/club/core";
-import { Club } from "@app/club/model";
-import { Stadium, StadiumService, StadiumFilters } from "@app/stadium";
-import { CLUBS_ROUTE, DEBOUNCE_TIME } from "@app/+constants";
-import { Pageable } from "@app/shared";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable, Subscription, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { ClubService } from '@app/club/core';
+import { Club } from '@app/club/model';
+import { Stadium, StadiumService, StadiumFilters } from '@app/stadium';
+import { CLUBS_ROUTE, DEBOUNCE_TIME } from '@app/+constants';
+import { Pageable } from '@app/shared';
 
 @Component({
-    selector: "club-edit",
-    templateUrl: "./club-edit.component.html",
-    styleUrls: ["./club-edit.component.scss"]
+    selector: 'club-edit',
+    templateUrl: './club-edit.component.html',
+    styleUrls: ['./club-edit.component.scss']
 })
 
 export class ClubEditComponent implements OnInit, OnDestroy {
@@ -33,7 +33,7 @@ export class ClubEditComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.initForm();
         this.sub = this.route.params.subscribe(params => {
-            this.id = +params["id"];
+            this.id = +params['id'];
             if (this.id > 0) {
                 this.sub2 = this.clubService.getSingle(this.id)
                     .subscribe((data: Club) => this.parse(data));
@@ -42,8 +42,8 @@ export class ClubEditComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if(this.sub) {this.sub.unsubscribe();}
-        if(this.sub2) {this.sub2.unsubscribe();}
+        if (this.sub) {this.sub.unsubscribe(); }
+        if (this.sub2) {this.sub2.unsubscribe(); }
     }
 
     public onSubmit(): void {
@@ -54,16 +54,16 @@ export class ClubEditComponent implements OnInit, OnDestroy {
 
     public onUploadImage(event: any): void {
         if (event.currentTarget.files.length > 0) {
-            this.clubService.uploadLogo(event.currentTarget.files[0], this.editForm.controls["englishName"].value)
+            this.clubService.uploadLogo(event.currentTarget.files[0], this.editForm.controls['englishName'].value)
                 .subscribe((result: any) => {
-                    this.imagePath = result.path + "?" + this.getRandomNumber();
-                    this.editForm.controls["logo"].patchValue(result.path);
+                    this.imagePath = result.path + '?' + this.getRandomNumber();
+                    this.editForm.controls['logo'].patchValue(result.path);
                 });
         }
     }
 
     public selectStadium(id: number) {
-        this.editForm.get("stadiumId").patchValue(id);
+        this.editForm.get('stadiumId').patchValue(id);
     }
 
     private getRandomNumber(): number {
@@ -84,17 +84,17 @@ export class ClubEditComponent implements OnInit, OnDestroy {
 
     private initForm(): void {
         this.editForm = this.formBuilder.group({
-            englishName: ["", Validators.compose([
+            englishName: ['', Validators.compose([
                 Validators.required, Validators.maxLength(30)])],
-            logo: ["", Validators.required],
-            name: ["", Validators.compose([
+            logo: ['', Validators.required],
+            name: ['', Validators.compose([
                 Validators.required, Validators.maxLength(30)])],
-            stadiumId: ["", Validators.required],
-            stadiumName: ["", Validators.required],
+            stadiumId: ['', Validators.required],
+            stadiumName: ['', Validators.required],
             id: [0, Validators.required]
         });
 
-        this.stadiums$ = this.editForm.controls["stadiumName"].valueChanges.pipe(
+        this.stadiums$ = this.editForm.controls['stadiumName'].valueChanges.pipe(
             debounceTime(DEBOUNCE_TIME),
             distinctUntilChanged(),
             switchMap((value: string) => {

@@ -1,1 +1,1 @@
-﻿export * from "./pm-reply.component";
+export * from './pm-reply.component';

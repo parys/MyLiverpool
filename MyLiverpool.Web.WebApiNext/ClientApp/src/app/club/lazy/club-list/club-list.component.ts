@@ -1,26 +1,28 @@
-﻿import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import { Location } from "@angular/common";
-import { ActivatedRoute } from "@angular/router";
-import { MatPaginator, MatSort, MatDialog } from "@angular/material";
-import { merge, of, Observable, fromEvent } from "rxjs";
-import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged } from "rxjs/operators";
-import { ClubService } from "@app/club/core";
-import { Club, ClubFilters } from "@app/club/model";
-import { Pageable, DeleteDialogComponent } from "@app/shared";
-import { CLUBS_ROUTE, DEBOUNCE_TIME, KEYUP, PAGE } from "@app/+constants";
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { merge, of, Observable, fromEvent } from 'rxjs';
+import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { ClubService } from '@app/club/core';
+import { Club, ClubFilters } from '@app/club/model';
+import { Pageable, DeleteDialogComponent } from '@app/shared';
+import { CLUBS_ROUTE, DEBOUNCE_TIME, KEYUP, PAGE } from '@app/+constants';
 
 @Component({
-    selector: "club-list",
-    templateUrl: "./club-list.component.html",
-    styleUrls: ["./club-list.component.scss"]
+    selector: 'club-list',
+    templateUrl: './club-list.component.html',
+    styleUrls: ['./club-list.component.scss']
 })
 export class ClubListComponent implements OnInit {
     public items: Club[];
-    displayedColumns = ["logo", "name", "englishName", "stadiumName", "tool"];
+    displayedColumns = ['logo', 'name', 'englishName', 'stadiumName', 'tool'];
 
-    @ViewChild(MatSort) sort: MatSort;
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild("nameInput") nameInput: ElementRef;
+    @ViewChild(MatSort, { static: true }) sort: MatSort;
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+    @ViewChild('nameInput', { static: true }) nameInput: ElementRef;
 
     constructor(private clubService: ClubService,
         private route: ActivatedRoute,
@@ -88,9 +90,9 @@ export class ClubListComponent implements OnInit {
     }
 
     public updateUrl(): void {
-        let newUrl = `${CLUBS_ROUTE}?${PAGE}=${this.paginator.pageIndex + 1}`;
+        const newUrl = `${CLUBS_ROUTE}?${PAGE}=${this.paginator.pageIndex + 1}`;
         this.location.replaceState(newUrl);
-    };
+    }
 
     private delete(index: number): void {
         this.clubService.delete(this.items[index].id)

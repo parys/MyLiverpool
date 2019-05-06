@@ -1,18 +1,19 @@
-﻿import { Component, OnInit, ChangeDetectorRef, Input, ViewChild, ChangeDetectionStrategy, AfterContentChecked } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { MatDialog, MatSnackBar } from "@angular/material";
-import { ChatMessage } from "@app/+common-models";
-import { ChatMessageService } from "../chatMessage.service";
-import { DeleteDialogComponent } from "@app/shared";
-import { RolesCheckedService } from "@app/+auth";
-import { SignalRService } from "@app/+signalr";
-import { EditorComponent } from "@app/editor";
-import { MAX_CHAT_MESSAGE_LENGTH, MESSAGE } from "@app/+constants";
+import { Component, OnInit, ChangeDetectorRef, Input, ViewChild, ChangeDetectionStrategy, AfterContentChecked } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ChatMessage } from '@app/+common-models';
+import { ChatMessageService } from '../chatMessage.service';
+import { DeleteDialogComponent } from '@app/shared';
+import { RolesCheckedService } from '@app/+auth';
+import { SignalRService } from '@app/+signalr';
+import { EditorComponent } from '@app/editor';
+import { MAX_CHAT_MESSAGE_LENGTH, MESSAGE } from '@app/+constants';
 
 @Component({
-    selector: "chat-window",
-    templateUrl: "./chat-window.component.html",
-    styleUrls: ["./chat-window.component.scss"],
+    selector: 'chat-window',
+    templateUrl: './chat-window.component.html',
+    styleUrls: ['./chat-window.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatWindowComponent implements OnInit, AfterContentChecked {
@@ -20,9 +21,9 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
     public items: ChatMessage[] = new Array<ChatMessage>();
     public selectedEditIndex: number = null;
 
-    @ViewChild("chatInput") private elementRef: EditorComponent;
+    @ViewChild('chatInput', { static: false }) private elementRef: EditorComponent;
     @Input() public type: number;
-    @Input() public height: number = 200;
+    @Input() public height = 200;
 
     constructor(private service: ChatMessageService,
         private formBuilder: FormBuilder,
@@ -41,7 +42,7 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
                 this.putToChat(data, false);
             }
         });
-        //this.roles.rolesChanged.subscribe(() =>
+        // this.roles.rolesChanged.subscribe(() =>
         //    this.cd.markForCheck());
     }
 
@@ -52,7 +53,7 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
     public update(): void {
         const id: number = this.items.length > 0 ? this.items[0].id : 0;
         this.service
-            .getLatest(id, this.type) //todo use filter?
+            .getLatest(id, this.type) // todo use filter?
             .subscribe((data: ChatMessage[]) => {
                     this.items = data.concat(this.items);
                 },
@@ -74,13 +75,13 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
                 this.putToChat(data);
                 this.cancelEdit();
             });
-        //} else {
+        // } else {
         //    this.service.create(message)
         //        .subscribe(data => {
         //                this.putToChat(data);
         //            },
         //            (e) => console.log(e));
-        //}
+        // }
     }
 
     public showDeleteModal(index: number): void {
@@ -93,14 +94,14 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
     }
 
     public addReply(index: number): void {
-        let message: string = this.messageForm.get(MESSAGE).value;
-        let userName: string = this.items[index].userName;
-        let newMessage: string = `<i>${userName}</i>, ${message}`;
+        const message: string = this.messageForm.get(MESSAGE).value;
+        const userName: string = this.items[index].userName;
+        const newMessage = `<i>${userName}</i>, ${message}`;
         this.messageForm.get(MESSAGE).patchValue(newMessage);
         this.elementRef.setFocus();
         this.cd.markForCheck();
     }
-    
+
     public edit(index: number): void {
         this.selectedEditIndex = index;
         this.messageForm.get(MESSAGE).patchValue(this.items[index].message);
@@ -108,7 +109,7 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
 
     public cancelEdit(): void {
         this.selectedEditIndex = null;
-        this.messageForm.get(MESSAGE).patchValue("");
+        this.messageForm.get(MESSAGE).patchValue('');
         this.cd.markForCheck();
     }
 
@@ -117,11 +118,11 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
             if (data) {
                 this.items.slice(index, 1);
                 this.items = this.items.concat([]);
-                this.snackBar.open("Коммент удален");
+                this.snackBar.open('Коммент удален');
             }
         },
             () => {
-                this.snackBar.open("Коммент НЕ удален");
+                this.snackBar.open('Коммент НЕ удален');
             },
             () => {
                 this.cd.markForCheck();
@@ -136,16 +137,16 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
             this.items.unshift(message);
         }
         if (clearAfter) {
-            this.messageForm.get(MESSAGE).patchValue("");
+            this.messageForm.get(MESSAGE).patchValue('');
         }
         this.cd.markForCheck();
     }
 
-    private initForm(message: string = ""): void {
+    private initForm(message: string = ''): void {
         this.messageForm = this.formBuilder.group({
             message: [message,
                 Validators.compose([Validators.required,
-                    Validators.maxLength(MAX_CHAT_MESSAGE_LENGTH)])], //todo add visual warning
+                    Validators.maxLength(MAX_CHAT_MESSAGE_LENGTH)])], // todo add visual warning
             typeId: [this.type, Validators.required]
         });
         this.messageForm.valueChanges.subscribe(() => {

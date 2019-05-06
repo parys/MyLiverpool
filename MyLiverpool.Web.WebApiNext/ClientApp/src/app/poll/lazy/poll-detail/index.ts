@@ -1,1 +1,1 @@
-﻿export * from "./poll-detail.component";
+export * from './poll-detail.component';

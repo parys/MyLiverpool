@@ -1,1 +1,1 @@
-﻿export * from "./stadium-list.component";
+export * from './stadium-list.component';

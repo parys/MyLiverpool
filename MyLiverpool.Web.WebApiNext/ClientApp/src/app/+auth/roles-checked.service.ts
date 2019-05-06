@@ -1,33 +1,33 @@
-﻿import { Injectable, ApplicationRef } from "@angular/core";
-import { StorageService } from "@app/+storage";
-import { RolesEnum } from "./models/roles.enum";
+import { Injectable, ApplicationRef } from '@angular/core';
+import { StorageService } from '@app/+storage';
+import { RolesEnum } from './models/roles.enum';
 
 @Injectable()
 export class RolesCheckedService {
-    //public isLogined: boolean = false;
-    //public isEditor: boolean =  false;
-    //public isNewsmaker: boolean =  false;
-    //public isModerator: boolean =  false;
-    //public isMainModerator: boolean =  false;
-    //public isAdminAssistant: boolean =  false;
-    //public isAdmin: boolean =  false;
-    //public isAuthor: boolean =  false;
-    //public isInformer: boolean =  false;
-    //public isMainInformer: boolean =  false;
+    // public isLogined: boolean = false;
+    // public isEditor: boolean =  false;
+    // public isNewsmaker: boolean =  false;
+    // public isModerator: boolean =  false;
+    // public isMainModerator: boolean =  false;
+    // public isAdminAssistant: boolean =  false;
+    // public isAdmin: boolean =  false;
+    // public isAuthor: boolean =  false;
+    // public isInformer: boolean =  false;
+    // public isMainInformer: boolean =  false;
 
     private roles: string[];
   //  public userRoles: UserRoles = new UserRoles();
   //  public rolesChanged: Subject<UserRoles> = new Subject<UserRoles>();
-    public isLogined: boolean = false;
-    public isEditor: boolean = false;
-    public isNewsmaker: boolean = false;
-    public isModerator: boolean = false;
-    public isMainModerator: boolean = false;
-    public isAdminAssistant: boolean = false;
-    public isAdmin: boolean = false;
-    public isAuthor: boolean = false;
-    public isInformer: boolean = false;
-    public isMainInformer: boolean = false;
+    public isLogined = false;
+    public isEditor = false;
+    public isNewsmaker = false;
+    public isModerator = false;
+    public isMainModerator = false;
+    public isAdminAssistant = false;
+    public isAdmin = false;
+    public isAuthor = false;
+    public isInformer = false;
+    public isMainInformer = false;
 
     constructor(
         private storage: StorageService,
@@ -42,17 +42,17 @@ export class RolesCheckedService {
         if (!this.roles) {
      //       this.rolesChanged.next(null);
             return;
-        };
-        //this.userRoles.isLogined = true;
-        //this.userRoles.isEditor = this.checkRole(RolesEnum[RolesEnum.NewsFull]) || this.checkRole(RolesEnum[RolesEnum.BlogFull]);
-        //this.userRoles.isNewsmaker = this.checkRole(RolesEnum[RolesEnum.NewsStart]);
-        //this.userRoles.isModerator = this.checkRole(RolesEnum[RolesEnum.UserStart]);
-        //this.userRoles.isMainModerator = this.checkRole(RolesEnum[RolesEnum.UserFull]);
-        //this.userRoles.isAdminAssistant = this.checkRole(RolesEnum[RolesEnum.AdminStart]);
-        //this.userRoles.isAdmin = this.checkRole(RolesEnum[RolesEnum.AdminFull]);
-        //this.userRoles.isAuthor = this.checkRole(RolesEnum[RolesEnum.BlogStart]);
-        //this.userRoles.isInformer = this.checkRole(RolesEnum[RolesEnum.InfoStart]);
-        //this.userRoles.isMainInformer = this.checkRole(RolesEnum[RolesEnum.InfoFull]);
+        }
+        // this.userRoles.isLogined = true;
+        // this.userRoles.isEditor = this.checkRole(RolesEnum[RolesEnum.NewsFull]) || this.checkRole(RolesEnum[RolesEnum.BlogFull]);
+        // this.userRoles.isNewsmaker = this.checkRole(RolesEnum[RolesEnum.NewsStart]);
+        // this.userRoles.isModerator = this.checkRole(RolesEnum[RolesEnum.UserStart]);
+        // this.userRoles.isMainModerator = this.checkRole(RolesEnum[RolesEnum.UserFull]);
+        // this.userRoles.isAdminAssistant = this.checkRole(RolesEnum[RolesEnum.AdminStart]);
+        // this.userRoles.isAdmin = this.checkRole(RolesEnum[RolesEnum.AdminFull]);
+        // this.userRoles.isAuthor = this.checkRole(RolesEnum[RolesEnum.BlogStart]);
+        // this.userRoles.isInformer = this.checkRole(RolesEnum[RolesEnum.InfoStart]);
+        // this.userRoles.isMainInformer = this.checkRole(RolesEnum[RolesEnum.InfoFull]);
         this.isLogined = true;
         this.isEditor = this.checkRole(RolesEnum[RolesEnum.NewsFull]) || this.checkRole(RolesEnum[RolesEnum.BlogFull]);
         this.isNewsmaker = this.checkRole(RolesEnum[RolesEnum.NewsStart]);
@@ -84,7 +84,7 @@ export class RolesCheckedService {
     }
 }
 
-//export class UserRoles {
+// export class UserRoles {
 //    public isLogined: boolean = false;
 //    public isEditor: boolean = false;
 //    public isNewsmaker: boolean = false;
@@ -95,4 +95,4 @@ export class RolesCheckedService {
 //    public isAuthor: boolean = false;
 //    public isInformer: boolean = false;
 //    public isMainInformer: boolean = false;
-//}
+// }

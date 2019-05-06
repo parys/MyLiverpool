@@ -1,10 +1,10 @@
-﻿import { Component, OnInit } from "@angular/core";
-import { SeasonService } from "../../core";
-import { Season } from "../../model";
+import { Component, OnInit } from '@angular/core';
+import { SeasonService } from '../../core';
+import { Season } from '../../model';
 
 @Component({
-    selector: "season-list",
-    templateUrl: "./season-list.component.html"
+    selector: 'season-list',
+    templateUrl: './season-list.component.html'
 })
 export class SeasonListComponent implements OnInit {
     public seasons: Season[];
@@ -12,7 +12,7 @@ export class SeasonListComponent implements OnInit {
     constructor(private service: SeasonService) {
     }
 
-    public ngOnInit(): void {     
+    public ngOnInit(): void {
         this.service.getAllWithoutFilter().subscribe(data => this.seasons = data,
             e => console.log(e));
     }

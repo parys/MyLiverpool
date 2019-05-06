@@ -1,10 +1,10 @@
-﻿import { NgModule } from "@angular/core";
-import { RouterModule } from "@angular/router";
-import { SharedModule } from "@app/shared";
-import { PmReplyComponent } from "./pm-reply";
-import { EditorModule } from "@app/editor";
-import { PmCoreModule } from "../core/pm-core.module";
-import { MatInputModule } from '@angular/material';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { SharedModule } from '@app/shared';
+import { PmReplyComponent } from './pm-reply';
+import { EditorModule } from '@app/editor';
+import { PmCoreModule } from '../core/pm-core.module';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
     imports: [

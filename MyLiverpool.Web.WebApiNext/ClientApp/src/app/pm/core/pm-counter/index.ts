@@ -1,1 +1,1 @@
-﻿export * from "./pm-counter.component";
+export * from './pm-counter.component';

@@ -1,45 +1,45 @@
-﻿import { Routes } from "@angular/router";
-import { UnSignedGuard, RoleGuard } from "@app/+auth";
-import { AccountSignupComponent } from "./account-signup";
-import { ConfirmEmailComponent } from "./confirmEmail";
-import { ForgotPasswordComponent } from "./forgotPassword";
-import { UnconfirmedEmailComponent } from "./unconfirmedEmail";
-import { ResetPasswordComponent } from "./resetPassword";
-import { ChangePasswordComponent } from "./changePassword";
+import { Routes } from '@angular/router';
+import { UnSignedGuard, RoleGuard } from '@app/+auth';
+import { AccountSignupComponent } from './account-signup';
+import { ConfirmEmailComponent } from './confirmEmail';
+import { ForgotPasswordComponent } from './forgotPassword';
+import { UnconfirmedEmailComponent } from './unconfirmedEmail';
+import { ResetPasswordComponent } from './resetPassword';
+import { ChangePasswordComponent } from './changePassword';
 
 export const accountRoutes: Routes = [
     {
-        path: "signup",
+        path: 'signup',
         component: AccountSignupComponent,
-        data: { title: "Регистрация" },
+        data: { title: 'Регистрация' },
         canActivate: [UnSignedGuard]
     },
     {
-        path: "confirmEmail",
+        path: 'confirmEmail',
         component: ConfirmEmailComponent,
-        data: { title: "Подтверждение пароля" }
+        data: { title: 'Подтверждение пароля' }
     },
     {
-        path: "forgotPassword",
+        path: 'forgotPassword',
         component: ForgotPasswordComponent,
-        data: { title: "Восстановление забытого пароля" },
+        data: { title: 'Восстановление забытого пароля' },
         canActivate: [UnSignedGuard]
     },
     {
-        path: "unconfirmedEmail",
+        path: 'unconfirmedEmail',
         component: UnconfirmedEmailComponent,
-        data: { title: "Ваша почта не подтверждена" }
+        data: { title: 'Ваша почта не подтверждена' }
     },
     {
-        path: "resetPassword",
+        path: 'resetPassword',
         component: ResetPasswordComponent,
-        data: { title: "Сброс пароля" },
+        data: { title: 'Сброс пароля' },
         canActivate: [UnSignedGuard]
     },
     {
-        path: "changePassword",
+        path: 'changePassword',
         component: ChangePasswordComponent,
-        data: { title: "Изменение пароля" },
+        data: { title: 'Изменение пароля' },
         canActivate: [RoleGuard]
     }
 ];

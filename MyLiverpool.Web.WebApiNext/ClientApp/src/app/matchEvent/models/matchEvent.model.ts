@@ -1,4 +1,4 @@
-﻿export class MatchEvent {
+export class MatchEvent {
     public id: number;
     public minute: string;
     public personId: number;

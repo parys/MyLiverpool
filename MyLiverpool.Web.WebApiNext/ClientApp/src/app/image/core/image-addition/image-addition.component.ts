@@ -1,18 +1,18 @@
-﻿import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { MatSnackBar } from "@angular/material";
-import { ImageService } from "../image.service";
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ImageService } from '../image.service';
 
 @Component({
-    selector: "image-addition",
-    templateUrl: "./image-addition.component.html",
-    styleUrls: ["./image-addition.component.scss"]
+    selector: 'image-addition',
+    templateUrl: './image-addition.component.html',
+    styleUrls: ['./image-addition.component.scss']
 })
 export class ImageAdditionComponent {
     public uploadedFiles: string[];
     @Input()
-    public isMultiple: boolean = true;
+    public isMultiple = true;
     @Input()
-    public controlName: string = "upload-image";
+    public controlName = 'upload-image';
 
     public buttonName: string;
     @Output()
@@ -24,7 +24,7 @@ export class ImageAdditionComponent {
     }
 
     public ngAfterViewInit(): void {
-        this.buttonName = `Загрузить изображени${this.isMultiple ? "я" : "е"}`;
+        this.buttonName = `Загрузить изображени${this.isMultiple ? 'я' : 'е'}`;
     }
 
     public onUploadImage(event: any) {
@@ -33,15 +33,15 @@ export class ImageAdditionComponent {
                 .subscribe(result => {
                         if (this.isMultiple) {
                             this.uploadedFiles = result;
-                            this.snackBar.open("Изображения загружены", null);
+                            this.snackBar.open('Изображения загружены', null);
                         } else {
                             this.loadedImage.emit(result[0]);
-                            this.snackBar.open("Изображение загружено", null);
+                            this.snackBar.open('Изображение загружено', null);
                         }
                     },
                     error => {
                         console.log(error);
-                        this.snackBar.open("Ошибка при загрузке", null);
+                        this.snackBar.open('Ошибка при загрузке', null);
                     });
         }
     }

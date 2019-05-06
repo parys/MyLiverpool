@@ -1,1 +1,1 @@
-﻿export * from "./wish-edit.component";
+export * from './wish-edit.component';

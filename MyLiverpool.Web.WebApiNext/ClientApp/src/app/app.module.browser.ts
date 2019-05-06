@@ -1,10 +1,10 @@
-﻿import { NgModule } from "@angular/core";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { AppModuleShared } from "./app.module";
-import { AppComponent } from "./app.component";
-import { ServiceWorkerModule } from "@angular/service-worker";
-import { environment } from "../environments/environment";
-import { BrowserTransferStateModule } from "@angular/platform-browser";
+import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppModuleShared } from './app.module';
+import { AppComponent } from './app.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { BrowserTransferStateModule } from '@angular/platform-browser';
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -12,7 +12,7 @@ import { BrowserTransferStateModule } from "@angular/platform-browser";
         AppModuleShared,
         BrowserAnimationsModule,
         BrowserTransferStateModule,
-        ServiceWorkerModule.register("/ngsw-worker.js", { enabled: environment.production })
+        ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [
         //   { provide: 'BASE_URL', useFactory: getBaseUrl }
@@ -21,6 +21,6 @@ import { BrowserTransferStateModule } from "@angular/platform-browser";
 export class AppModule {
 }
 
-//export function getBaseUrl() {
+// export function getBaseUrl() {
 //    return document.getElementsByTagName("base")[0].href;
-//}
+// }

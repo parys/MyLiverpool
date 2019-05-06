@@ -1,6 +1,6 @@
-﻿import { NgModule } from "@angular/core";
-import { SharedModule } from "@app/shared";
-import { MaterialCategoryService } from "./materialCategory.service";
+import { NgModule } from '@angular/core';
+import { SharedModule } from '@app/shared';
+import { MaterialCategoryService } from './materialCategory.service';
 
 @NgModule({
     imports: [
@@ -10,4 +10,4 @@ import { MaterialCategoryService } from "./materialCategory.service";
         MaterialCategoryService
     ]
 })
-export class MaterialCategoryCoreModule { }  
+export class MaterialCategoryCoreModule { }

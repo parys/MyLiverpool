@@ -1,1 +1,1 @@
-﻿export * from "./unconfirmedEmail.component";
+export * from './unconfirmedEmail.component';

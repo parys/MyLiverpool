@@ -1,1 +1,1 @@
-﻿export * from "./pm-detail.component";
+export * from './pm-detail.component';

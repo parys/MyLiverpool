@@ -1,4 +1,4 @@
-﻿export enum RolesEnum {
+export enum RolesEnum {
     Simple = 0,
     NewsStart = 1,
     NewsFull = 2,

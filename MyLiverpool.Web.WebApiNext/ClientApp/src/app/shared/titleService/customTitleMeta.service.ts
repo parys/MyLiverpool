@@ -1,10 +1,10 @@
-﻿import { Injectable } from "@angular/core";
-import { Title, Meta } from "@angular/platform-browser";
-import { TITLE_RU } from "../../+constants/ru.constants";
+import { Injectable } from '@angular/core';
+import { Title, Meta } from '@angular/platform-browser';
+import { TITLE_RU } from '../../+constants/ru.constants';
 
-@Injectable({providedIn: "root"})
+@Injectable({providedIn: 'root'})
 export class CustomTitleMetaService {
-    private count: number = 0;
+    private count = 0;
     private title: string = TITLE_RU;
     constructor(private titleService: Title,
         private meta: Meta) { }
@@ -25,20 +25,20 @@ export class CustomTitleMetaService {
     }
 
     public updateDescriptionMetaTag(content: string) {
-        this.meta.updateTag({ name: "description", content: content });
-        this.meta.updateTag({ property: "og:description", content: content });
+        this.meta.updateTag({ name: 'description', content: content });
+        this.meta.updateTag({ property: 'og:description', content: content });
     }
 
     public updateKeywordsMetaTag(content: string) {
-        this.meta.updateTag({ name: "keywords", content: content });
+        this.meta.updateTag({ name: 'keywords', content: content });
     }
 
     public updateTypeMetaTag(content: string) {
-        this.meta.updateTag({ property: "og:type", content: content });
+        this.meta.updateTag({ property: 'og:type', content: content });
     }
 
     public updateOgImageMetaTag(content: string) {
-        this.meta.updateTag({ property: "og:image", content: content });
+        this.meta.updateTag({ property: 'og:image', content: content });
     }
 
     private updateTitle(): void {
@@ -47,6 +47,6 @@ export class CustomTitleMetaService {
         } else {
             this.titleService.setTitle(this.title);
         }
-        this.meta.updateTag({ property: "og:title", content: this.title });
+        this.meta.updateTag({ property: 'og:title', content: this.title });
     }
 }

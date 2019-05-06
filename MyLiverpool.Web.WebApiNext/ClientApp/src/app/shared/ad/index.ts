@@ -1,1 +1,1 @@
-﻿export * from "./ad.component";
+export * from './ad.component';

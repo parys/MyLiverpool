@@ -1,1 +1,1 @@
-﻿export * from "./stadium-edit.component";
+export * from './stadium-edit.component';

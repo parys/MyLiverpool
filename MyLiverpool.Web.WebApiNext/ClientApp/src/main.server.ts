@@ -1,20 +1,20 @@
-﻿import 'zone.js/dist/zone-node';
+import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
-import "./polyfills/server.polyfills";
+import './polyfills/server.polyfills';
 import { renderModule, renderModuleFactory } from '@angular/platform-server';
 import { APP_BASE_HREF } from '@angular/common';
 import { enableProdMode } from '@angular/core';
 import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 import { createServerRenderer } from 'aspnet-prerendering';
 export { AppServerModule } from './app/app.module.server';
-//import { COOKIES } from './app/app.models';
+// import { COOKIES } from './app/app.models';
 import { InjectionToken } from '@angular/core';
 
 export const COOKIES = new InjectionToken<string>('COOKIES');
 // This allows to set cookies on server
 // Only cookie used in this app is culture cookie
-//import * as xhr2 from 'xhr2';
-//xhr2.prototype._restrictedHeaders = {};
+// import * as xhr2 from 'xhr2';
+// xhr2.prototype._restrictedHeaders = {};
 
 enableProdMode();
 
@@ -26,7 +26,7 @@ export default createServerRenderer(params => {
         extraProviders: [
             provideModuleMap(LAZY_MODULE_MAP),
             { provide: APP_BASE_HREF, useValue: params.baseUrl },
-            { provide: "BASE_URL", useValue: params.origin + params.baseUrl },
+            { provide: 'BASE_URL', useValue: params.origin + params.baseUrl },
             { provide: COOKIES, useValue: params.data.cookies }
         ]
     };
@@ -43,15 +43,15 @@ export default createServerRenderer(params => {
 
 });
 
-//import { enableProdMode } from "@angular/core";
-//import { createServerRenderer } from "aspnet-prerendering";
-//import { AppModule } from "./app/app.module.server";
-//import { ngAspnetCoreEngine, IEngineOptions, createTransferScript } from "@nguniversal/aspnetcore-engine";
+// import { enableProdMode } from "@angular/core";
+// import { createServerRenderer } from "aspnet-prerendering";
+// import { AppModule } from "./app/app.module.server";
+// import { ngAspnetCoreEngine, IEngineOptions, createTransferScript } from "@nguniversal/aspnetcore-engine";
 
 
-//enableProdMode();
+// enableProdMode();
 
-//export default createServerRenderer(params => {
+// export default createServerRenderer(params => {
 //    // Platform-server provider configuration
 //    const setupOptions: IEngineOptions = {
 //        appSelector: "<app></app>",
@@ -80,4 +80,4 @@ export default createServerRenderer(params => {
 //            globals: response.globals
 //        });
 //    });
-//});
+// });

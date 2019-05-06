@@ -1,27 +1,29 @@
-﻿import { Component, OnInit, OnDestroy, ViewChild, ElementRef  } from "@angular/core"; 
-import { Location } from "@angular/common";
-import { MatPaginator, MatSort, MatDialog } from "@angular/material";
-import { ActivatedRoute } from "@angular/router";
-import { merge, of, fromEvent, Observable, Subscription } from "rxjs";
-import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged } from "rxjs/operators";
-import { Injury, InjuryFilters } from "@app/injury/model";
-import { InjuryService } from "@app/injury/core";
-import { Pageable, DeleteDialogComponent } from "@app/shared";
-import { DEBOUNCE_TIME, INJURIES_ROUTE, KEYUP, PAGE } from "@app/+constants";
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef  } from '@angular/core';
+import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { ActivatedRoute } from '@angular/router';
+import { merge, of, fromEvent, Observable, Subscription } from 'rxjs';
+import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Injury, InjuryFilters } from '@app/injury/model';
+import { InjuryService } from '@app/injury/core';
+import { Pageable, DeleteDialogComponent } from '@app/shared';
+import { DEBOUNCE_TIME, INJURIES_ROUTE, KEYUP, PAGE } from '@app/+constants';
 
 @Component({
-    selector: "injury-list",
-    templateUrl: "./injury-list.component.html"
+    selector: 'injury-list',
+    templateUrl: './injury-list.component.html'
 })
 
 export class InjuryListComponent implements OnInit, OnDestroy {
     private sub: Subscription;
     public items: Injury[];
-    displayedColumns = ["personName", "startTime", "endTime", "description", "tool"];
+    displayedColumns = ['personName', 'startTime', 'endTime', 'description', 'tool'];
 
-    @ViewChild(MatSort) sort: MatSort;
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild("nameInput") nameInput: ElementRef;
+    @ViewChild(MatSort, { static: true }) sort: MatSort;
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+    @ViewChild('nameInput', { static: true }) nameInput: ElementRef;
 
     constructor(private injuryService: InjuryService,
         private route: ActivatedRoute,
@@ -68,11 +70,11 @@ export class InjuryListComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if (this.sub) this.sub.unsubscribe();
+        if (this.sub) { this.sub.unsubscribe(); }
     }
 
     public showDeleteModal(injury: Injury): void {
-        let dialogRef = this.dialog.open(DeleteDialogComponent);
+        const dialogRef = this.dialog.open(DeleteDialogComponent);
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.delete(injury.id);
@@ -95,8 +97,8 @@ export class InjuryListComponent implements OnInit, OnDestroy {
     public updateUrl(): void {
         const newUrl = `${INJURIES_ROUTE}?${PAGE}=${this.paginator.pageIndex + 1}`;
         this.location.replaceState(newUrl);
-    };
-    
+    }
+
     private delete(index: number): void {
         this.injuryService.delete(this.items[index].id)
             .subscribe((res: boolean) => {

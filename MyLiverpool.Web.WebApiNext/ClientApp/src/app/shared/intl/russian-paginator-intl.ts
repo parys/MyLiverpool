@@ -1,4 +1,4 @@
-﻿import { MatPaginatorIntl } from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 
 const russianhRangeLabel = (page: number, pageSize: number, length: number) => {
     if (length == 0 || pageSize == 0) { return `0 из ${length}`; }
@@ -13,7 +13,7 @@ const russianhRangeLabel = (page: number, pageSize: number, length: number) => {
         startIndex + pageSize;
 
     return `${startIndex + 1} - ${endIndex} из ${length}`;
-}
+};
 
 
 export function getRussianPaginatorIntl() {

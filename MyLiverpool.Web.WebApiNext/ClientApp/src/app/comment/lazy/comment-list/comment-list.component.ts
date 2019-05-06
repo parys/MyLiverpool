@@ -1,19 +1,21 @@
-﻿import { Component, OnDestroy, ViewChild, AfterViewInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { Location } from "@angular/common";
-import { MatDialog, MatPaginator, MatCheckbox } from "@angular/material";
-import { merge, of, Observable, Subscription } from "rxjs";
-import { startWith, switchMap, map, catchError } from "rxjs/operators";
-import { Comment } from "@app/+common-models";
-import { CommentService } from "@app/comment/core";
-import { DeleteDialogComponent, Pageable } from "@app/shared";
-import { RolesCheckedService } from "@app/+auth";
-import { CommentFilter } from "@app/comment/model";
-import { COMMENTS_ROUTE, PAGE, USER_ID } from "@app/+constants";
+import { Component, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { merge, of, Observable, Subscription } from 'rxjs';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { Comment } from '@app/+common-models';
+import { CommentService } from '@app/comment/core';
+import { DeleteDialogComponent, Pageable } from '@app/shared';
+import { RolesCheckedService } from '@app/+auth';
+import { CommentFilter } from '@app/comment/model';
+import { COMMENTS_ROUTE, PAGE, USER_ID } from '@app/+constants';
 
 @Component({
-    selector: "comment-list",
-    templateUrl: "./comment-list.component.html"
+    selector: 'comment-list',
+    templateUrl: './comment-list.component.html'
 })
 export class CommentListComponent implements OnDestroy, AfterViewInit {
     private sub: Subscription;
@@ -22,8 +24,8 @@ export class CommentListComponent implements OnDestroy, AfterViewInit {
     public userName: string;
     public userId: number;
 
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild("onlyUnverified") onlyUnverified: MatCheckbox;
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+    @ViewChild('onlyUnverified', { static: false }) onlyUnverified: MatCheckbox;
 
     constructor(private materialCommentService: CommentService,
         private route: ActivatedRoute,
@@ -35,12 +37,12 @@ export class CommentListComponent implements OnDestroy, AfterViewInit {
     public ngAfterViewInit(): void {
         this.sub = this.route.queryParams.subscribe(qParams => {
                 this.paginator.pageIndex = +qParams[PAGE] - 1 || 0;
-                this.paginator.pageSize = +qParams["itemsPerPage"] || 15;
+                this.paginator.pageSize = +qParams['itemsPerPage'] || 15;
 
-                this.categoryId = qParams["categoryId"] || null;
-                this.userName = qParams["userName"] || "";
+                this.categoryId = qParams['categoryId'] || null;
+                this.userName = qParams['userName'] || '';
                 this.userId = qParams[USER_ID];
-                this.onlyUnverified.checked = qParams["onlyUnverified"] || false;
+                this.onlyUnverified.checked = qParams['onlyUnverified'] || false;
             });
 
         merge(this.paginator.page,
@@ -68,7 +70,7 @@ export class CommentListComponent implements OnDestroy, AfterViewInit {
     }
 
     public ngOnDestroy(): void {
-        if (this.sub) this.sub.unsubscribe();
+        if (this.sub) { this.sub.unsubscribe(); }
     }
 
     public update(): Observable<Pageable<Comment>> {

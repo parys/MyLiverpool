@@ -1,21 +1,21 @@
-﻿import { Pipe, PipeTransform } from "@angular/core";
-import { DatePipe } from "@angular/common";
+import { Pipe, PipeTransform } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
-@Pipe({ name: "customDate" })
+@Pipe({ name: 'customDate' })
 export class CustomDatePipe implements PipeTransform {
     public transform(value: string, withSeconds: boolean = false, withDayOfWeek: boolean = false, withoutTime: boolean = false, withoutYear: boolean = false): string {
-        const datePipe = new DatePipe("ru-RU");
-        let dateString = "";
+        const datePipe = new DatePipe('ru-RU');
+        let dateString = '';
         if (this.isExactDate(value, withoutYear, 0)) {
-            dateString += "сегодня";
+            dateString += 'сегодня';
         } else if (this.isExactDate(value, withoutYear, -1)) {
-            dateString += "вчера";
+            dateString += 'вчера';
         } else if (this.isExactDate(value, withoutYear, +1)) {
-            dateString += "завтра";
+            dateString += 'завтра';
         } else {
-            dateString += datePipe.transform(value,`d MMM y ${withDayOfWeek ? "EEE" : ""}`);
+            dateString += datePipe.transform(value, `d MMM y ${withDayOfWeek ? 'EEE' : ''}`);
         }
-        return dateString + datePipe.transform(value, ` ${withoutTime ? "" : " HH:mm"}${!withoutTime && withSeconds ? ":ss" : ""}`);
+        return dateString + datePipe.transform(value, ` ${withoutTime ? '' : ' HH:mm'}${!withoutTime && withSeconds ? ':ss' : ''}`);
     }
 
     private isExactDate(date: string, withoutYear: boolean, dateDirection: number): boolean {

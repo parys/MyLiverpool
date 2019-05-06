@@ -1,4 +1,4 @@
-﻿//should also changed 
+// should also changed
 export enum HelperType {
     EplTable = 1,
     BestPlayer = 2,

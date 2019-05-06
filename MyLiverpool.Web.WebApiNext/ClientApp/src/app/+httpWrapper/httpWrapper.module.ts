@@ -1,6 +1,6 @@
-﻿import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { HttpWrapper } from "./httpWrapper.service";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpWrapper } from './httpWrapper.service';
 
 @NgModule({
     imports: [
@@ -10,4 +10,4 @@ import { HttpWrapper } from "./httpWrapper.service";
         HttpWrapper
     ]
 })
-export class HttpWrapperModule { }  
+export class HttpWrapperModule { }

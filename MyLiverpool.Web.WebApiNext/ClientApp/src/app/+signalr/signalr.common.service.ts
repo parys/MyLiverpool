@@ -1,17 +1,17 @@
-﻿import { Injectable, Inject, PLATFORM_ID } from "@angular/core";
-import { isPlatformServer } from "@angular/common";  
-import { Subject } from "rxjs";
-import { StorageService } from "@app/+storage";
-import { ChatMessage, Comment, UsersOnline } from "@app/+common-models";
-import { Pm } from "@app/pm/model"
-import { HubConnection, HubConnectionBuilder, LogLevel } from "@aspnet/signalr";
-//import { MessagePackHubProtocol } from "@aspnet/signalr-protocol-msgpack";
-import { Notification } from "@app/notification/model";
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { Subject } from 'rxjs';
+import { StorageService } from '@app/+storage';
+import { ChatMessage, Comment, UsersOnline } from '@app/+common-models';
+import { Pm } from '@app/pm/model';
+import { HubConnection, HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
+// import { MessagePackHubProtocol } from "@aspnet/signalr-protocol-msgpack";
+import { Notification } from '@app/notification/model';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class SignalRService {
     private hubConnection: HubConnection;
-    private alreadyStarted: boolean = false;
+    private alreadyStarted = false;
     public chatSubject: Subject<ChatMessage> = new Subject<ChatMessage>();
     public onlineSubject: Subject<UsersOnline> = new Subject<UsersOnline>();
     public lastCommentsSubject: Subject<Comment> = new Subject<Comment>();
@@ -22,18 +22,18 @@ export class SignalRService {
 
     constructor(private storage: StorageService,
         @Inject(PLATFORM_ID) private platformId: Object,
-        @Inject("BASE_URL") private baseUrl: string) {
+        @Inject('BASE_URL') private baseUrl: string) {
     }
 
     public initializeHub(): void {
         if (isPlatformServer(this.platformId)) {
             return;
         }
-        let hubUrl = "anonym";
+        let hubUrl = 'anonym';
 
         const token = this.storage.getAccessToken();
         if (token) {
-            hubUrl = "auth";
+            hubUrl = 'auth';
         }
         const options = {
             accessTokenFactory() { return token; },
@@ -49,32 +49,32 @@ export class SignalRService {
           //  .withHubProtocol(new MessagePackHubProtocol())
             .configureLogging(LogLevel.Error)
             .build();
-        this.hubConnection.on("updateChat", (data: ChatMessage) => {
+        this.hubConnection.on('updateChat', (data: ChatMessage) => {
             this.chatSubject.next(data);
         });
-        this.hubConnection.on("updateOnline", (data: UsersOnline) => {
+        this.hubConnection.on('updateOnline', (data: UsersOnline) => {
             this.onlineSubject.next(data);
         });
-        this.hubConnection.on("addComment", (data: Comment) => {
+        this.hubConnection.on('addComment', (data: Comment) => {
             this.lastCommentsSubject.next(data);
         });
-        this.hubConnection.on("updateComment", (data: Comment) => {
+        this.hubConnection.on('updateComment', (data: Comment) => {
             this.lastCommentsSubject.next(data);
         });
         if (token) {
-            this.hubConnection.on("readPm",
+            this.hubConnection.on('readPm',
                 (data: boolean) => {
                     this.readPm.next(data);
                 });
-            this.hubConnection.on("newPm",
+            this.hubConnection.on('newPm',
                 (data: Pm) => {
                     this.newPm.next(data);
                 });
-            this.hubConnection.on("newNotify",
+            this.hubConnection.on('newNotify',
                 (data: Notification) => {
                     this.newNotify.next(data);
                 });
-            this.hubConnection.on("readNotify",
+            this.hubConnection.on('readNotify',
                 (data: number) => {
                     this.readNotify.next(data);
                 });

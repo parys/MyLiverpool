@@ -1,15 +1,15 @@
-﻿import { trigger, keyframes, animate, transition, state, style } from "@angular/animations";
-import { SLIDE_OUT_LEFT, SLIDE_OUT_RIGHT, SLIDE_IN_RIGHT, SLIDE_IN_LEFT } from "../+constants/help.constants";
+import { trigger, keyframes, animate, transition, state, style } from '@angular/animations';
+import { SLIDE_OUT_LEFT, SLIDE_OUT_RIGHT, SLIDE_IN_RIGHT, SLIDE_IN_LEFT } from '../+constants/help.constants';
 
-const initial: string = "initial";
-const fixed: string = "fixed";
+const initial = 'initial';
+const fixed = 'fixed';
 const slideOutLeft = [
     style({
-        left: "-50%",
+        left: '-50%',
         offset: 0
     }),
     style({
-        left: "-99%",
+        left: '-99%',
         position: fixed,
         offset: 1
     })
@@ -17,11 +17,11 @@ const slideOutLeft = [
 
 const slideOutRight = [
     style({
-        left: "50%",
+        left: '50%',
         offset: 0
     }),
     style({
-        left: "99%",
+        left: '99%',
         position: fixed,
         offset: 1
     })
@@ -29,44 +29,44 @@ const slideOutRight = [
 
 const slideInLeft = [
     style({
-        left: "-99%",
+        left: '-99%',
         position: initial,
         offset: 0
     }),
     style({
-        left: "0",
+        left: '0',
         offset: 1
     })
 ];
 
 const slideInRight = [
     style({
-        left: "99%",
+        left: '99%',
         position: initial,
         offset: 0
     }),
     style({
-        left: "0",
+        left: '0',
         offset: 1
     })
 ];
 
 export const SlideInOutAnimation = [
-    trigger("slideInOut",
+    trigger('slideInOut',
         [
             state(SLIDE_OUT_LEFT, style({
-                left: "-99%",
+                left: '-99%',
                 position: fixed
             })),
             state(SLIDE_OUT_RIGHT, style({
-                left: "99%",
+                left: '99%',
                 position: fixed
             })),
             state(SLIDE_IN_RIGHT, style({
-                left: "0%",
+                left: '0%',
             })),
             state(SLIDE_IN_LEFT, style({
-                left: "0%",
+                left: '0%',
             })),
             transition(`* => ${SLIDE_OUT_LEFT}`, [animate(250, keyframes(slideOutLeft))]),
             transition(`* => ${SLIDE_OUT_RIGHT}`, [animate(250, keyframes(slideOutRight))]),

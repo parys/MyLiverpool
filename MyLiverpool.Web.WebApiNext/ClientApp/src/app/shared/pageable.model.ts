@@ -1,4 +1,4 @@
-﻿export class Pageable<T> {
+export class Pageable<T> {
     list: T[];
     pageNo: number;
     totalItems: number;

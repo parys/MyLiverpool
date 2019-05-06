@@ -1,4 +1,4 @@
-﻿export class CommentVote {
+export class CommentVote {
     public commentId: number;
     public positive: boolean;
 }

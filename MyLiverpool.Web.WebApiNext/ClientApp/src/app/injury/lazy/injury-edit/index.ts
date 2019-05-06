@@ -1,1 +1,1 @@
-﻿export * from "./injury-edit.component";
+export * from './injury-edit.component';

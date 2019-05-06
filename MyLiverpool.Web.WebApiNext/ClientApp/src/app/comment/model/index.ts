@@ -1,2 +1,2 @@
-﻿export * from "./commentVote.model";
-export * from "./commentFilter.model";
+export * from './commentVote.model';
+export * from './commentFilter.model';

@@ -1,13 +1,13 @@
-﻿import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Router, NavigationEnd } from "@angular/router";
-import { Pm } from "../../model";
-import { PmService } from "../../core";
-import { Subscription } from "rxjs";
-import { EDIT_ROUTE, PMS_ROUTE } from "../../../+constants/routes.constants";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { Pm } from '../../model';
+import { PmService } from '../../core';
+import { Subscription } from 'rxjs';
+import { EDIT_ROUTE, PMS_ROUTE } from '../../../+constants/routes.constants';
 
 @Component({
-    selector: "pm-list",
-    templateUrl: "./pm-list.component.html"
+    selector: 'pm-list',
+    templateUrl: './pm-list.component.html'
 })
 
 export class PmListComponent implements OnInit, OnDestroy {
@@ -29,7 +29,7 @@ export class PmListComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if(this.sub$) this.sub$.unsubscribe();
+        if (this.sub$) { this.sub$.unsubscribe(); }
     }
 
     private parse(model: any): void {
@@ -38,14 +38,14 @@ export class PmListComponent implements OnInit, OnDestroy {
     }
 
     public delete(index: number): void {
-        //this.newsCategoryService.Delete(this.items[index].id).subscribe(data => data,
+        // this.newsCategoryService.Delete(this.items[index].id).subscribe(data => data,
         //    error => console.log(error),
         //    () => console.log("success remove categoryu"));
-        //this.items.splice(index, 1);
+        // this.items.splice(index, 1);
     }
 
-    public writePm(): void {           
-        this.router.navigate([PMS_ROUTE, 0, EDIT_ROUTE]);  
+    public writePm(): void {
+        this.router.navigate([PMS_ROUTE, 0, EDIT_ROUTE]);
     }
 
     private init(): void {

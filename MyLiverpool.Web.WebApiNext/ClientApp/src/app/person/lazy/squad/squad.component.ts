@@ -1,21 +1,21 @@
-﻿import { Component } from "@angular/core";
-import { Location } from "@angular/common";
-import { ActivatedRoute } from "@angular/router";
-import { Subscription } from "rxjs";
-import { PersonService } from "@app/person/core";
-import { SquadList, PersonTypeEnum } from "@app/person/model";
-import { RolesCheckedService } from "@app/+auth";
+import { Component } from '@angular/core';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { PersonService } from '@app/person/core';
+import { SquadList, PersonTypeEnum } from '@app/person/model';
+import { RolesCheckedService } from '@app/+auth';
 
 @Component({
-    selector: "squad",
-    templateUrl: "./squad.component.html",
-    styleUrls: ["./squad.component.scss"]
+    selector: 'squad',
+    templateUrl: './squad.component.html',
+    styleUrls: ['./squad.component.scss']
 })
 export class SquadComponent {
     private sub: Subscription;
     public item: SquadList;
     public routeLinks: any[];
-    public activeLinkIndex: number = 0;
+    public activeLinkIndex = 0;
 
     constructor(private personService: PersonService,
         private route: ActivatedRoute,
@@ -25,12 +25,12 @@ export class SquadComponent {
 
     public ngOnInit(): void {
         this.routeLinks = [
-            { label: "Первая команда", link: "/persons/squad/first" },
-            { label: "Академия", link: "/persons/squad/academy" },
-            { label: "В аренде", link: "/persons/squad/loan" }];
-        if (this.route.snapshot.data["type"] === PersonTypeEnum[PersonTypeEnum.First]) {
+            { label: 'Первая команда', link: '/persons/squad/first' },
+            { label: 'Академия', link: '/persons/squad/academy' },
+            { label: 'В аренде', link: '/persons/squad/loan' }];
+        if (this.route.snapshot.data['type'] === PersonTypeEnum[PersonTypeEnum.First]) {
             this.activeLinkIndex = 0;
-        } else if (this.route.snapshot.data["type"] === PersonTypeEnum[PersonTypeEnum.Academy]) {
+        } else if (this.route.snapshot.data['type'] === PersonTypeEnum[PersonTypeEnum.Academy]) {
             this.activeLinkIndex = 1;
         } else {
             this.activeLinkIndex = 2;

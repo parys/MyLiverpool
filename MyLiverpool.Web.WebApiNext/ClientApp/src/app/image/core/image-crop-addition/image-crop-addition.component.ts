@@ -1,19 +1,19 @@
-﻿import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { MatSnackBar } from "@angular/material";
-import { ImageService } from "../image.service";
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ImageService } from '../image.service';
 
 @Component({
-    selector: "image-crop-addition",
-    templateUrl: "./image-crop-addition.component.html",
-    styleUrls: ["./image-crop-addition.component.scss"]
+    selector: 'image-crop-addition',
+    templateUrl: './image-crop-addition.component.html',
+    styleUrls: ['./image-crop-addition.component.scss']
 })
 export class ImageCropAdditionComponent {
     @Input()
-    public controlName: string = "upload-crop-image";
+    public controlName = 'upload-crop-image';
     @Output()
     public loadedImage: EventEmitter<string> = new EventEmitter<string>();
-    public imageChangedEvent: any = "";
-    public croppedImage: any = "";
+    public imageChangedEvent: any = '';
+    public croppedImage: any = '';
 
     constructor(private service: ImageService,
         private snackBar: MatSnackBar
@@ -31,11 +31,11 @@ export class ImageCropAdditionComponent {
         this.service.uploadBase64Image(this.croppedImage.base64)
             .subscribe(result => {
                 this.loadedImage.emit(result);
-                this.snackBar.open("Изображение обрезано");
+                this.snackBar.open('Изображение обрезано');
                 this.imageChangedEvent = this.croppedImage = null;
                 },
                 error => {
-                    this.snackBar.open("Ошибка при загрузке", null);
+                    this.snackBar.open('Ошибка при загрузке', null);
                 });
     }
 }

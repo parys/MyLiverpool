@@ -1,6 +1,6 @@
-﻿import { NgModule } from "@angular/core";
-import { HttpWrapperModule } from "@app/+httpWrapper";
-import { BaseRestService } from "./base-rest.service";
+import { NgModule } from '@angular/core';
+import { HttpWrapperModule } from '@app/+httpWrapper';
+import { BaseRestService } from './base-rest.service';
 
 @NgModule({
     imports: [
@@ -10,4 +10,4 @@ import { BaseRestService } from "./base-rest.service";
         BaseRestService
     ]
 })
-export class InfrastructureModule { }  
+export class InfrastructureModule { }

@@ -1,24 +1,24 @@
-﻿import { Component, OnInit, ViewChild } from "@angular/core";
-import { MatSelect, MatSelectChange } from "@angular/material";
-import { SeasonService } from "../../core";
-import { PersonStatistics, Season } from "../../model";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSelect, MatSelectChange } from '@angular/material/select';
+import { SeasonService } from '../../core';
+import { PersonStatistics, Season } from '../../model';
 
 @Component({
-    selector: "<season-statistics>",
-    templateUrl: "./season-statistics.component.html"
+    selector: '<season-statistics>',
+    templateUrl: './season-statistics.component.html'
 })
 export class SeasonStatisticsComponent implements OnInit {
     public statistics: PersonStatistics[];
     public seasons: Season[];
-    displayedColumns = ["personName", "goals", "assists", "yellows", "reds"];
+    displayedColumns = ['personName', 'goals', 'assists', 'yellows', 'reds'];
 
-    @ViewChild("seasonSelect") seasonSelect: MatSelect;
+    @ViewChild('seasonSelect', { static: true }) seasonSelect: MatSelect;
 
     constructor(private seasonService: SeasonService) {
 
     }
 
-    public ngOnInit(): void {//todo add updating url
+    public ngOnInit(): void {// todo add updating url
         this.seasonSelect.selectionChange.subscribe((data: MatSelectChange) => {
             this.update(data.value, false);
         });

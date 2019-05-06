@@ -1,4 +1,4 @@
-﻿export class Comment {
+export class Comment {
     public id: number;
     public additionTime: Date;
     public lastModified: Date;

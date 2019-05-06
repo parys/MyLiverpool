@@ -1,1 +1,1 @@
-﻿export * from "./season-statistics-item.component";
+export * from './season-statistics-item.component';

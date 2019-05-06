@@ -1,19 +1,19 @@
-﻿import { Component, OnInit, OnDestroy } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { MatSnackBar } from "@angular/material";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from "rxjs";
-import { MaterialCategoryService } from "../../core";
-import { MaterialType } from "../../model";
-import { CustomTitleMetaService } from "@app/shared";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { MaterialCategoryService } from '../../core';
+import { MaterialType } from '../../model';
+import { CustomTitleMetaService } from '@app/shared';
 
 @Component({
-    selector: "materialCategory-edit",
-    templateUrl: "./materialCategory-edit.component.html"
+    selector: 'materialCategory-edit',
+    templateUrl: './materialCategory-edit.component.html'
 })
 export class MaterialCategoryEditComponent implements OnInit, OnDestroy {
     public editCategoryForm: FormGroup;
-    private id: number = 0;
+    private id = 0;
     private sub: Subscription;
     private type: MaterialType;
 
@@ -23,22 +23,22 @@ export class MaterialCategoryEditComponent implements OnInit, OnDestroy {
         private router: Router,
         private titleService: CustomTitleMetaService,
         private route: ActivatedRoute) {
-        if (this.router.url.startsWith("/newsCategories")) {
-            this.titleService.setTitle("Категории новостей");
+        if (this.router.url.startsWith('/newsCategories')) {
+            this.titleService.setTitle('Категории новостей');
             this.type = MaterialType.News;
-        } else if (this.router.url.startsWith("/blogCategories")) {
-            this.titleService.setTitle("Категории блогов");
+        } else if (this.router.url.startsWith('/blogCategories')) {
+            this.titleService.setTitle('Категории блогов');
             this.type = MaterialType.Blogs;
-        } 
+        }
     }
 
     public ngOnInit(): void {
         this.editCategoryForm = this.formBuilder.group({
-            name: ["", Validators.required],
-            description: [""]
+            name: ['', Validators.required],
+            description: ['']
         });
         this.sub = this.route.params.subscribe(params => {
-            this.id = +params["id"];
+            this.id = +params['id'];
             if (this.id > 0) {
                 this.service
                     .getSingle(this.id)
@@ -59,13 +59,13 @@ export class MaterialCategoryEditComponent implements OnInit, OnDestroy {
         if (this.id > 0) {
             this.service.update(this.id, model).subscribe(data => {
                 if (data) {
-                    this.snackBar.open("Категория обновлена", null);
+                    this.snackBar.open('Категория обновлена', null);
                 }
             }, e => console.log(e));
         } else {
             this.service.create(model, this.type).subscribe(data => {
                 if (data) {
-                    this.snackBar.open("Категория создана", null);
+                    this.snackBar.open('Категория создана', null);
                 }
             }, e => console.log(e));
         }

@@ -1,4 +1,4 @@
-﻿import { Person } from "./person.model";
+import { Person } from './person.model';
 export class SquadList {
     public goalkeepers: Person[];
     public defenders: Person[];

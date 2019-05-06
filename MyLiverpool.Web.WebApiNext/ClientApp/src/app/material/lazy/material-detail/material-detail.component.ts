@@ -1,21 +1,22 @@
-﻿import { Component, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, PLATFORM_ID, Inject } from "@angular/core";
-import { isPlatformBrowser } from "@angular/common";
-import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
-import { MatDialog, MatSnackBar } from "@angular/material";
-import { Subscription } from "rxjs";
-import { MaterialService, MaterialActivateDialogComponent } from "../../core";
-import { Material } from "../../model";
-import { MaterialType } from "@app/materialCategory";
-import { DeleteDialogComponent } from "@app/shared";
-import { RolesCheckedService } from "@app/+auth";
-import { StorageService } from "@app/+storage";
-import { CustomTitleMetaService as CustomTitleService } from "@app/shared";
-import { NEWS_RU, BLOG_RU } from "@app/+constants/ru.constants";
+import { Component, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
+import { MaterialService, MaterialActivateDialogComponent } from '../../core';
+import { Material } from '../../model';
+import { MaterialType } from '@app/materialCategory';
+import { DeleteDialogComponent } from '@app/shared';
+import { RolesCheckedService } from '@app/+auth';
+import { StorageService } from '@app/+storage';
+import { CustomTitleMetaService as CustomTitleService } from '@app/shared';
+import { NEWS_RU, BLOG_RU } from '@app/+constants/ru.constants';
 
 @Component({
-    selector: "material-detail",
-    templateUrl: "./material-detail.component.html",
-    styleUrls: ["./material-detail.component.scss"],
+    selector: 'material-detail',
+    templateUrl: './material-detail.component.html',
+    styleUrls: ['./material-detail.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -43,8 +44,8 @@ export class MaterialDetailComponent implements OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if (this.sub) this.sub.unsubscribe();
-        if (this.navigationSubscription) this.navigationSubscription.unsubscribe();
+        if (this.sub) { this.sub.unsubscribe(); }
+        if (this.navigationSubscription) { this.navigationSubscription.unsubscribe(); }
     }
 
     public showActivateModal(): void {
@@ -66,7 +67,7 @@ export class MaterialDetailComponent implements OnDestroy {
     }
 
     private init(): void {
-        if (this.router.url.startsWith("/news")) {
+        if (this.router.url.startsWith('/news')) {
             this.titleService.setTitle(NEWS_RU);
             this.type = MaterialType.News;
             this.cd.markForCheck();
@@ -77,7 +78,7 @@ export class MaterialDetailComponent implements OnDestroy {
         }
 
         this.sub = this.route.params.subscribe(params => {
-            this.service.getSingle(+params["id"])
+            this.service.getSingle(+params['id'])
                 .subscribe(data => {
                     this.parse(data);
                 },
@@ -97,9 +98,9 @@ export class MaterialDetailComponent implements OnDestroy {
                 if (res) {
                     this.item.pending = false;
                     this.cd.markForCheck();
-                    this.snackBar.open("Материал активирован");
+                    this.snackBar.open('Материал активирован');
                 } else {
-                    this.snackBar.open("Материал НЕ активирован");
+                    this.snackBar.open('Материал НЕ активирован');
                 }
             });
     }
@@ -110,7 +111,7 @@ export class MaterialDetailComponent implements OnDestroy {
                 if (result) {
                     this.router.navigate([`/${MaterialType[this.type].toLowerCase()}`]);
                 } else {
-                    this.snackBar.open("Ошибка удаления");
+                    this.snackBar.open('Ошибка удаления');
                 }
             });
     }

@@ -1,2 +1,2 @@
-﻿export * from "./user.service";
-export * from "./user-core.module";
+export * from './user.service';
+export * from './user-core.module';

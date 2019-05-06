@@ -1,1 +1,1 @@
-﻿export * from "./squad.component";
+export * from './squad.component';

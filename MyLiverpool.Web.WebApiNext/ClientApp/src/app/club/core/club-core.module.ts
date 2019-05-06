@@ -1,6 +1,6 @@
-﻿import { NgModule } from "@angular/core";
-import { SharedModule } from "@app/shared";
-import { ClubService } from "./club.service";
+import { NgModule } from '@angular/core';
+import { SharedModule } from '@app/shared';
+import { ClubService } from './club.service';
 
 @NgModule({
     imports: [

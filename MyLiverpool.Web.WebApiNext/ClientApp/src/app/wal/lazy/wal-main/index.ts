@@ -1,1 +1,1 @@
-﻿export * from "./wal-main.component";
+export * from './wal-main.component';

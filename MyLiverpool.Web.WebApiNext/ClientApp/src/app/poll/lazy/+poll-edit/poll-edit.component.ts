@@ -1,16 +1,16 @@
-﻿import { Component, OnInit, OnDestroy } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
-import { MatSnackBar } from "@angular/material";
-import { Observable, Subscription } from "rxjs";
-import { debounceTime, distinctUntilChanged, switchMap } from "rxjs/operators";
-import { Poll, PollAnswer } from "../../models";
-import { PollService } from "../../core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Poll, PollAnswer } from '../../models';
+import { PollService } from '../../core';
 
 @Component({
-    selector: "poll-edit",
-    templateUrl: "./poll-edit.component.html",
-    styleUrls: ["./poll-edit.component.scss"]
+    selector: 'poll-edit',
+    templateUrl: './poll-edit.component.html',
+    styleUrls: ['./poll-edit.component.scss']
 })
 export class PollEditComponent implements OnInit, OnDestroy {
     private sub: Subscription;
@@ -27,8 +27,8 @@ export class PollEditComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         this.sub = this.route.params.subscribe(params => {
-            if (+params["id"] !== 0) {  
-                this.sub2 = this.service.getSingle(+params["id"])
+            if (+params['id'] !== 0) {
+                this.sub2 = this.service.getSingle(+params['id'])
                     .subscribe((data: Poll) => {
                         this.item = data;
                         this.editPollForm.patchValue(data);
@@ -43,13 +43,13 @@ export class PollEditComponent implements OnInit, OnDestroy {
     }
 
     public onSubmit(): void {
-        this.item.question = this.editPollForm.get("question").value;
+        this.item.question = this.editPollForm.get('question').value;
         this.item.answers = this.item.answers.filter(x => x.text);
 
         this.sub = this.service.createOrUpdate(this.item.id, this.item)
             .subscribe((data: Poll) => {
-            this.editPollForm.patchValue({ message: "" });
-            this.snackBar.open("Создан или обновлен");
+            this.editPollForm.patchValue({ message: '' });
+            this.snackBar.open('Создан или обновлен');
         });
 
     }
@@ -62,11 +62,11 @@ export class PollEditComponent implements OnInit, OnDestroy {
 
     private initForm(): void {
         this.editPollForm = this.formBuilder.group({
-            question: ["", Validators.compose([
+            question: ['', Validators.compose([
                 Validators.required,
                 Validators.maxLength(100)
             ])],
-            startTime: [""],
+            startTime: [''],
         });
     }
 }
