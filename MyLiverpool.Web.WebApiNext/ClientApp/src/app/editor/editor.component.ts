@@ -112,8 +112,8 @@ export class EditorComponent implements AfterViewInit, ControlValueAccessor, OnD
     private onChangeCallback = (x: any) => { };
 
     private getPlugins(): string {
-        const common: string = `autolink image paste customEmoticons`;
-        const type1: string = `advlist lists link hr media textcolor colorpicker ${common}`;
+        const common: string = `autolink image paste emoticons`;
+        const type1: string = `advlist lists link hr media ${common}`;
         if (this.type === 1) {
             return type1;
         }
@@ -125,10 +125,10 @@ export class EditorComponent implements AfterViewInit, ControlValueAccessor, OnD
 
     private getToolbar(): string {
         const common: string =
-            `bold italic underline strikethrough | customEmoticons`;
-        const type1: string = `styleselect | ${common} | link image media | fontsizeselect hr
+            `bold italic strikethrough emoticons`;
+        const type1: string = `styleselect | ${common} underline | hr visualblocks | link image media | fontsizeselect
                                  | bullist numlist | forecolor backcolor | alignleft aligncenter alignright alignjustify | outdent indent`;
-        const type2: string = `undo redo | fullscreen ${type1} | table code | visualblocks`;
+        const type2: string = `fullscreen ${type1} | table code`;
         if (this.type === 1) {
             return type1;
         }
@@ -161,12 +161,13 @@ export class EditorComponent implements AfterViewInit, ControlValueAccessor, OnD
                 allow_script_urls: true,
                 relative_urls: true,
                 document_base_url: "/",
+                emoticons_database_url: '/emojis.js',
                 toolbar: this.getToolbar(),
                 visualblocks_default_state: true,
                 external_plugins: {
-                    customEmoticons: "/plugins/customEmoticons/plugin.js"
+             //       customEmoticons: "/plugins/customEmoticons/plugin.js"
                 },
-                skin_url: "/src/lightgray",
+            //    skin_url: "/skins/ui/oxide-dark",
                 setup: (editor: any) => { //Editor) => {
                     this.editor = editor;
                     editor.on("init", () => this.zone.run(() => editor.setContent(this._value)));
