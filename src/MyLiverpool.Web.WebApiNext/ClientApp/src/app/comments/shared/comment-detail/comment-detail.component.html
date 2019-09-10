@@ -46,7 +46,7 @@
                 <div class="width15p"><b>Ответ:</b></div>
                 <div class="width85p">
                     <i *ngIf="!isEditMode" [innerHTML]="item.answer | safe: 'html'"></i>
-                    <bbeditor *ngIf="isEditMode" [value]="item.answer" formControlName="answer"></bbeditor>
+                    <!-- <bbeditor *ngIf="isEditMode" [value]="item.answer" formControlName="answer"></!--> -->
                 </div>
             </div>
             <div class="full-width" *ngIf="!roles.isSelf(item.authorId) && canCommentary && !isAddingMode && roles.isLogined">
@@ -59,13 +59,13 @@
                     <img class="avatar-medium" [src]="item.photo" [alt]="item.authorUserName" />
                 </div>
                 <div class="width85p">
-                    <bbeditor formControlName="message" #replyInput></bbeditor>
+                    <!-- <bbeditor formControlName="message" #replyInput></bbeditor> -->
                 </div>
             </div>
             <div class="full-width flex" *ngIf="roles.isEditor">
                 <div class="width15p">Ответ:</div>
                 <div class="width85p">
-                    <bbeditor [height]="150" formControlName="answer"></bbeditor>
+                    <!-- <bbeditor [height]="150" formControlName="answer"></bbeditor> -->
                 </div>
             </div>
             <div class="flex full-width">
@@ -81,7 +81,7 @@
             <h4 class="">Добавление ответа на комментарий</h4>
             <form class="form-horizontal" role="form" [formGroup]="commentForm" (ngSubmit)="addComment()">
                 <div class="">
-                    <bbeditor formControlName="message" #replyInput></bbeditor>
+                    <!-- <bbeditor formControlName="message" #replyInput></bbeditor> -->
                 </div>
                 <div class="comment-action-buttons">
                     <button mat-raised-button color="warn" [disabled]="!commentForm.valid" type="submit">Добавить</button>

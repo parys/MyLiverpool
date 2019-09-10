@@ -7,7 +7,6 @@ import * as forumSubsection from '@forum/forumSubsection';
 import * as forumMessage from '@forum/forumMessage';
 import * as forumTheme from '@forum/forumTheme';
 import { forumRoutes } from '@forum/forum.routes';
-import { EditorModule } from '@editor/index';
 import { SharedModule } from '@shared/index';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PipesModule } from '@base/pipes';
@@ -15,7 +14,6 @@ import { PipesModule } from '@base/pipes';
 @NgModule({
     imports: [
         CommonModule,
-        EditorModule,
         NgxPaginationModule,
         RouterModule.forChild(forumRoutes),
         SharedModule,

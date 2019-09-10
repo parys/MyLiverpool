@@ -1,4 +1,4 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, NgModuleFactoryLoader, SystemJsNgModuleLoader } from '@angular/core';
 import {
     BrowserModule,
     HammerGestureConfig,
@@ -18,6 +18,7 @@ import { AccountCoreModule } from '@accounts/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppMaterialModule } from './app-material.module';
 import { PipesModule } from './base/pipes';
+import { LoadModuleDirective } from '@base/lazy-loading/lazy-module.directive';
 
 registerLocaleData(localeRU);
 
@@ -64,6 +65,7 @@ export class MyHammerConfig extends HammerGestureConfig {
         home.NavbarMenuComponent,
         home.SidebarLeftComponent,
         home.SidebarRightComponent,
+     //   LoadModuleDirective,
         AppComponent,
     ],
     exports: [
@@ -77,6 +79,7 @@ export class MyHammerConfig extends HammerGestureConfig {
             provide: HAMMER_GESTURE_CONFIG,
             useClass: MyHammerConfig,
         },
+        { provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader }
         // {
         //    provide: ErrorHandler,
         //    useClass: UIErrorHandler

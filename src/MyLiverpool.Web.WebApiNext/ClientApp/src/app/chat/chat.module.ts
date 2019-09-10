@@ -2,7 +2,6 @@
 import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '@shared/index';
-import { EditorModule } from '@editor/index';
 import { PipesModule } from '@base/pipes';
 import { LayoutModule } from '@layout/layout.module';
 
@@ -17,7 +16,6 @@ import { ChatMessageService } from '@chat/chat-message.service';
     imports: [
         SharedModule,
         RouterModule.forChild(chatRoutes),
-        EditorModule,
         PipesModule,
         LayoutModule // todo needed for users-online
     ],

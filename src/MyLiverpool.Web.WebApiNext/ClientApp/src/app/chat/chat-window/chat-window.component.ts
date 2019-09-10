@@ -10,8 +10,6 @@ import { SignalRService } from '@base/signalr';
 import { MAX_CHAT_MESSAGE_LENGTH, MESSAGE } from '@constants/index';
 
 import { ChatMessageService } from '@chat/chat-message.service';
-import { EditorComponent } from '@editor/index';
-
 @Component({
     selector: 'chat-window',
     templateUrl: './chat-window.component.html',
@@ -23,7 +21,7 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
     public items: ChatMessage[] = new Array<ChatMessage>();
     public selectedEditIndex: number = null;
 
-    @ViewChild('chatInput', { static: false })private elementRef: EditorComponent;
+  //  @ViewChild('chatInput', { static: false })private elementRef: EditorComponent;
     @Input() public type: number;
     @Input() public height = 200;
 
@@ -95,7 +93,7 @@ export class ChatWindowComponent implements OnInit, AfterContentChecked {
         const userName: string = this.items[index].userName;
         const newMessage = `<i>${userName}</i>, ${message}`;
         this.messageForm.get(MESSAGE).patchValue(newMessage);
-        this.elementRef.setFocus();
+      //  this.elementRef.setFocus();
         this.cd.markForCheck();
     }
 

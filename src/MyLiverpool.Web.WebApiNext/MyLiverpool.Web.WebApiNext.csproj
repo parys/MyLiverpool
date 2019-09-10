@@ -54,6 +54,7 @@
     <Content Include="ClientApp\src\index.html" />
     <Content Include="ClientApp\src\tsconfig.cli.json" />
     <Folder Include="ClientApp\.vscode\" />
+    <Folder Include="ClientApp\src\app\base\lazy-loading\" />
     <Folder Include="ClientApp\src\app\clubs\pages\club-edit\" />
     <Folder Include="ClientApp\src\app\clubs\pages\club-list\" />
     <Folder Include="ClientApp\src\app\domain\base\" />

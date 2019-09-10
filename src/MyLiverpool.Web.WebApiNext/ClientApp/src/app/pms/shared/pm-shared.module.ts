@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 
 import { SharedModule } from '@shared/index';
-import { EditorModule } from '@editor/index';
 
 import { PmService } from '@pms/pm.service';
 import { PmReplyComponent } from '@pms/shared/pm-reply';
@@ -12,7 +11,6 @@ import { PmReplyComponent } from '@pms/shared/pm-reply';
     imports: [
         SharedModule,
         RouterModule,
-        EditorModule,
         MatInputModule
     ],
     declarations: [

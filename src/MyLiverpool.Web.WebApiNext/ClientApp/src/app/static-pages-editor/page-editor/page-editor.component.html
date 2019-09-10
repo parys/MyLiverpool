@@ -3,7 +3,9 @@
         <div class="full-width">
             <label class="full-width"> Текст страницы(<span [textContent]="title"></span>):</label>
             <div class="full-width">
-                <bbeditor name="message" [type]="2" [value]="content" [height]="550" formControlName="content"></bbeditor>
+                <!-- <bbeditor name="message" [type]="2" [value]="content" [height]="550" formControlName="content"></bbeditor> -->
+                
+                <ng-container loadModule="editor" [type]="2" [value]="content" [height]="550" formControlName="content"></ng-container>
             </div>
         </div>
         <div class="full-width text-center top10">

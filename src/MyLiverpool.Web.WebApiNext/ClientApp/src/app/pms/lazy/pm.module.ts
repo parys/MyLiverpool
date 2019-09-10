@@ -5,7 +5,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 
 import { SharedModule } from '@shared/index';
-import { EditorModule } from '@editor/index';
 import { BreadcrumbService } from '@shared/breadcrumb';
 import { PMS_ROUTE } from '@constants/index';
 import { PmSharedModule } from '@pms/shared';
@@ -21,7 +20,6 @@ import { PmEditComponent } from '@pms/lazy/pm-edit';
     imports: [
         SharedModule,
         RouterModule.forChild(pmRoutes),
-        EditorModule,
         PmSharedModule,
         MatTabsModule,
         MatAutocompleteModule,

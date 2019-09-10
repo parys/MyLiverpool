@@ -5,7 +5,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SharedModule } from '@shared/index';
 import { commentRoutes } from '@comments/lazy/comment.routes';
 import { CommentListComponent } from '@comments/lazy/comment-list';
-import { EditorModule } from '@editor/index';
 import { CommentSharedModule } from '@comments/shared';
 import { BreadcrumbService } from '@shared/breadcrumb';
 import { COMMENTS_ROUTE, COMMENTS_RU } from '@constants/index';
@@ -14,7 +13,6 @@ import { CommentService } from '@comments/comment.service';
 @NgModule({
     imports: [
         SharedModule,
-        EditorModule,
         RouterModule.forChild(commentRoutes),
         CommentSharedModule,
         MatCheckboxModule

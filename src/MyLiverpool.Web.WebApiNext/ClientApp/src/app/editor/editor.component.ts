@@ -8,6 +8,27 @@ import { LazyLoadingLibraryService } from './lazyLoadingLibrary.service';
 
 declare let tinymce: any;
 
+
+import 'tinymce/tinymce.min.js';
+import 'tinymce/themes/modern/theme.min.js';
+import 'tinymce/plugins/advlist/plugin.min.js';
+import 'tinymce/plugins/autolink/plugin.min.js';
+import 'tinymce/plugins/colorpicker/plugin.min.js';
+import 'tinymce/plugins/image/plugin.min.js';
+import 'tinymce/plugins/hr/plugin.min.js';
+import 'tinymce/plugins/link/plugin.min.js';
+import 'tinymce/plugins/lists/plugin.min.js';
+import 'tinymce/plugins/media/plugin.min.js';
+import 'tinymce/plugins/paste/plugin.min.js';
+import 'tinymce/plugins/textcolor/plugin.min.js';
+import './langs/ru.js';
+import './customPlugins/plugin.min.js';
+import 'tinymce/plugins/fullscreen/plugin.min.js';
+import 'tinymce/plugins/code/plugin.min.js';
+import 'tinymce/plugins/spellchecker/plugin.min.js';
+import 'tinymce/plugins/table/plugin.min.js';
+import 'tinymce/plugins/visualblocks/plugin.min.js';
+
 @Component({
     selector: 'bbeditor',
     providers: [
@@ -18,7 +39,7 @@ declare let tinymce: any;
         }],
     styleUrls: ['./editor.component.scss'],
     template: `<textarea id="{{elementId}}"></textarea>`,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.Default
 })
 
 export class EditorComponent implements AfterViewInit, ControlValueAccessor, OnDestroy  {
@@ -34,7 +55,7 @@ export class EditorComponent implements AfterViewInit, ControlValueAccessor, OnD
     constructor(
         private lazyService: LazyLoadingLibraryService,
         private zone: NgZone) {
-       // console.warn("tiny ctor " + this.elementId);
+        console.warn("tiny ctor " + this.elementId);
         // if (!this.isTinyDefined()) {
         //    console.warn("tiny ctor-2 " + this.elementId);
         //    console.warn("tiny ctor-3 " + this.elementId);

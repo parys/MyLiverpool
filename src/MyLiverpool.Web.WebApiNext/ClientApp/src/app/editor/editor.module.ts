@@ -9,13 +9,20 @@ import { LazyLoadingLibraryService } from './lazyLoadingLibrary.service';
         ReactiveFormsModule
     ],
     declarations: [
-        EditorComponent
+        EditorModule.rootComponent
     ],
-    exports: [
-        EditorComponent
+    // exports: [
+    //     EditorComponent
+    // ],
+    bootstrap: [EditorModule.rootComponent],
+
+    entryComponents: [
+        EditorModule.rootComponent
     ],
     providers: [
         LazyLoadingLibraryService
     ]
 })
-export class EditorModule { }
+export class EditorModule {
+    static rootComponent = EditorComponent;
+}

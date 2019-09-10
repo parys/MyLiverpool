@@ -4,7 +4,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Pm } from '@domain/models';
 import { PmService } from '@pms/pm.service';
-import { EditorComponent } from '@editor/index';
 
 @Component({
     selector: 'pm-reply',
@@ -17,7 +16,7 @@ export class PmReplyComponent implements OnInit, AfterViewInit {
     @Input() public userId: number;
     @Input() public title: string;
     @Output() public close = new EventEmitter();
-    @ViewChild('mpInput', { static: false })private elementRef: EditorComponent;
+ //   @ViewChild('mpInput', { static: false })private elementRef: EditorComponent;
 
     constructor(private service: PmService,
                 private snackBar: MatSnackBar,
@@ -62,7 +61,7 @@ export class PmReplyComponent implements OnInit, AfterViewInit {
     }
 
     public ngAfterViewInit(): void {
-        this.elementRef.setFocus();
+      //  this.elementRef.setFocus();
     }
 
     private getTitle(): string {

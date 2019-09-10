@@ -15,7 +15,7 @@
 <form *ngIf="canCommentary && roles.isLogined" 
        class="form-horizontal" role="form" [formGroup]="commentAddForm" (ngSubmit)="onSubmit()">
     <div class="full-width">
-        <bbeditor formControlName="message"></bbeditor>
+        <!-- <bbeditor formControlName="message"></bbeditor> -->
         <div class="comment-action-buttons" style="margin-bottom: 0">
             <button mat-raised-button color="warn" type="submit" [disabled]="!commentAddForm.valid">Добавить</button>
         </div>

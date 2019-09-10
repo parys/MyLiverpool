@@ -8,11 +8,11 @@ import { Subscription } from 'rxjs';
 import { StaticPagesEditorService } from '@static-pages-editor/static-pages-editor.service';
 import { HelperType, StaticPage } from '@domain/models';
 
-// import "tinymce/plugins/fullscreen/plugin.min.js";
-// import "tinymce/plugins/code/plugin.min.js";
-// import "tinymce/plugins/spellchecker/plugin.min.js";
-// import "tinymce/plugins/table/plugin.min.js";
-// import "tinymce/plugins/visualblocks/plugin.min.js";
+// import 'tinymce/plugins/fullscreen/plugin.min.js';
+// import 'tinymce/plugins/code/plugin.min.js';
+// import 'tinymce/plugins/spellchecker/plugin.min.js';
+// import 'tinymce/plugins/table/plugin.min.js';
+// import 'tinymce/plugins/visualblocks/plugin.min.js';
 
 @Component({
     selector: 'page-editor',

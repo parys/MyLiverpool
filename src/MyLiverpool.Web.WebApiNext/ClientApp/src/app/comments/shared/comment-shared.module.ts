@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 
 import { SharedModule } from '@shared/index';
-import { EditorModule } from '@editor/index';
 import { PipesModule } from '@base/pipes';
 
 import { CommentService } from '@comments/comment.service';
@@ -13,7 +12,6 @@ import { CommentSectionComponent } from '@comments/shared/comment-section';
 @NgModule({
     imports: [
         SharedModule,
-        EditorModule,
         RouterModule,
         PipesModule,
         MatIconModule
@@ -24,8 +22,7 @@ import { CommentSectionComponent } from '@comments/shared/comment-section';
     ],
     exports: [
         CommentSectionComponent,
-        CommentDetailComponent,
-        EditorModule
+        CommentDetailComponent
     ],
     providers: [
         CommentService

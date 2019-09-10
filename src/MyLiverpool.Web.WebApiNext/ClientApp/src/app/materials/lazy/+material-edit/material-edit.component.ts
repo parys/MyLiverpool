@@ -12,12 +12,11 @@ import { RolesCheckedService } from '@base/auth';
 import { MaterialGuardDialogComponent } from './material-guard-dialog';
 import { EDIT_ROUTE, MESSAGE } from '@constants/index';
 
-// todo moved to script till I found solution to include it here(and in page-editor)
-// import "tinymce/plugins/fullscreen/plugin.min.js";
-// import "tinymce/plugins/code/plugin.min.js";
-// import "tinymce/plugins/spellchecker/plugin.min.js";
-// import "tinymce/plugins/table/plugin.min.js";
-// import "tinymce/plugins/visualblocks/plugin.min.js";
+import 'tinymce/plugins/fullscreen/plugin.min.js';
+import 'tinymce/plugins/code/plugin.min.js';
+import 'tinymce/plugins/spellchecker/plugin.min.js';
+import 'tinymce/plugins/table/plugin.min.js';
+import 'tinymce/plugins/visualblocks/plugin.min.js';
 
 @Component({
     selector: 'material-edit',

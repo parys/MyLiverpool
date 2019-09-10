@@ -10,7 +10,6 @@ import { DeleteDialogComponent } from '@shared/index';
 import { RolesCheckedService } from '@base/auth';
 
 import { CommentService } from '@comments/comment.service';
-import { EditorComponent } from '@editor/index';
 
 @Component({
     selector: 'comment-detail',
@@ -28,7 +27,7 @@ export class CommentDetailComponent implements OnInit, OnDestroy {
     @Input() public matchId: number;
     @Input() public parent: Comment;
     @Input() public type: number;
-    @ViewChild('replyInput', { static: false })private elementRef: EditorComponent;
+//    @ViewChild('replyInput', { static: false })private elementRef: EditorComponent;
 
     public commentForm: FormGroup;
     private oldCopy: Comment;
@@ -66,14 +65,14 @@ export class CommentDetailComponent implements OnInit, OnDestroy {
         this.isAddingMode = true;
         this.initForm();
         this.cd.detectChanges();
-        this.elementRef.setFocus();
+   //     this.elementRef.setFocus();
     }
 
     public showEditModal(): void {
         this.isEditMode = true;
         this.initForm();
         this.cd.detectChanges();
-        this.elementRef.setFocus();
+     //   this.elementRef.setFocus();
     }
 
     public showDeleteModal(): void {
