@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.Data.SqlClient;
 
 namespace MyLfc.Persistence
 {
