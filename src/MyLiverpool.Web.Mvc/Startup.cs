@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
+using System.Text.Json;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -21,7 +22,6 @@ using MyLfc.Common.Web.Hubs;
 using MyLiverpool.Business.Services.Helpers;
 using MyLiverpool.Common.Utilities;
 using MyLiverpool.Data.ResourceAccess.Helpers;
-using Newtonsoft.Json.Serialization;
 using MyLfc.Common.Web.Middlewares;
 using MyLfc.Persistence;
 using MyLiverpool.Common.Mappings;
@@ -62,7 +62,7 @@ namespace MyLiverpool.Web.Mvc
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddMvc().AddJsonOptions(options =>
             {
-                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             });
             
             services.AddCustomDbContext(Configuration);
@@ -128,12 +128,10 @@ namespace MyLiverpool.Web.Mvc
             });
 
             app.UseAuthentication();
-
-            app.UseMvc(routes =>
+            
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller}/{action=Index}/{id?}");
             });
         }
 

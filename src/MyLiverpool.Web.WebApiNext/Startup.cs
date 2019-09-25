@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Antiforgery;
@@ -22,7 +23,6 @@ using MyLiverpool.Business.Services.Helpers;
 using MyLiverpool.Common.Utilities;
 using MyLiverpool.Data.ResourceAccess.Helpers;
 using MyLiverpool.Web.WebApiNext.Extensions;
-using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using MyLfc.Application.Infrastructure;
@@ -92,9 +92,9 @@ namespace MyLiverpool.Web.WebApiNext
             services.AddMvc(options => { options.Filters.Add(typeof(RequestDecorator)); })
                 .AddJsonOptions(options =>
                 {
-                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddCors(options =>
             {
@@ -210,10 +210,7 @@ namespace MyLiverpool.Web.WebApiNext
             // app.UseXsrf();
             if (env.IsDevelopment())
             {
-               // loggerFactory.AddConsole(Configuration.GetSection("Logging"));
- //               loggerFactory.AddDebug();
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
 
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
@@ -255,18 +252,12 @@ namespace MyLiverpool.Web.WebApiNext
             }
 
             app.UseAuthentication();
-
-            app.UseSignalR(routes =>
+         
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapHub<AnonymHub>("/hubs/anonym");
-                routes.MapHub<AuthHub>("/hubs/auth");
-            });
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                endpoints.MapHub<AnonymHub>("/hubs/anonym");
+                endpoints.MapHub<AuthHub>("/hubs/auth");
+                endpoints.MapControllerRoute("default", "{controller}/{action=Index}/{id?}");
             });
 
             //    if (!Env.IsDevelopment())
