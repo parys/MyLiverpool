@@ -15,22 +15,19 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MyLiverpool.Business.Services.Helpers;
 using MyLiverpool.Common.Utilities;
 using MyLiverpool.Data.ResourceAccess.Helpers;
-using MyLiverpool.Web.WebApiNext.Extensions;
-using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.Extensions.Hosting;
 using MyLfc.Application.Infrastructure;
 using MyLfc.Application.Infrastructure.Profiles;
 using MyLfc.Common.Web;
 using MyLfc.Common.Web.Hubs;
 using MyLfc.Common.Web.Middlewares;
-using MyLfc.Persistence;
 using MyLiverpool.Common.Mappings;
 using MyLiverpool.Web.WebApiNext.Infrastructure.Filters;
 
@@ -45,18 +42,18 @@ namespace MyLiverpool.Web.WebApiNext
         /// Constructor.
         /// </summary>
         /// <param name="env"></param>
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
-            if (env.IsDevelopment())
-            {
+          //  if (env.IsDevelopment())
+           // {
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
                 // builder.AddUserSecrets<Startup>();
-            }
+          //  }
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
@@ -65,7 +62,7 @@ namespace MyLiverpool.Web.WebApiNext
 
         private IConfigurationRoot Configuration { get; }
 
-        private IHostingEnvironment Env { get; }
+        private IWebHostEnvironment Env { get; }
 
         /// <summary>
         /// This method gets called by the runtime. Use this method to add services to the container.
@@ -140,39 +137,38 @@ namespace MyLiverpool.Web.WebApiNext
             services.AddCustomRedisCache(Configuration);
 
             //   services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
-
             if (Env.IsDevelopment())
             {
-                services.AddSwaggerGen(options =>
-                {
-                    options.SwaggerDoc("v1", new Info
-                    {
-                        Version = "v1",
-                        Title = "Swagger Sample API",
-                        Description = "API Sample made",
-                        TermsOfService = "None"
-                    });
+                //services.AddSwaggerGen(options =>
+                //{
+                //    options.SwaggerDoc("v1", new Info
+                //    {
+                //        Version = "v1",
+                //        Title = "Swagger Sample API",
+                //        Description = "API Sample made",
+                //        TermsOfService = "None"
+                //    });
 
-                    //    var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "MyApi.xml");
-                    //s    options.IncludeXmlComments(filePath);
-                    options.OperationFilter<HandleModelbinding>();
+                //    //    var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "MyApi.xml");
+                //    //s    options.IncludeXmlComments(filePath);
+                //    options.OperationFilter<HandleModelbinding>();
 
-                    options.AddSecurityDefinition("oauth2", new OAuth2Scheme
-                    {
-                        Type = "oauth2",
-                        Flow = "implicit",
-                        AuthorizationUrl = "/connect/authorize",
-                        //   Extensions = { {"123", new object()}},
-                        TokenUrl = "connect/token",
-                        Scopes = new Dictionary<string, string>
-                        {
-                            {"roles", "roles scope"},
-                            {"openid", "openid scope"}
-                        },
-                    });
+                //    options.AddSecurityDefinition("oauth2", new OAuth2Scheme
+                //    {
+                //        Type = "oauth2",
+                //        Flow = "implicit",
+                //        AuthorizationUrl = "/connect/authorize",
+                //        //   Extensions = { {"123", new object()}},
+                //        TokenUrl = "connect/token",
+                //        Scopes = new Dictionary<string, string>
+                //        {
+                //            {"roles", "roles scope"},
+                //            {"openid", "openid scope"}
+                //        },
+                //    });
 
                     //   options.OperationFilter<AssignSecurityRequirements>();
-                });
+                //});
             }
             services.AddAutoMapper(typeof(MaterialProfile), typeof(ForumMessageMapperProfile));
             services.AddMediatR();
@@ -183,8 +179,8 @@ namespace MyLiverpool.Web.WebApiNext
 
                   //   options.InvocationTimeoutMilliseconds = 140000;
             });
-            var dbContext = (LiverpoolContext)services.BuildServiceProvider().GetService(typeof(LiverpoolContext));
-            dbContext.Database.Migrate();
+         //   var dbContext = (LiverpoolContext)services.BuildServiceProvider().GetService(typeof(LiverpoolContext));
+         //   dbContext.Database.Migrate();
             //if (Env.IsDevelopment())
             //{
             //    new DatabaseInitializer(context).Seed();
@@ -203,7 +199,7 @@ namespace MyLiverpool.Web.WebApiNext
         /// <param name="env"></param>
         /// <param name="loggerFactory"></param>
         /// <param name="antiforgery"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IAntiforgery antiforgery)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IAntiforgery antiforgery)
         {
             //  app.UseMiddleware<ExceptionHandlerMiddleware>();
 
@@ -212,12 +208,12 @@ namespace MyLiverpool.Web.WebApiNext
             {
                 app.UseDeveloperExceptionPage();
 
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "V1 Docs");
+             //   app.UseSwagger();
+           //     app.UseSwaggerUI(c =>
+            //    {
+           //         c.SwaggerEndpoint("/swagger/v1/swagger.json", "V1 Docs");
                     //   c.ConfigureOAuth2("test-client-id123", "test-client-secr43et", "test-rea32lm", "test-a11pp");
-                });
+          //      });
             }
             else
             {
@@ -233,7 +229,6 @@ namespace MyLiverpool.Web.WebApiNext
                 }
             }
 
-            app.UseCors("MyPolicy");
             //   app.UseSignalRAuthentication();
 
             app.UseDefaultFiles();
@@ -244,15 +239,21 @@ namespace MyLiverpool.Web.WebApiNext
                 OnPrepareResponse = ctx =>
                 {
                     ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
-                }
+                },
             });
+
+            app.UseRouting();
+
+            app.UseCors("MyPolicy");
+
             //  if (!Env.IsDevelopment())
             {
                 app.UseSpaStaticFiles(new StaticFileOptions());
             }
 
             app.UseAuthentication();
-         
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<AnonymHub>("/hubs/anonym");
@@ -292,7 +293,7 @@ namespace MyLiverpool.Web.WebApiNext
 
                     if (env.IsDevelopment())
                     {
-                    //    spa.UseAngularCliServer(npmScript: "start");
+                        spa.UseAngularCliServer(npmScript: "start");
                         //   OR
                         // spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                     }
@@ -302,7 +303,7 @@ namespace MyLiverpool.Web.WebApiNext
 
         private void RegisterCoreHelpers(IServiceCollection services)
         {
-            services.AddSingleton<IHostingEnvironment>(Env);
+            services.AddSingleton<IWebHostEnvironment>(Env);
             services.AddSingleton<IConfigurationRoot>(Configuration);
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<ISignalRHubAggregator, SignalRHubAggregator>();

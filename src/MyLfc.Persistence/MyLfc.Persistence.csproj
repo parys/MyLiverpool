@@ -10,8 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20190806204807_AddFaqStuff.cs" />
-    <Compile Remove="Migrations\20190806204807_AddFaqStuff.Designer.cs" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <ItemGroup>
