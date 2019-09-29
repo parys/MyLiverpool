@@ -7,12 +7,14 @@ import { MatchEventEditPanelComponent } from '@match-events/components/match-eve
 import { MatchEventMatchPanelComponent } from '@match-events/components/match-event-panel-component';
 import { MatchEventsMaterialModule } from '@match-events/match-events-material.module';
 import { MatchEventService } from '@match-events/matchEvent.service';
+import { SelectPersonFormFieldModule } from '@widgets/http/select-person-form-field';
 
 @NgModule({
     imports: [
         CommonModule,
         SharedModule,
-        MatchEventsMaterialModule
+        MatchEventsMaterialModule,
+        SelectPersonFormFieldModule
     ],
     declarations: [
         MatchEventEditPanelComponent,

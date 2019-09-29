@@ -10,7 +10,7 @@ namespace MyLiverpool.Common.Utilities
 
         public static string GenerateNewPath(string path, string webRootPath)
         {
-            var fullPath = GetFullPath(path, webRootPath);
+            var fullPath = Path.Combine(webRootPath, path);
             if (!Directory.Exists(fullPath))
             {
                 Directory.CreateDirectory(fullPath);
@@ -47,14 +47,9 @@ namespace MyLiverpool.Common.Utilities
             return newName;
         }
 
-        public static string GetFullPath(string prefix, string webRootPath)
+        public static string GetFullPath(string prefix, string name)
         {
-            return Path.Combine(webRootPath, prefix);
-        }
-
-        public static string GetFullPath(string path1, string path2, string webRootPath)
-        {
-            return GetFullPath(Path.Combine(path1, path2), webRootPath);
+            return Path.Combine(prefix, name);
         }
     }
 }

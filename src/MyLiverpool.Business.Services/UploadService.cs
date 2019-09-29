@@ -30,7 +30,7 @@ namespace MyLiverpool.Business.Services
                 var newName = PathHelpers.GenerateNewName() + "." + file.FileName.Split('.').Last();
                 var newPath = PathHelpers.GenerateNewPath(ImagesPath, _appEnvironment.WebRootPath);
                 var relativePath = Path.Combine(newPath, newName);
-                var path = PathHelpers.GetFullPath(relativePath, _appEnvironment.WebRootPath);
+                var path = Path.Combine(_appEnvironment.WebRootPath, relativePath);
                 relativePath = Regex.Replace(relativePath, "\\\\", "/");
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
@@ -50,7 +50,7 @@ namespace MyLiverpool.Business.Services
             string newName = PathHelpers.GenerateNewName() + ".jpeg";
             var newPath = PathHelpers.GenerateNewPath(ImagesPath, _appEnvironment.WebRootPath);
             var relativePath = Path.Combine(newPath, newName);
-            var path = PathHelpers.GetFullPath(relativePath, _appEnvironment.WebRootPath);
+            var path = Path.Combine(_appEnvironment.WebRootPath, relativePath);
             relativePath = Regex.Replace(relativePath, "\\\\", "/");
             await File.WriteAllBytesAsync(path, Convert.FromBase64String(base64File));
             return "/" + relativePath;

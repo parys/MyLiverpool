@@ -66,7 +66,7 @@ namespace MyLfc.Application.Users
                     FileHelper.Delete(path);
                 }
 
-                path = PathHelpers.GetFullPath(newPath, relativePath);
+                path = Path.Combine(_appEnvironment.WebRootPath, newPath, relativePath);
                 relativePath = Path.Combine(newPath, relativePath);
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {

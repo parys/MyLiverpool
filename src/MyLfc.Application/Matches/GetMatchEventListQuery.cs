@@ -59,7 +59,7 @@ namespace MyLfc.Application.Matches
 
             public int PersonId { get; set; }
 
-            public string RussianName { get; set; }
+            public string PersonName { get; set; }
 
             public MatchEventType Type { get; set; }
 

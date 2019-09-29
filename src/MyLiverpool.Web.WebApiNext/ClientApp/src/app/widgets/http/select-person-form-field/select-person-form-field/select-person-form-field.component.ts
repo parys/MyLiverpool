@@ -25,6 +25,7 @@ export class SelectPersonFormFieldComponent extends AbstractControlComponent<num
     @Input() personName: string;
     @Input() focus = false;
     @Input() type = null;
+    @Input() matchId = null;
     @ViewChild('selectInput', { static: true }) selectInput: ElementRef;
 
     public persons$: Observable<Person[]>;
@@ -42,15 +43,19 @@ export class SelectPersonFormFieldComponent extends AbstractControlComponent<num
                 const filter = new PersonFilters();
                 filter.name = value;
                 filter.type = this.type;
+                filter.matchId = this.matchId;
                 return this.personService.getAll(filter);
             }),
             switchMap((pagingPersons: PagedList<Person>): Observable<Person[]> => {
                 return of(pagingPersons.results);
             }));
+        this.selectCtrl.setValue(this.personName);
     }
 
-    public onSelectionChange(personId: number): void {
-        this.value = personId;
+
+    public onSelectionChange(person: Person): void {
+        this.value = person.id;
+        this.personName = person.personName;
     }
 
     public ngAfterViewInit(): void {

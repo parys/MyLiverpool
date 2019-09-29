@@ -168,7 +168,7 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
                 };
                 var result = await Mediator.Send(request);
 
-                return Ok(new {path = result});
+                return Ok(result);
             }
 
             return BadRequest();
@@ -180,7 +180,7 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
         /// <param name="request">The identifier of resetting avatar user.</param>
         /// <returns>New user photo path.</returns>
         [Authorize, HttpPut("avatar/{userId:int}/reset")]
-        [Obsolete("Delete after 14 Aug 19")]
+        [Obsolete("Delete after 14 Oct 19")]
         public async Task<ActionResult> ResetAvatarOldAsync([FromRoute] ResetUserAvatarCommand.Request request)
         {
             if (!User.IsInRole(nameof(RolesEnum.UserStart)) && User.GetUserId() != request.UserId)

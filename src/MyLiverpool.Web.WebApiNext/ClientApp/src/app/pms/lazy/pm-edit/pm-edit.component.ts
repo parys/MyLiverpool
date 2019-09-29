@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
-import { Pm, User } from '@domain/models';
+import { Pm, User, UserFilters, PagedList } from '@domain/models';
 import { PmService } from '@pms/pm.service';
 
 @Component({
@@ -43,10 +43,16 @@ export class PmEditComponent implements OnInit, OnDestroy {
             ]
         });
 
-        this.users$ = this.editPmForm.controls['receiver'].valueChanges.pipe(
+        this.users$ = this.editPmForm.controls.receiver.valueChanges.pipe(
             debounceTime(this.debounceTime),
             distinctUntilChanged(),
-            switchMap((value: string) => this.service.getListByUserName(value)));
+            switchMap((value: string) => {
+                const filter = new UserFilters();
+                filter.userName = value;
+                return this.service.getUsers(filter);
+            }),
+            switchMap((value: PagedList<User>) => of(value.results))
+            );
     }
 
     public ngOnDestroy(): void {

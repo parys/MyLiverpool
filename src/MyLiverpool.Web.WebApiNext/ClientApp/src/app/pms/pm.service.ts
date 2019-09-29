@@ -3,8 +3,8 @@
 import { Observable } from 'rxjs';
 
 import { HttpWrapper } from '@base/httpWrapper';
-import { Pm, User } from '@domain/models';
-import { PMS_ROUTE } from '@constants/routes.constants';
+import { Pm, User, UserFilters, PagedList } from '@domain/models';
+import { PMS_ROUTE, USERS_ROUTE } from '@constants/routes.constants';
 
 @Injectable()
 export class PmService {
@@ -33,7 +33,8 @@ export class PmService {
         return this.http.delete<boolean>(this.actionUrl + id);
     }
 
-    public getListByUserName(typed: string): Observable<User[]> { // bug temp workaround
-        return this.http.get<User[]>(`user/getUserNames?typed=${typed}`);
+    public getUsers(filters: UserFilters): Observable<PagedList<User>> {
+        return this.http.getWithParams<PagedList<User>>(USERS_ROUTE, filters);
     }
+
 }

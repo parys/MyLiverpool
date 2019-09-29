@@ -2,14 +2,9 @@
 <h6 class="text-center">Добавление события матча</h6>
 <form class="full-width" role="form" [formGroup]="editMatchEventForm" (ngSubmit)="onSubmit()">
     <mat-slide-toggle formControlName="isOur" color="warn">Наше событие</mat-slide-toggle>
-    <mat-form-field class="full-width">
-        <input matInput placeholder="Игрок" [matAutocomplete]="person" formControlName="russianName">
-        <mat-autocomplete #person="matAutocomplete">
-            <mat-option *ngFor="let person of persons$ | async" [value]="person.russianName" (click)="selectPerson(person.id)">
-                <span>{{ person.russianName }}</span>
-            </mat-option>
-        </mat-autocomplete>
-    </mat-form-field>
+    <select-person-form-field formControlName="personId" [personName]="editMatchEventForm.controls['personName'].value"
+        [matchId]="matchId" focus="true">
+    </select-person-form-field>
     <mat-form-field class="full-width">
         <mat-select placeholder="Тип" formControlName="type">
             <mat-option *ngFor="let type of types" [value]="type.id">{{ type.name }}</mat-option>
@@ -19,6 +14,7 @@
         <input matInput placeholder="Минута" formControlName="minute">
     </mat-form-field>
     <div class="full-width text-center">
-        <button mat-raised-button color="warn" class="full-width" type="submit" [disabled]="!editMatchEventForm.valid">Сохранить</button>
+        <button mat-raised-button color="warn" class="full-width" type="submit"
+            [disabled]="!editMatchEventForm.valid">Сохранить</button>
     </div>
 </form>

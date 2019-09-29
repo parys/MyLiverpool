@@ -11,6 +11,7 @@
     public number?: number;
     public name: string;
     public russianName: string;
+    public personName: string;
     public title: string;
     public position: string;
     public country: string;

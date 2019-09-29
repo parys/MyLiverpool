@@ -2,8 +2,8 @@
     <mat-form-field class="full-width">
         <input matInput placeholder="Получатель" [matAutocomplete]="user" formControlName="receiver">
         <mat-autocomplete #user="matAutocomplete">
-            <mat-option *ngFor="let user of users$ | async" [value]="user.username" (click)="selectUser(user.id)">
-                <span>{{ user.username }}</span>
+            <mat-option *ngFor="let user of users$ | async" [value]="user.userName" (click)="selectUser(user.id)">
+                <span>{{ user.userName }}</span>
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>

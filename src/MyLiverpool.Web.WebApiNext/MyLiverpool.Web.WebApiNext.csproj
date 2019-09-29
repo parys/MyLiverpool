@@ -54,22 +54,6 @@
     <Content Include="ClientApp\src\index.html" />
     <Content Include="ClientApp\src\tsconfig.cli.json" />
     <Folder Include="ClientApp\.vscode\" />
-    <Folder Include="ClientApp\src\app\clubs\pages\club-edit\" />
-    <Folder Include="ClientApp\src\app\clubs\pages\club-list\" />
-    <Folder Include="ClientApp\src\app\domain\base\" />
-    <Folder Include="ClientApp\src\app\faq-items\faq-item-list\" />
-    <Folder Include="ClientApp\src\app\faq-items\faq-item-edit\" />
-    <Folder Include="ClientApp\src\app\persons\pages\person-detail\" />
-    <Folder Include="ClientApp\src\app\persons\pages\person-list\" />
-    <Folder Include="ClientApp\src\app\persons\pages\squad\" />
-    <Folder Include="ClientApp\src\app\persons\pages\stuff-list\" />
-    <Folder Include="ClientApp\src\app\pms\core\" />
-    <Folder Include="ClientApp\src\app\static-pages\pages\static-page\" />
-    <Folder Include="ClientApp\src\app\transfers\pages\transfer-list\" />
-    <Folder Include="ClientApp\src\app\widgets\http\select-person-form-field\select-person-form-field\" />
-    <Folder Include="ClientApp\src\app\wishes\pages\wish-edit\" />
-    <Folder Include="ClientApp\src\app\wishes\pages\wish-list\" />
-    <Folder Include="Connected Services\" />
     <Folder Include="wwwroot\assets\icons\" />
     <Folder Include="wwwroot\src\" />
   </ItemGroup>

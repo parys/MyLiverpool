@@ -86,6 +86,7 @@ export class MatchPersonPanelComponent implements OnInit {
         this.selectedMatchPerson = person;
         this.selectedIndex = this.matchPersons.indexOf(person);
         this.isEdit = true;
+        console.log(person);
     }
 
     public showDeleteModal(person: MatchPerson): void {

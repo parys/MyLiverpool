@@ -1,13 +1,8 @@
 ﻿import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { Observable, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-
 import { MatchEventService } from '@match-events/matchEvent.service';
-import { MatchEvent, MatchEventType, PersonFilters, Person, PagedList } from '@domain/models';
-import { PersonService } from '@persons/person.service'; // todo
-import { DEBOUNCE_TIME } from '@constants/app.constants';
+import { MatchEvent, MatchEventType } from '@domain/models';
 
 @Component({
     selector: 'match-event-edit-panel',
@@ -19,14 +14,13 @@ export class MatchEventEditPanelComponent implements OnInit {
     @Input() public matchId: number;
     @Input() public seasonId: number;
     @Input() public selectedEvent: MatchEvent;
+    @Input() public isOur: boolean;
     @Output() public matchEvent = new EventEmitter<MatchEvent>();
     public editMatchEventForm: FormGroup;
-    public persons$: Observable<Person[]>;
 
     public types: MatchEventType[];
 
     constructor(private matchEventService: MatchEventService,
-                private personService: PersonService,
                 private formBuilder: FormBuilder) {
     }
 
@@ -52,18 +46,13 @@ export class MatchEventEditPanelComponent implements OnInit {
     }
 
     public selectPerson(id: number) {
-        this.editMatchEventForm.get('personId').patchValue(id);
+        this.editMatchEventForm.controls.personId.patchValue(id);
     }
 
     private emitNewEvent(event: MatchEvent): void {
-        event.russianName = this.editMatchEventForm.get('russianName').value;
+        event.personName = this.editMatchEventForm.get('personName').value;
         this.matchEvent.emit(event);
     }
-
-    // private parse(data: MatchEvent): void {
-    //     this.id = data.id;
-    //     this.editMatchEventForm.patchValue(data);
-    // }
 
     private parseForm(): MatchEvent {
         const item: MatchEvent = this.editMatchEventForm.value;
@@ -75,25 +64,12 @@ export class MatchEventEditPanelComponent implements OnInit {
 
     private initForm(): void {
         this.editMatchEventForm = this.formBuilder.group({
-            russianName: [this.selectedEvent ? this.selectedEvent.russianName : '', Validators.required],
+            personName: [this.selectedEvent ? this.selectedEvent.personName : ''],
             personId: [this.selectedEvent ? this.selectedEvent.personId : '', Validators.required],
             type: [this.selectedEvent ? this.selectedEvent.type : '', Validators.required],
             minute: [this.selectedEvent ? this.selectedEvent.minute : '', Validators.required],
-            isOur: [this.selectedEvent ? this.selectedEvent.isOur : false]
+            isOur: [this.selectedEvent ? this.selectedEvent.isOur : this.isOur]
         });
         this.id = this.selectedEvent ? this.selectedEvent.id : 0;
-
-        this.persons$ = this.editMatchEventForm.controls['russianName'].valueChanges.pipe(
-                debounceTime(DEBOUNCE_TIME),
-                distinctUntilChanged(),
-                switchMap((value: string) => {
-                    const filter = new PersonFilters();
-                    filter.name = value;
-                    filter.matchId = this.matchId;
-                    return this.personService.getAll(filter);
-                }),
-                switchMap((pagingPersons: PagedList<Person>): Observable<Person[]> => {
-                    return of(pagingPersons.results);
-                }));
     }
 }

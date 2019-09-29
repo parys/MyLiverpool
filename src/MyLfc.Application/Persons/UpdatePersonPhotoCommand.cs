@@ -39,7 +39,7 @@ namespace MyLfc.Application.Persons
                 string path = PersonPath + fileName;
 
                 var relativePath = path;
-                path = PathHelpers.GetFullPath(path, _appEnvironment.WebRootPath);
+                path = Path.Combine(_appEnvironment.WebRootPath, path);
                 if (!Directory.Exists(PersonPath))
                 {
                     Directory.CreateDirectory(PersonPath);

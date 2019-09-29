@@ -19,7 +19,7 @@ export class MatchEventMatchPanelComponent implements OnInit {
     @Input() public seasonId: number;
     public events: MatchEvent[];
     public isEditEvent = false;
-    public selectedEvent: MatchEvent;
+    public isHomeEdit = false;
     public selectedIndex: number;
 
     constructor(private matchEventService: MatchEventService,
@@ -33,12 +33,12 @@ export class MatchEventMatchPanelComponent implements OnInit {
             .subscribe(data => this.events = data);
     }
 
-    public addEvent(): void {
+    public addEvent(home: boolean): void {
         this.isEditEvent = true;
+        this.isHomeEdit = home;
     }
 
     public cancelEventEdit(): void {
-        this.selectedEvent = null;
         this.isEditEvent = false;
         this.selectedIndex = null;
     }
@@ -54,7 +54,6 @@ export class MatchEventMatchPanelComponent implements OnInit {
     }
 
     public selectEvent(index: number): void {
-        this.selectedEvent = this.events[index];
         this.selectedIndex = index;
         this.isEditEvent = true;
     }

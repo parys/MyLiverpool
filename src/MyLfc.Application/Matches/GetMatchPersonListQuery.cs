@@ -65,7 +65,7 @@ namespace MyLfc.Application.Matches
 
             public MatchPersonType PersonType { get; set; }
 
-            public string RussianName => $"{FirstRussianName} {LastRussianName}";
+            public string PersonName => $"{FirstRussianName} {LastRussianName}";
         }
     }
 }

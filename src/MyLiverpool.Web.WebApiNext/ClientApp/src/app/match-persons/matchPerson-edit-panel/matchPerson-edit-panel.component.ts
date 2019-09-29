@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+﻿import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { MatchPerson, Person, MatchPersonType } from '@domain/models';
@@ -7,7 +7,8 @@ import { MatchPersonService } from '../match-person.service';
 
 @Component({
     selector: 'match-person-edit-panel',
-    templateUrl: './matchPerson-edit-panel.component.html'
+    templateUrl: './matchPerson-edit-panel.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class MatchPersonEditPanelComponent implements OnInit {
@@ -22,10 +23,12 @@ export class MatchPersonEditPanelComponent implements OnInit {
     @Output() public matchPerson = new EventEmitter<MatchPerson>();
     @Output() public exit = new EventEmitter();
     public editMatchPersonForm: FormGroup;
+    public name: string;
 
     public types: MatchPersonType[];
 
     constructor(private matchPersonService: MatchPersonService,
+                private cdr: ChangeDetectorRef,
                 private formBuilder: FormBuilder) {
     }
 
@@ -44,30 +47,22 @@ export class MatchPersonEditPanelComponent implements OnInit {
 
     public onSubmit(): void {
         const matchPerson: MatchPerson = this.parseForm();
-        if (this.isEdit) {
-            this.matchPersonService.update(matchPerson)
-                .subscribe(data => {
-                    matchPerson.number = data.number;
-                    this.emitNewPerson(matchPerson);
-                },
-                    null,
-                    () => this.checkExit());
-        } else {
-            this.matchPersonService.create(matchPerson)
-                .subscribe(data => {
-                    matchPerson.number = data.number;
-                    this.emitNewPerson(matchPerson);
-                },
-                    null,
-                    () => this.checkExit());
-        }
-        this.editMatchPersonForm.get('personId').patchValue('');
-        this.editMatchPersonForm.get('russianName').patchValue('');
+        this.matchPersonService.createOrUpdate(this.isEdit, matchPerson)
+            .subscribe(data => {
+                matchPerson.number = data.number;
+                this.emitNewPerson(matchPerson);
+            },
+                null,
+                () => this.checkExit());
+        this.editMatchPersonForm.controls.personId.patchValue('');
+        this.name = this.name !== '' ? '' : null ; // dirty hack to change component input
+        this.cdr.markForCheck();
     }
 
     public setPerson(person: Person): void {
-        this.editMatchPersonForm.get('personId').patchValue(person.id);
-        this.editMatchPersonForm.get('russianName').patchValue(person.russianName);
+        this.editMatchPersonForm.controls.personId.patchValue(person.id);
+        this.name = person.personName;
+        this.onSubmit();
     }
 
     private emitNewPerson(matchPerson: MatchPerson): void {
@@ -90,11 +85,11 @@ export class MatchPersonEditPanelComponent implements OnInit {
 
     private initForm(): void {
         this.editMatchPersonForm = this.formBuilder.group({
-            russianName: [this.selectedMatchPerson ? this.selectedMatchPerson.russianName : ''],
-            personId: [this.selectedMatchPerson ? this.selectedMatchPerson.personId : '', Validators.required],
+            personId: [this.selectedMatchPerson ? this.selectedMatchPerson.id : '', Validators.required],
             personType: [this.selectedMatchPerson ? this.selectedMatchPerson.personType : this.typeId, Validators.required],
             useType: [true]
         });
+        this.name = this.selectedMatchPerson ? this.selectedMatchPerson.personName : '';
         this.isEdit = this.selectedMatchPerson !== undefined;
     }
 }

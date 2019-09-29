@@ -2,7 +2,7 @@
 <div class="text-center">Добавление человека к матчу</div>
 <form class="full-width" role="form" [formGroup]="editMatchPersonForm" (ngSubmit)="onSubmit()">
     <select-person-form-field formControlName="personId"
-        [personName]="editMatchPersonForm.controls['russianName'].value" [type]="this.editMatchPersonForm.get('useType').value ? personTypeId : null"
+        [personName]="name" [type]="this.editMatchPersonForm.get('useType').value ? personTypeId : null"
          focus="true">
     </select-person-form-field>
     <mat-form-field class="full-width">

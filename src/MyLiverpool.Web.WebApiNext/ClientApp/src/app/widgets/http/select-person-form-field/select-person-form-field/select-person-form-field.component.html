@@ -3,9 +3,9 @@
      [value]="personName"
      [formControl]="selectCtrl">
     <mat-autocomplete #person="matAutocomplete">
-        <mat-option *ngFor="let person of persons$ | async" [value]="person.russianName"
-            (click)="value = person.id">
-            <span>{{ person.russianName }}</span>
+        <mat-option *ngFor="let person of persons$ | async" [value]="person.personName"
+            (click)="onSelectionChange(person)">
+            <span>{{ person.personName }}</span>
         </mat-option>
     </mat-autocomplete>
 </mat-form-field>

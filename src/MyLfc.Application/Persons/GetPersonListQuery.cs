@@ -135,6 +135,7 @@ namespace MyLfc.Application.Persons
 
             public string Name => $"{FirstName} {LastName}";
             public string RussianName => $"{FirstRussianName} {LastRussianName}";
+            public string PersonName => $"{FirstRussianName} {LastRussianName}";
         }
     }
 }

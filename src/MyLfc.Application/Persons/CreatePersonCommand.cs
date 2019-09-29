@@ -53,6 +53,7 @@ namespace MyLfc.Application.Persons
             public int Id { get; set; }
 
             public string RussianName => FirstRussianName + " " + LastRussianName;
+            public string PersonName => FirstRussianName + " " + LastRussianName;
 
             public string FirstRussianName { get; set; }
 

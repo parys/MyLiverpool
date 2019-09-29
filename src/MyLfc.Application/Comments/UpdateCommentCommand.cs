@@ -58,6 +58,8 @@ namespace MyLfc.Application.Comments
 
                 comment = _mapper.Map(request, comment);
                 comment.IsVerified = _requestContext.User.IsSiteTeamMember();
+                comment.LastModified = DateTimeOffset.UtcNow;
+                
 
                 await _context.SaveChangesAsync(cancellationToken);
 

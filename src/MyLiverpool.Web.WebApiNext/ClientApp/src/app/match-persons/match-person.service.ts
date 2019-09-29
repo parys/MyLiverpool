@@ -18,12 +18,13 @@ export class MatchPersonService {
         return this.http.get<MatchPerson[]>(`${MATCHES_ROUTE}/${matchId}/persons`);
     }
 
-    public create(item: MatchPerson): Observable<MatchPerson> {
-        return this.http.post<MatchPerson>(this.actionUrl, JSON.stringify(item));
-    }
-
-    public update( itemToUpdate: MatchPerson): Observable<MatchPerson> {
-        return this.http.put<MatchPerson>(this.actionUrl, JSON.stringify(itemToUpdate));
+    public createOrUpdate(isEdit: boolean, item: MatchPerson): Observable<MatchPerson> {
+        const stringify = JSON.stringify(item);
+        if (isEdit) {
+            return this.http.put<MatchPerson>(this.actionUrl, stringify);
+        } else {
+            return this.http.post<MatchPerson>(this.actionUrl, stringify);
+        }
     }
 
     public getTypes(): Observable<MatchPersonType[]> {

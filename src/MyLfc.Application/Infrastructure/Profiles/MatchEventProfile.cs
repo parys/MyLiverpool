@@ -15,7 +15,7 @@ namespace MyLfc.Application.Infrastructure.Profiles
             CreateMap<UpdateMatchEventCommand.Request, MatchEvent>();
 
             CreateMap<MatchEvent, GetMatchEventListQuery.MatchEventListDto>()
-                .ForMember(dest => dest.RussianName, src => src.MapFrom(x => x.Person.RussianName))
+                .ForMember(dest => dest.PersonName, src => src.MapFrom(x => x.Person.RussianName))
                 .ForMember(dest => dest.TypeName, src => src.MapFrom(x => x.Type.GetNameAttribute()))
                 .ForMember(dest => dest.SeasonName, src => src.MapFrom(x => x.Season.StartSeasonYear));
             

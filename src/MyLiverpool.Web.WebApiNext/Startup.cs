@@ -285,14 +285,14 @@ namespace MyLiverpool.Web.WebApiNext
                             options.SupplyData = (requestContext, obj) =>
                             {
                                 //  var result = appService.GetApplicationData(requestContext).GetAwaiter().GetResult();
-                                obj.Add("Cookies", requestContext.Request.Cookies);
+                       //         obj.Add("Cookies", requestContext.Request.Cookies);
                             };
                         });
                     }
 
                     if (env.IsDevelopment())
                     {
-                   //     spa.UseAngularCliServer(npmScript: "start");
+                    //    spa.UseAngularCliServer(npmScript: "start");
                         //   OR
                         // spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                     }
