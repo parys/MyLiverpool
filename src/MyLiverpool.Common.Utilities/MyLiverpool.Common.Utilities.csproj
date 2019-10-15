@@ -10,11 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.12" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.16" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.0.0" />

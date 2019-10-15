@@ -6,20 +6,19 @@ import { BreadcrumbService } from '@shared/breadcrumb';
 import { CALENDAR_RU, SEASONS_ROUTE, STATISTICS_RU } from '@constants/index';
 import { PipesModule } from '@base/pipes';
 
-import { seasonRoutes } from '@seasons/lazy/season.routes';
-import { SeasonCoreModule } from '@seasons/core';
-import { SeasonCalendarComponent } from '@seasons/lazy/season-calendar';
-import { SeasonEditComponent } from '@seasons/lazy/season-edit';
-import { SeasonListComponent } from '@seasons/lazy/season-list';
-import { SeasonStatisticsComponent } from '@seasons/lazy/season-statistics';
-import { SeasonStatisticsItemComponent } from '@seasons/lazy/season-statistics-item';
+import { seasonRoutes } from '@seasons/season.routes';
+import { SeasonCalendarComponent } from '@seasons/pages/season-calendar';
+import { SeasonEditComponent } from '@seasons/pages/season-edit';
+import { SeasonListComponent } from '@seasons/pages/season-list';
+import { SeasonStatisticsComponent } from '@seasons/pages/season-statistics';
+import { SeasonStatisticsItemComponent } from '@seasons/components/season-statistics-item';
 import { SeasonMaterialModule } from './season-material.module';
+import { SeasonService } from '@seasons/season.service';
 
 @NgModule({
     imports: [
         SharedModule,
         RouterModule.forChild(seasonRoutes),
-        SeasonCoreModule,
         PipesModule,
         SeasonMaterialModule
     ],
@@ -29,6 +28,9 @@ import { SeasonMaterialModule } from './season-material.module';
         SeasonListComponent,
         SeasonStatisticsComponent,
         SeasonStatisticsItemComponent
+    ],
+    providers: [
+        SeasonService
     ]
 })
 export class SeasonModule {

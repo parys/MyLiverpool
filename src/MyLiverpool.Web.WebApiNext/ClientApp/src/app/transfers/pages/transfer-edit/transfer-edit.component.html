@@ -4,16 +4,9 @@
     </select-person-form-field>
     <select-club-form-field formControlName="clubId" [clubName]="editTransferForm.controls['clubName'].value">
     </select-club-form-field>
-    <mat-form-field class="full-width">
-        <input matInput placeholder="Cезон" [matAutocomplete]="season" formControlName="seasonName">
-        <mat-autocomplete #season="matAutocomplete">
-            <mat-option *ngFor="let season of seasons$ | async"
-                [value]="season.startSeasonYear + '-' + season.endSeasonYear" (click)="selectSeason(season.id)">
-                <span>{{ season.startSeasonYear + '-' + season.endSeasonYear }}</span>
-            </mat-option>
-        </mat-autocomplete>
-    </mat-form-field>
-
+    <select-season-form-field formControlName="seasonId" [seasonName]="editTransferForm.controls['seasonName'].value">
+    </select-season-form-field>
+    
     <mat-form-field class="full-width">
         <input matInput [matDatepicker]="datePicker1" placeholder="Выберите дату трансфера" formControlName="startDate">
         <mat-datepicker-toggle matSuffix [for]="datePicker1"></mat-datepicker-toggle>

@@ -1,0 +1,11 @@
+<mat-form-field class="full-width">
+    <input matInput #selectSeason placeholder="Сезон" [matAutocomplete]="season"
+     [value]="seasonName"
+     [formControl]="seasonCtrl">
+    <mat-autocomplete #season="matAutocomplete">
+        <mat-option *ngFor="let season of seasons$ | async" [value]="season.startSeasonYear + '-' + season.endSeasonYear"
+            (click)="value = season.id">
+            <span>{{ season.startSeasonYear + '-' + season.endSeasonYear }}</span>
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

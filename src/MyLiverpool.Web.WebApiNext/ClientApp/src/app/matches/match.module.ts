@@ -6,7 +6,6 @@ import { MatchPersonModule } from '@match-persons/index';
 import { CommentSharedModule } from '@comments/shared';
 import { SharedModule } from '@shared/index';
 import { StadiumCoreModule } from '@stadiums/core';
-import { SeasonCoreModule } from '@seasons/index';
 import { BreadcrumbService } from '@shared/breadcrumb';
 import { MATCHES_RU, MATCH_RU } from '@constants/ru.constants';
 import { MATCHES_ROUTE } from '@constants/routes.constants';
@@ -19,6 +18,7 @@ import { MatchDetailComponent } from '@matches/pages/match-detail';
 import { matchRoutes } from '@matches/match.routes';
 import { MatchMaterialModule } from '@matches/match-material.module';
 import { SelectClubFormFieldModule } from '@widgets/http/select-club-form-field';
+import { SelectSeasonFormFieldModule } from '@widgets/http/select-season-form-field';
 
 @NgModule({
     imports: [
@@ -27,11 +27,11 @@ import { SelectClubFormFieldModule } from '@widgets/http/select-club-form-field'
         MatchEventsModule,
         RouterModule.forChild(matchRoutes),
         MatchPersonModule,
-        SeasonCoreModule,
         StadiumCoreModule,
         PipesModule,
         MatchMaterialModule,
-        SelectClubFormFieldModule
+        SelectClubFormFieldModule,
+        SelectSeasonFormFieldModule
     ],
     declarations: [
         MatchEditComponent,

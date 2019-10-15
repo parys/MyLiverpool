@@ -1,7 +1,8 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { SeasonService } from '@seasons/core';
 import { Season, PagedList } from '@domain/models';
+
+import { SeasonService } from '@seasons/season.service';
 
 @Component({
     selector: 'season-list',

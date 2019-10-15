@@ -40,6 +40,7 @@ namespace MyLfc.Application.Matches
                     .Include(x => x.Stadium)
                     .Include(x => x.Club)
                     .Include(x => x.Events)
+                    .Include(x => x.Season)
                     .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
                 var liverpoolClub = await _mediator.Send(new GetLiverpoolClubQuery.Request(), cancellationToken);

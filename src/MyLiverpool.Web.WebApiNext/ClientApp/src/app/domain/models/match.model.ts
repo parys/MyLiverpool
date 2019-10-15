@@ -16,7 +16,7 @@
     public stadiumName: string;
     public stadiumCity: string;
     public seasonId: number;
-    public seasonName: number;
+    public seasonName: string;
     public scoreHome: string;
     public scorePenaltyHome: number;
     public scoreAway: string;

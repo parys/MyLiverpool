@@ -194,7 +194,7 @@ const routes: Routes = [
     },
     {
         path: SEASONS_ROUTE,
-        loadChildren: () => import('./seasons/lazy/season.module').then(m => m.SeasonModule)
+        loadChildren: () => import('./seasons/season.module').then(m => m.SeasonModule)
     },
     {
         path: STADIUMS_ROUTE,

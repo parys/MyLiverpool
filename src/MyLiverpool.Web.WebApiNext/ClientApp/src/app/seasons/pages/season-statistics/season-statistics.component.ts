@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
-import { SeasonService } from '../../core';
+
 import { PersonStatistics, Season, SeasonStatistics } from '@domain/models';
+
+import { SeasonService } from '@seasons/season.service';
 
 @Component({
     selector: '<season-statistics>',
@@ -12,7 +14,7 @@ export class SeasonStatisticsComponent implements OnInit {
     public seasons: Season[];
     displayedColumns = ['personName', 'goals', 'assists', 'yellows', 'reds'];
 
-    @ViewChild('seasonSelect', { static: true })seasonSelect: MatSelect;
+    @ViewChild('seasonSelect', { static: true }) seasonSelect: MatSelect;
 
     constructor(private seasonService: SeasonService) {
 
@@ -33,9 +35,9 @@ export class SeasonStatisticsComponent implements OnInit {
         this.seasonService.getStatistics(id)
             .subscribe((data: SeasonStatistics) => {
                 this.statistics = data.persons;
-                    if (selectUpdate) {
-                        this.seasonSelect.value = data.id;
-                    }
-                });
+                if (selectUpdate) {
+                    this.seasonSelect.value = data.id;
+                }
+            });
     }
 }

@@ -6,8 +6,7 @@ import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { MatchService } from '@matches/match.service';
-import { SeasonService,  } from '@seasons/core';
-import { Match, MatchType, Stadium, StadiumFilters, Season, PagedList } from '@domain/models';
+import { Match, MatchType, Stadium, StadiumFilters, PagedList } from '@domain/models';
 import { StadiumService } from '@stadiums/core';
 import { MATCHES_ROUTE } from '@constants/routes.constants';
 import { DEBOUNCE_TIME } from '@constants/app.constants';
@@ -21,15 +20,14 @@ export class MatchEditComponent implements OnInit {
     private id: number;
     public editMatchForm: FormGroup;
     public types: MatchType[];
-    public seasons: Season[];
     public stadiums$: Observable<Stadium[]>;
+    public seasonName: string;
 
     constructor(private matchService: MatchService,
                 private route: ActivatedRoute,
                 private stadiumService: StadiumService,
                 private router: Router,
-                private formBuilder: FormBuilder,
-                private seasonService: SeasonService) {
+                private formBuilder: FormBuilder) {
     }
 
     public ngOnInit(): void {
@@ -42,9 +40,6 @@ export class MatchEditComponent implements OnInit {
 
         this.matchService.getTypes()
             .subscribe((data: MatchType[]) => this.types = data);
-
-        this.seasonService.getAllWithoutFilter()
-            .subscribe((data: PagedList<Season>) => this.seasons = data.results);
     }
 
     public onSubmit(): void {
@@ -62,6 +57,7 @@ export class MatchEditComponent implements OnInit {
         this.editMatchForm.patchValue(data);
         this.editMatchForm.get('date').patchValue(new Date(data.dateTime));
         this.editMatchForm.get('time').patchValue(new Date(data.dateTime).toTimeString().slice(0, 8));
+        this.seasonName = data.seasonName;
     }
 
     private parseForm(): Match {

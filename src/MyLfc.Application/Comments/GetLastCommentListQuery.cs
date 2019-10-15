@@ -37,9 +37,6 @@ namespace MyLfc.Application.Comments
             {
                 var comments = await _context.MaterialComments
                     .AsNoTracking()
-                    .Include(x => x.Author)
-                    .Include(x => x.CommentVotes)
-                    .Where(x => !x.Pending)
                     .OrderByDescending(x => x.AdditionTime)
                     .Take(GlobalConstants.LastCommentsCount)
                     .ProjectTo<LastCommentDto>(_mapper.ConfigurationProvider)

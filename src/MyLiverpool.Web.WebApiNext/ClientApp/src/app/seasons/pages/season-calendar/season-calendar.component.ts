@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Season, PagedList } from '@domain/models';
 import { RolesCheckedService } from '@base/auth';
 
-import { SeasonService } from '@seasons/core';
+import { SeasonService } from '@seasons/season.service';
 
 @Component({
     selector: 'season-calendar',

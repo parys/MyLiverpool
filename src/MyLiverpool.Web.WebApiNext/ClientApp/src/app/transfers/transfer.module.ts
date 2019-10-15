@@ -1,18 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatInputModule } from '@angular/material/input';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
 
 import { TRANSFERS_RU } from '@constants/ru.constants';
 import { SelectPersonFormFieldModule } from '@widgets/http/select-person-form-field';
 import { SelectClubFormFieldModule } from '@widgets/http/select-club-form-field';
+import { SelectSeasonFormFieldModule } from '@widgets/http/select-season-form-field';
 import { SharedModule } from '@shared/index';
-import { SeasonCoreModule } from '@seasons/core';
 import { BreadcrumbService } from '@shared/breadcrumb';
 import { TRANSFERS_ROUTE } from '@constants/routes.constants';
 
@@ -27,9 +20,9 @@ import { TransfersMaterialModule } from './transfers-material.module';
     imports: [
         SharedModule,
         RouterModule.forChild(transferRoutes),
-        SeasonCoreModule,
         SelectPersonFormFieldModule,
         SelectClubFormFieldModule,
+        SelectSeasonFormFieldModule,
         TransfersMaterialModule
     ],
     declarations: [

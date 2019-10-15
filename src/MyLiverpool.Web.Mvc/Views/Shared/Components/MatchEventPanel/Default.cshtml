@@ -10,56 +10,56 @@
                 {
                     case MatchEventType.Goal:
                         {
-                            <span><img class="width20px" alt="Гол" src="/img/goal.png" title="@ev.TypeName">@ev.RussianName - @ev.Minute' </span>
+                            <span><img class="width20px" alt="Гол" src="/img/goal.png" title="@ev.TypeName">@ev.PersonName - @ev.Minute' </span>
                             break;
                         }
                     case MatchEventType.GoalPenalty:
                         {
-                            <span><img class="width20px" alt="Гол" src="/img/goal.png" title="@ev.TypeName">(П)@ev.RussianName - @ev.Minute' </span>
+                            <span><img class="width20px" alt="Гол" src="/img/goal.png" title="@ev.TypeName">(П)@ev.PersonName - @ev.Minute' </span>
                             break;
                         }
 
                     case MatchEventType.GoalOwn:
                         {
-                            <span><img class="width20px" alt="Гол" src="/img/goal_own.png" title="@ev.TypeName">(А)@ev.RussianName - @ev.Minute' </span>
+                            <span><img class="width20px" alt="Гол" src="/img/goal_own.png" title="@ev.TypeName">(А)@ev.PersonName - @ev.Minute' </span>
                             break;
                         }
                     case MatchEventType.Assist:
                         {
-                            <span title="@ev.TypeName">(@ev.RussianName)</span>
+                            <span title="@ev.TypeName">(@ev.PersonName)</span>
                             break;
                         }
 
                     case MatchEventType.Yellow:
                         {
-                            <span class="flex-vertical-center"><span class="glyphicon glyphicon-file color-gold"></span>@ev.RussianName - @ev.Minute' </span>
+                            <span class="flex-vertical-center"><span class="glyphicon glyphicon-file color-gold"></span>@ev.PersonName - @ev.Minute' </span>
                             break;
                         }
                     case MatchEventType.Red:
                         {
-                            <span *ngIf="event.type === 7" class="flex-vertical-center"><span class="glyphicon glyphicon-file color-red" title="@ev.TypeName"></span>@ev.RussianName - @ev.Minute' </span>
+                            <span *ngIf="event.type === 7" class="flex-vertical-center"><span class="glyphicon glyphicon-file color-red" title="@ev.TypeName"></span>@ev.PersonName - @ev.Minute' </span>
                             break;
                         }
 
                     case MatchEventType.SubstitudeIn:
                         {
-                            <span *ngIf="event.type === 9" class="flex-vertical-center" title="@ev.TypeName"> <span class="glyphicon glyphicon-triangle-bottom color-red"></span>@ev.RussianName - @ev.Minute' </span>
+                            <span *ngIf="event.type === 9" class="flex-vertical-center" title="@ev.TypeName"> <span class="glyphicon glyphicon-triangle-bottom color-red"></span>@ev.PersonName - @ev.Minute' </span>
                             break;
                         }
                     case MatchEventType.SubstitudeOut:
                         {
-                            <span *ngIf="event.type === 8" class="flex-vertical-center" title="@ev.TypeName"><span class="glyphicon glyphicon-triangle-top color-green"></span>@ev.RussianName - @ev.Minute' </span>
+                            <span *ngIf="event.type === 8" class="flex-vertical-center" title="@ev.TypeName"><span class="glyphicon glyphicon-triangle-top color-green"></span>@ev.PersonName - @ev.Minute' </span>
                             break;
                         }
                     case MatchEventType.NotGoalPenalty:
                         {
-                            <span *ngIf="event.type === 10"><img class="width20px" alt="Гол" src="/img/goal_own.png" title="@ev.TypeName">П(нереализованный)@ev.RussianName - @ev.Minute' </span>
+                            <span *ngIf="event.type === 10"><img class="width20px" alt="Гол" src="/img/goal_own.png" title="@ev.TypeName">П(нереализованный)@ev.PersonName - @ev.Minute' </span>
                             break;
                         }
 
                     case MatchEventType.Injury:
                     {
-                        <span>Травма @ev.RussianName - @ev.Minute' </span>
+                        <span>Травма @ev.PersonName - @ev.Minute' </span>
                         break;
                     }
 

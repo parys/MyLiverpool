@@ -4,10 +4,10 @@ import { CALENDAR_RU, STATISTICS_RU, EDITING_RU } from '@constants/ru.constants'
 import { EDIT_ROUTE } from '@constants/routes.constants';
 import { RoleGuard, RolesEnum } from '@base/auth';
 
-import { SeasonListComponent } from '@seasons/lazy/season-list';
-import { SeasonEditComponent } from '@seasons/lazy/season-edit';
-import { SeasonCalendarComponent } from '@seasons/lazy/season-calendar';
-import { SeasonStatisticsComponent } from '@seasons/lazy/season-statistics';
+import { SeasonListComponent } from '@seasons/pages/season-list';
+import { SeasonEditComponent } from '@seasons/pages/season-edit';
+import { SeasonCalendarComponent } from '@seasons/pages/season-calendar';
+import { SeasonStatisticsComponent } from '@seasons/pages/season-statistics';
 
 export const seasonRoutes: Routes = [
     { path: '', component: SeasonListComponent, data: { title: 'Список сезонов' } },

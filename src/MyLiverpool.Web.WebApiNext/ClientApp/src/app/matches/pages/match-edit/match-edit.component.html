@@ -7,11 +7,8 @@
         </mat-select>
     </mat-form-field>
     
-    <mat-form-field class="full-width">
-        <mat-select placeholder="Сезон" formControlName="seasonId">
-            <mat-option *ngFor="let season of seasons" [value]="season.id" [textContent]="season.startSeasonYear + '-' + season.endSeasonYear"></mat-option>
-        </mat-select>
-    </mat-form-field>
+    <select-season-form-field formControlName="seasonId" [seasonName]="seasonName">
+    </select-season-form-field>
 
     <div class="full-width text-center">
         Выезд <mat-slide-toggle formControlName="isHome"

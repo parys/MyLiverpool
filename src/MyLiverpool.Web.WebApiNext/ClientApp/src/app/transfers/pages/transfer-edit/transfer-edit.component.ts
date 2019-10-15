@@ -5,8 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription, Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
-import { Transfer, Club, ClubFilters, Season, SeasonFilters, PagedList } from '@domain/models';
-import { SeasonService } from '@seasons/core';
+import { Transfer, Season, SeasonFilters, PagedList } from '@domain/models';
 import { TRANSFERS_ROUTE } from '@constants/routes.constants';
 import { DEBOUNCE_TIME } from '@constants/app.constants';
 import { TransferService } from '@transfers/transfer.service';
@@ -26,8 +25,7 @@ export class TransferEditComponent implements OnInit, OnDestroy {
     constructor(private transferService: TransferService,
                 private route: ActivatedRoute,
                 private router: Router,
-                private formBuilder: FormBuilder,
-                private seasonService: SeasonService) {
+                private formBuilder: FormBuilder) {
     }
 
     public ngOnInit(): void {
@@ -43,10 +41,6 @@ export class TransferEditComponent implements OnInit, OnDestroy {
     public ngOnDestroy(): void {
         if (this.sub) { this.sub.unsubscribe(); }
         if (this.sub3) { this.sub3.unsubscribe(); }
-    }
-
-    public selectSeason(id: number) {
-        this.editTransferForm.get('seasonId').patchValue(id);
     }
 
     public onSubmit(): void {
@@ -97,17 +91,5 @@ export class TransferEditComponent implements OnInit, OnDestroy {
             onLoan: [false, Validators.required],
             coming: [true, Validators.required],
         });
-
-        this.seasons$ = this.editTransferForm.controls['seasonName'].valueChanges.pipe(
-            debounceTime(DEBOUNCE_TIME),
-            distinctUntilChanged(),
-            switchMap((value: string): Observable<PagedList<Season>> => {
-                const filter = new SeasonFilters();
-                filter.name = value;
-                return this.seasonService.getAll(filter);
-            }),
-            switchMap((pagingSeasons: PagedList<Season>): Observable<Season[]> => {
-                return of(pagingSeasons.results);
-            }));
     }
 }

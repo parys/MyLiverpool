@@ -5,8 +5,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Season } from '@domain/models';
-import { SeasonService } from '@seasons/core';
 import { SEASONS_ROUTE } from '@constants/index';
+
+import { SeasonService } from '@seasons/season.service';
 
 @Component({
     selector: 'season-edit',
@@ -27,7 +28,7 @@ export class SeasonEditComponent implements OnInit, OnDestroy {
         this.editForm = this.formBuilder.group({
             startSeasonYear: ['', Validators.required]
         });
-        this.id = this.route.snapshot.params['id'] || 0;
+        this.id = this.route.snapshot.params.id || 0;
         if (this.id > 0) {
             this.sub2 = this.service
                 .getSingle(this.id)

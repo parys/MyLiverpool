@@ -26,6 +26,7 @@ namespace MyLfc.Application.Infrastructure.Profiles
                     src => src.MapFrom(x => GetPenaltyScore(x.DateTime, x.Events, !x.IsHome)))
                 .ForMember(x => x.ScorePenaltyHome,
                     src => src.MapFrom(x => GetPenaltyScore(x.DateTime, x.Events, x.IsHome)))
+                .ForMember(x => x.SeasonName, src => src.MapFrom(x => $"{x.Season.StartSeasonYear}-{x.Season.StartSeasonYear+1}" ))
                 .ForMember(x => x.StadiumName, src => src.MapFrom(x => x.Stadium.Name))
                 .ForMember(x => x.StadiumCity, src => src.MapFrom(x => x.Stadium.City));
 
