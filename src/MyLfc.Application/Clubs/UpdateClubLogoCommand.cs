@@ -25,9 +25,9 @@ namespace MyLfc.Application.Clubs
 
         public class Handler : IRequestHandler<Request, Response>
         {
-            private readonly IHostingEnvironment _appEnvironment;
+            private readonly IWebHostEnvironment _appEnvironment;
 
-            public Handler(IHostingEnvironment appEnvironment)
+            public Handler(IWebHostEnvironment appEnvironment)
             {
                 _appEnvironment = appEnvironment;
             }

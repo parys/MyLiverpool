@@ -246,7 +246,7 @@ namespace MyLiverpool.Web.WebApiNext
 
             app.UseCors("MyPolicy");
 
-            //  if (!Env.IsDevelopment())
+            if (!Env.IsDevelopment())
             {
                 app.UseSpaStaticFiles(new StaticFileOptions());
             }

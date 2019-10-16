@@ -50,11 +50,6 @@ namespace MyLfc.Persistence
             return entity;
         }
 
-        public async Task UpdateRangeAsync(IEnumerable<TEntity> entities)
-        {
-            _context.Set<TEntity>().UpdateRange(entities);
-            await _context.SaveChangesAsync();
-        }
 
         public async Task<bool> DeleteAsync(TEntity entity)
         {
@@ -78,15 +73,6 @@ namespace MyLfc.Persistence
             return false;
         }
 
-        public async Task DeleteRangeAsync(IEnumerable<TEntity> entities)
-        {
-            if (entities.Any())
-            {
-                _context.Set<TEntity>().RemoveRange(entities);
-                await _context.SaveChangesAsync();
-            }
-        }
-
         public async Task<int> CountAsync(Expression<Func<TEntity, bool>> filter = null)
         {
             IQueryable<TEntity> query = _context.Set<TEntity>().AsNoTracking();
@@ -97,14 +83,6 @@ namespace MyLfc.Persistence
             return await query.CountAsync();
         }
         
-        public async Task<IEnumerable<TEntity>> GetListAsync(int? page = null, int itemPerPage = 15, bool asNoTracking = true,
-            Expression<Func<TEntity, bool>> filter = null, SortOrder order = SortOrder.Ascending,
-            Expression<Func<TEntity, object>> orderBy = null,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
-        {
-            return await GetQueryableList(page, itemPerPage, asNoTracking, filter, order, orderBy, include).ToListAsync();
-        }
-
         public IQueryable<TEntity> GetQueryableList(int? page = null, int itemPerPage = 15, bool asNoTracking = true,
             Expression<Func<TEntity, bool>> filter = null, SortOrder order = SortOrder.Ascending,
             Expression<Func<TEntity, object>> orderBy = null,

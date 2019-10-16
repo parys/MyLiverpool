@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using MyLfc.Application.Infrastructure;
 using MyLfc.Application.Infrastructure.Profiles;
 using MyLfc.Common.Web;
@@ -31,7 +32,7 @@ namespace MyLiverpool.Web.Mvc
 
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -45,7 +46,7 @@ namespace MyLiverpool.Web.Mvc
 
         private IConfigurationRoot Configuration { get; }
 
-        private IHostingEnvironment Env { get; }
+        private IWebHostEnvironment Env { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -98,7 +99,7 @@ namespace MyLiverpool.Web.Mvc
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
@@ -137,7 +138,7 @@ namespace MyLiverpool.Web.Mvc
 
         private void RegisterCoreHelpers(IServiceCollection services)
         {
-            services.AddSingleton<IHostingEnvironment>(Env);
+            services.AddSingleton<IWebHostEnvironment>(Env);
             services.AddSingleton<IConfigurationRoot>(Configuration);
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<ISignalRHubAggregator, EmptyHubAggregator>();

@@ -21,13 +21,13 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
         private const string PathContent = "content";
         private const string PathImages = "images";
         private readonly string _pathFull = Path.Combine("content", "images");
-        private readonly IHostingEnvironment _env;
+        private readonly IWebHostEnvironment _env;
         private readonly IUploadService _uploadService;
         
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ImagesController(IHostingEnvironment environment, IUploadService uploadService)
+        public ImagesController(IWebHostEnvironment environment, IUploadService uploadService)
         {
             _env = environment;
             _uploadService = uploadService;

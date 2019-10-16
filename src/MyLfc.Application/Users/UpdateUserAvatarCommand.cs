@@ -33,9 +33,9 @@ namespace MyLfc.Application.Users
 
             private readonly RequestContext _requestContext;
 
-            private readonly IHostingEnvironment _appEnvironment;
+            private readonly IWebHostEnvironment _appEnvironment;
 
-            public Handler(LiverpoolContext context, RequestContext requestContext, IHostingEnvironment appEnvironment)
+            public Handler(LiverpoolContext context, RequestContext requestContext, IWebHostEnvironment appEnvironment)
             {
                 _context = context;
                 _requestContext = requestContext;

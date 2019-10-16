@@ -15,9 +15,9 @@ namespace MyLiverpool.Business.Services
     {
         public const string ContentPath = "content";
         public readonly string ImagesPath = Path.Combine(ContentPath, "images");
-        private readonly IHostingEnvironment _appEnvironment;
+        private readonly IWebHostEnvironment _appEnvironment;
 
-        public UploadService(IHostingEnvironment appEnvironment)
+        public UploadService(IWebHostEnvironment appEnvironment)
         {
             _appEnvironment = appEnvironment;
         }

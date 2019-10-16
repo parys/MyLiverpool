@@ -64,22 +64,24 @@ namespace MyLiverpool.Business.Services
                               s.Name != "Новости" &&
                               s.Name != "Рабочие темы";
             }
-            var sections = await _forumSectionRepository
-                .GetQueryableList()
-                .Select(x => new ForumSection
-            {
-                Id = x.Id,
-                Name = x.Name,
-                IdOld = x.IdOld,
-                Subsections = x.Subsections.Select(y => new ForumSubsection()
-                {
-                    Id = y.Id,
-                    Name = y.Name,
-                    ThemesCount = y.Themes.Count,
-                    Description = y.Description,
-                    IdOld = y.IdOld
-                }).ToList()
-            }).ToListAsync();
+
+            var sections = new List<ForumSection>();//await _forumSectionRepository
+            //var sections = await _forumSectionRepository
+            //    .
+            //    .Select(x => new ForumSection
+            //{
+            //    Id = x.Id,
+            //    Name = x.Name,
+            //    IdOld = x.IdOld,
+            //    Subsections = x.Subsections.Select(y => new ForumSubsection()
+            //    {
+            //        Id = y.Id,
+            //        Name = y.Name,
+            //        ThemesCount = y.Themes.Count,
+            //        Description = y.Description,
+            //        IdOld = y.IdOld
+            //    }).ToList()
+            //}).ToListAsync();
             sections.ForEach(x => x.Subsections = x.Subsections.AsQueryable().Where(filter).ToList());
 
             return _mapper.Map<IEnumerable<ForumSectionDto>>(sections);
