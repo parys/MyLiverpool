@@ -17,13 +17,13 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="3.0.0" />
-    <PackageReference Include="OpenIddict" Version="2.0.0" />
-    <PackageReference Include="OpenIddict.Core" Version="2.0.0" />
-    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="2.0.0" />
-    <PackageReference Include="OpenIddict.EntityFrameworkCore.Models" Version="2.0.0" />
-    <PackageReference Include="OpenIddict.Mvc" Version="2.0.0" />
-    <PackageReference Include="OpenIddict.Server" Version="2.0.0" />
-    <PackageReference Include="OpenIddict.Validation" Version="2.0.0" />
+    <PackageReference Include="OpenIddict" Version="2.0.1" />
+    <PackageReference Include="OpenIddict.Core" Version="2.0.1" />
+    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="2.0.1" />
+    <PackageReference Include="OpenIddict.EntityFrameworkCore.Models" Version="2.0.1" />
+    <PackageReference Include="OpenIddict.Mvc" Version="2.0.1" />
+    <PackageReference Include="OpenIddict.Server" Version="2.0.1" />
+    <PackageReference Include="OpenIddict.Validation" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
