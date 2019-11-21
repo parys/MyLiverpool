@@ -15,6 +15,7 @@ import { TransferEditComponent } from '@transfers/pages/transfer-edit';
 import { TransferListComponent } from '@transfers/pages/transfer-list';
 import { TransferService } from '@transfers/transfer.service';
 import { TransfersMaterialModule } from './transfers-material.module';
+import { PaginationModule } from '@base/pagination/pagination.module';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { TransfersMaterialModule } from './transfers-material.module';
         SelectPersonFormFieldModule,
         SelectClubFormFieldModule,
         SelectSeasonFormFieldModule,
-        TransfersMaterialModule
+        TransfersMaterialModule,
+        PaginationModule
     ],
     declarations: [
         TransferEditComponent,

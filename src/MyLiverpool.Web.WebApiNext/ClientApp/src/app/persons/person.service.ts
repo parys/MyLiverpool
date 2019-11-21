@@ -30,10 +30,4 @@ export class PersonService extends BaseRestService<Person, PersonFilters> {
     public getSquad(type: string): Observable<SquadList> {
         return this.http.get<SquadList>(`${this.actionUrl}squad?type=${type}`);
     }
-
-    public updatePhoto(name: string, file: File): Observable<object> {
-        const formData: FormData = new FormData();
-        formData.append('uploadFile', file, file.name);
-        return this.http.post<object>(`${this.actionUrl}photo/${name}`, formData, true);
-    }
 }

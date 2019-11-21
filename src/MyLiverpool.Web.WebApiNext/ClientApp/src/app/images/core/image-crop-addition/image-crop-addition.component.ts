@@ -16,7 +16,7 @@ export class ImageCropAdditionComponent {
     public croppedImage: any = '';
 
     constructor(private service: ImageService,
-        private snackBar: MatSnackBar
+                private snackBar: MatSnackBar
     ) {}
 
     public onUploadImage(event: any): void  {

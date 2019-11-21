@@ -1,10 +1,6 @@
 ﻿import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 
 import {
     MatchCalendarComponent,
@@ -23,14 +19,7 @@ import {
 } from '@layout/components/';
 import { LayoutService } from '@layout/layout.service';
 import { PipesModule } from '@base/pipes';
-
-const matModules = [
-    MatButtonModule,
-    MatBadgeModule,
-    MatCardModule,
-    MatIconModule,
-
-];
+import { LayoutMaterialModule } from './layout-material.module';
 
 const layoutComponents = [
     NotificationCounterComponent,
@@ -52,7 +41,7 @@ const layoutComponents = [
     imports: [
         CommonModule,
         RouterModule,
-        ...matModules,
+        LayoutMaterialModule,
         PipesModule
     ],
     declarations: [

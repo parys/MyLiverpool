@@ -1,5 +1,5 @@
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ChangeDetectorRef, Input, forwardRef } from '@angular/core';
+import { ChangeDetectorRef, Input, forwardRef, Directive } from '@angular/core';
 
 import { ObserverComponent } from '@domain/base/observer.component';
 

@@ -13,6 +13,7 @@ import { BreadcrumbService } from '@shared/breadcrumb';
 import { STADIUMS_ROUTE } from '@constants/routes.constants';
 import { STADIUMS_RU } from '@constants/ru.constants';
 import { MatButtonModule } from '@angular/material/button';
+import { PaginationModule } from '@base/pagination/pagination.module';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { MatButtonModule } from '@angular/material/button';
         MatInputModule,
         MatSortModule,
         MatTableModule,
-        MatButtonModule
+        MatButtonModule,
+        PaginationModule
     ],
     declarations: [
         StadiumEditComponent,

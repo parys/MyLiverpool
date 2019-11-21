@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -44,16 +43,7 @@ namespace MyLiverpool.Business.Services
 
         public async Task<string> UploadAsync(string base64File)
         {
-           // base64File = base64File.Replace("data:image/webp;base64,", "");
-            base64File = base64File.Replace("data:image/jpeg;base64,", "");
-         //   string newName = GenerateNewName() + ".webp";
-            string newName = PathHelpers.GenerateNewName() + ".jpeg";
-            var newPath = PathHelpers.GenerateNewPath(ImagesPath, _appEnvironment.WebRootPath);
-            var relativePath = Path.Combine(newPath, newName);
-            var path = Path.Combine(_appEnvironment.WebRootPath, relativePath);
-            relativePath = Regex.Replace(relativePath, "\\\\", "/");
-            await File.WriteAllBytesAsync(path, Convert.FromBase64String(base64File));
-            return "/" + relativePath;
+            return await FileHelper.SaveMaterialPhotoAsync(base64File, ImagesPath, _appEnvironment.WebRootPath);
         }
     }
 }

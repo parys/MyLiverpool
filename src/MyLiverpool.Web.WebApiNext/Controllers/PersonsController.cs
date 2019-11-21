@@ -161,22 +161,5 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
 
             return Ok(await Task.FromResult(list));
         }
-        
-        /// <summary>
-        /// Uploads a person photo.
-        /// </summary>
-        /// <returns>Result of uploading new photo.</returns>
-        [Authorize(Roles = nameof(RolesEnum.InfoStart)), HttpPost("photo/{name}")]
-        public async Task<ActionResult> UploadPhotoAsync([FromRoute] UpdatePersonPhotoCommand.Request request)
-        {
-            if (Request.Form.Files != null && Request.Form.Files.Count > 0)
-            {
-                request.File = Request.Form.Files[0];
-                var result = await Mediator.Send(request);
-
-                    return Ok(new { path = result.Path });
-            }
-            return BadRequest();
-        }
     }
 }

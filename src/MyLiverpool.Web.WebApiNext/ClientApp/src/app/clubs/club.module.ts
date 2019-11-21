@@ -12,13 +12,15 @@ import { ClubEditComponent } from '@clubs/pages/club-edit';
 import { ClubListComponent } from '@clubs/pages/club-list';
 import { ClubMaterialModule } from '@clubs/club-material.module';
 import { ClubService } from '@clubs/club.service';
+import { PaginationModule } from '@base/pagination/pagination.module';
 
 @NgModule({
     imports: [
         SharedModule,
         RouterModule.forChild(clubRoutes),
         StadiumCoreModule,
-        ClubMaterialModule
+        ClubMaterialModule,
+        PaginationModule
     ],
     declarations: [
         ClubEditComponent,

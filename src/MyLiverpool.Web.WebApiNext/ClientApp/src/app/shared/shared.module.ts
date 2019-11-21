@@ -1,33 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DeleteDialogComponent } from './delete-dialog';
-import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+// import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { LoaderComponent, LoaderService } from './loader';
-import { BearerInterceptor } from './interceptors';
 import { BreadcrumbComponent } from './breadcrumb';
 import { AdComponent } from './ad';
 
-import { getRussianPaginatorIntl } from './intl/russian-paginator-intl';
-import { StorageModule, StorageService } from '@base/storage';
-import { AuthModule } from '@base/auth/auth.module';
 import { PipesModule } from '@base/pipes';
 
 const mat = [
     MatDialogModule,
     MatMenuModule,
-    MatProgressBarModule,
     MatSnackBarModule,
-    MatPaginatorModule,
     MatTooltipModule,
 ];
 
@@ -37,14 +27,11 @@ const mat = [
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
-        StorageModule,
-        AuthModule, // todo temporary?
         PipesModule, // todo ?
             ...mat
     ],
     declarations: [
         DeleteDialogComponent,
-        LoaderComponent,
         BreadcrumbComponent,
         AdComponent,
     ],
@@ -52,20 +39,15 @@ const mat = [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-
         DeleteDialogComponent,
-        LoaderComponent,
         BreadcrumbComponent,
         AdComponent,
 
         ...mat
     ],
     providers: [
-        LoaderService,
-        { provide: HTTP_INTERCEPTORS, useClass: BearerInterceptor, multi: true, deps: [StorageService, LoaderService] },
-        { provide: MatPaginatorIntl, useValue: getRussianPaginatorIntl() },
         { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000 } },
-        { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
+   //     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
     ],
     entryComponents: [
         DeleteDialogComponent

@@ -10,6 +10,7 @@ import { SharedModule } from '@shared/index';
 
 import { PersonEditComponent } from '@persons/shared/person-edit';
 import { PersonService } from '@persons/person.service';
+import { CropImageFormFieldModule } from '@widgets/non-http/crop-image-form-field';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { PersonService } from '@persons/person.service';
         MatNativeDateModule,
         MatDatepickerModule,
         MatSelectModule,
-        MatButtonModule
+        MatButtonModule,
+        CropImageFormFieldModule,
     ],
     declarations: [
         PersonEditComponent

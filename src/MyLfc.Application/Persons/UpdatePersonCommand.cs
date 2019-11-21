@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using MyLfc.Application.Infrastructure.Exceptions;
 using MyLfc.Domain;
 using MyLfc.Persistence;
+using MyLiverpool.Common.Utilities;
 
 namespace MyLfc.Application.Persons
 {
@@ -31,11 +33,14 @@ namespace MyLfc.Application.Persons
             private readonly LiverpoolContext _context;
 
             private readonly IMapper _mapper;
-            
-            public Handler(LiverpoolContext context, IMapper mapper)
+
+            private readonly IHostingEnvironment _appEnvironment;
+
+            public Handler(LiverpoolContext context, IMapper mapper, IHostingEnvironment appEnvironment)
             {
                 _context = context;
                 _mapper = mapper;
+                _appEnvironment = appEnvironment;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -50,6 +55,10 @@ namespace MyLfc.Application.Persons
 
                 person = _mapper.Map(request, person);
 
+                var fileName = request.FirstName + request.LastName;
+
+                person.Photo =
+                    await FileHelper.SavePersonPhotoAsync(request.Photo, fileName, _appEnvironment.WebRootPath);
                 await _context.SaveChangesAsync(cancellationToken);
 
                 return new Response {Id = person.Id};

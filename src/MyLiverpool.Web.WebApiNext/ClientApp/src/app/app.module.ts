@@ -19,6 +19,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppMaterialModule } from './app-material.module';
 import { PipesModule } from './base/pipes';
 import { SignalRModule } from '@base/signalr';
+import { AuthModule } from '@base/auth';
+import { StorageModule } from '@base/storage';
+import { LoaderModule } from '@base/loader';
 
 registerLocaleData(localeRU);
 
@@ -60,7 +63,10 @@ export class MyHammerConfig extends HammerGestureConfig {
         AppRoutingModule,
         AppMaterialModule,
         PipesModule,
-        SignalRModule.forRoot()
+        StorageModule.forRoot(),
+        SignalRModule.forRoot(),
+        AuthModule.forRoot(),
+        LoaderModule.forRoot()
     ],
     declarations: [
         home.NavbarComponent,

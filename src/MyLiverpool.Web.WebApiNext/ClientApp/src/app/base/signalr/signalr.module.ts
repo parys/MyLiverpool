@@ -26,4 +26,5 @@ export class SignalRModule extends EnsureModuleLoadedOnceGuard {
         parentModule: SignalRModule,
     ) {
         super(parentModule);
-    } }
+    }
+}

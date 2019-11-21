@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 
 import { SharedModule, BreadcrumbService } from '@shared/index';
 import { RecaptchaModule } from '@widgets/recaptcha';
@@ -12,13 +10,15 @@ import { WishListComponent, WishEditComponent } from '@wishes/pages';
 import { WishService } from '@wishes/wish.service';
 import { wishRoutes } from '@wishes/wish.routes';
 import { WishMaterialModule } from './wish-material.module';
+import { PaginationModule } from '@base/pagination/pagination.module';
 
 @NgModule({
     imports: [
         SharedModule,
         RouterModule.forChild(wishRoutes),
         RecaptchaModule,
-        WishMaterialModule
+        WishMaterialModule,
+        PaginationModule
     ],
     declarations: [
         WishEditComponent,

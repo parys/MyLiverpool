@@ -10,6 +10,7 @@ import { CommentSharedModule } from '@comments/shared';
 import { BreadcrumbService } from '@shared/breadcrumb';
 import { COMMENTS_ROUTE, COMMENTS_RU } from '@constants/index';
 import { CommentService } from '@comments/comment.service';
+import { PaginationModule } from '@base/pagination/pagination.module';
 
 @NgModule({
     imports: [
@@ -17,7 +18,8 @@ import { CommentService } from '@comments/comment.service';
         EditorModule,
         RouterModule.forChild(commentRoutes),
         CommentSharedModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        PaginationModule
     ],
     declarations: [
         CommentListComponent,

@@ -9,6 +9,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
+import { PaginationModule } from '@base/pagination/pagination.module';
 
 const materialModules = [
     MatIconModule,
@@ -20,6 +21,7 @@ const materialModules = [
     MatSelectModule,
     MatSlideToggleModule,
     MatSortModule,
+    PaginationModule
 ];
 
 @NgModule({
