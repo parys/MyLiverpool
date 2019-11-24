@@ -15,7 +15,7 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
+                .HasAnnotation("ProductVersion", "3.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -23,13 +23,17 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ClaimType");
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ClaimValue");
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -42,13 +46,17 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ClaimType");
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ClaimValue");
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -59,13 +67,17 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ProviderKey");
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ProviderDisplayName");
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -76,9 +88,11 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("RoleId");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -89,13 +103,17 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Value");
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
@@ -106,18 +124,24 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTimeOffset>("AdditionTime");
+                    b.Property<DateTimeOffset>("AdditionTime")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<int>("AuthorId");
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Ip")
+                        .HasColumnType("nvarchar(15)")
                         .HasMaxLength(15);
 
-                    b.Property<string>("Message");
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("Type");
+                    b.Property<byte>("Type")
+                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
@@ -130,17 +154,23 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("EnglishName");
+                    b.Property<string>("EnglishName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Logo");
+                    b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StadiumId");
+                    b.Property<int>("StadiumId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("StadiumName");
+                    b.Property<string>("StadiumName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -151,11 +181,14 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
 
             modelBuilder.Entity("MyLfc.Domain.CommentVote", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("CommentId");
+                    b.Property<int>("CommentId")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("Positive");
+                    b.Property<bool>("Positive")
+                        .HasColumnType("bit");
 
                     b.HasKey("UserId", "CommentId");
 
@@ -168,14 +201,18 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("ForSiteTeam");
+                    b.Property<bool>("ForSiteTeam")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<byte>("Order");
+                    b.Property<byte>("Order")
+                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
@@ -186,18 +223,24 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Answer")
+                        .HasColumnType("nvarchar(2000)")
                         .HasMaxLength(2000);
 
-                    b.Property<int>("FaqCategoryId");
+                    b.Property<int>("FaqCategoryId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("LastUpdated");
+                    b.Property<DateTimeOffset>("LastUpdated")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<byte>("Order");
+                    b.Property<byte>("Order")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Question")
+                        .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
                     b.HasKey("Id");
@@ -211,21 +254,29 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTimeOffset>("AdditionTime");
+                    b.Property<DateTimeOffset>("AdditionTime")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<int>("AuthorId");
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("IsFirstMessage");
+                    b.Property<bool>("IsFirstMessage")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTimeOffset>("LastModifiedTime");
+                    b.Property<DateTimeOffset>("LastModifiedTime")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Message");
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OldId");
+                    b.Property<int>("OldId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("ThemeId");
+                    b.Property<int>("ThemeId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -240,11 +291,14 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("IdOld");
+                    b.Property<int>("IdOld")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -255,19 +309,26 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AnswersCount");
+                    b.Property<int>("AnswersCount")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdOld");
+                    b.Property<int>("IdOld")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SectionId");
+                    b.Property<int>("SectionId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Views");
+                    b.Property<int>("Views")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -280,31 +341,44 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Answers");
+                    b.Property<int>("Answers")
+                        .HasColumnType("int");
 
-                    b.Property<int>("AuthorId");
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdOld");
+                    b.Property<int>("IdOld")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("IsClosed");
+                    b.Property<bool>("IsClosed")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("IsPool");
+                    b.Property<bool>("IsPool")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("LastAnswerUserId");
+                    b.Property<int>("LastAnswerUserId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTimeOffset?>("LastMessageAdditionTime");
+                    b.Property<DateTimeOffset?>("LastMessageAdditionTime")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("OnTop");
+                    b.Property<bool>("OnTop")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("SubsectionId");
+                    b.Property<int>("SubsectionId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Views");
+                    b.Property<int>("Views")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -321,11 +395,14 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Type");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Value");
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -336,15 +413,20 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("EndTime");
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("PersonId");
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("StartTime");
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -357,17 +439,23 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Came");
+                    b.Property<bool>("Came")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("ClubId");
+                    b.Property<int>("ClubId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("EndTime");
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("PersonId");
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("StartTime");
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -382,31 +470,44 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClubId");
+                    b.Property<int>("ClubId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("DateTime");
+                    b.Property<DateTimeOffset>("DateTime")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<bool>("IsHome");
+                    b.Property<bool>("IsHome")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("MatchType");
+                    b.Property<int>("MatchType")
+                        .HasColumnType("int");
 
-                    b.Property<string>("PhotoUrl");
+                    b.Property<string>("PhotoUrl")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PreviewId");
+                    b.Property<int?>("PreviewId")
+                        .HasColumnType("int");
 
-                    b.Property<int?>("ReportId");
+                    b.Property<int?>("ReportId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("ReportUrl");
+                    b.Property<string>("ReportUrl")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Score");
+                    b.Property<string>("Score")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SeasonId");
+                    b.Property<int>("SeasonId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("StadiumId");
+                    b.Property<int>("StadiumId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("VideoUrl");
+                    b.Property<string>("VideoUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -423,21 +524,29 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Home");
+                    b.Property<bool>("Home")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("IsOur");
+                    b.Property<bool>("IsOur")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("MatchId");
+                    b.Property<int>("MatchId")
+                        .HasColumnType("int");
 
-                    b.Property<byte?>("Minute");
+                    b.Property<byte?>("Minute")
+                        .HasColumnType("tinyint");
 
-                    b.Property<int>("PersonId");
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("SeasonId");
+                    b.Property<int>("SeasonId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Type");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -452,13 +561,17 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
 
             modelBuilder.Entity("MyLfc.Domain.MatchPerson", b =>
                 {
-                    b.Property<int>("MatchId");
+                    b.Property<int>("MatchId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("PersonId");
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("Created");
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("PersonType");
+                    b.Property<int>("PersonType")
+                        .HasColumnType("int");
 
                     b.HasKey("MatchId", "PersonId");
 
@@ -471,50 +584,70 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTimeOffset>("AdditionTime");
+                    b.Property<DateTimeOffset>("AdditionTime")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<int>("AuthorId");
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Brief")
+                        .HasColumnType("nvarchar(1000)")
                         .HasMaxLength(1000);
 
-                    b.Property<bool>("CanCommentary");
+                    b.Property<bool>("CanCommentary")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("CategoryId");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("Deleted");
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTimeOffset>("LastModified");
+                    b.Property<DateTimeOffset>("LastModified")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Message");
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OldId");
+                    b.Property<int>("OldId")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("OnTop");
+                    b.Property<bool>("OnTop")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("Pending");
+                    b.Property<bool>("Pending")
+                        .HasColumnType("bit");
 
                     b.Property<string>("PhotoPath")
+                        .HasColumnType("nvarchar(400)")
                         .HasMaxLength(400);
 
                     b.Property<string>("PhotoPreview")
+                        .HasColumnType("nvarchar(400)")
                         .HasMaxLength(400);
 
-                    b.Property<int>("Reads");
+                    b.Property<int>("Reads")
+                        .HasColumnType("int");
 
                     b.Property<string>("Source")
+                        .HasColumnType("nvarchar(300)")
                         .HasMaxLength(300);
 
-                    b.Property<string>("Tags");
+                    b.Property<string>("Tags")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
+                        .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
-                    b.Property<int>("Type");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("UsePhotoInBody");
+                    b.Property<bool>("UsePhotoInBody")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -529,15 +662,20 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MaterialType");
+                    b.Property<int>("MaterialType")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OldId");
+                    b.Property<int>("OldId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -548,39 +686,55 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTimeOffset>("AdditionTime");
+                    b.Property<DateTimeOffset>("AdditionTime")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Answer")
+                        .HasColumnType("nvarchar(max)")
                         .HasMaxLength(5000);
 
-                    b.Property<int>("AuthorId");
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("Deleted");
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("IsVerified");
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTimeOffset>("LastModified");
+                    b.Property<DateTimeOffset>("LastModified")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<int?>("MatchId");
+                    b.Property<int?>("MatchId")
+                        .HasColumnType("int");
 
-                    b.Property<int?>("MaterialId");
+                    b.Property<int?>("MaterialId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)")
                         .HasMaxLength(40000);
 
-                    b.Property<int>("OldId");
+                    b.Property<int>("OldId")
+                        .HasColumnType("int");
 
-                    b.Property<int?>("OldParentId");
+                    b.Property<int?>("OldParentId")
+                        .HasColumnType("int");
 
-                    b.Property<int?>("ParentId");
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("Pending");
+                    b.Property<bool>("Pending")
+                        .HasColumnType("bit");
 
-                    b.Property<int?>("PollId");
+                    b.Property<int?>("PollId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Type");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -601,21 +755,29 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CommentId");
+                    b.Property<int>("CommentId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("DateTime");
+                    b.Property<DateTimeOffset>("DateTime")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<int?>("EntityId");
+                    b.Property<int?>("EntityId")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("IsRead");
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("Text");
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Type");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
-                    b.Property<int>("UserId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -628,27 +790,38 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTimeOffset?>("Birthday");
+                    b.Property<DateTimeOffset?>("Birthday")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Country");
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FirstRussianName");
+                    b.Property<string>("FirstRussianName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastRussianName");
+                    b.Property<string>("LastRussianName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte?>("Number");
+                    b.Property<byte?>("Number")
+                        .HasColumnType("tinyint");
 
-                    b.Property<string>("Photo");
+                    b.Property<string>("Photo")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Position");
+                    b.Property<string>("Position")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Type");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -659,14 +832,18 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTimeOffset?>("EndTime");
+                    b.Property<DateTimeOffset?>("EndTime")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Question")
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<DateTimeOffset>("StartTime");
+                    b.Property<DateTimeOffset>("StartTime")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -677,11 +854,14 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("PollId");
+                    b.Property<int>("PollId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Text")
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.HasKey("Id");
@@ -693,11 +873,14 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
 
             modelBuilder.Entity("MyLfc.Domain.Polls.PollAnswerUser", b =>
                 {
-                    b.Property<int>("PollAnswerId");
+                    b.Property<int>("PollAnswerId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("UserId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("PollId");
+                    b.Property<int>("PollId")
+                        .HasColumnType("int");
 
                     b.HasKey("PollAnswerId", "UserId");
 
@@ -712,20 +895,27 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsRead");
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Message")
+                        .HasColumnType("nvarchar(2500)")
                         .HasMaxLength(2500);
 
-                    b.Property<int>("ReceiverId");
+                    b.Property<int>("ReceiverId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("SenderId");
+                    b.Property<int>("SenderId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("SentTime");
+                    b.Property<DateTimeOffset>("SentTime")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Title")
+                        .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
                     b.HasKey("Id");
@@ -741,15 +931,19 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -766,11 +960,14 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RussianName");
+                    b.Property<string>("RussianName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -779,9 +976,11 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
 
             modelBuilder.Entity("MyLfc.Domain.RoleRoleGroup", b =>
                 {
-                    b.Property<int>("RoleId");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("RoleGroupId");
+                    b.Property<int>("RoleGroupId")
+                        .HasColumnType("int");
 
                     b.HasKey("RoleId", "RoleGroupId");
 
@@ -794,9 +993,11 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("StartSeasonYear");
+                    b.Property<int>("StartSeasonYear")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -807,11 +1008,14 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("City");
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -822,23 +1026,32 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("Amount");
+                    b.Property<int?>("Amount")
+                        .HasColumnType("int");
 
-                    b.Property<int?>("ClubId");
+                    b.Property<int?>("ClubId")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("Coming");
+                    b.Property<bool>("Coming")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTimeOffset?>("FinishDate");
+                    b.Property<DateTimeOffset?>("FinishDate")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<bool>("OnLoan");
+                    b.Property<bool>("OnLoan")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("PersonId");
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
 
-                    b.Property<int?>("SeasonId");
+                    b.Property<int?>("SeasonId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("StartDate");
+                    b.Property<DateTimeOffset>("StartDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -855,67 +1068,96 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AccessFailedCount");
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
 
-                    b.Property<DateTimeOffset?>("Birthday");
+                    b.Property<DateTimeOffset?>("Birthday")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("City");
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Country");
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<bool>("EmailConfirmed");
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("FullName");
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Gender");
+                    b.Property<bool>("Gender")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("Homepage");
+                    b.Property<string>("Homepage")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Ip");
+                    b.Property<string>("Ip")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset>("LastModified");
+                    b.Property<DateTimeOffset>("LastModified")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<bool>("LockoutEnabled");
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTimeOffset?>("LockoutEnd");
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<int>("OldId");
+                    b.Property<int>("OldId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("PasswordHash");
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber");
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("PhoneNumberConfirmed");
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("Photo");
+                    b.Property<string>("Photo")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset>("RegistrationDate");
+                    b.Property<DateTimeOffset>("RegistrationDate")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<int>("RoleGroupId");
+                    b.Property<int>("RoleGroupId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("SecurityStamp");
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Skype");
+                    b.Property<string>("Skype")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("TwoFactorEnabled");
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -935,13 +1177,17 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
 
             modelBuilder.Entity("MyLfc.Domain.UserConfig", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("IsPmToEmailNotifyEnabled");
+                    b.Property<bool>("IsPmToEmailNotifyEnabled")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("IsReplyToEmailEnabled");
+                    b.Property<bool>("IsReplyToEmailEnabled")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("IsReplyToPmEnabled");
+                    b.Property<bool>("IsReplyToPmEnabled")
+                        .HasColumnType("bit");
 
                     b.HasKey("UserId");
 
@@ -952,16 +1198,21 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Message");
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("State");
+                    b.Property<int>("State")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
+                        .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
-                    b.Property<int>("Type");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -972,32 +1223,43 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClientId")
                         .IsRequired()
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<string>("ClientSecret");
+                    b.Property<string>("ClientSecret")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyToken")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<string>("ConsentType");
+                    b.Property<string>("ConsentType")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DisplayName");
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Permissions");
+                    b.Property<string>("Permissions")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PostLogoutRedirectUris");
+                    b.Property<string>("PostLogoutRedirectUris")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Properties");
+                    b.Property<string>("Properties")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RedirectUris");
+                    b.Property<string>("RedirectUris")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
                         .IsRequired()
+                        .HasColumnType("nvarchar(25)")
                         .HasMaxLength(25);
 
                     b.HasKey("Id");
@@ -1012,28 +1274,36 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ApplicationId");
+                    b.Property<int?>("ApplicationId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyToken")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<string>("Properties");
+                    b.Property<string>("Properties")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Scopes");
+                    b.Property<string>("Scopes")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .IsRequired()
+                        .HasColumnType("nvarchar(25)")
                         .HasMaxLength(25);
 
                     b.Property<string>("Subject")
                         .IsRequired()
+                        .HasColumnType("nvarchar(450)")
                         .HasMaxLength(450);
 
                     b.Property<string>("Type")
                         .IsRequired()
+                        .HasColumnType("nvarchar(25)")
                         .HasMaxLength(25);
 
                     b.HasKey("Id");
@@ -1047,23 +1317,30 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ConcurrencyToken")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DisplayName");
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
-                    b.Property<string>("Properties");
+                    b.Property<string>("Properties")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Resources");
+                    b.Property<string>("Resources")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1077,37 +1354,49 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ApplicationId");
+                    b.Property<int?>("ApplicationId")
+                        .HasColumnType("int");
 
-                    b.Property<int?>("AuthorizationId");
+                    b.Property<int?>("AuthorizationId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyToken")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<DateTimeOffset?>("CreationDate");
+                    b.Property<DateTimeOffset?>("CreationDate")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTimeOffset?>("ExpirationDate");
+                    b.Property<DateTimeOffset?>("ExpirationDate")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Payload");
+                    b.Property<string>("Payload")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Properties");
+                    b.Property<string>("Properties")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReferenceId")
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<string>("Status")
                         .IsRequired()
+                        .HasColumnType("nvarchar(25)")
                         .HasMaxLength(25);
 
                     b.Property<string>("Subject")
                         .IsRequired()
+                        .HasColumnType("nvarchar(450)")
                         .HasMaxLength(450);
 
                     b.Property<string>("Type")
                         .IsRequired()
+                        .HasColumnType("nvarchar(25)")
                         .HasMaxLength(25);
 
                     b.HasKey("Id");
@@ -1125,47 +1414,53 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("MyLfc.Domain.Role")
+                    b.HasOne("MyLfc.Domain.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("MyLfc.Domain.User")
+                    b.HasOne("MyLfc.Domain.User", null)
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("MyLfc.Domain.User")
+                    b.HasOne("MyLfc.Domain.User", null)
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("MyLfc.Domain.Role")
+                    b.HasOne("MyLfc.Domain.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.HasOne("MyLfc.Domain.User")
+                    b.HasOne("MyLfc.Domain.User", null)
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("MyLfc.Domain.User")
+                    b.HasOne("MyLfc.Domain.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.ChatMessage", b =>
@@ -1173,7 +1468,8 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.User", "Author")
                         .WithMany("ChatMessages")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.Club", b =>
@@ -1181,7 +1477,8 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.Stadium", "Stadium")
                         .WithMany("Clubs")
                         .HasForeignKey("StadiumId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.CommentVote", b =>
@@ -1189,12 +1486,14 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.MaterialComment", "Comment")
                         .WithMany("CommentVotes")
                         .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyLfc.Domain.User", "User")
                         .WithMany("CommentVotes")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.FaqItem", b =>
@@ -1202,7 +1501,8 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.FaqCategory", "FaqCategory")
                         .WithMany("Items")
                         .HasForeignKey("FaqCategoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.ForumMessage", b =>
@@ -1210,12 +1510,14 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.User", "Author")
                         .WithMany("ForumMessages")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyLfc.Domain.ForumTheme", "Theme")
                         .WithMany("Messages")
                         .HasForeignKey("ThemeId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.ForumSubsection", b =>
@@ -1223,7 +1525,8 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.ForumSection", "Section")
                         .WithMany("Subsections")
                         .HasForeignKey("SectionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.ForumTheme", b =>
@@ -1231,17 +1534,20 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.User", "Author")
                         .WithMany()
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyLfc.Domain.User", "LastAnswerUser")
                         .WithMany()
                         .HasForeignKey("LastAnswerUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyLfc.Domain.ForumSubsection", "Subsection")
                         .WithMany("Themes")
                         .HasForeignKey("SubsectionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.Injury", b =>
@@ -1249,7 +1555,8 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.Person", "Person")
                         .WithMany("Injuries")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.Loan", b =>
@@ -1257,12 +1564,14 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.Club", "Club")
                         .WithMany("Loans")
                         .HasForeignKey("ClubId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyLfc.Domain.Person", "Person")
                         .WithMany("Loans")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.Match", b =>
@@ -1270,17 +1579,20 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.Club", "Club")
                         .WithMany("Matches")
                         .HasForeignKey("ClubId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyLfc.Domain.Season", "Season")
                         .WithMany("Matches")
                         .HasForeignKey("SeasonId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyLfc.Domain.Stadium", "Stadium")
                         .WithMany("Matches")
                         .HasForeignKey("StadiumId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.MatchEvent", b =>
@@ -1288,17 +1600,20 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.Match", "Match")
                         .WithMany("Events")
                         .HasForeignKey("MatchId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyLfc.Domain.Person", "Person")
                         .WithMany("Events")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyLfc.Domain.Season", "Season")
                         .WithMany("Events")
                         .HasForeignKey("SeasonId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.MatchPerson", b =>
@@ -1306,12 +1621,14 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.Match", "Match")
                         .WithMany("Persons")
                         .HasForeignKey("MatchId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyLfc.Domain.Person", "Person")
                         .WithMany("Matches")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.Material", b =>
@@ -1319,12 +1636,14 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.User", "Author")
                         .WithMany("Materials")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyLfc.Domain.MaterialCategory", "Category")
                         .WithMany("Materials")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.MaterialComment", b =>
@@ -1332,7 +1651,8 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.User", "Author")
                         .WithMany("Comments")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyLfc.Domain.Match", "Match")
                         .WithMany("Comments")
@@ -1360,7 +1680,8 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.User", "User")
                         .WithMany("Notifications")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.Polls.PollAnswer", b =>
@@ -1368,7 +1689,8 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.Polls.Poll", "Poll")
                         .WithMany("Answers")
                         .HasForeignKey("PollId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.Polls.PollAnswerUser", b =>
@@ -1376,17 +1698,20 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.Polls.PollAnswer", "PollAnswer")
                         .WithMany()
                         .HasForeignKey("PollAnswerId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyLfc.Domain.Polls.Poll", "Poll")
                         .WithMany()
                         .HasForeignKey("PollId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyLfc.Domain.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.PrivateMessage", b =>
@@ -1394,12 +1719,14 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.User", "Receiver")
                         .WithMany("ReceivedPrivateMessages")
                         .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyLfc.Domain.User", "Sender")
                         .WithMany("SentPrivateMessages")
                         .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.RoleRoleGroup", b =>
@@ -1407,12 +1734,14 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.RoleGroup", "RoleGroup")
                         .WithMany("RoleGroups")
                         .HasForeignKey("RoleGroupId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyLfc.Domain.Role", "Role")
                         .WithMany("RoleRoleGroups")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.Transfer", b =>
@@ -1425,7 +1754,8 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.Person", "Person")
                         .WithMany("Transfers")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyLfc.Domain.Season", "Season")
                         .WithMany()
@@ -1438,7 +1768,8 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.RoleGroup", "RoleGroup")
                         .WithMany("Users")
                         .HasForeignKey("RoleGroupId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyLfc.Domain.UserConfig", b =>
@@ -1446,7 +1777,8 @@ namespace MyLiverpool.Data.ResourceAccess.Migrations
                     b.HasOne("MyLfc.Domain.User", "User")
                         .WithOne("UserConfig")
                         .HasForeignKey("MyLfc.Domain.UserConfig", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("OpenIddict.EntityFrameworkCore.Models.OpenIddictAuthorization<int>", b =>

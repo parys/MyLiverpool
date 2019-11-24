@@ -22,12 +22,14 @@ using MyLiverpool.Business.Services.Helpers;
 using MyLiverpool.Common.Utilities;
 using MyLiverpool.Data.ResourceAccess.Helpers;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using MyLfc.Application.Infrastructure;
 using MyLfc.Application.Infrastructure.Profiles;
 using MyLfc.Common.Web;
 using MyLfc.Common.Web.Hubs;
 using MyLfc.Common.Web.Middlewares;
+using MyLfc.Persistence;
 using MyLiverpool.Common.Mappings;
 using MyLiverpool.Web.WebApiNext.Infrastructure.Filters;
 
@@ -206,13 +208,14 @@ namespace MyLiverpool.Web.WebApiNext
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
 
-             //   app.UseSwagger();
-           //     app.UseSwaggerUI(c =>
-            //    {
-           //         c.SwaggerEndpoint("/swagger/v1/swagger.json", "V1 Docs");
-                    //   c.ConfigureOAuth2("test-client-id123", "test-client-secr43et", "test-rea32lm", "test-a11pp");
-          //      });
+                //   app.UseSwagger();
+                //     app.UseSwaggerUI(c =>
+                //    {
+                //         c.SwaggerEndpoint("/swagger/v1/swagger.json", "V1 Docs");
+                //   c.ConfigureOAuth2("test-client-id123", "test-client-secr43et", "test-rea32lm", "test-a11pp");
+                //      });
             }
             else
             {
@@ -241,8 +244,6 @@ namespace MyLiverpool.Web.WebApiNext
                 },
             });
 
-            app.UseRouting();
-
             app.UseCors("MyPolicy");
 
             if (!Env.IsDevelopment())
@@ -250,7 +251,10 @@ namespace MyLiverpool.Web.WebApiNext
                 app.UseSpaStaticFiles();
             }
 
+            app.UseRouting();
+
             app.UseAuthentication();
+           // app.UseIdentityServer();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
