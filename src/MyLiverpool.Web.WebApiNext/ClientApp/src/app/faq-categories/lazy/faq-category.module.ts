@@ -3,7 +3,8 @@ import { RouterModule } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
-import { SharedModule, BreadcrumbService } from '@shared/index';
+import { BreadcrumbService } from '@base/breadcrumbs';
+import { SharedModule } from '@shared/index';
 import { FAQ_CATEGORIES_ROUTE, FAQ_CATEGORIES_RU } from '@constants/index';
 
 import { faqCategoryRoutes } from '@faq-categories/lazy/faq-category.routes';

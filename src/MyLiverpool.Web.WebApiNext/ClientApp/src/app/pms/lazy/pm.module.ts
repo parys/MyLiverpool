@@ -6,7 +6,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 import { SharedModule } from '@shared/index';
 import { EditorModule } from '@editor/index';
-import { BreadcrumbService } from '@shared/breadcrumb';
+import { BreadcrumbService } from '@base/breadcrumbs';
 import { PMS_ROUTE } from '@constants/index';
 import { PmSharedModule } from '@pms/shared';
 import { PipesModule } from '@base/pipes';

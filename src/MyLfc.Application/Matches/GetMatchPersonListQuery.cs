@@ -7,6 +7,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using MyLfc.Application.Infrastructure;
 using MyLfc.Persistence;
 using MyLiverpool.Data.Common;
 
@@ -25,7 +26,7 @@ namespace MyLfc.Application.Matches
             private readonly LiverpoolContext _context;
 
             private readonly IMapper _mapper;
-            
+
             public Handler(LiverpoolContext context, IMapper mapper)
             {
                 _context = context;
@@ -40,32 +41,44 @@ namespace MyLfc.Application.Matches
                     .ProjectTo<MatchPersonListDto>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);
 
-                return new Response{Results = persons};
+                var isHome = await _context.Matches.AsNoTracking()
+                    .Where(x => x.Id == request.MatchId)
+                    .Select(x => x.IsHome)
+                    .FirstAsync(cancellationToken);
+
+                var dict = new Dictionary<int, List<MatchPersonListDto>>();
+                foreach (int value in Enum.GetValues(typeof(MatchPersonPlaceType)))
+                {
+                    dict.Add(value, new List<MatchPersonListDto>());
+                }
+                foreach (var person in persons)
+                {
+                    dict[(int)person.PersonType.GetMatchPlaceholderType(isHome)].Add(person);
+                }
+
+                return new Response {Results = dict};
             }
+
         }
 
 
         [Serializable]
         public class Response
         {
-            public List<MatchPersonListDto> Results { get; set; }
+            public Dictionary<int, List<MatchPersonListDto>> Results =
+                new Dictionary<int, List<MatchPersonListDto>>();
         }
-
 
         [Serializable]
         public class MatchPersonListDto
         {
-            public int Id { get; set; }
+            public int PersonId { get; set; }
 
-            public string FirstRussianName { get; set; }
-
-            public string LastRussianName { get; set; }
-            
             public byte? Number { get; set; }
 
             public MatchPersonType PersonType { get; set; }
 
-            public string PersonName => $"{FirstRussianName} {LastRussianName}";
+            public string PersonName { get; set; }
         }
     }
 }

@@ -17,7 +17,11 @@
     </div>
     <div class="full-width">
         <div *ngIf="item.usePhotoInBody" class="full-width bottom10">
-            <img [src]="item.photo" class="material-preview" alt="" />
+            <img [src]="item.photo" [srcset]="item.photo | img:[300, 450, 700]"
+            sizes="(max-width: 767px) 300px,
+                   (max-width: 900px) 450px,
+                   700px" class="material-preview" [alt]="item.brief"  loading="lazy"/>
+            
             <b><i class="full-width" [innerHTML]="item.brief | safe: 'html'"></i></b>
         </div>
         <article class="material-body" [innerHTML]="item.message | safe: 'html'"></article>
@@ -35,10 +39,10 @@
             </ul>
         </div>
     </div>
-    <div class="full-width flex-space-around"><span class="full-width">К другим новостям: </span>
+    <!-- <div class="full-width flex-space-around"><span class="full-width">К другим новостям: </span>
         <a *ngIf="item.prevMaterialId" [routerLink]="['/', item.typeName, item.prevMaterialId]"><span [textContent]="item.prevMaterialTitle"></span>(назад)</a>
         <a *ngIf="item.nextMaterialId" [routerLink]="['/', item.typeName, item.nextMaterialId]"><span [textContent]="item.nextMaterialTitle"></span>(вперед)</a>
-    </div>
+    </div> -->
     <div class="full-width flex">
         <comment-section [materialId]="item.id" [type]="item.type" [canCommentary]="item.canCommentary"></comment-section>
     </div>

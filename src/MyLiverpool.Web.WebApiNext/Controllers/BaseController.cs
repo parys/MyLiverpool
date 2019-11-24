@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using MyLfc.Common.Web.DistributedCache;
+using MyLfc.Common.Web.Hubs;
 
 namespace MyLiverpool.Web.WebApiNext.Controllers
 {
@@ -21,6 +22,7 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
     {
         private IMediator _mediator;
         private IDistributedCacheManager _cacheManager;
+        private ISignalRHubAggregator _signalR;
 
         /// <summary>
         /// Returns existing or new mediator entity.
@@ -31,5 +33,10 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
         /// Returns existing or new cache manager.
         /// </summary>
         protected IDistributedCacheManager CacheManager => _cacheManager ?? (_cacheManager = HttpContext.RequestServices.GetService<IDistributedCacheManager>());
+    
+        /// <summary>
+        /// Returns existing or new cache manager.
+        /// </summary>
+        protected ISignalRHubAggregator SignalRHub => _signalR ?? (_signalR = HttpContext.RequestServices.GetService<ISignalRHubAggregator>());
     }
 }

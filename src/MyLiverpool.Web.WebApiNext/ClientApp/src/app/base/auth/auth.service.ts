@@ -89,7 +89,7 @@ export class AuthService {
         Object.keys(data)
             .forEach(key => params2 = params2.append(key, data[key]));
 
-        return this.http1.post<IAuthTokenModel>('/connect/token', params2.toString(), { headers: headers }).pipe(
+        return this.http1.post<IAuthTokenModel>('/connect/token', params2.toString(), { headers }).pipe(
             tap((tokens: IAuthTokenModel) => {
 
                 tokens.expiration_date = new Date(new Date().getTime() + tokens.expires_in * 1000).getTime().toString();

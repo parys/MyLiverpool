@@ -3,7 +3,7 @@
     <tr *ngIf="section.subsections.length > 0 || roles.isAdminAssistant">
          <td class="gTableTop" colspan="5">
              <span [textContent]="section.name"></span>
-             <span class="pull-right" *ngIf="roles.isAdminAssistant">
+             <span *ngIf="roles.isAdminAssistant">
                  <a [routerLink]="[0, 'edit']">Добавить подсекцию</a>
                  <a *ngIf="section.subsections.length === 0" ng-click="vm.removeSection($index)">
                      <span class="glyphicon glyphicon-remove">

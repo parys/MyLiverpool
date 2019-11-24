@@ -14,8 +14,8 @@ import { Observable, throwError } from 'rxjs';
 import { tap, catchError, flatMap } from 'rxjs/operators';
 
 import { StorageService } from '@base/storage';
-import { IRefreshGrantModel, IAuthTokenModel } from '@base/auth';
-import { LoaderService } from '@shared/loader';
+import { IRefreshGrantModel, IAuthTokenModel } from '@base/auth/models';
+import { LoaderService } from '@base/loader';
 
 @Injectable()
 export class BearerInterceptor implements HttpInterceptor {
@@ -58,7 +58,7 @@ export class BearerInterceptor implements HttpInterceptor {
         Object.keys(data)
             .forEach(key => params.append(key, data[key]));
         const http = new HttpClient(handler);
-        return http.post<IAuthTokenModel>('/connect/token', params.toString(), { headers: headers }).pipe(
+        return http.post<IAuthTokenModel>('/connect/token', params.toString(), { headers }).pipe(
             tap((tokens: IAuthTokenModel) => {
 
                 tokens.expiration_date = new Date(new Date().getTime() + tokens.expires_in * 1000).getTime().toString();

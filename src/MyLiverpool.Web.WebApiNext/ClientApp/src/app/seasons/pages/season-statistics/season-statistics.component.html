@@ -1,23 +1,23 @@
 ﻿<h3>Статистика игроков</h3>
 <mat-form-field class="full-width">
     <mat-select #seasonSelect placeholder="Сезон">
-        <mat-option *ngFor="let season of seasons" [value]="season.id" [textContent]="season.startSeasonYear + '-' + season.endSeasonYear">
+        <mat-option *ngFor="let season of seasons" [value]="season.id"
+            [textContent]="season.startSeasonYear + '-' + season.endSeasonYear">
         </mat-option>
     </mat-select>
 </mat-form-field>
 <!--<div>
     <table mat-table [dataSource]="statistics" matSort class="statistic-table full-width">
 
-        <ng-container matColumnDef="personName" sticky>
+        <ng-container matColumnDef="personName1" sticky>
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Игрок </th>
             <td mat-cell *matCellDef="let statistic">
-                    <span [textContent]="statistic.personName"></span>
+                <span [textContent]="statistic.personName"></span>
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="goals">
-            <th mat-header-cell *matHeaderCellDef> Голы </th>
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>                  
+        <ng-container matColumnDef="goals1">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 <td>АПЛ</td>
                 <td>ЛЧ</td>
                 <td>ЛЕ</td>
@@ -28,38 +28,78 @@
             <td mat-cell *matCellDef="let statistic">
                 <season-statistics-item [personStat]="statistic.goals"></season-statistics-item>
             </td>
-            
-            </ng-container>
 
+        </ng-container>
+
+        <ng-container matColumnDef="assists1">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <td mat-cell *matCellDef="let statistic">
+                <season-statistics-item [personStat]="statistic.assists"></season-statistics-item>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="yellows1">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <td mat-cell *matCellDef="let statistic">
+                <season-statistics-item [personStat]="statistic.yellows"></season-statistics-item>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="reds1">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <td mat-cell *matCellDef="let statistic">
+                <season-statistics-item [personStat]="statistic.reds"></season-statistics-item>
+            </td>
+        </ng-container>
+
+        <!-- Player ->
+        <ng-container matColumnDef="player">
+            <th mat-header-cell *matHeaderCellDef [style.text-align]="center" [attr.colspan]="1">
+                Игрок
+            </th>
+        </ng-container>
+
+        <!-- Header row goals ->
+        <ng-container matColumnDef="goals">
+            <th mat-header-cell *matHeaderCellDef [style.text-align]="center" [attr.colspan]="1">
+                Голы
+            </th>
+        </ng-container>
+        <!-- Header row assists ->
         <ng-container matColumnDef="assists">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Ассисты </th>
-            <td mat-cell *matCellDef="let statistic" [textContent]="statistic.commentsCount"></td>
+            <th mat-header-cell *matHeaderCellDef [style.text-align]="center" [attr.colspan]="1">
+                Ассисты
+            </th>
         </ng-container>
-
+        <!-- Header row yellows ->
         <ng-container matColumnDef="yellows">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Желтые </th>
-            <td mat-cell *matCellDef="let statistic" [textContent]="statistic.registrationDate | customDate:true"></td>
+            <th mat-header-cell *matHeaderCellDef [style.text-align]="center" [attr.colspan]="1">
+                Желтые
+            </th>
         </ng-container>
-
+        <!-- Header row reds ->
         <ng-container matColumnDef="reds">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Красные </th>
-            <td mat-cell *matCellDef="let statistic" [textContent]="statistic.roleGroupName"></td>
+            <th mat-header-cell *matHeaderCellDef [style.text-align]="center" [attr.colspan]="1">
+                Красные
+            </th>
         </ng-container>
 
+        <tr mat-header-row *matHeaderRowDef="['player', 'goals', 'assists', 'yellows', 'reds']"></tr>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 </div>-->
 <div style="position: relative;">
-    <div class="overflowable container-row" style="margin-left: 150px; width: calc(100%-150px);
+    <div class="overflowable" style="margin-left: 150px; width: calc(100%-150px);
                                                                                                  overflow-x: auto;
                                                                                                  overflow-y: auto;
                                                                                                  padding-bottom: 5px;
                                                                                                  ">
-        <table class="table table-condensed table-striped table-bordered table-hover" style="border-collapse: separate; ">
+        <table class="table table-condensed table-striped table-bordered table-hover"
+            style="border-collapse: separate; ">
             <thead>
                 <tr>
-                    <td style="position: absolute; left: 0; top: auto; width: 150px" ></td>
+                    <td style="position: absolute; left: 0; top: auto; width: 150px"></td>
                     <td colspan="6">Голы</td>
                     <td colspan="6">Передачи</td>
                     <td colspan="6">ЖК</td>

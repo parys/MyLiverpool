@@ -15,6 +15,7 @@
     }
 
 
+
     .comment.active {
         border-color: #731010;
         border-width: 3px;
@@ -24,27 +25,16 @@
         margin-left: 0;
     }
 
-    .com-offset-1, .com-offset-2, .com-offset-3, .com-offset-4, .com-offset-5, .com-offset-6, .com-offset-7 {
+    .com-offset-1,
+    .com-offset-2,
+    .com-offset-3,
+    .com-offset-4,
+    .com-offset-5,
+    .com-offset-6,
+    .com-offset-7 {
         margin-left: 3%;
     }
-    /*.com-offset-2 {
-    margin-left: 6%;
-}
-.com-offset-3 {
-    margin-left: 9%;
-}
-.com-offset-4 {
-    margin-left: 12%;
-}
-.com-offset-5 {
-    margin-left: 15%;
-}
-.com-offset-6 {
-    margin-left: 18%;
-}
-.com-offset-7 {
-    margin-left: 21%;
-}*/
+
     .comment-container.nested {
         border-left: #6e6e6e dotted 1px;
         padding-left: 1px;
@@ -65,5 +55,20 @@
 
     .top5 {
         margin-top: 5px;
+    }
+
+    .width15p {
+        width: 15%;
+    }
+
+    .width85p {
+        width: 85%;
+    }
+}
+
+::ng-deep {
+    .comment img {
+        max-width: 100%;
+        height: auto;
     }
 }

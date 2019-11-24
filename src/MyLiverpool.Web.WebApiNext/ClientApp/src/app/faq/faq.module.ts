@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { SharedModule, BreadcrumbService } from '@shared/index';
+import { BreadcrumbService } from '@base/breadcrumbs';
+import { SharedModule } from '@shared/index';
 import { FAQ_ROUTE } from '@constants/routes.constants';
 import { FaqCategoryService } from '@faq-categories/lazy/faq-category.service';
 import { PipesModule } from '@base/pipes';

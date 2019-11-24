@@ -6,7 +6,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">
                     <a [routerLink]="[item.id]"> <span [textContent]="item.dateTime | customDate:false:true"></span> - <span [textContent]="item.stadiumName"></span></a>
-                    <span class="pull-right">
+                    <span >
                         <a [routerLink]="[item.id, 'edit']"><i class="material-icons">edit</i></a>
                         <a (click)="showDeleteModal(i)"><i class="material-icons">clear</i></a>
                     </span>

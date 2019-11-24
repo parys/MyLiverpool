@@ -10,9 +10,9 @@ import { SeasonService } from '@seasons/season.service';
     templateUrl: './season-statistics.component.html'
 })
 export class SeasonStatisticsComponent implements OnInit {
-    public statistics: PersonStatistics[];
+    public statistics: PersonStatistics[] = [];
     public seasons: Season[];
-    displayedColumns = ['personName', 'goals', 'assists', 'yellows', 'reds'];
+    displayedColumns = ['personName1', 'goals1', 'assists1', 'yellows1', 'reds1'];
 
     @ViewChild('seasonSelect', { static: true }) seasonSelect: MatSelect;
 

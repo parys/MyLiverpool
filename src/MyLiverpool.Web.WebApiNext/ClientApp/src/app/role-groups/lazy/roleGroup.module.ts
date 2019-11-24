@@ -5,7 +5,7 @@ import { SharedModule } from '@shared/index';
 import { roleGroupRoutes } from '@role-groups/lazy/roleGroup.routes';
 import { RoleGroupListComponent } from '@role-groups/lazy/roleGroup-list';
 import { RoleGroupCoreModule } from '@role-groups/core/roleGroup-core.module';
-import { BreadcrumbService } from '@shared/breadcrumb';
+import { BreadcrumbService } from '@base/breadcrumbs';
 import { ROLE_GROUPS_ROUTE } from '@constants/routes.constants';
 
 @NgModule({

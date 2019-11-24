@@ -1,11 +1,14 @@
 ﻿<div class="injuries" *ngIf="items?.length > 0">
-    <h4><b>Травмированные:</b>
-        <a *ngIf="roles.isAdminAssistant" [routerLink]="['/injuries', 0, 'edit']"><i class="material-icons color-red" style="font-size: 100%;">add</i></a></h4>
+    <h4><b>Травмированы:</b>
+        <a *ngIf="roles.isAdminAssistant" [routerLink]="['/injuries', 0, 'edit']"><i class="material-icons color-red"
+                style="font-size: 100%;">add</i></a></h4>
     <div class="injury-item" *ngFor="let injury of items">
         <div class="full-width">
-            <img [src]="injury.personPhoto" loading="lazy" [alt]="injury.personName"/>
+            <img loading="lazy" [src]="injury.personPhoto" class="photo"
+             [alt]="injury.personName" [srcset]="injury.personPhoto | img:[50]" />
             <b [textContent]="injury.personName"></b>
-            <a *ngIf="roles.isAdminAssistant" [routerLink]="['/injuries', injury.id, 'edit']"><span class="material-icons color-red" style="font-size: 100%;">edit</span></a>
+            <a *ngIf="roles.isAdminAssistant" [routerLink]="['/injuries', injury.id, 'edit']"><span
+                    class="material-icons color-red" style="font-size: 100%;">edit</span></a>
         </div>
         <div class="full-width">
             <span [textContent]="injury.description"></span>

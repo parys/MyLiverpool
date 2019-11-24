@@ -1,5 +1,5 @@
-﻿import { Component, Output, EventEmitter, PLATFORM_ID, Inject } from "@angular/core";
-import { isPlatformBrowser } from "@angular/common";  
+﻿import { Component, Output, EventEmitter, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
     selector: "recaptcha",
@@ -12,11 +12,11 @@ import { isPlatformBrowser } from "@angular/common";
                 </re-captcha>`
 })
 export class RecaptchaComponent {
-    public isBrowser: boolean = false;
+    public isBrowser = false;
     @Output() public isHuman = new EventEmitter<boolean>();
 
 
-    constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    constructor(@Inject(PLATFORM_ID) private platformId: object) {
         this.isBrowser = isPlatformBrowser(this.platformId);
     }
 

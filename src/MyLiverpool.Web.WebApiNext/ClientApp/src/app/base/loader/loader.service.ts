@@ -8,9 +8,9 @@ export class LoaderService {
     public loaderState = this.loaderSubject.asObservable();
 
     public show() {
-        this.loaderSubject.next(<LoaderState>{show: true});
+        this.loaderSubject.next({show: true} as LoaderState);
     }
     public hide() {
-        this.loaderSubject.next(<LoaderState>{show: false});
+        this.loaderSubject.next({show: false} as LoaderState);
     }
 }

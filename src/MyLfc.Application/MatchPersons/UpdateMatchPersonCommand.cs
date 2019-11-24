@@ -5,6 +5,7 @@ using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using MyLfc.Application.Infrastructure;
 using MyLfc.Persistence;
 using MyLiverpool.Data.Common;
 
@@ -19,6 +20,8 @@ namespace MyLfc.Application.MatchPersons
             public int PersonId { get; set; }
 
             public MatchPersonType PersonType { get; set; }
+
+            public bool IsHome { get; set; }
         }
 
 
@@ -44,7 +47,7 @@ namespace MyLfc.Application.MatchPersons
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                var person = _context.Persons
+                var person = await _context.Persons
                     .AsNoTracking()
                     .FirstOrDefaultAsync(x => x.Id == request.PersonId, cancellationToken);
                 
@@ -68,19 +71,24 @@ namespace MyLfc.Application.MatchPersons
                 await _context.SaveChangesAsync(cancellationToken);
 
 
-                return new Response {MatchId = matchPerson.MatchId,
+                return new Response {
                     PersonId = matchPerson.PersonId,
-                    Number = (await person).Number};
+                    Number =  person.Number,
+                    PersonName = person.RussianName,
+                    Type = request.PersonType.GetMatchPlaceholderType(request.IsHome)
+                };
             }
         }
 
         public class Response
         {
-            public int MatchId { get; set; }
-
             public int PersonId { get; set; }
 
             public byte? Number { get; set; }
+
+            public string PersonName { get; set; }
+
+            public MatchPersonPlaceType Type { get; set; }
         }
     }
 }

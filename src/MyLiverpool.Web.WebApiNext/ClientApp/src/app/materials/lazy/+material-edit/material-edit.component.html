@@ -10,12 +10,12 @@
             <input matInput formControlName="title" placeholder="Название" />
         </mat-form-field>
         <div class="full-width">
-            <label class="control-label"> Краткое описание:</label>
-            <bbeditor name="brief" [type]="1" [value]="item.brief" [height]="110" formControlName="brief"></bbeditor>
+            <label class="control-label"> Описание:</label>
+            <bbeditor name="brief" [type]="1" [value]="item.brief" [height]="70" formControlName="brief"></bbeditor>
         </div>
         <div class="full-width">
-            <label class="control-label"> Текст новости:</label>
-            <bbeditor name="message" [type]="2" [value]="item.message" [height]="350" formControlName="message"></bbeditor>
+            <label class="control-label"> Текст:</label>
+            <bbeditor name="message" [type]="2" [value]="item.message" [height]="400" formControlName="message"></bbeditor>
         </div>
         <div class="full-width">
             <button mat-raised-button color="warn" class="full-width" type="submit" [disabled]="!editForm.valid">Сохранить</button>

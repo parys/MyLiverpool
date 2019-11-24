@@ -1,4 +1,4 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, Injectable } from '@angular/core';
 import {
     BrowserModule,
     HammerGestureConfig,
@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import localeRU from '@angular/common/locales/ru';
 
-import { BreadcrumbService } from '@shared/breadcrumb';
+import { BreadcrumbService } from '@base/breadcrumbs';
 import { AppComponent } from './app.component';
 import { ChatModule } from './chat';
 import * as home from './home';
@@ -19,11 +19,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppMaterialModule } from './app-material.module';
 import { PipesModule } from './base/pipes';
 import { SignalRModule } from '@base/signalr';
+import { AuthModule } from '@base/auth';
+import { StorageModule } from '@base/storage';
+import { LoaderModule } from '@base/loader';
+import { BreadcrumbModule } from '@base/breadcrumbs/breadcrumb.module';
 
 registerLocaleData(localeRU);
 
 declare var Hammer: any;
-
+@Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
     buildHammer(element: HTMLElement) {
         const mc = new Hammer(element, {
@@ -59,7 +63,11 @@ export class MyHammerConfig extends HammerGestureConfig {
         AppRoutingModule,
         AppMaterialModule,
         PipesModule,
-        SignalRModule.forRoot()
+        StorageModule.forRoot(),
+        SignalRModule.forRoot(),
+        AuthModule.forRoot(),
+        LoaderModule.forRoot(),
+        BreadcrumbModule.forRoot(),
     ],
     declarations: [
         home.NavbarComponent,

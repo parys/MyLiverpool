@@ -26,23 +26,15 @@
 
   <ItemGroup>
       <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
-    <Compile Remove="ClientApp\dist-server\**" />
-    <Compile Remove="ClientApp\dist\**" />
     <Compile Remove="ClientApp\node_modules\**" />
-    <Content Remove="ClientApp\dist-server\**" />
-    <Content Remove="ClientApp\dist\**" />
     <Content Remove="wwwroot\src\**" />
     <Content Remove="wwwroot\content\**" />
     <Content Remove="wwwroot\fonts\**" />
     <Content Remove="wwwroot\swagger\**" />
-    <EmbeddedResource Remove="ClientApp\dist-server\**" />
-    <EmbeddedResource Remove="ClientApp\dist\**" />
     <EmbeddedResource Remove="ClientApp\node_modules\**" />
     <EmbeddedResource Remove="ClientApp\src\**" />
     <EmbeddedResource Remove="wwwroot\content\**" />
     <EmbeddedResource Remove="wwwroot\src\**" />
-    <None Remove="ClientApp\dist-server\**" />
-    <None Remove="ClientApp\dist\**" />
     <None Remove="ClientApp\node_modules\**" />
     <None Remove="ClientApp\src\app\editor\langs\**" />
     <None Remove="ClientApp\src\fonts\**" />

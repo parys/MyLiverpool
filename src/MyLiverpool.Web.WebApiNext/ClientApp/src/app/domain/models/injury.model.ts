@@ -5,4 +5,5 @@
     public startTime: Date;
     public endTime: Date;
     public description: string;
+    public personPhoto: string;
 }

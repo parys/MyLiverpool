@@ -1,124 +1,86 @@
-﻿<div class="full-width">
-    <div class="full-width flex">
+﻿
+    <div class="full-width flex" *ngIf="persons">
         <div class="full-width text-center">
-            Главный судья: {{mainRef?.personName}}
-            <span *ngIf="roles.isInformer && !mainRef" role="button" (click)="addMatchPerson(7, 0, 1, 11)">
+            Главный судья:
+            <div class="full-width" *ngFor="let person of persons[11]; trackBy: trackByFn"> 
+                <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="false" [matchId]="matchId" (selected)="onSelectPerson($event)"></match-person-info>
+            </div>
+            <span *ngIf="roles.isInformer && persons[11]?.length == 0" role="button" (click)="addMatchPerson(7, 0, 1, 11)">
                 <mat-icon>add</mat-icon>
-            </span>
-            <span *ngIf="roles.isInformer && mainRef">
-                <i role="button" (click)="selectMatchPerson(mainRef)" class="material-icons"
-                    style="font-size: 100%;">edit</i>
-                <i role="button" (click)="showDeleteModal(mainRef)" class="material-icons"
-                    style="font-size: 100%;">clear</i>
             </span>
         </div>
         <div class="full-width text-center">
-            Помощники судьи: <span *ngFor="let ref of assistantRef; let last = last;">
-                {{ref.personName}}
-                <span *ngIf="roles.isInformer" role="button" (click)="selectMatchPerson(ref)" class="material-icons"
-                    style="font-size: 100%;">edit</span>
-                <span *ngIf="roles.isInformer" role="button" (click)="showDeleteModal(ref)" class="material-icons"
-                    style="font-size: 100%;">clear</span>
+            Помощники судьи: <span *ngFor="let ref of persons[12]; let last = last; trackBy: trackByFn">
+                <match-person-info [person]="ref" [isHome]="isHome" [isPlayer]="false" [matchId]="matchId" (selected)="onSelectPerson($event)"></match-person-info>
                 <span *ngIf="!last">, </span>
             </span>
-            <span *ngIf="roles.isInformer && assistantRef.length < 2" role="button"
-                (click)="addMatchPerson(8, assistantRef.length, 2, 11)">
+            <span *ngIf="roles.isInformer && persons[12]?.length < 2" role="button"
+                (click)="addMatchPerson(8, persons[12]?.length, 2, 11)">
                 <mat-icon>add</mat-icon>
             </span>
         </div>
-        <div class="full-width text-center" *ngIf="additionalRef.length > 0 || roles.isInformer">
-            Дополнительные судьи: <span *ngFor="let ref of additionalRef; let last=last;">
-                {{ref.personName}}
-                <span *ngIf="roles.isInformer">
-                    <span role="button" (click)="selectMatchPerson(ref)" class="material-icons"
-                        style="font-size: 100%;">edit</span>
-                    <span role="button" (click)="showDeleteModal(ref)" class="material-icons"
-                        style="font-size: 100%;">clear</span>
-                </span>
+        <div class="full-width text-center" *ngIf="persons[13]?.length > 0 || roles.isInformer">
+            Дополнительные судьи: <span *ngFor="let ref of persons[13]; let last=last; trackBy: trackByFn;">
+                <match-person-info [person]="ref" [isHome]="isHome" [isPlayer]="false" [matchId]="matchId" (selected)="onSelectPerson($event)"></match-person-info>
                 <span *ngIf="!last">, </span>
             </span>
-            <span *ngIf="roles.isInformer && additionalRef.length < 2" role="button"
-                (click)="addMatchPerson(10, additionalRef.length, 2, 11)">
+            <span *ngIf="roles.isInformer && persons[13]?.length < 2" role="button"
+                (click)="addMatchPerson(10, persons[13]?.length, 2, 11)">
                 <mat-icon>add</mat-icon>
             </span>
         </div>
         <div class="full-width text-center">
-            Резервный судья: {{fourthRef?.personName}}
-            <span *ngIf="roles.isInformer && !fourthRef" role="button" (click)="addMatchPerson(9, 0, 1, 11)">
+            Резервный судья:
+            <span *ngIf="roles.isInformer && persons[14]?.length == 0" role="button" (click)="addMatchPerson(9, 0, 1, 14)">
                 <mat-icon>add</mat-icon>
             </span>
-            <span *ngIf="roles.isInformer && fourthRef">
-                <span role="button" (click)="selectMatchPerson(fourthRef)" class="material-icons"
-                    style="font-size: 100%;">edit</span>
-                <span role="button" (click)="showDeleteModal(fourthRef)" class="material-icons"
-                    style="font-size: 100%;">clear</span>
-            </span>
+            <div class="full-width" *ngFor="let person of persons[14]; trackBy: trackByFn"> 
+                <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="false" [matchId]="matchId" (selected)="onSelectPerson($event)"></match-person-info>
+            </div>
         </div>
-        <div class="width50p container-row">
+        <div class="width50p">
             <i class="full-width top10">
                 Главный тренер:
-                <span *ngIf="roles.isInformer && !homeCoach" role="button"
-                    (click)="addMatchPerson(isHome ? 5 : 6, 0, 1, isHome ? 6 : 14)">
+                <span *ngIf="roles.isInformer && persons[3]?.length == 0" role="button"
+                    (click)="addMatchPerson(isHome ? 5 : 6, 0, 1, isHome ? 6 : 5)">
                     <mat-icon>add</mat-icon>
                 </span>
-                <span *ngIf="roles.isInformer && homeCoach">
-                    <span role="button" (click)="selectMatchPerson(homeCoach)" class="material-icons"
-                        style="font-size: 100%;">edit</span>
-                    <span role="button" (click)="showDeleteModal(homeCoach)" class="material-icons"
-                        style="font-size: 100%;">clear</span>
-                </span>
+                <div class="full-width" *ngFor="let person of persons[3]; trackBy: trackByFn"> 
+                    <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="false" [matchId]="matchId" (selected)="onSelectPerson($event)"></match-person-info>
+                </div>
             </i>
-            <div class="full-width" [textContent]="homeCoach?.personName"></div>
             <i class="full-width top10">
                 Состав:
-                <span *ngIf="roles.isInformer && homeTeam.length < 11" role="button"
-                    (click)="addMatchPerson(isHome ? 1 : 3, homeTeam.length, 11, isHome ? 1 : 4)">
+                <span *ngIf="roles.isInformer && persons[1]?.length < 11" role="button"
+                    (click)="addMatchPerson(isHome ? 1 : 3, persons[1]?.length, 11, isHome ? 1 : 4)">
                     <mat-icon>add</mat-icon>
                 </span>
             </i>
-            <div class="full-width" *ngFor="let person of homeTeam">
-                {{person.number}} - {{person.personName}}
-                <span *ngIf="roles.isInformer">
-                    <span role="button" (click)="selectMatchPerson(person)" class="material-icons"
-                        style="font-size: 100%;">edit</span>
-                    <span role="button" (click)="showDeleteModal(person)" class="material-icons"
-                        style="font-size: 100%;">clear</span>
-                </span>
+            <div class="full-width" *ngFor="let person of persons[1]; trackBy: trackByFn">
+                <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId" (selected)="onSelectPerson($event)"></match-person-info>
             </div>
             <i class="full-width top10">
                 Запасные:
-                <span *ngIf="roles.isInformer && homeBench.length < 7" role="button"
-                    (click)="addMatchPerson(isHome ? 2 : 4, homeBench.length, 7, isHome ? 1 : 4)">
+                <span *ngIf="roles.isInformer && persons[2]?.length < 7" role="button"
+                    (click)="addMatchPerson(isHome ? 2 : 4, persons[2].length, 7, isHome ? 1 : 4)">
                     <mat-icon>add</mat-icon>
                 </span>
             </i>
-            <div class="full-width" *ngFor="let person of homeBench">
-                {{person.number}} - {{person.personName}}
-                <span *ngIf="roles.isInformer">
-                    <span role="button" (click)="selectMatchPerson(person)" class="material-icons"
-                        style="font-size: 100%;">edit</span>
-                    <span role="button" (click)="showDeleteModal(person)" class="material-icons"
-                        style="font-size: 100%;">clear</span>
-                </span>
+            <div class="full-width" *ngFor="let person of persons[2]; trackBy: trackByFn">
+                <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId" (selected)="onSelectPerson($event)"></match-person-info>
             </div>
-            <div class="full-width top10" *ngIf="homeBan.length > 0 || roles.isInformer">
+            <div class="full-width top10" *ngIf="persons[5]?.length > 0 || roles.isInformer">
                 <i class="full-width">Дисквалифицированы:
                     <span *ngIf="roles.isInformer" role="button"
                         (click)="addMatchPerson(isHome ? 12 : 14, 0, 0, isHome ? 1 : 4)">
                         <mat-icon>add</mat-icon>
                     </span>
                 </i>
-                <div class="full-width" *ngFor="let person of homeBan">
-                    {{person.number}} - {{person.personName}}
-                    <span *ngIf="roles.isInformer">
-                        <span role="button" (click)="selectMatchPerson(person)" class="material-icons"
-                            style="font-size: 100%;">edit</span>
-                        <span role="button" (click)="showDeleteModal(person)" class="material-icons"
-                            style="font-size: 100%;">clear</span>
-                    </span>
+                <div class="full-width" *ngFor="let person of persons[5]; trackBy: trackByFn">
+                    <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId" (selected)="onSelectPerson($event)"></match-person-info>
                 </div>
             </div>
-            <div class="full-width top10" *ngIf="homeInjury.length > 0 || roles.isInformer">
+            <div class="full-width top10" *ngIf="persons[4]?.length > 0 || roles.isInformer">
                 <i class="full-width">
                     Травмированы:
                     <span *ngIf="roles.isInformer" role="button"
@@ -126,65 +88,43 @@
                         <mat-icon>add</mat-icon>
                     </span>
                 </i>
-                <div class="full-width" *ngFor="let person of homeInjury">
-                    {{person.number}} - {{person.personName}}
-                    <span *ngIf="roles.isInformer">
-                        <span role="button" (click)="selectMatchPerson(person)" class="material-icons"
-                            style="font-size: 100%;">edit</span>
-                        <span role="button" (click)="showDeleteModal(person)" class="material-icons"
-                            style="font-size: 100%;">clear</span>
-                    </span>
+                <div class="full-width" *ngFor="let person of persons[4]; trackBy: trackByFn">
+                    <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId" (selected)="onSelectPerson($event)"></match-person-info>
                 </div>
             </div>
         </div>
         <div class="width50p text-right">
             <i class="full-width top10">
                 Главный тренер:
-                <span *ngIf="roles.isInformer && !awayCoach" role="button"
-                    (click)="addMatchPerson(isHome ? 6 : 5, 0,1, isHome ? 14 : 6)">
+                <span *ngIf="roles.isInformer && persons[8]?.length == 0" role="button"
+                    (click)="addMatchPerson(isHome ? 6 : 5, 0,1, isHome ? 5 : 6)">
                     <mat-icon>add</mat-icon>
                 </span>
-                <span *ngIf="roles.isInformer && awayCoach">
-                    <span role="button" (click)="selectMatchPerson(awayCoach)" class="material-icons"
-                        style="font-size: 100%;">edit</span>
-                    <span role="button" (click)="showDeleteModal(awayCoach)" class="material-icons"
-                        style="font-size: 100%;">clear</span>
-                </span>
+                <div class="full-width" *ngFor="let person of persons[8]; trackBy: trackByFn"> 
+                    <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="false" [matchId]="matchId" (selected)="onSelectPerson($event)"></match-person-info>
+                </div>
             </i>
-            <div class="full-width" [textContent]="awayCoach?.personName"></div>
             <i class="full-width top10">
                 Состав:
-                <span *ngIf="roles.isInformer && awayTeam.length < 11" role="button"
-                    (click)="addMatchPerson(isHome ? 3 : 1, awayTeam.length, 11, isHome ? 4 : 1)">
+                <span *ngIf="roles.isInformer && persons[6]?.length < 11" role="button"
+                    (click)="addMatchPerson(isHome ? 3 : 1, persons[6].length, 11, isHome ? 4 : 1)">
                     <mat-icon>add</mat-icon>
                 </span>
             </i>
-            <div class="full-width" *ngFor="let person of awayTeam">
-                {{person.number}} - {{person.personName}}
-                <span *ngIf="roles.isInformer">
-                    <span role="button" (click)="selectMatchPerson(person)" class="material-icons"
-                        style="font-size: 100%;">edit</span>
-                    <span role="button" (click)="showDeleteModal(person)" class="material-icons"
-                        style="font-size: 100%;">clear</span>
-                </span>
+            <div class="full-width" *ngFor="let person of persons[6]; trackBy: trackByFn"> 
+                <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId" (selected)="onSelectPerson($event)"></match-person-info>
             </div>
             <i class="full-width top10">
                 Запасные:
-                <span *ngIf="roles.isInformer && awayBench.length < 7" role="button"
-                    (click)="addMatchPerson(isHome ? 4 : 2, awayBench.length, 7, isHome ? 4 : 1)">
+                <span *ngIf="roles.isInformer && persons[7]?.length < 7" role="button"
+                    (click)="addMatchPerson(isHome ? 4 : 2, persons[7]?.length, 7, isHome ? 4 : 1)">
                     <mat-icon>add</mat-icon>
                 </span>
             </i>
-            <div class="full-width" *ngFor="let person of awayBench">
-                {{person.number}} - {{person.personName}}
-                <span *ngIf="roles.isInformer">
-                    <span role="button" (click)="selectMatchPerson(person)" class="material-icons"
-                        style="font-size: 100%;">edit</span>
-                    <span role="button" (click)="showDeleteModal(person)" class="material-icons"
-                        style="font-size: 100%;">clear</span>
-                </span>
+            <div class="full-width" *ngFor="let person of persons[7]; trackBy: trackByFn">
+                <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId" (selected)="onSelectPerson($event)"></match-person-info>
             </div>
-            <div class="full-width top10" *ngIf="awayBan.length > 0 || roles.isInformer">
+            <div class="full-width top10" *ngIf="persons[10]?.length > 0 || roles.isInformer">
                 <i class="full-width">
                     Дисквалифицированы:
                     <span *ngIf="roles.isInformer" role="button"
@@ -192,17 +132,11 @@
                         <mat-icon>add</mat-icon>
                     </span>
                 </i>
-                <div class="full-width" *ngFor="let person of awayBan">
-                    {{person.number}} - {{person.personName}}
-                    <span *ngIf="roles.isInformer">
-                        <span role="button" (click)="selectMatchPerson(person)" class="material-icons"
-                            style="font-size: 100%;">edit</span>
-                        <span role="button" (click)="showDeleteModal(person)" class="material-icons"
-                            style="font-size: 100%;">clear</span>
-                    </span>
+                <div class="full-width" *ngFor="let person of persons[10]; trackBy: trackByFn">
+                    <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId" (selected)="onSelectPerson($event)"></match-person-info>
                 </div>
             </div>
-            <div class="full-width top10" *ngIf="awayInjury.length > 0 || roles.isInformer">
+            <div class="full-width top10" *ngIf="persons[9]?.length > 0 || roles.isInformer">
                 <i class="full-width">
                     Травмированы:
                     <span *ngIf="roles.isInformer" role="button"
@@ -210,19 +144,12 @@
                         <mat-icon>add</mat-icon>
                     </span>
                 </i>
-                <div class="full-width" *ngFor="let person of awayInjury">
-                    {{person.number}} - {{person.personName}}
-                    <span *ngIf="roles.isInformer">
-                        <span role="button" (click)="selectMatchPerson(person)" class="material-icons"
-                            style="font-size: 100%;">edit</span>
-                        <span role="button" (click)="showDeleteModal(person)" class="material-icons"
-                            style="font-size: 100%;">clear</span>
-                    </span>
+                <div class="full-width" *ngFor="let person of persons[9]; trackBy: trackByFn">
+                    <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId" (selected)="onSelectPerson($event)"></match-person-info>
                 </div>
             </div>
         </div>
     </div>
-</div>
 <div *ngIf="roles.isInformer" class="full-width">
     <button mat-raised-button color="warn" (click)="addMatchPerson()" class="full-width" *ngIf="!isEdit">Добавить
         человека</button>
@@ -231,7 +158,7 @@
         <div class="full-width top20">
             <match-person-edit-panel [matchId]="matchId" [selectedMatchPerson]="selectedMatchPerson"
                 [currentCount]="currentCount" [neededCount]="neededCount" [personTypeId]="personTypeId"
-                [typeId]="selectedType" (matchPerson)="updateMatchPerson($event)"></match-person-edit-panel>
+                [typeId]="selectedType" [isHome]="isHome" (exit)="onClose()"></match-person-edit-panel>
         </div>
     </div>
 </div>

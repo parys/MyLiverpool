@@ -5,5 +5,6 @@
     public personType: number;
     public personTypeName: string;
     public number: number;
-    public id: number;
+
+    public type: number;
 }

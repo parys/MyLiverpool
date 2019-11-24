@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '@shared/index';
 import { RoleGroupCoreModule } from '@role-groups/core';
-import { BreadcrumbService } from '@shared/breadcrumb';
+import { BreadcrumbService } from '@base/breadcrumbs';
 import { USERS_ROUTE } from '@constants/routes.constants';
 import { PmSharedModule } from '@pms/shared';
 import { PipesModule } from '@base/pipes';

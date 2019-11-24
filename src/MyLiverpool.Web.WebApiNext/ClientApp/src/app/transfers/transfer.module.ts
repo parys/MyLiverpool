@@ -6,7 +6,7 @@ import { SelectPersonFormFieldModule } from '@widgets/http/select-person-form-fi
 import { SelectClubFormFieldModule } from '@widgets/http/select-club-form-field';
 import { SelectSeasonFormFieldModule } from '@widgets/http/select-season-form-field';
 import { SharedModule } from '@shared/index';
-import { BreadcrumbService } from '@shared/breadcrumb';
+import { BreadcrumbService } from '@base/breadcrumbs';
 import { TRANSFERS_ROUTE } from '@constants/routes.constants';
 
 import { TransferCurrentListComponent } from '@transfers/pages/transfer-current-list';
@@ -15,6 +15,7 @@ import { TransferEditComponent } from '@transfers/pages/transfer-edit';
 import { TransferListComponent } from '@transfers/pages/transfer-list';
 import { TransferService } from '@transfers/transfer.service';
 import { TransfersMaterialModule } from './transfers-material.module';
+import { PaginationModule } from '@base/pagination/pagination.module';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { TransfersMaterialModule } from './transfers-material.module';
         SelectPersonFormFieldModule,
         SelectClubFormFieldModule,
         SelectSeasonFormFieldModule,
-        TransfersMaterialModule
+        TransfersMaterialModule,
+        PaginationModule
     ],
     declarations: [
         TransferEditComponent,

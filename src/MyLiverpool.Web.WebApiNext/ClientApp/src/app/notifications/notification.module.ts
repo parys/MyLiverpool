@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { SharedModule } from '@shared/index';
-import { BreadcrumbService } from '@shared/breadcrumb';
+import { BreadcrumbService } from '@base/breadcrumbs';
 import { NOTIFICATIONS_ROUTE } from '@constants/routes.constants';
 
 import { notificationRoutes } from './notification.routes';

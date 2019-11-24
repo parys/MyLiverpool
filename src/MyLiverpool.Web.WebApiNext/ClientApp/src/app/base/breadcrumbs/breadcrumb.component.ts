@@ -25,14 +25,13 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     prefix = 'Главная';
 
     public urls: string[] = new Array();
-    private _routerSubscription: any;
 
     constructor(
         private router: Router,
         private cd: ChangeDetectorRef,
         private breadcrumbService: BreadcrumbService
     ) {
-        this._routerSubscription = this.router.events.subscribe((navigationEnd: NavigationEnd) => {
+        this.router.events.subscribe((navigationEnd: NavigationEnd) => {
             if (!navigationEnd.urlAfterRedirects && !navigationEnd.url) { return; }
             this.urls.length = 0; // Fastest way to clear out
             this.generateBreadcrumbTrail(navigationEnd.urlAfterRedirects ? navigationEnd.urlAfterRedirects : navigationEnd.url);

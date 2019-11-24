@@ -9,6 +9,8 @@ namespace MyLfc.Common.Web.Middlewares
         public static IServiceCollection AddCustomRedisCache(this IServiceCollection services, IConfiguration configuration)
         {
             var redisConfig = configuration.GetSection("Redis");
+
+            DistributedCacheManager.KeyPrefix = redisConfig?["Prefix"] ?? "";
             services.AddDistributedRedisCache(opts =>
             {
                 opts.Configuration = redisConfig["Domain"] + ":" + redisConfig["Port"];

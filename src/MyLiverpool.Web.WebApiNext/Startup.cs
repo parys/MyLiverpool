@@ -133,7 +133,6 @@ namespace MyLiverpool.Web.WebApiNext
 
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.Configure<SsrSettings>(Configuration.GetSection("SSR"));
-
             services.AddCustomRedisCache(Configuration);
 
             //   services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
@@ -172,15 +171,15 @@ namespace MyLiverpool.Web.WebApiNext
             }
             services.AddAutoMapper(typeof(MaterialProfile), typeof(ForumMessageMapperProfile));
             services.AddMediatR();
-            services.AddNodeServices(options =>
-            {
-                  options.DebuggingPort = 9229;
-                  options.LaunchWithDebugging = false;
+            //services.AddNodeServices(options =>
+            //{
+            //      options.DebuggingPort = 9229;
+            //      options.LaunchWithDebugging = false;
 
-                  //   options.InvocationTimeoutMilliseconds = 140000;
-            });
-         //   var dbContext = (LiverpoolContext)services.BuildServiceProvider().GetService(typeof(LiverpoolContext));
-         //   dbContext.Database.Migrate();
+            //      //   options.InvocationTimeoutMilliseconds = 140000;
+            //});
+            var dbContext = (LiverpoolContext)services.BuildServiceProvider().GetService(typeof(LiverpoolContext));
+            dbContext.Database.Migrate();
             //if (Env.IsDevelopment())
             //{
             //    new DatabaseInitializer(context).Seed();
@@ -248,7 +247,7 @@ namespace MyLiverpool.Web.WebApiNext
 
             if (!Env.IsDevelopment())
             {
-                app.UseSpaStaticFiles(new StaticFileOptions());
+                app.UseSpaStaticFiles();
             }
 
             app.UseAuthentication();
@@ -293,9 +292,9 @@ namespace MyLiverpool.Web.WebApiNext
 
                     if (env.IsDevelopment())
                     {
-                        spa.UseAngularCliServer(npmScript: "start");
+                       // spa.UseAngularCliServer(npmScript: "start");
                         //   OR
-                        // spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                       //  spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                     }
                 });
             }

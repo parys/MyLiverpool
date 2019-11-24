@@ -1,10 +1,10 @@
-﻿import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
-import { LoaderService } from "./loader.service";
-import { LoaderState } from "./loaderState.model";
+﻿import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { LoaderService } from './loader.service';
+import { LoaderState } from './loaderState.model';
 @Component({
-    selector: "http-loader",
-    templateUrl: "loader.component.html",
-    styleUrls: ["loader.component.css"],
+    selector: 'http-loader',
+    templateUrl: 'loader.component.html',
+    styleUrls: ['loader.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoaderComponent implements OnInit {

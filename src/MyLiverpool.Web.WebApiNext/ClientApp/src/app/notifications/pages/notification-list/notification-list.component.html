@@ -3,7 +3,7 @@
     <ng-template #removeAll>
         <button mat-raised-button (click)="readAll()">Пометить все как прочитанные</button>
     </ng-template>
-    <a class="pull-right" routerLink="/users/0/settings"><mat-icon>settings</mat-icon></a>
+    <a routerLink="/users/0/settings"><mat-icon>settings</mat-icon></a>
 </div>
 <div class="full-width" *ngFor="let event of items; let i = index;">
     <div class="full-width event-block" [class.unread]="!event.isRead">

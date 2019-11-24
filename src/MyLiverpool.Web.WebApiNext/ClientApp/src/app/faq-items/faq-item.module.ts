@@ -4,7 +4,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 
-import { SharedModule, BreadcrumbService } from '@shared/index';
+import { BreadcrumbService } from '@base/breadcrumbs';
+import { SharedModule } from '@shared/index';
 import { FAQ_CATEGORIES_ROUTE } from '@constants/routes.constants';
 import { FAQ_CATEGORIES_RU } from '@constants/ru.constants';
 import { EditorModule } from '@editor/index';

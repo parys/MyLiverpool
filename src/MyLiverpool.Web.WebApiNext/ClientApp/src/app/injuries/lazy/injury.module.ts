@@ -14,11 +14,12 @@ import { injuryRoutes } from '@injuries/lazy/injury.routes';
 
 import { SharedModule } from '@shared/index';
 
-import { BreadcrumbService } from '@shared/breadcrumb';
+import { BreadcrumbService } from '@base/breadcrumbs';
 import { INJURIES_ROUTE } from '@constants/routes.constants';
 import { InjuryService } from '@injuries/injury.service';
 import { INJURIES_RU } from '@constants/ru.constants';
 import { SelectPersonFormFieldModule } from '@widgets/http/select-person-form-field';
+import { PaginationModule } from '@base/pagination/pagination.module';
 
 @NgModule({
     imports: [
@@ -30,7 +31,8 @@ import { SelectPersonFormFieldModule } from '@widgets/http/select-person-form-fi
         MatSortModule,
         MatInputModule,
         MatButtonModule,
-        SelectPersonFormFieldModule
+        SelectPersonFormFieldModule,
+        PaginationModule
     ],
     declarations: [
         InjuryEditComponent,

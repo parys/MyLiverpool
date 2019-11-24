@@ -1,7 +1,8 @@
 ﻿import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { SharedModule, BreadcrumbService } from '@shared/index';
+import { BreadcrumbService } from '@base/breadcrumbs';
+import { SharedModule } from '@shared/index';
 import { WAL_ROUTE, WAL_RU } from '@constants/index';
 
 import { WalMainComponent } from '@wal/lazy/wal-main';

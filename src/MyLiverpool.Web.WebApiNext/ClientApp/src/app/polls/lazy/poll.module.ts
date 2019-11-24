@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 
-import { SharedModule, BreadcrumbService } from '@shared/index';
+import { BreadcrumbService } from '@base/breadcrumbs';
+import { SharedModule } from '@shared/index';
 import { POLLS_ROUTE } from '@constants/routes.constants';
 
 import { pollRoutes } from '@polls/lazy/poll.routes';

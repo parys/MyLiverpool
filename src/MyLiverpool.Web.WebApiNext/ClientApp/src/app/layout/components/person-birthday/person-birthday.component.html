@@ -5,10 +5,15 @@
         </mat-card-title>
     </mat-card-header>
     <mat-card-content class="center">
-        <img [src]="items[currentPersonIndex].photo" class="photo" [alt]="items[currentPersonIndex].russianName" />
+        <img loading="lazy" [src]="items[currentPersonIndex].photo" class="photo"
+            [alt]="items[currentPersonIndex].russianName" [srcset]="items[currentPersonIndex].photo | img:[100]" />
     </mat-card-content>
     <div *ngIf="items.length > 1" class="flex-space-between">
-        <button mat-button (click)="goToPrevious()"><mat-icon>arrow_left</mat-icon></button>
-        <button mat-button (click)="goToNext()"><mat-icon>arrow_right</mat-icon></button>
+        <button mat-button (click)="goToPrevious()">
+            <mat-icon>arrow_left</mat-icon>
+        </button>
+        <button mat-button (click)="goToNext()">
+            <mat-icon>arrow_right</mat-icon>
+        </button>
     </div>
 </mat-card>

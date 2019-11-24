@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 
 import { SharedModule } from '@shared/index';
-import { BreadcrumbService } from '@shared/breadcrumb';
+import { BreadcrumbService } from '@base/breadcrumbs';
 import { BLOG_CATEGORIES_ROUTE, NEWS_CATEGORIES_ROUTE } from '@constants/index';
 
 import { materialCategoryRoutes } from '@material-categories/lazy/materialCategory.routes';

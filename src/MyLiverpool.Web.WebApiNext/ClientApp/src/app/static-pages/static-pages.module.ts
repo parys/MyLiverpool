@@ -1,11 +1,13 @@
 ﻿import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { SharedModule, BreadcrumbService } from '@shared/index';
+import { PipesModule } from '@base/pipes';
+import { BreadcrumbService } from '@base/breadcrumbs';
+
+import { SharedModule } from '@shared/index';
 import { staticPagesRoutes } from './static-pages.routes';
 import { StaticPageComponent } from '@static-pages/pages/static-page';
 import { StaticPagesService } from '@static-pages/static-pages.service';
-import { PipesModule } from '@base/pipes';
 
 @NgModule({
     imports: [

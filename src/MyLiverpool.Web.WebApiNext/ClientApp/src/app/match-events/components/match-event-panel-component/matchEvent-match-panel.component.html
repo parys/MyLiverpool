@@ -1,29 +1,48 @@
-﻿<div *ngFor="let event of events; let i = index;" class="full-width container-row">
-    <div [class.pull-right]="(!isHome && event.isOur) || (isHome && !event.isOur)" class="inline-flex">
-        <span *ngIf="event.type === 1"><img class="width20px" alt="Гол" src="/img/goal.png" [title]="event.typeName">{{event.personName}} - {{event.minute}}' </span>
-        <span *ngIf="event.type === 2"><img class="width20px" alt="Гол" src="/img/goal.png" [title]="event.typeName">(П){{event.personName}} - {{event.minute}}' </span>
-        <span *ngIf="event.type === 3"><img class="width20px" alt="Гол" src="/img/goal.png" [title]="event.typeName">(П){{event.personName}}</span>
-        <span *ngIf="event.type === 4"><img class="width20px" alt="Гол" src="/img/goal_own.png" [title]="event.typeName">(А){{event.personName}} - {{event.minute}}' </span>
-        <span *ngIf="event.type === 5" [title]="event.typeName">({{event.personName}})</span>
-        <span *ngIf="event.type === 6" class="flex-v-c"><mat-icon class="color-gold">sim_card_alert</mat-icon>{{event.personName}} - {{event.minute}}' </span>
-        <span *ngIf="event.type === 7" class="flex-v-c"><mat-icon class="color-red" [title]="event.typeName">sim_card_alert</mat-icon>{{event.personName}} - {{event.minute}}' </span>
-        <span *ngIf="event.type === 9" class="flex-v-c" [title]="event.typeName"> <mat-icon class="color-red">arrow_downward</mat-icon>{{event.personName}} - {{event.minute}}' </span>
-        <span *ngIf="event.type === 8" class="flex-v-c" [title]="event.typeName"><mat-icon class="color-green">arrow_upward</mat-icon>{{event.personName}} - {{event.minute}}' </span>
-        <span *ngIf="event.type === 10"><img class="width20px" alt="Гол" src="/img/goal_own.png" [title]="event.typeName">П(нереализованный){{event.personName}} - {{event.minute}}' </span>
-        <span *ngIf="event.type === 11"><img class="width20px" alt="Незабитый пенальти" src="/img/goal_own.png" [title]="event.typeName">П(нереализованный){{event.personName}}</span>
-        <span *ngIf="event.type === 12"><span class="">Травма </span>{{event.personName}} - {{event.minute}}' </span>
-        <i *ngIf="roles.isInformer" role="button" (click)="selectEvent(i)"><mat-icon style="font-size: 100%;">edit</mat-icon></i>
-        <i *ngIf="roles.isInformer" role="button" (click)="showDeleteModal(i)"><mat-icon style="font-size: 100%;">clear</mat-icon></i>
+﻿<div *ngFor="let event of events; let i = index;" class="events">
+    <div [ngSwitch]="event.type" [class.right]="(!isHome && event.isOur) || (isHome && !event.isOur)" class="inline-flex">
+        <div *ngSwitchCase="1"><img class="width20px" alt="Гол" src="/img/goal.png"
+                [title]="event.typeName">{{event.personName}} - {{event.minute}}' </div>
+        <div *ngSwitchCase="2"><img class="width20px" alt="Гол" src="/img/goal.png"
+                [title]="event.typeName">(П){{event.personName}} - {{event.minute}}' </div>
+        <div *ngSwitchCase="3"><img class="width20px" alt="Гол" src="/img/goal.png"
+                [title]="event.typeName">(П){{event.personName}}</div>
+        <span *ngSwitchCase="4"><img class="width20px" alt="Гол" src="/img/goal_own.png"
+                [title]="event.typeName">(А){{event.personName}} - {{event.minute}}' </span>
+        <span *ngSwitchCase="5" [title]="event.typeName">({{event.personName}})</span>
+        <span *ngSwitchCase="6" class="flex-v-c">
+            <mat-icon class="color-gold">sim_card_alert</mat-icon>{{event.personName}} - {{event.minute}}'
+        </span>
+        <div *ngSwitchCase="7" class="flex-v-c">
+            <mat-icon class="color-red" [title]="event.typeName">sim_card_alert</mat-icon>{{event.personName}} -
+            {{event.minute}}'
+        </div>
+        <div *ngSwitchCase="9" class="flex-v-c" [title]="event.typeName">
+            <mat-icon class="color-red">arrow_downward</mat-icon>{{event.personName}} - {{event.minute}}'
+        </div>
+        <div *ngSwitchCase="8" class="flex-v-c" [title]="event.typeName">
+            <mat-icon class="color-green">arrow_upward</mat-icon>{{event.personName}} - {{event.minute}}'
+        </div>
+        <span *ngSwitchCase="10"><img class="width20px" alt="Гол" src="/img/goal_own.png"
+                [title]="event.typeName">П(нереализованный){{event.personName}} - {{event.minute}}' </span>
+        <span *ngSwitchCase="11"><img class="width20px" alt="Незабитый пенальти" src="/img/goal_own.png"
+                [title]="event.typeName">П(нереализованный){{event.personName}}</span>
+        <span *ngSwitchCase="12"><span class="">Травма </span>{{event.personName}} - {{event.minute}}' </span>
+        <i *ngIf="roles.isInformer" role="button" (click)="selectEvent(i)">
+            <mat-icon class="small">edit</mat-icon>
+        </i>
+        <i *ngIf="roles.isInformer" role="button" (click)="showDeleteModal(i)">
+            <mat-icon class="small">clear</mat-icon>
+        </i>
     </div>
 </div>
-<div *ngIf="roles.isInformer" class="full-width">
-    <span class="flex-space-between">
-            <button mat-raised-button color="warn" (click)="addEvent(true)" *ngIf="!isEditEvent">Добавить событие</button>
+<div *ngIf="roles.isInformer" class="full-width flex-space-between">
+    <button mat-raised-button color="warn" (click)="addEvent(true)" *ngIf="!isEditEvent">Добавить событие</button>
     <button mat-raised-button color="warn" (click)="addEvent(false)" *ngIf="!isEditEvent">Добавить событие</button>
-</span>
+
     <button mat-raised-button (click)="cancelEventEdit()" *ngIf="isEditEvent">Отменить редактирование</button>
     <div class="full-width top20" *ngIf="isEditEvent">
-        <match-event-edit-panel [isOur]="(isHomeEdit && isHome) || (!isHomeEdit && !isHome)" [matchId]="matchId" [seasonId]="seasonId"
-         [selectedEvent]="events[selectedIndex]" (matchEvent)="updateEvent($event)"></match-event-edit-panel>
+        <match-event-edit-panel [isOur]="(isHomeEdit && isHome) || (!isHomeEdit && !isHome)" [matchId]="matchId"
+            [seasonId]="seasonId" [selectedEvent]="events[selectedIndex]" (matchEvent)="updateEvent($event)">
+        </match-event-edit-panel>
     </div>
 </div>

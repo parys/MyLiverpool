@@ -1,6 +1,5 @@
 ﻿import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
-import './polyfills/server.polyfills';
 import { renderModule, renderModuleFactory } from '@angular/platform-server';
 import { APP_BASE_HREF } from '@angular/common';
 import { enableProdMode } from '@angular/core';

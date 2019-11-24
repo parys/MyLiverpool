@@ -5,7 +5,8 @@
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <img [src]="items[currentUserIndex].photo" class="photo" [alt]="items[currentUserIndex].userName" />
+        <img loading="lazy" [src]="items[currentUserIndex].photo" class="photo"
+        [alt]="items[currentUserIndex].userName" [srcset]="items[currentUserIndex].photo | img:[100]" />
     </mat-card-content>
     <div *ngIf="items.length > 1" class="flex-space-between">
         <button mat-button (click)="goToPrevious()"><mat-icon>arrow_left</mat-icon></button>

@@ -1,0 +1,5 @@
+﻿<span *ngIf="isPlayer">{{person.number}} - </span>{{person.personName}}
+<span *ngIf="roles.isInformer">
+    <span role="button" (click)="onSelectPerson(person)" class="material-icons" style="font-size: 100%;">edit</span>
+    <span role="button" (click)="showDeleteModal(person)" class="material-icons" style="font-size: 100%;">clear</span>
+</span>

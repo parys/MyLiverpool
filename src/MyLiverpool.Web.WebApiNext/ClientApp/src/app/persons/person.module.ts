@@ -13,9 +13,10 @@ import { personRoutes } from './person.routes';
 import { SharedModule } from '@shared/index';
 import { PersonService } from './person.service';
 import { PersonEditModule } from './shared';
-import { BreadcrumbService } from '../shared/breadcrumb';
+import { BreadcrumbService } from '../base/breadcrumbs';
 import { PERSONS_ROUTE, STUFF_ROUTE, SQUAD_ROUTE } from '@constants/routes.constants';
 import { PipesModule } from '@base/pipes';
+import { PaginationModule } from '@base/pagination/pagination.module';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { PipesModule } from '@base/pipes';
         MatSortModule,
         MatCardModule,
         MatButtonModule,
-        PipesModule
+        PipesModule,
+        PaginationModule
     ],
     declarations: [
         PersonListComponent,

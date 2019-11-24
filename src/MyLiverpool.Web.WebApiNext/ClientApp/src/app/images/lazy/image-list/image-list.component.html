@@ -1,7 +1,7 @@
 ﻿<div>
     <a role="button" *ngIf="defaultPath != path" (click)="goUp()">Вернуться назад</a>
     <button mat-raised-button [routerLink]="['/images/add']">Добавить</button>
-    <a role="button" class="pull-right" *ngIf="selectedItem" (click)="removeSelection()">Отменить выбор</a>
+    <a role="button" *ngIf="selectedItem" (click)="removeSelection()">Отменить выбор</a>
     <image-detail *ngIf="selectedItem" [item]="selectedItem"></image-detail>
     <div class="images">
         <div *ngFor="let file of items">

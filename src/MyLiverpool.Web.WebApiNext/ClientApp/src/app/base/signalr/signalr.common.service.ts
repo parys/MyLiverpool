@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 
 import { StorageService } from '@base/storage';
-import { ChatMessage, Comment, UsersOnline, Pm, Notification } from '@domain/models';
+import { ChatMessage, Comment, UsersOnline, Pm, Notification, MatchPerson, MatchEvent } from '@domain/models';
 // import { MessagePackHubProtocol } from "@aspnet/signalr-protocol-msgpack";
 
 @Injectable({ providedIn: 'root' })
@@ -20,6 +20,8 @@ export class SignalRService {
     public newNotify: Subject<Notification> = new Subject<Notification>();
     public readNotify: Subject<number> = new Subject<number>();
     public newComment: Subject<Comment> = new Subject<Comment>();
+    public matchPerson: Subject<MatchPerson> = new Subject<MatchPerson>();
+    public matchEvent: Subject<MatchEvent> = new Subject<MatchEvent>();
 
     constructor(private storage: StorageService,
                 @Inject(PLATFORM_ID) private platformId: object,
@@ -61,6 +63,13 @@ export class SignalRService {
         });
         this.hubConnection.on('updateComment', (data: Comment) => {
             this.lastCommentsSubject.next(data);
+        });
+        this.hubConnection.on('addMp', (data: any) => {
+            console.log(data);
+            this.matchPerson.next(data);
+        });
+        this.hubConnection.on('addMe', (data: MatchEvent) => {
+            this.matchEvent.next(data);
         });
         this.hubConnection.on('newComment', (data: Comment) => {
             data.children = data.children || [];

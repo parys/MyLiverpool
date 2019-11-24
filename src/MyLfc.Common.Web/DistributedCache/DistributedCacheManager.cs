@@ -8,6 +8,7 @@ namespace MyLfc.Common.Web.DistributedCache
 {
     public class DistributedCacheManager : IDistributedCacheManager
     {
+        public static string KeyPrefix = "";
         private readonly IDistributedCache _distributedCache;
 
         public DistributedCacheManager(IDistributedCache distributedCache)
@@ -19,7 +20,7 @@ namespace MyLfc.Common.Web.DistributedCache
         {
             try
             {
-                await _distributedCache.SetAsync(key, obj.Serialize());
+                await _distributedCache.SetAsync(KeyPrefix + key, obj.Serialize());
             }
             catch (RedisConnectionException)
             {
@@ -30,7 +31,7 @@ namespace MyLfc.Common.Web.DistributedCache
         {
             try
             {
-                await _distributedCache.SetStringAsync(key, obj);
+                await _distributedCache.SetStringAsync(KeyPrefix + key, obj);
             }
             catch (RedisConnectionException)
             {
@@ -41,7 +42,7 @@ namespace MyLfc.Common.Web.DistributedCache
         {
             try
             {
-                var cacheValue = await _distributedCache.GetAsync(key);
+                var cacheValue = await _distributedCache.GetAsync(KeyPrefix + key);
                 if (cacheValue != null)
                 {
                     return cacheValue.Deserialize<T>();
@@ -58,7 +59,7 @@ namespace MyLfc.Common.Web.DistributedCache
         {
             try
             {
-                return await _distributedCache.GetStringAsync(key);
+                return await _distributedCache.GetStringAsync(KeyPrefix + key);
             }
             catch (RedisConnectionException)
             {
@@ -71,7 +72,7 @@ namespace MyLfc.Common.Web.DistributedCache
         {
             try
             {
-                await _distributedCache.RemoveAsync(key);
+                await _distributedCache.RemoveAsync(KeyPrefix + key);
             }
             catch (RedisConnectionException)
             {
@@ -84,7 +85,7 @@ namespace MyLfc.Common.Web.DistributedCache
             {
                 foreach (var key in keys)
                 {
-                    await _distributedCache.RemoveAsync(key);
+                    await _distributedCache.RemoveAsync(KeyPrefix + key);
                 }
             }
             catch (RedisConnectionException)
@@ -97,7 +98,7 @@ namespace MyLfc.Common.Web.DistributedCache
             T result;
             try
             {
-                var cached = await _distributedCache.GetAsync(key);
+                var cached = await _distributedCache.GetAsync(KeyPrefix + key);
                 if (cached != null)
                 {
                     result = cached.Deserialize<T>();
@@ -107,7 +108,7 @@ namespace MyLfc.Common.Web.DistributedCache
                     result = await (Task<T>)method.DynamicInvoke();
                     if (result != null)
                     {
-                        await _distributedCache.SetAsync(key, result.Serialize());
+                        await _distributedCache.SetAsync(KeyPrefix + key, result.Serialize());
                     }
                 }
             }
@@ -124,7 +125,7 @@ namespace MyLfc.Common.Web.DistributedCache
             string result;
             try
             {
-                var cached = await _distributedCache.GetStringAsync(key);
+                var cached = await _distributedCache.GetStringAsync(KeyPrefix + key);
                 if (cached != null)
                 {
                     return cached;
@@ -133,11 +134,11 @@ namespace MyLfc.Common.Web.DistributedCache
                 result = await (Task<string>)method.DynamicInvoke();
                 if (string.IsNullOrWhiteSpace(result))
                 {
-                    await _distributedCache.RemoveAsync(key);
+                    await _distributedCache.RemoveAsync(KeyPrefix + key);
                 }
                 else
                 {
-                    await _distributedCache.SetStringAsync(key, result);
+                    await _distributedCache.SetStringAsync(KeyPrefix + key, result);
                 }
             }
             catch (RedisConnectionException)

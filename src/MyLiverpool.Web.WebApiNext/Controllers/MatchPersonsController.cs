@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyLfc.Application.Matches;
 using MyLfc.Application.MatchPersons;
+using MyLfc.Common.Web.Hubs;
 using MyLiverpool.Common.Utilities.Extensions;
 using MyLiverpool.Data.Common;
 
@@ -17,38 +17,16 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
     public class MatchPersonsController : BaseController
     {
         /// <summary>
-        /// Creates new match person.
-        /// </summary>
-        /// <param name="request">Filled match person model.</param>
-        /// <returns>Created entity.</returns>
-        [Authorize(Roles = nameof(RolesEnum.InfoStart)), HttpPost("")]
-        public async Task<IActionResult> CreateAsync([FromBody]UpdateMatchPersonCommand.Request request)
-        {
-            return Ok(await Mediator.Send(request));
-        }
-
-        /// <summary>
-        /// Updates match person.
+        /// Creates or Updates match person.
         /// </summary>
         /// <param name="request">Updated match event dto.</param>
         /// <returns>Updated entity.</returns>
         [Authorize(Roles = nameof(RolesEnum.InfoStart)), HttpPut("")]
         public async Task<IActionResult> UpdateAsync([FromBody]UpdateMatchPersonCommand.Request request)
         {
-            return Ok(await Mediator.Send(request));
-        }
-        
-        /// <summary>
-        /// Returns match persons by match id.
-        /// </summary>
-        /// <param name="id">The identifier of match.</param>
-        /// <returns>List of match events for match.</returns>
-        [AllowAnonymous, HttpGet("getForMatch/{id:int}")]
-        [Obsolete("Remove after 10 AUg 19")]
-        public async Task<IActionResult> GetForMatchAsync(int id)
-        {
-            var request = new GetMatchPersonListQuery.Request {MatchId = id};
-            return Ok(await Mediator.Send(request));
+            var result = await Mediator.Send(request);
+            SignalRHub.Send(HubEndpointConstants.AddMatchPerson, result);
+            return Ok(result);
         }
 
         /// <summary>
@@ -56,6 +34,7 @@ namespace MyLiverpool.Web.WebApiNext.Controllers
         /// </summary>
         /// <returns>List of types.</returns>
         [Authorize, HttpGet("getTypes")]
+        [ResponseCache(Duration = 24*60)]
         public async Task<IActionResult> GetTypes()
         {
             var list = new List<object>();

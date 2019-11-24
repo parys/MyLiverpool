@@ -14,7 +14,7 @@ import { UnconfirmedEmailComponent } from './unconfirmedEmail';
 import { AccountValidators } from './account.validators';
 import { AccountCoreModule } from '../core';
 import { RecaptchaModule } from '@widgets/recaptcha';
-import { BreadcrumbService } from '@shared/breadcrumb';
+import { BreadcrumbService } from '@base/breadcrumbs';
 import { AccountService } from './account.service';
 import { ACCOUNT_ROUTE } from '@constants/index';
 import { MatButtonModule } from '@angular/material/button';

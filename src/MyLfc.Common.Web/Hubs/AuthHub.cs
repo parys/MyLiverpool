@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace MyLfc.Common.Web.Hubs
 {
     /// <summary>
-    /// Hub for athenticated users.
+    /// Hub for authenticated users.
     /// </summary>
     [Authorize(AuthenticationSchemes = OAuthValidationDefaults.AuthenticationScheme)]
     public class AuthHub : AnonymHub

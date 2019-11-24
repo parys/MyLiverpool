@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '@shared/index';
-import { BreadcrumbService } from '@shared/breadcrumb';
+import { BreadcrumbService } from '@base/breadcrumbs';
 import { CALENDAR_RU, SEASONS_ROUTE, STATISTICS_RU } from '@constants/index';
 import { PipesModule } from '@base/pipes';
 

@@ -3,13 +3,17 @@
         color: green;
     }
 
-.col-xs-12 {
-    position: relative;
-    min-height: 1px;
-    padding-right: 0;
-    padding-left: 0;
-    float: left;
+.events {
+    display: flex;
     width: 100%;
+}
+
+.mat-icon.small {
+    font-size: 100%;
+    width: auto;
+}
+.right {
+    margin-left: auto;
 }
 
 .width20px {
