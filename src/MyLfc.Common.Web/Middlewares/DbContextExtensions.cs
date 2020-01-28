@@ -12,7 +12,6 @@ namespace MyLfc.Common.Web.Middlewares
             services.AddDbContext<LiverpoolContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-                options.UseOpenIddict<int>();
             });
 
             return services;

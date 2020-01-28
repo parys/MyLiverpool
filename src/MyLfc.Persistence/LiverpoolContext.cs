@@ -1,22 +1,29 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
+using IdentityServer4.EntityFramework.Entities;
+using IdentityServer4.EntityFramework.Extensions;
+using IdentityServer4.EntityFramework.Interfaces;
+using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using MyLfc.Domain;
 using MyLfc.Domain.Polls;
 
 namespace MyLfc.Persistence
 {
-    public class LiverpoolContext : IdentityDbContext<User, Role, int>
+    public class LiverpoolContext : IdentityDbContext<User, Role, int>, IPersistedGrantDbContext
     {
         private static bool _created = false;
-        public LiverpoolContext(DbContextOptions<LiverpoolContext> options) : base(options)
+        private readonly IOptions<OperationalStoreOptions> _operationalStoreOptions;
+
+        public LiverpoolContext(DbContextOptions<LiverpoolContext> options,
+            IOptions<OperationalStoreOptions> operationalStoreOptions)
+            : base(options)
         {
-            if (!_created)
-            {
-                _created = true;
-            }
+            _operationalStoreOptions = operationalStoreOptions;
         }
-        
+
         public DbSet<Wish> Wishes { get; set; }
         public DbSet<Material> Materials { get; set; }
         public DbSet<MaterialCategory> MaterialCategories { get; set; }
@@ -205,6 +212,16 @@ namespace MyLfc.Persistence
             modelBuilder.Entity<MatchEvent>().ToTable("MatchEvents");
             modelBuilder.Entity<Notification>().ToTable("Notifications");
 
+            modelBuilder.ConfigurePersistedGrantContext(_operationalStoreOptions.Value);
+
         }
+
+        public Task<int> SaveChangesAsync()
+        {
+            return base.SaveChangesAsync();
+        }
+
+        public DbSet<PersistedGrant> PersistedGrants { get; set; }
+        public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
     }
 }

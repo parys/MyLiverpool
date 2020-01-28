@@ -1,8 +1,9 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { IRegisterModel, AuthService } from '@base/auth';
+import { IRegisterModel } from '@base/auth';
 import { AccountService } from '@accounts/lazy/account.service';
 import { AccountValidators } from '@accounts/lazy/account.validators';
+import { AuthService } from '@auth/services';
 
 @Component({
     selector: 'account-signup',

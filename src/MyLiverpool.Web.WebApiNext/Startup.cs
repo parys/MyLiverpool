@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.IO.Compression;
-using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.AspNetCore.Rewrite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyLiverpool.Business.Services.Helpers;
@@ -28,6 +27,8 @@ using MyLfc.Common.Web.Middlewares;
 using MyLiverpool.Common.Mappings;
 using MyLiverpool.Web.WebApiNext.Infrastructure.Filters;
 using Microsoft.Extensions.Hosting;
+using MyLfc.Domain;
+using MyLiverpool.Web.WebApiNext.Extensions;
 using Serilog;
 
 namespace MyLiverpool.Web.WebApiNext
@@ -98,7 +99,7 @@ namespace MyLiverpool.Web.WebApiNext
                 options.AddPolicy("MyPolicy", builder =>
                 {
                     builder
-                        .WithOrigins("localhost:1669", "localhost:4200", "test.mylfc.ru", "mylfc.ru")
+                        .WithOrigins("localhost:1667", "localhost:1669", "localhost:4200", "test.mylfc.ru", "mylfc.ru")
                         .SetIsOriginAllowed(_ => true)
                         .AllowAnyMethod()
                         .AllowAnyHeader()
@@ -108,21 +109,60 @@ namespace MyLiverpool.Web.WebApiNext
 
             services.AddCustomDbContext(Configuration);
 
-            services.AddDataProtection().SetApplicationName("liverpoolfc-app")
-                .PersistKeysToFileSystem(new DirectoryInfo(Directory.GetCurrentDirectory()));
-
             services.AddCustomIdentitySettings();
 
-            services.AddAuthentication()
-                .AddOAuthValidation(options =>
-                {
-                    options.Events.OnRetrieveToken = context =>
-                    {
-                        context.Token = context.Request.Query["access_token"];
-                        return Task.CompletedTask;
-                    };
-                });
-            services.ApplyCustomOpenIdDict(Env);
+
+            services.AddAuthorizationAndAuthentication(Configuration);
+            //services.AddDataProtection().SetApplicationName("liverpoolfc-app")
+            //    .PersistKeysToFileSystem(new DirectoryInfo(Directory.GetCurrentDirectory()));
+            //services.AddIdentityServer()
+            //    //         .AddApiAuthorization<User, LiverpoolContext>();
+            //    .AddDeveloperSigningCredential()
+
+            //    //.AddInMemoryPersistedGrants()
+            //    //// this adds the operational data from DB (codes, tokens, consents)
+            //    .AddOperationalStore(options =>
+            //    {
+            //        options.ConfigureDbContext = builder => builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            //       // this enables automatic token cleanup. this is optional.
+            //       options.EnableTokenCleanup = true;
+            //        options.TokenCleanupInterval = 30; // interval in seconds
+            //    })
+            //    .AddInMemoryIdentityResources(Config.GetIdentityResources())
+            //    .AddInMemoryApiResources(Config.GetApiResources())
+            //    .AddInMemoryClients(Config.GetClients())
+            //    .AddAspNetIdentity<User>();
+
+
+            //services.AddAuthentication(options =>
+            //    {
+            //        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    }).AddIdentityServerJwt()
+                //    o =>
+                //{
+                //    o.Authority = "http://localhost:1669";
+                //    o.Audience = "resourceapi";
+                //    o.RequireHttpsMetadata = false;
+                    //o.Events.OnMessageReceived = context =>
+                    //{
+                    //    context.Token = context.Request.Query["access_token"];
+                    //    return Task.CompletedTask;
+                    //};
+           //     })
+                //.AddOAuthValidation(options =>
+                //{
+                //    options.Events.OnRetrieveToken = context =>
+                //    {
+                //        context.Token = context.Request.Query["access_token"];
+                //        return Task.CompletedTask;
+                //    };
+                //})
+                ;
+
+            services.AddControllersWithViews();
+            services.AddRazorPages();
+            //    services.ApplyCustomOpenIdDict(Env);
 
             services.AddSignalR()
                         // todo .AddMessagePackProtocol(options =>
@@ -181,13 +221,7 @@ namespace MyLiverpool.Web.WebApiNext
             }
             services.AddAutoMapper(typeof(MaterialProfile), typeof(ForumMessageMapperProfile));
             services.AddMediatR();
-           // services.AddNodeServices(options =>
-          //  {
-                //      options.DebuggingPort = 9229;
-          //            options.LaunchWithDebugging = false;
 
-                //      //   options.InvocationTimeoutMilliseconds = 140000;
-         //   });
             //todo using (var dbContext =
             //    (LiverpoolContext) services.BuildServiceProvider().GetService(typeof(LiverpoolContext)))
             //{
@@ -197,10 +231,7 @@ namespace MyLiverpool.Web.WebApiNext
             //{
             //    new DatabaseInitializer(context).Seed();
             //}
-
-            // In production, the Angular files will be served from this directory
-        //    services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist/aspnetcorespa"; });
-
+            
             services.AddScoped<RequestContext>();
         }
 
@@ -238,13 +269,13 @@ namespace MyLiverpool.Web.WebApiNext
                 }
             }
 
-            if (env.IsDevelopment())
-            {
-                var options = new RewriteOptions()
-                    .AddRewrite("^/small([0-9]+)(.*)", "$1", true);
+            //if (env.IsDevelopment())
+            //{
+            //    var options = new RewriteOptions()
+            //        .AddRewrite("^/small([0-9]+)(.*)", "$1", true);
 
-                app.UseRewriter(options);
-            }
+            //    app.UseRewriter(options);
+            //}
             app.UseDefaultFiles();
 
             var cachePeriod = env.IsDevelopment() ? "600" : "6048000";
@@ -255,16 +286,12 @@ namespace MyLiverpool.Web.WebApiNext
                     ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
                 }
             });
-            //if (!Env.IsDevelopment())
-            //{
-            //    app.UseSpaStaticFiles();
-            //}
 
-            app.UseRouting();
             app.UseCors("MyPolicy");
-            //   app.UseSignalRAuthentication();
+            app.UseRouting();
 
             app.UseAuthentication();
+         //   app.UseIdentityServer();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -274,46 +301,8 @@ namespace MyLiverpool.Web.WebApiNext
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+              //  endpoints.MapRazorPages();
             });
-
-            //    if (!Env.IsDevelopment())
-            //{
-            //    var ssrEnabled = Configuration.GetSection("SSR") != null && Convert.ToBoolean(Configuration.GetSection("SSR")["Enabled"]);
-            //    app.UseSpa(spa =>
-            //    {
-            //        spa.Options.SourcePath = "ClientApp";
-
-            //        /*
-            //                 // If you want to enable server-side rendering (SSR),
-            //                 // [1] In AspNetCoreSpa.csproj, change the <BuildServerSideRenderer> property
-            //                 //     value to 'true', so that the SSR bundle is built during publish
-            //                 // [2] Uncomment this code block
-            //                 */
-
-            //        if (ssrEnabled)
-            //        {
-            //            spa.UseSpaPrerendering(options =>
-            //            {
-            //                options.BootModulePath = $"{spa.Options.SourcePath}/dist-server/main.js";
-            //                options.BootModuleBuilder =
-            //                    env.IsDevelopment() ? new AngularCliBuilder(npmScript: "build:ssr") : null;
-            //                options.ExcludeUrls = new[] { "/api", "/sockjs-node", "/src", "/content", "/hubs", "/null", "/0", "/lite" };
-            //                options.SupplyData = (requestContext, obj) =>
-            //                {
-            //                    //  var result = appService.GetApplicationData(requestContext).GetAwaiter().GetResult();
-            //                    //         obj.Add("Cookies", requestContext.Request.Cookies);
-            //                };
-            //            });
-            //        }
-
-            //        if (env.IsDevelopment())
-            //        {
-            //            // spa.UseAngularCliServer(npmScript: "start");
-            //            //   OR
-            //            //  spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-            //        }
-            //    });
-            //}
         }
 
         private void RegisterCoreHelpers(IServiceCollection services)

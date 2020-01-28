@@ -4,5 +4,17 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:1669/'
+  apiUrl: 'http://localhost:1669/',
+  auth: {
+    authority: 'http://localhost:1667/',
+    client_id: 'angular.client',
+    redirect_uri: 'http://localhost:4200/auth-callback',
+    post_logout_redirect_uri: 'http://localhost:4200/',
+    response_type: 'id_token token',
+    scope: 'openid mylfc offline_access profile',
+    filterProtocolClaims: true,
+    loadUserInfo: true,
+    automaticSilentRenew: true,
+    silent_redirect_uri: 'http://localhost:4200/silent-refresh.html'
+  },
 };

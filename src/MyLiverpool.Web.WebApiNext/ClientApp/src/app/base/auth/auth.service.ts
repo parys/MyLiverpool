@@ -1,155 +1,151 @@
-﻿import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+﻿// import { Injectable } from '@angular/core';
+// import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import { filter, map, tap, catchError, flatMap, first } from 'rxjs/operators';
-import { Observable, Subscription, BehaviorSubject, of, interval, throwError } from 'rxjs';
+// import { filter, map, tap, catchError, flatMap, first } from 'rxjs/operators';
+// import { Observable, Subscription, BehaviorSubject, of, interval, throwError } from 'rxjs';
 
-import { HttpWrapper } from '@base/httpWrapper';
-import { StorageService } from '@base/storage';
-import { RolesCheckedService } from '@base/auth/roles-checked.service';
-import { SignalRService } from '@base/signalr';
+// import { HttpWrapper } from '@base/httpWrapper';
+// import { StorageService } from '@base/storage';
+// import { RolesCheckedService } from '@base/auth/roles-checked.service';
+// import { SignalRService } from '@base/signalr';
 
-import { IAuthStateModel, IAuthTokenModel, IRegisterModel, ILoginModel, IRefreshGrantModel } from './models';
-import { UriEncoder } from './uri-encoder';
-import { environment } from '@environments/environment';
+// import { IAuthStateModel, IAuthTokenModel, IRegisterModel, ILoginModel, IRefreshGrantModel } from './models';
+// import { UriEncoder } from './uri-encoder';
+// import { environment } from '@environments/environment';
 
-@Injectable()
-export class AuthService {
+// @Injectable()
+// export class AuthService {
 
-    private initialState: IAuthStateModel = { tokens: null, authReady: false };
-    private state: BehaviorSubject<IAuthStateModel>;
-    private refreshSubscription$: Subscription;
+//     private initialState: IAuthStateModel = { tokens: null, authReady: false };
+//     private state: BehaviorSubject<IAuthStateModel>;
+//  //   private refreshSubscription$: Subscription;
 
-    public tokens$: Observable<IAuthTokenModel>;
-    public loggedIn$: Observable<boolean>;
+//     public tokens$: Observable<IAuthTokenModel>;
+//     public loggedIn$: Observable<boolean>;
 
-    constructor(private http: HttpWrapper,
-                private http1: HttpClient,
-                private storage: StorageService,
-                private signalRService: SignalRService,
-                private rolesCheckedService: RolesCheckedService
-    ) {
+//     constructor(private http: HttpWrapper,
+//                 private http1: HttpClient,
+//                 private storage: StorageService,
+//                 private signalRService: SignalRService,
+//                 private rolesCheckedService: RolesCheckedService
+//     ) {
 
-        this.state = new BehaviorSubject<IAuthStateModel>(this.initialState);
+//         this.state = new BehaviorSubject<IAuthStateModel>(this.initialState);
 
-        this.tokens$ = this.state.pipe(
-            filter((state: IAuthStateModel) => state.authReady),
-            map((state: IAuthStateModel) => state.tokens));
+//         this.tokens$ = this.state.pipe(
+//             filter((state: IAuthStateModel) => state.authReady),
+//             map((state: IAuthStateModel) => state.tokens));
 
-        this.loggedIn$ = this.tokens$.pipe(map(tokens => !!tokens));
-    }
+//         this.loggedIn$ = this.tokens$.pipe(map(tokens => !!tokens));
+//     }
 
-    public init(): Observable<IAuthTokenModel> {
-        return this.startupTokenRefresh().pipe(
-            tap(() => this.scheduleRefresh()));
-    }
+//     // public init(): Observable<IAuthTokenModel> {
+//     //     return this.startupTokenRefresh().pipe(
+//     //         tap(() => this.scheduleRefresh()));
+//     // }
 
-    public register(data: IRegisterModel): Observable<any> {
-        return this.http1.post(environment + 'api/v1/account/register', data).pipe(
-            catchError(res => throwError(res.error)));
-    }
 
-    public login(user: ILoginModel): Observable<any> {
-        return this.getTokens(user, 'password').pipe(
-            catchError(res => throwError(res.error)),
-            tap(res => {
-                this.scheduleRefresh();
-            }));
-    }
+//     // public login(user: ILoginModel): Observable<any> {
+//     //     return this.getTokens(user, 'password').pipe(
+//     //         catchError(res => throwError(res.error)),
+//     //         tap(res => {
+//     //             this.scheduleRefresh();
+//     //         }));
+//     // }
 
-    public logout(): void {
-        this.updateState({ tokens: null });
+//     // public logout(): void {
+//     //     this.updateState({ tokens: null });
 
-        this.storage.removeAuthTokens();
-        this.rolesCheckedService.checkRoles();
+//     //     this.storage.removeAuthTokens();
+//     //     this.rolesCheckedService.checkRoles();
 
-        if (this.refreshSubscription$) {
-            this.refreshSubscription$.unsubscribe();
+//     //     if (this.refreshSubscription$) {
+//     //         this.refreshSubscription$.unsubscribe();
 
-    //        console.warn("init hub from logout");
-            this.signalRService.initializeHub();
-        }
-    }
+//     // //        console.warn("init hub from logout");
+//     //         this.signalRService.initializeHub();
+//     //     }
+//     // }
 
-    public refreshTokens(): Observable<IAuthTokenModel> {
-        return this.getTokens({ refresh_token: this.storage.getRefreshToken() }, 'refresh_token')
-                .pipe(catchError(error => throwError('Expired')));
-    }
+//     // public refreshTokens(): Observable<IAuthTokenModel> {
+//     //     return this.getTokens({ refresh_token: this.storage.getRefreshToken() }, 'refresh_token')
+//     //             .pipe(catchError(error => throwError('Expired')));
+//     // }
 
-    private updateState(newState: IAuthStateModel): void {
-            this.state.next(Object.assign({}, this.state.getValue(), newState));
-    }
+//     // private updateState(newState: IAuthStateModel): void {
+//     //         this.state.next(Object.assign({}, this.state.getValue(), newState));
+//     // }
 
-    private getTokens(data: IRefreshGrantModel | ILoginModel | any, grantType: string): Observable<IAuthTokenModel> {
-        const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8;' });
+//     // private getTokens(data: IRefreshGrantModel | ILoginModel | any, grantType: string): Observable<IAuthTokenModel> {
+//     //     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8;' });
 
-        Object.assign(data, { scope: 'openid offline_access' });
+//     //     Object.assign(data, { scope: 'openid offline_access' });
 
-        let params2 = new HttpParams({ fromString: '', encoder: new UriEncoder() });
-        params2 = params2.set('grant_type', grantType);
-        Object.keys(data)
-            .forEach(key => params2 = params2.append(key, data[key]));
+//     //     let params2 = new HttpParams({ fromString: '', encoder: new UriEncoder() });
+//     //     params2 = params2.set('grant_type', grantType);
+//     //     Object.keys(data)
+//     //         .forEach(key => params2 = params2.append(key, data[key]));
 
-        return this.http1.post<IAuthTokenModel>(environment.apiUrl + 'connect/token', params2.toString(), { headers }).pipe(
-            tap((tokens: IAuthTokenModel) => {
+//     //     return this.http1.post<IAuthTokenModel>(environment.apiUrl + 'connect/token', params2.toString(), { headers }).pipe(
+//     //         tap((tokens: IAuthTokenModel) => {
 
-                tokens.expiration_date = new Date(new Date().getTime() + tokens.expires_in * 1000).getTime().toString();
+//     //             tokens.expiration_date = new Date(new Date().getTime() + tokens.expires_in * 1000).getTime().toString();
 
-                this.storage.setAuthTokens(tokens);
-                if (tokens.refresh_token) {
-                    this.storage.setRefreshToken(tokens.refresh_token);
-                }
-                this.updateState({ authReady: true, tokens });
-                this.getUserProfile();
-            }));
-    }
+//     //             this.storage.setAuthTokens(tokens);
+//     //             if (tokens.refresh_token) {
+//     //                 this.storage.setRefreshToken(tokens.refresh_token);
+//     //             }
+//     //             this.updateState({ authReady: true, tokens });
+//     //             this.getUserProfile();
+//     //         }));
+//     // }
 
-    private startupTokenRefresh(): Observable<IAuthTokenModel> {
-        return of(this.storage.retrieveTokens()).pipe(
-            flatMap((tokens: IAuthTokenModel) => {
-                if (!tokens) {
-                    this.updateState({ authReady: true });
+//     // private startupTokenRefresh(): Observable<IAuthTokenModel> {
+//     //     return of(this.storage.retrieveTokens()).pipe(
+//     //         flatMap((tokens: IAuthTokenModel) => {
+//     //             if (!tokens) {
+//     //                 this.updateState({ authReady: true });
 
-        //            console.warn("init hub from refresh");
-                    this.signalRService.initializeHub();
-                    return throwError('No token');
-                }
+//     //     //            console.warn("init hub from refresh");
+//     //                 this.signalRService.initializeHub();
+//     //                 return throwError('No token');
+//     //             }
 
-                this.updateState({ tokens });
+//     //             this.updateState({ tokens });
 
-                if (+tokens.expiration_date > new Date().getTime()) {
-                    this.updateState({ authReady: true });
-                }
+//     //             if (+tokens.expiration_date > new Date().getTime()) {
+//     //                 this.updateState({ authReady: true });
+//     //             }
 
-                return this.refreshTokens();
-            }),
-            catchError(e => {
-                console.warn(e);
-                this.logout();
-                this.updateState({ authReady: true });
-                return throwError(e);
-            }));
-    }
+//     //             return this.refreshTokens();
+//     //         }),
+//     //         catchError(e => {
+//     //             console.warn(e);
+//     //             this.logout();
+//     //             this.updateState({ authReady: true });
+//     //             return throwError(e);
+//     //         }));
+//     // }
 
-    private scheduleRefresh(): void {
-        this.refreshSubscription$ = this.tokens$.pipe(
-            first(),
-            // refresh every half the total expiration time
-            flatMap((tokens: IAuthTokenModel) => interval(tokens.expires_in * 500)),
-            flatMap(() => this.refreshTokens()))
-            .subscribe();
-    }
+//     // private scheduleRefresh(): void {
+//     //     this.refreshSubscription$ = this.tokens$.pipe(
+//     //         first(),
+//     //         // refresh every half the total expiration time
+//     //         flatMap((tokens: IAuthTokenModel) => interval(tokens.expires_in * 500)),
+//     //         flatMap(() => this.refreshTokens()))
+//     //         .subscribe();
+//     // }
 
-    private getUserProfile(): void {
-        this.http.get<any>('users/roles') // bug make list request form service
-            .subscribe((data: any) => {
-                    this.storage.setUserId(+data.userId);
-                    this.storage.setRoles(data.roles);
-                    this.rolesCheckedService.checkRoles();
+//     // private getUserProfile(): void {
+//     //     this.http.get<any>('users/roles') // bug make list request form service
+//     //         .subscribe((data: any) => {
+//     //                 this.storage.setUserId(+data.userId);
+//     //                 this.storage.setRoles(data.roles);
+//     //                 this.rolesCheckedService.checkRoles();
 
-     //               console.warn("init hub from getUserProfile");
-                    this.signalRService.initializeHub(); // WARNING---------------------------------------------------------
-                }
-            );
-    }
-}
+//     //  //               console.warn("init hub from getUserProfile");
+//     //                 this.signalRService.initializeHub(); // WARNING---------------------------------------------------------
+//     //             }
+//     //         );
+//     // }
+// }

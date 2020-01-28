@@ -14,5 +14,19 @@
     "/plugins": {
         "target": "http://localhost:1669",
       "secure": false
+    },
+    "/small150": {      
+      "target": "http://localhost:1669",
+      "secure": false,
+      "pathRewrite": {
+        "^/small150": ""
+      },
+      "/small100": {      
+        "target": "http://localhost:1669",
+        "secure": false,
+        "pathRewrite": {
+          "^/small100": ""
+        }
+      }
     }
 }

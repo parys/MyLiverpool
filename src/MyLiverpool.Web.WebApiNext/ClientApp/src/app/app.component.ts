@@ -15,7 +15,6 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
 import { filter, map } from 'rxjs/operators';
 
-import { AuthService } from '@base/auth';
 import { CustomTitleMetaService as CustomTitleService } from '@shared/index';
 
 
@@ -28,7 +27,6 @@ import { CustomTitleMetaService as CustomTitleService } from '@shared/index';
 })
 export class AppComponent implements OnInit {
     constructor(private router: Router,
-                private authService: AuthService,
                 private activatedRoute: ActivatedRoute,
                 private titleService: CustomTitleService,
                 @Inject(PLATFORM_ID) private platformId: object
@@ -50,10 +48,10 @@ export class AppComponent implements OnInit {
     public ngOnInit(): void {
         if (isPlatformBrowser(this.platformId)) {
             // This starts up the token refresh preocess for the app
-            this.authService.init()
-                .subscribe(null,
-                    e => console.warn(e)
-                );
+            // this.authService.init()
+            //     .subscribe(null,
+            //         e => console.warn(e)
+            //     );
             this.updateGestureState();
         }
 

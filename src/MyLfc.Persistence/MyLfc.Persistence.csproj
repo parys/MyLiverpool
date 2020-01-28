@@ -12,10 +12,12 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1">
       <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="IdentityServer4.EntityFramework" Version="3.1.0" />
+
   </ItemGroup>
   
   <ItemGroup>
@@ -24,5 +26,4 @@
     <ProjectReference Include="..\MyLiverpool.Data.Common\MyLiverpool.Data.Common.csproj" />
     <ProjectReference Include="..\MyLiverpool.Data.ResourceAccess.Interfaces\MyLiverpool.Data.ResourceAccess.Interfaces.csproj" />
   </ItemGroup>
-
 </Project>

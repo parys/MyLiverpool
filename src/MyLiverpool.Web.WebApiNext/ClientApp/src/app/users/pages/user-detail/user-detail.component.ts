@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { RolesCheckedService, AuthService } from '@base/auth';
+import { RolesCheckedService } from '@base/auth';
 import { User, RoleGroup} from '@domain/models';
 import { RoleGroupService } from '@role-groups/index';
 import { CustomTitleMetaService as CustomTitleService } from '@shared/index';
@@ -34,8 +34,7 @@ export class UserDetailComponent extends ObserverComponent implements OnInit {
         private snackBar: MatSnackBar,
         private router: Router,
         private location: Location,
-        private titleService: CustomTitleService,
-        private authService: AuthService) {
+        private titleService: CustomTitleService) {
         super();
     }
 
@@ -51,11 +50,7 @@ export class UserDetailComponent extends ObserverComponent implements OnInit {
         if (this.roles.isAdminAssistant) {
             this.loadRoleGroups();
         }
-    }
-
-    public logout(): void {
-        this.authService.logout();
-    }
+    }    
 
     public onSubmit(): void {
         const roleGroupId = this.roleForm.controls['roleGroupId'].value;

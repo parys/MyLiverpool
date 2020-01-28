@@ -29,15 +29,25 @@
               "src/favicon.ico",
               "src/assets",
               {
-                  "glob": "**/*",
-                  "input": "src/icons",
-                  "output": "/"
+                "glob": "**/*",
+                "input": "src/icons",
+                "output": "/"
               },
               {
                 "glob": "**/*",
                 "input": "src/fonts",
                 "output": "/"
-            }
+              },
+              {
+                "glob": "**/*",
+                "input": "src/static",
+                "output": "/"
+              },
+              {
+                "glob": "oidc-client.min.js",
+                "input": "node_modules/oidc-client/dist",
+                "output": "/"
+              }
             ],
             "styles": [
               "src/fonts/iconfont/material-icons.css",
@@ -134,9 +144,10 @@
               "bundleDependencies": "all",
               "fileReplacements": [
                 {
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.prod.ts"
-              }]
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             },
             "test": {
               "optimization": false,
@@ -148,14 +159,15 @@
               "bundleDependencies": "all",
               "fileReplacements": [
                 {
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.test.ts"
-              }]
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.test.ts"
+                }
+              ]
             }
           }
         }
       }
-    }    
+    }
   },
   "defaultProject": "angular2app"
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using MyLfc.Persistence;
 
 namespace MyLfc.Application.Tests.Infrastructure
@@ -11,8 +13,8 @@ namespace MyLfc.Application.Tests.Infrastructure
             var options = new DbContextOptionsBuilder<LiverpoolContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
-
-            var context = new LiverpoolContext(options);
+            var operationalStoreOptions = Options.Create(new OperationalStoreOptions());
+            var context = new LiverpoolContext(options, operationalStoreOptions);
 
             context.Database.EnsureCreated();
 

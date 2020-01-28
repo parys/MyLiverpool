@@ -14,6 +14,7 @@ namespace MyLfc.Domain
         //public virtual ICollection<RoleClaim> Claims { get; set; }
 
         public virtual ICollection<RoleRoleGroup> RoleRoleGroups { get; set; } = new HashSet<RoleRoleGroup>();
+        public virtual ICollection<IdentityUserRole<int>> Roles { get; } = new List<IdentityUserRole<int>>();
 
         //public int RoleGroupId { get; set; }
     }
