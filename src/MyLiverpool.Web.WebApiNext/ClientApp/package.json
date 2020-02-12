@@ -41,7 +41,7 @@
     "@aspnet/signalr": "1.0.4",
     "@ngxs/store": "3.6.2",
     "@nguniversal/module-map-ngfactory-loader": "8.2.6",
-    "@nguniversal/express-engine": "9.0.0",
+    "@nguniversal/express-engine": "8.2.6",
     "express": "4.17.1",
     "angular2-recaptcha": "1.1.0",
     "aspnet-prerendering": "3.0.1",
