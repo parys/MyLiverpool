@@ -21,9 +21,9 @@ export class UsersFilterComponent implements AfterViewInit {
 
     @Output() filterChange: EventEmitter<UserFilters> = new EventEmitter<UserFilters>();
 
-    @ViewChild('roleSelect', { static: false }) roleSelect: MatSelect;
-    @ViewChild('userInput', { static: false }) userInput: ElementRef;
-    @ViewChild('ipInput', { static: false }) ipInput: ElementRef;
+    @ViewChild('roleSelect') roleSelect: MatSelect;
+    @ViewChild('userInput') userInput: ElementRef;
+    @ViewChild('ipInput') ipInput: ElementRef;
 
     public ngAfterViewInit(): void {
 

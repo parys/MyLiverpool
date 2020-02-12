@@ -26,7 +26,7 @@ export class ChatWindowComponent implements OnInit {
     public items: ChatMessage[] = new Array<ChatMessage>();
     public selectedEditIndex: number = null;
 
-    @ViewChild('chatInput', { static: false })private elementRef: EditorComponent;
+    @ViewChild('chatInput')private elementRef: EditorComponent;
     @Input() public type: number;
     @Input() public height = 200;
 

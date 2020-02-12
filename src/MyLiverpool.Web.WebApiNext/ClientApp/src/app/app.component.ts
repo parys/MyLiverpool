@@ -44,7 +44,7 @@ export class AppComponent extends ObserverComponent implements OnInit {
     @HostBinding('@.disabled')
     public animationsDisabled = true;
 
-    @ViewChild('sidenav', { static: false }) sidenav: MatSidenav;
+    @ViewChild('sidenav') sidenav: MatSidenav;
 
     public ngOnInit(): void {
         this.initTitleSubscriber();

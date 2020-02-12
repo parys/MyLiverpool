@@ -86,3 +86,5 @@ export { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 // //        });
 // //    });
 // // });
+
+export { renderModule, renderModuleFactory } from '@angular/platform-server';

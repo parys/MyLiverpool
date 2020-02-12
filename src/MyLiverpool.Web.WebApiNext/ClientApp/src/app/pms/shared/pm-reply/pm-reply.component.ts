@@ -17,7 +17,7 @@ export class PmReplyComponent implements OnInit, AfterViewInit {
     @Input() public userId: number;
     @Input() public title: string;
     @Output() public close = new EventEmitter();
-    @ViewChild('mpInput', { static: false })private elementRef: EditorComponent;
+    @ViewChild('mpInput')private elementRef: EditorComponent;
 
     constructor(private service: PmService,
                 private snackBar: MatSnackBar,

@@ -69,7 +69,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -93,7 +92,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -125,7 +123,7 @@
           },
           "configurations": {
             "production": {
-              "optimization": false,
+              "optimization": true,
               "outputHashing": "media",
               "sourceMap": false,
               "namedChunks": false,
@@ -140,7 +138,7 @@
               ]
             },
             "test": {
-              "optimization": false,
+              "optimization": true,
               "outputHashing": "media",
               "sourceMap": false,
               "namedChunks": false,

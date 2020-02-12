@@ -20,7 +20,7 @@ export class SeasonCalendarComponent implements OnInit, AfterViewInit {
     private id = 0;
     public seasons: Season[];
 
-    @ViewChild('seasonSelect', { static: false }) seasonSelect: MatSelect;
+    @ViewChild('seasonSelect') seasonSelect: MatSelect;
 
     @Select(AuthState.isAdminAssistant) isAdminAssistant$: Observable<boolean>;
 
