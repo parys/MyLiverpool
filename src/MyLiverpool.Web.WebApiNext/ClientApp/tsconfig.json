@@ -152,13 +152,10 @@
   ],
   "exclude": [
     "./src/app/forum/*",
-    "./src/environments/*",
     "./src/app/app/app.module.server.ts"
   ],
-  "files": [
-    "./src/app/layout/modules/sidebar-right/sidebar-right.module.ts",
-    "./src/app/layout/modules/sidebar-left/sidebar-left.module.ts",
-    "./src/app/editor/tiny-module/tiny.module.ts"
+  "include": [
+    "src/**/*",
   ],
   "compileOnSave": false,
   "atom": {
