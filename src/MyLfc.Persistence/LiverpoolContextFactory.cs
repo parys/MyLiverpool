@@ -6,7 +6,7 @@ namespace MyLfc.Persistence
     public class LiverpoolContextFactory : IDesignTimeDbContextFactory<LiverpoolContext>
     {
         private const string connectionString =
-            "Server=.;Database=MyLiverpool11231;Trusted_Connection=True;MultipleActiveResultSets=true";
+            "Server=USER-PC\\MSSQLSERVER02;Database=DB_lfc;Trusted_Connection=True;MultipleActiveResultSets=true";
         public LiverpoolContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<LiverpoolContext>();
